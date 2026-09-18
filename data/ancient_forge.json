@@ -1,0 +1,62 @@
+{
+  "source": "https://abyssus.wiki.gg/wiki/Ancient_Forge",
+  "description": "The Ancient Forge is an interactive structure found once each in the Abandoned Temple, Gardens, and Sanctuary (3 per expedition). It lets players choose between upgrading a weapon or an ability, up to 3 Forge Upgrades per weapon/ability. Requires the Ancient Forge skill on the Soul Wheel.",
+  "weaponUpgrades": {
+    "note": "Each of the 8 weapons has 8 unique Forge Upgrades of its own (no upgrades are shared across weapons). See data/weapons.json -> weapons[].forgeUpgrades.",
+    "uniquePerWeapon": 8,
+    "shared": []
+  },
+  "abilityUpgrades": {
+    "note": "Each ability has 11 upgrades unique to it, plus these 5 upgrades shared across every ability. Per-ability unique upgrades are not yet extracted (see Abilities page).",
+    "uniquePerAbility": 11,
+    "shared": [
+      {
+        "name": "Extra Pockets",
+        "description": "Gain 3 Ability stacks.",
+        "icon": "forge/Ability_Shared.png",
+        "effects": [
+          {
+            "op": "flat",
+            "stat": "abilityCharges",
+            "scope": "ability",
+            "value": 3.0
+          }
+        ]
+      },
+      {
+        "name": "Increased Efficiency",
+        "description": "Kills Lower the cooldown of your Ability.",
+        "icon": "forge/Ability_Shared.png",
+        "effects": [],
+        "unmodeled": "no numeric damage effect the DSL can express"
+      },
+      {
+        "name": "Rich Get Richer",
+        "description": "Decreases cooldown by 10% for every Ability stack.",
+        "icon": "forge/Ability_Shared.png",
+        "effects": [],
+        "unmodeled": "no numeric damage effect the DSL can express"
+      },
+      {
+        "name": "Investment",
+        "description": "Increases Ability damage by 10% for each God Blessing on your Ability.",
+        "icon": "forge/Ability_Shared.png",
+        "effects": [
+          {
+            "op": "mult",
+            "stat": "abilityDamage",
+            "scope": "ability",
+            "value": 0.1
+          }
+        ]
+      },
+      {
+        "name": "Double Trouble",
+        "description": "Blessings on your Ability have 30% chance to trigger twice.",
+        "icon": "forge/Ability_Shared.png",
+        "effects": [],
+        "unmodeled": "no numeric damage effect the DSL can express"
+      }
+    ]
+  }
+}

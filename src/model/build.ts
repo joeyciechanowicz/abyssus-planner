@@ -1,0 +1,60 @@
+import { z } from 'zod';
+
+/** A loadout. Ids reference entries in data/*.json via the maps in ./data. */
+export const buildSchema = z.object({
+  weaponId: z.string(),
+  modeName: z.string(),
+  /** One aspect per slot; a slot may be left empty. */
+  aspects: z.object({
+    primary: z.string().nullable().default(null),
+    secondary: z.string().nullable().default(null),
+    ability: z.string().nullable().default(null),
+  }),
+  /** Blessing ids. Only blessings belonging to an equipped aspect are counted. */
+  blessingIds: z.array(z.string()).default([]),
+  /** 1 charm, or 2 with the Charm Power soul skill. */
+  charmIds: z.array(z.string()).default([]),
+  abilityId: z.string().nullable().default(null),
+  /** Up to 3 per the Ancient Forge rules. */
+  weaponUpgrades: z.array(z.string()).default([]),
+  abilityUpgrades: z.array(z.string()).default([]),
+  soulSkillIds: z.array(z.string()).default([]),
+});
+export type Build = z.infer<typeof buildSchema>;
+
+/** Assumptions the player controls; none of these are knowable from the wiki. */
+export interface SimOptions {
+  /** Fraction of shots that land on a weakspot. */
+  weakspotAccuracy: number;
+  /** Fraction of shots that hit at all. */
+  accuracy: number;
+  /** Player health fraction, for conditionals like "while above 80% Health". */
+  healthFraction: number;
+  /** Target health fraction, for "enemies at full Health" style conditionals. */
+  targetHealthFraction: number;
+  /** How many stacks of a stacking effect to assume are up (0..1 of its cap). */
+  stackFullness: number;
+  /** Charge-based modes: 0 = tap, 1 = fully charged. */
+  chargeLevel: number;
+}
+
+export const defaultOptions: SimOptions = {
+  weakspotAccuracy: 0.5,
+  accuracy: 0.95,
+  healthFraction: 1.0,
+  targetHealthFraction: 1.0,
+  stackFullness: 0.5,
+  chargeLevel: 1.0,
+};
+
+export const emptyBuild: Build = {
+  weaponId: 'Engine_Rifle',
+  modeName: 'Automatic Fire',
+  aspects: { primary: null, secondary: null, ability: null },
+  blessingIds: [],
+  charmIds: [],
+  abilityId: null,
+  weaponUpgrades: [],
+  abilityUpgrades: [],
+  soulSkillIds: [],
+};

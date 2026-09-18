@@ -1,0 +1,2753 @@
+{
+  "source": "https://abyssus.wiki.gg/wiki/Weapons",
+  "weapons": [
+    {
+      "id": "Engine_Rifle",
+      "name": "Engine Rifle",
+      "modes": [
+        {
+          "name": "Automatic Fire",
+          "type": "Primary",
+          "damage": "32",
+          "weakspotDamage": "64",
+          "special": "Fast automatic fire.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Automatic_Fire.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 32,
+              "max": 32,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 64,
+              "max": 64,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 10.0,
+          "clipSize": 100,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Burst Fire",
+          "type": "Primary",
+          "damage": "40 x3",
+          "weakspotDamage": "80 x3",
+          "special": "Semi-automatic bursts.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Gun Meets Crown",
+          "icon": "weapons/Burst_Fire.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 40,
+              "max": 40,
+              "count": 3
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 80,
+              "max": 80,
+              "count": 3
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 2.6,
+          "clipSize": 99,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 3,
+          "estimated": true
+        },
+        {
+          "name": "Gatling Fire",
+          "type": "Primary",
+          "damage": "35",
+          "weakspotDamage": "70",
+          "special": "Increases Fire Rate the longer you shoot.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Eco Warfare",
+          "icon": "weapons/Gatling_Fire.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 35,
+              "max": 35,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 70,
+              "max": 70,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 12.0,
+          "clipSize": 100,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Engine Rev",
+          "type": "Secondary",
+          "damage": "35",
+          "weakspotDamage": "70",
+          "special": "High Fire Rate but increases Heat.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Engine_Rev.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 35,
+              "max": 35,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 70,
+              "max": 70,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 13.0,
+          "clipSize": 120,
+          "reloadTime": 2.5,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Split Shot",
+          "type": "Secondary",
+          "damage": "18 x3",
+          "weakspotDamage": "36 x3",
+          "special": "Fires multiple in an unpredictable pattern but increases Heat.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Drumfire",
+          "icon": "weapons/Split_Shot.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 18,
+              "max": 18,
+              "count": 3
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 36,
+              "max": 36,
+              "count": 3
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 6.0,
+          "clipSize": 60,
+          "reloadTime": 2.5,
+          "projectilesPerShot": 3,
+          "estimated": true
+        },
+        {
+          "name": "Concentrated Shot",
+          "type": "Secondary",
+          "damage": "100",
+          "weakspotDamage": "200",
+          "special": "Semi automatic fire that knocks enemies back but increases Heat.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Deadline",
+          "icon": "weapons/Concentrated_Shot.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 100,
+              "max": 100,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 200,
+              "max": 200,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 2.2,
+          "clipSize": 30,
+          "reloadTime": 2.5,
+          "projectilesPerShot": 1,
+          "estimated": true
+        }
+      ],
+      "forgeUpgrades": [
+        {
+          "name": "Prolonged Revving",
+          "description": "Shooting enemies reduces Heat.",
+          "icon": "forge/Prolonged_Revving.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Greased Barrel",
+          "description": "Increases damage the longer you fire without letting go of your Primary or Secondary.",
+          "icon": "forge/Prolonged_Revving.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Insulated Barrel",
+          "description": "Increases fire rate by up to 100% the higher your Heat is.",
+          "icon": "forge/Prolonged_Revving.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "name": "Heat Converter",
+          "description": "Deal up to 100% more damage the higher your Heat is.",
+          "icon": "forge/Heat_Converter.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 1.0,
+              "note": "ramping: this is the maximum"
+            }
+          ]
+        },
+        {
+          "name": "Binary Cooling",
+          "description": "Heat no longer decreases over time after Overheating, but is cleared after 5 sec.",
+          "icon": "forge/Prolonged_Revving.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Burst Cooling",
+          "description": "Stops Heat from increasing for 5 sec. after Overheated is cleared.",
+          "icon": "forge/Heat_Converter.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Large Capacity",
+          "description": "Increases the max clip size and the Overheat threshold by 100%.",
+          "icon": "forge/Heat_Converter.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "clipSize",
+              "scope": "all",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "name": "Heat Expulsion",
+          "description": "Explodes in a 15-meter radius once Overheated, dealing 1000% weapon damage.",
+          "icon": "forge/Prolonged_Revving.png",
+          "effects": [
+            {
+              "op": "proc",
+              "amount": 10.0,
+              "of": "weaponDamage",
+              "chance": 1.0,
+              "scope": "all"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Shotgun",
+      "name": "Shotgun",
+      "modes": [
+        {
+          "name": "Semi-automatic",
+          "type": "Primary",
+          "damage": "50 x8 (400)",
+          "weakspotDamage": "100 x8 (800)",
+          "special": "Semi-automatic pump shotgun.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Semi-automatic_Shotgun.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 50,
+              "max": 50,
+              "count": 8
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 100,
+              "max": 100,
+              "count": 8
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.6,
+          "clipSize": 6,
+          "reloadTime": 2.6,
+          "projectilesPerShot": 8,
+          "estimated": true
+        },
+        {
+          "name": "Full-automatic",
+          "type": "Primary",
+          "damage": "35 x8 (280)",
+          "weakspotDamage": "70 x8 (560)",
+          "special": "Fully automatic shotgun. Changes magazine size from 6 to 12.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Triple Kill!",
+          "icon": "weapons/Full-automatic.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 35,
+              "max": 35,
+              "count": 8
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 70,
+              "max": 70,
+              "count": 8
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 3.0,
+          "clipSize": 12,
+          "reloadTime": 3.0,
+          "projectilesPerShot": 8,
+          "estimated": true
+        },
+        {
+          "name": "Superheavy Slug",
+          "type": "Primary",
+          "damage": "65 x4 (260)",
+          "weakspotDamage": "162 x4 (648)",
+          "special": "Precise shots with increased Weakspot damage.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Up Close & Personal",
+          "icon": "weapons/Superheavy_Slug.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 65,
+              "max": 65,
+              "count": 4
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 162,
+              "max": 162,
+              "count": 4
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.2,
+          "clipSize": 6,
+          "reloadTime": 2.6,
+          "projectilesPerShot": 4,
+          "estimated": true
+        },
+        {
+          "name": "Buckshot",
+          "type": "Secondary",
+          "damage": "250",
+          "weakspotDamage": "500",
+          "special": "Fires a powerful blast, knocking yourself backwards.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Buckshot.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 250,
+              "max": 250,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 500,
+              "max": 500,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 0.8,
+          "clipSize": 2,
+          "reloadTime": 2.6,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Unload",
+          "type": "Secondary",
+          "damage": "60>95",
+          "weakspotDamage": "120>191",
+          "special": "Fires all bullets in quick succession, dealing more damage with each shot.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Ricky's Creed",
+          "icon": "weapons/Unload.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 60,
+              "max": 95,
+              "count": 1,
+              "chargeSteps": 2
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 120,
+              "max": 191,
+              "count": 1,
+              "chargeSteps": 2
+            }
+          ],
+          "damageParsed": "auto",
+          "chargeSteps": 2,
+          "fireRate": 4.0,
+          "clipSize": 6,
+          "reloadTime": 2.6,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Pressure Shot",
+          "type": "Secondary",
+          "damage": "210",
+          "weakspotDamage": "420",
+          "special": "Stuns and knocks enemies backwards.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Boomstick",
+          "icon": "weapons/Pressure_Shot.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 210,
+              "max": 210,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 420,
+              "max": 420,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 0.9,
+          "clipSize": 2,
+          "reloadTime": 2.6,
+          "projectilesPerShot": 1,
+          "estimated": true
+        }
+      ],
+      "forgeUpgrades": [
+        {
+          "name": "Light Frame",
+          "description": "Moving during combat builds Momentum that increased fire rate by up to 80% and movement speed by up to 80%. Clears outside of combat and drains while standing still.",
+          "icon": "forge/Light_Frame.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.8,
+              "note": "ramping: this is the maximum"
+            }
+          ]
+        },
+        {
+          "name": "Long Barrel",
+          "description": "Reduces spread by 50% and increases Weakspot damage by 50%.",
+          "icon": "forge/Long_Barrel.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "weakspotDamage",
+              "scope": "all",
+              "value": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Sawed-Off Barrel",
+          "description": "Increases Damage by 50%, but also increases spread by 50%.",
+          "icon": "forge/Light_Frame.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Heavy Shell",
+          "description": "Secondary Fire applies Slow and Weak on enemies hit.",
+          "icon": "forge/Heavy_Shell.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Compact Shell",
+          "description": "Killing an enemy makes the next shot deal 100% more damage. Does not stack.",
+          "icon": "forge/Heavy_Shell.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "name": "Optimized Gauge",
+          "description": "Deal 50% additional damage to Stunned, Slowed, Frozen or Rooted enemies.",
+          "icon": "forge/Heavy_Shell.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Automatic Trigger",
+          "description": "Using your Primary makes the next Secondary attack deal 80% more damage.",
+          "icon": "forge/Light_Frame.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.8
+            }
+          ]
+        },
+        {
+          "name": "Automatic Action",
+          "description": "Using your Secondary makes the next Primary attack deal 80% more damage.",
+          "icon": "forge/Light_Frame.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Tesla_Gun",
+      "name": "Tesla Gun",
+      "modes": [
+        {
+          "name": "Electrical Beam",
+          "type": "Primary",
+          "damage": "20",
+          "weakspotDamage": "40",
+          "special": "A continuous beam of electricity.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Electrical_Beam.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 20,
+              "max": 20,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 40,
+              "max": 40,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 12.0,
+          "clipSize": 150,
+          "reloadTime": 2.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Charge Beam",
+          "type": "Primary",
+          "damage": "16",
+          "weakspotDamage": "32",
+          "special": "Overload targets when hitting their weakspots. (Deals 300-332 damage)",
+          "unlockedByDefault": false,
+          "unlockCondition": "Battery",
+          "icon": "weapons/Charge_Beam.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 16,
+              "max": 16,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 32,
+              "max": 32,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 12.0,
+          "clipSize": 150,
+          "reloadTime": 2.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Unstable Coil",
+          "type": "Primary",
+          "damage": "30",
+          "weakspotDamage": "60",
+          "special": "Lock on to nearby enemies.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Caged No More",
+          "icon": "weapons/Unstable_Coil.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 30,
+              "max": 30,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 60,
+              "max": 60,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 6.0,
+          "clipSize": 120,
+          "reloadTime": 2.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Spark Orb",
+          "type": "Secondary",
+          "damage": "19>32>40",
+          "weakspotDamage": "37>64>80",
+          "special": "Charge up a slow moving orb that zaps nearby enemies.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Spark_Orb.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 19,
+              "max": 40,
+              "count": 1,
+              "chargeSteps": 3
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 37,
+              "max": 80,
+              "count": 1,
+              "chargeSteps": 3
+            }
+          ],
+          "damageParsed": "auto",
+          "chargeSteps": 3,
+          "fireRate": 0.8,
+          "clipSize": 30,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Charge Orb",
+          "type": "Secondary",
+          "damage": "97>120>142>165 (Explosion) / 20>24>28>32 x10 (DoT)",
+          "weakspotDamage": "97>120>142>165 (Explosion) / 20>24>28>32 x10 (DoT)",
+          "special": "Charge up an orb that explodes on impact and deals damage over time.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Battery",
+          "icon": "weapons/Charge_Orb.png",
+          "damageComponents": [
+            {
+              "label": "Explosion",
+              "kind": "explosion",
+              "min": 97,
+              "max": 165,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 20,
+              "max": 32,
+              "count": 10
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": "Explosion",
+              "kind": "explosion",
+              "min": 97,
+              "max": 165,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 20,
+              "max": 32,
+              "count": 10
+            }
+          ],
+          "chargeSteps": 4,
+          "damageParsed": "manual",
+          "fireRate": 0.6,
+          "clipSize": 30,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Magnetic Storm",
+          "type": "Secondary",
+          "damage": "54>66>78>91",
+          "weakspotDamage": "108>132>156>182",
+          "special": "Charge up a storm of electricity.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Electrifying",
+          "icon": "weapons/Magnetic_Storm.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 54,
+              "max": 91,
+              "count": 1,
+              "chargeSteps": 4
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 108,
+              "max": 182,
+              "count": 1,
+              "chargeSteps": 4
+            }
+          ],
+          "damageParsed": "auto",
+          "chargeSteps": 4,
+          "fireRate": 0.7,
+          "clipSize": 30,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        }
+      ],
+      "forgeUpgrades": [
+        {
+          "name": "Spark Gap",
+          "description": "Increase fire rate the longer you fire without letting go of your Primary.",
+          "icon": "forge/Spark_Gap.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Streamlined Transistor",
+          "description": "Increase damage the longer you fire without letting go of your Primary.",
+          "icon": "forge/Spark_Gap.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Compact Transformer",
+          "description": "Secondary charges twice as fast.",
+          "icon": "forge/Spark_Gap.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Larger Battery",
+          "description": "Secondary can be charged an additional 2 steps, increasing its effect.",
+          "icon": "forge/Spark_Gap.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Wireless Transmitter",
+          "description": "Your Secondary's duration is increased by 20% for each active Secondary effect.",
+          "icon": "forge/Spark_Gap.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "High Voltage",
+          "description": "Deal 20% more Primary damage to enemies currently being hit by the Secondary.",
+          "icon": "forge/Spark_Gap.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "primary",
+              "value": 0.2
+            }
+          ]
+        },
+        {
+          "name": "High-Frequency",
+          "description": "Increases range/radius of your Secondary by 50%",
+          "icon": "forge/Spark_Gap.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Backup Battery",
+          "description": "Increase magazine size by 50. Killing enemies grants 10 stacks of Backup Battery. When you run out of ammo, stacks of Backup Battery are consumed to instantly refund 1 ammo per stack.",
+          "icon": "forge/Spark_Gap.png",
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "clipSize",
+              "scope": "all",
+              "value": 50.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Brine_Revolver",
+      "name": "Brine Revolver",
+      "modes": [
+        {
+          "name": "Semi-automatic",
+          "type": "Primary",
+          "damage": "70",
+          "weakspotDamage": "140",
+          "special": "Semi-automatic fire.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Semi-automatic_Revolver.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 70,
+              "max": 70,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 140,
+              "max": 140,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 3.5,
+          "clipSize": 8,
+          "reloadTime": 1.8,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Burst Fire",
+          "type": "Primary",
+          "damage": "64 x3",
+          "weakspotDamage": "128 x3",
+          "special": "Fires a burst of bullets.",
+          "unlockedByDefault": false,
+          "unlockCondition": "High Noon",
+          "icon": "weapons/Burst_Fire_Revolver.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 64,
+              "max": 64,
+              "count": 3
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 128,
+              "max": 128,
+              "count": 3
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.8,
+          "clipSize": 9,
+          "reloadTime": 1.8,
+          "projectilesPerShot": 3,
+          "estimated": true
+        },
+        {
+          "name": "Large Caliber",
+          "type": "Primary",
+          "damage": "120",
+          "weakspotDamage": "360",
+          "special": "Deals high damage and increased Weakspot damage.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Good, Bad and Ugly",
+          "icon": "weapons/Large_Caliber.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 120,
+              "max": 120,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 360,
+              "max": 360,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.6,
+          "clipSize": 5,
+          "reloadTime": 2.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Steady Scope",
+          "type": "Secondary",
+          "damage": "200",
+          "weakspotDamage": "400",
+          "special": "Reliable damage while scoped.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Steady_Scope.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 200,
+              "max": 200,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 400,
+              "max": 400,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.0,
+          "clipSize": 5,
+          "reloadTime": 2.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Quick Scope",
+          "type": "Secondary",
+          "damage": "187 - 31",
+          "weakspotDamage": "375 - 62",
+          "special": "Fire quickly after scoping for increased damage.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Town Ain't Big Enough",
+          "icon": "weapons/Quick_Scope.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 31,
+              "max": 187,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 62,
+              "max": 375,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.4,
+          "clipSize": 5,
+          "reloadTime": 2.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Charge Scope",
+          "type": "Secondary",
+          "damage": "70 - 440",
+          "weakspotDamage": "140 - 880",
+          "special": "Deals more damage on full charge.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Sharpshooter",
+          "icon": "weapons/Charge_Scope.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 70,
+              "max": 440,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 140,
+              "max": 880,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 0.7,
+          "clipSize": 5,
+          "reloadTime": 2.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        }
+      ],
+      "forgeUpgrades": [
+        {
+          "name": "Combustion Muzzle",
+          "description": "Reloading empowers the next bullet, making it deal 50% more damage.",
+          "icon": "forge/Combustion_Muzzle.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Critical Cylinder",
+          "description": "Weakspot hits have a chance to recover 1 ammo.",
+          "icon": "forge/Combustion_Muzzle.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Fast Trigger",
+          "description": "A bullet fired within 0.8 sec. of the last one deals 25% increased damage. Damage stacks until reload.",
+          "icon": "forge/Combustion_Muzzle.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.25
+            }
+          ]
+        },
+        {
+          "name": "Critical Bullets",
+          "description": "Each consecutive Weakspot hit increases damage by 5%. Reloading resets the damage bonus.",
+          "icon": "forge/Combustion_Muzzle.png",
+          "effects": [
+            {
+              "op": "stacking",
+              "stat": "damage",
+              "scope": "all",
+              "valuePer": 0.05,
+              "per": "weakspot",
+              "max": null,
+              "note": "resets on reload"
+            }
+          ]
+        },
+        {
+          "name": "Accelerating Bullets",
+          "description": "Deals 50% more Weakspot damage to enemies beyond 20 meters.",
+          "icon": "forge/Combustion_Muzzle.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "weakspotDamage",
+              "scope": "all",
+              "value": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Overload Bullets",
+          "description": "Adds stacks of \"Overload\" to the player. Overload stacks are consumed when shooting an enemy with your Secondary. Your Secondary deals 25% additional damage per stack of Overload at the time of firing.",
+          "icon": "forge/Combustion_Muzzle.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "secondary",
+              "value": 0.25
+            }
+          ]
+        },
+        {
+          "name": "Boosted Cylinder",
+          "description": "Hitting an enemy with your Secondary increases fire rate for 3 sec.",
+          "icon": "forge/Combustion_Muzzle.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Exploitative Bullets",
+          "description": "Your damage over time multiplier is increased by 50% while scoped.",
+          "icon": "forge/Combustion_Muzzle.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "dotDamage",
+              "scope": "dot",
+              "value": 0.5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Disc_Thrower",
+      "name": "Disc Thrower",
+      "modes": [
+        {
+          "name": "Automatic",
+          "type": "Primary",
+          "damage": "50",
+          "weakspotDamage": "100",
+          "special": "Fires discs that return after a hit.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Automatic.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 50,
+              "max": 50,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 100,
+              "max": 100,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 4.0,
+          "clipSize": 20,
+          "reloadTime": 2.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Fan Fire",
+          "type": "Primary",
+          "damage": "40 x3",
+          "weakspotDamage": "80 x3",
+          "special": "Fires discs in a fan pattern.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Disco Fever!",
+          "icon": "weapons/Fan_Fire.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 40,
+              "max": 40,
+              "count": 3
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 80,
+              "max": 80,
+              "count": 3
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 2.0,
+          "clipSize": 21,
+          "reloadTime": 2.0,
+          "projectilesPerShot": 3,
+          "estimated": true
+        },
+        {
+          "name": "Dynamo",
+          "type": "Primary",
+          "damage": "40",
+          "weakspotDamage": "80",
+          "special": "Fires discs that bounce between enemies before returning.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Dynamo",
+          "icon": "weapons/Dynamo.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 40,
+              "max": 40,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 80,
+              "max": 80,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 3.0,
+          "clipSize": 20,
+          "reloadTime": 2.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Inferno Discs",
+          "type": "Secondary",
+          "damage": "80",
+          "weakspotDamage": "N/A",
+          "special": "Causes an explosion around discs.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Inferno Discs.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 80,
+              "max": 80,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": null,
+          "damageParsed": "auto",
+          "fireRate": 2.0,
+          "clipSize": 12,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Electron Conductors",
+          "type": "Secondary",
+          "damage": "80",
+          "weakspotDamage": "160",
+          "special": "Creates arcs of electricity between discs.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Dr. Discstein",
+          "icon": "weapons/Electron Conductors.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 80,
+              "max": 80,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 160,
+              "max": 160,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 2.0,
+          "clipSize": 12,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Search and Destroy",
+          "type": "Secondary",
+          "damage": "50",
+          "weakspotDamage": "100",
+          "special": "Redirects discs towards their nearest enemy and destroy them on impact.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Frisbee",
+          "icon": "weapons/Search and Destroy.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 50,
+              "max": 50,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 100,
+              "max": 100,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 2.5,
+          "clipSize": 12,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        }
+      ],
+      "forgeUpgrades": [
+        {
+          "name": "Spare Discs",
+          "description": "+3 maximum stored discs.",
+          "icon": "forge/Spare_Discs.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Slim Discs",
+          "description": "Increases disc speed by 100% and reduces spread and damage falloff.",
+          "icon": "forge/Slim_Discs.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Twin Discs",
+          "description": "Weakspot hits fire an additional disc that deals 70% less damage and is destroyed on impact.",
+          "icon": "forge/Twin_Discs.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": -0.7
+            }
+          ]
+        },
+        {
+          "name": "Whetting Bounce",
+          "description": "Discs deal 120% more damage if they bounce on the environment before hitting an enemy.",
+          "icon": "forge/Whetting_Bounce.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 1.2
+            }
+          ]
+        },
+        {
+          "name": "Elemental Overcharge",
+          "description": "Your Secondary deals 50% more damage each time the same disc triggers its effect.",
+          "icon": "forge/Elemental_Overcharge.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "secondary",
+              "value": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Halting Discs",
+          "description": "Discs spin in place for 2 sec. after hitting an enemy, then continue their arc. They deal continuous damage to nearby enemies while spinning.",
+          "icon": "forge/Halting_Discs.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Automatic Detonation",
+          "description": "Weakspot hits with your Primary automatically trigger your Secondary.",
+          "icon": "forge/Automatic_Detonation.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Priming Flight",
+          "description": "Primary and Secondary deals up to 100% increased damage based on distance traveled.",
+          "icon": "forge/Priming_Flight.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 1.0,
+              "note": "ramping: this is the maximum"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Combat_Bow",
+      "name": "Combat Bow",
+      "modes": [
+        {
+          "name": "Precision Shot",
+          "type": "Primary",
+          "damage": "65 - 357",
+          "weakspotDamage": "130 - 715",
+          "special": "Charged arrow that deals more damage when shot during its Sweetspot.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Precision_Shot.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 65,
+              "max": 357,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 130,
+              "max": 715,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.1,
+          "clipSize": 20,
+          "reloadTime": 1.5,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Pierce",
+          "type": "Primary",
+          "damage": "75 - 300",
+          "weakspotDamage": "150 - 600",
+          "special": "A piercing arrow that deals increased damage per enemy hit.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Robin Hood",
+          "icon": "weapons/Pierce.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 75,
+              "max": 300,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 150,
+              "max": 600,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.0,
+          "clipSize": 20,
+          "reloadTime": 1.5,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Return Arrow",
+          "type": "Primary",
+          "damage": "25 - 200",
+          "weakspotDamage": "51 - 400",
+          "special": "Gain increased damage and Fire Rate when picking up arrows or shooting during Sweetspots. [+10% damage per stack]",
+          "unlockedByDefault": false,
+          "unlockCondition": "Bottomless Quiver",
+          "icon": "weapons/Return_Arrow.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 25,
+              "max": 200,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 51,
+              "max": 400,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.3,
+          "clipSize": 20,
+          "reloadTime": 1.5,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Multi-Shot",
+          "type": "Secondary",
+          "damage": "14 - 75 x5",
+          "weakspotDamage": "29 - 150 x5",
+          "special": "Fires a barrage of arrows.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Multi-Shot.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 14,
+              "max": 75,
+              "count": 5
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 29,
+              "max": 150,
+              "count": 5
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 0.9,
+          "clipSize": 20,
+          "reloadTime": 1.5,
+          "projectilesPerShot": 5,
+          "estimated": true
+        },
+        {
+          "name": "Smart Arrow",
+          "type": "Secondary",
+          "damage": "39 - 168",
+          "weakspotDamage": "79 - 336",
+          "special": "An arrow that bounces between enemies and surfaces.",
+          "unlockedByDefault": false,
+          "unlockCondition": "X Marks the Spot",
+          "icon": "weapons/Smart_Arrow.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 39,
+              "max": 168,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 79,
+              "max": 336,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.1,
+          "clipSize": 20,
+          "reloadTime": 1.5,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Exploding Arrow",
+          "type": "Secondary",
+          "damage": "28 - 119 (Hit) / 127 - 306 (Explosion)",
+          "weakspotDamage": "56 - 238 (Hit) / 127 - 306 (Explosion)",
+          "special": "An arrow that explodes on hit.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Three For One",
+          "icon": "weapons/Exploding_Arrow.png",
+          "damageComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 28,
+              "max": 119,
+              "count": 1
+            },
+            {
+              "label": "Explosion",
+              "kind": "explosion",
+              "min": 127,
+              "max": 306,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 56,
+              "max": 238,
+              "count": 1
+            },
+            {
+              "label": "Explosion",
+              "kind": "explosion",
+              "min": 127,
+              "max": 306,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 0.9,
+          "clipSize": 20,
+          "reloadTime": 1.5,
+          "projectilesPerShot": 1,
+          "estimated": true
+        }
+      ],
+      "forgeUpgrades": [
+        {
+          "name": "Pressure Arrow",
+          "description": "Arrows have an aura around them that damages enemies it passes through, dealing 50% weapon damage.",
+          "icon": "forge/Pressure_Arrow.png",
+          "effects": [
+            {
+              "op": "proc",
+              "amount": 0.5,
+              "of": "weaponDamage",
+              "chance": 1.0,
+              "scope": "all"
+            }
+          ]
+        },
+        {
+          "name": "Stable String",
+          "description": "Each consecutive Weakspot hit deals 10% increased damage. Stacks 25 times.",
+          "icon": "forge/Stable_String.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "name": "Elastic String",
+          "description": "Takes less time to fully charge, and continuing to charge further increases the damage by up to 50%.",
+          "icon": "forge/Elastic_String.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "True Form",
+          "description": "Sweetspots always count as Weakspot hits.",
+          "icon": "forge/True_Form.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Consistent Scope",
+          "description": "Sweetspots shoot an additional arrow that deals 50% less damage.",
+          "icon": "forge/Consistent_Scope.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": -0.5
+            }
+          ]
+        },
+        {
+          "name": "Spined Arrow",
+          "description": "Arrows deal 25% weapon damage as damage over time. Can stack, but all stacks disappear after 5 sec.",
+          "icon": "forge/Spined_Arrow.png",
+          "effects": [
+            {
+              "op": "proc",
+              "amount": 0.25,
+              "of": "weaponDamage",
+              "chance": 1.0,
+              "scope": "dot"
+            }
+          ]
+        },
+        {
+          "name": "Longbow",
+          "description": "Arrows deal up to 50% more Weakspot damage based on the distance traveled.",
+          "icon": "forge/Longbow.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "weakspotDamage",
+              "scope": "all",
+              "value": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Shortbow",
+          "description": "Arrows are automatically shot once fully charged. Can be held to shoot continuously.",
+          "icon": "forge/Shortbow.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "id": "Plasma_Launcher",
+      "name": "Plasma Launcher",
+      "modes": [
+        {
+          "name": "Semi-automatic",
+          "type": "Primary",
+          "damage": "180",
+          "weakspotDamage": "360",
+          "special": "Fires explosive plasma orbs.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Semi-automatic.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 180,
+              "max": 180,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 360,
+              "max": 360,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.3,
+          "clipSize": 6,
+          "reloadTime": 2.8,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Flak Cannon",
+          "type": "Primary",
+          "damage": "110",
+          "weakspotDamage": "220",
+          "special": "Fires fast plasma orbs.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Kaboom!",
+          "icon": "weapons/Flak_Cannon.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 110,
+              "max": 110,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 220,
+              "max": 220,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 2.5,
+          "clipSize": 10,
+          "reloadTime": 2.8,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Seekers",
+          "type": "Primary",
+          "damage": "150 x5",
+          "weakspotDamage": "300 x5",
+          "special": "Hold to acquire targets and release a barrage of plasma orbs.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Boom!",
+          "icon": "weapons/Seekers.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 150,
+              "max": 150,
+              "count": 5
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 300,
+              "max": 300,
+              "count": 5
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 0.5,
+          "clipSize": 10,
+          "reloadTime": 2.8,
+          "projectilesPerShot": 5,
+          "estimated": true
+        },
+        {
+          "name": "Disintegration Beam",
+          "type": "Secondary",
+          "damage": "350",
+          "weakspotDamage": "700",
+          "special": "Fires a devastating beam of plasma that pierces through enemies.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Disintegration_Beam.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 350,
+              "max": 350,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 700,
+              "max": 700,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 0.8,
+          "clipSize": 4,
+          "reloadTime": 3.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Void Infusion",
+          "type": "Secondary",
+          "damage": "100 (Hit) / 25 x6 (DoT)",
+          "weakspotDamage": "200 (Hit) / 25 x6 (DoT)",
+          "special": "Creates a black hole on impact that damages and slows.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Shot, Chaser",
+          "icon": "weapons/Void_Infusion.png",
+          "damageComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 100,
+              "max": 100,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 25,
+              "max": 25,
+              "count": 6
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 200,
+              "max": 200,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 25,
+              "max": 25,
+              "count": 6
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.0,
+          "clipSize": 5,
+          "reloadTime": 3.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Adhesive Compound",
+          "type": "Secondary",
+          "damage": "60 (Hit) / 60 x5 (DoT)",
+          "weakspotDamage": "120 (Hit) / 120 x5 (DoT)",
+          "special": "Fires a plasma orb which sticks to the target and explodes continuously.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Plasmaster",
+          "icon": "weapons/Adhesive_Compound.png",
+          "damageComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 60,
+              "max": 60,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 60,
+              "max": 60,
+              "count": 5
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 120,
+              "max": 120,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 120,
+              "max": 120,
+              "count": 5
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.2,
+          "clipSize": 6,
+          "reloadTime": 3.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        }
+      ],
+      "forgeUpgrades": [
+        {
+          "name": "Seismic Fuel",
+          "description": "Hitting 3 enemies increases the explosion radius for 5 sec.",
+          "icon": "forge/Seismic_Fuel.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Molotov Fuel",
+          "description": "Enemies take 50% continuous weapon damage for 5 sec. after being hit.",
+          "icon": "forge/Molotov_Fuel.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Revolving Valve",
+          "description": "Lasting attacks have doubled duration, charged attacks have halved buildup.",
+          "icon": "forge/Revolving_Valve.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Explosive Valve",
+          "description": "Damage now scales with the projectile's explosion radius.",
+          "icon": "forge/Explosive_Valve.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Accelerating Core",
+          "description": "Explosions increase in size the further the projectile travels. Up to 100%.",
+          "icon": "forge/Accelerating_Core.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Bouncy Core",
+          "description": "Projectiles bounce 2 times or until an enemy is directly hit, exploding each bounce and dealing 25% more damage.",
+          "icon": "forge/Bouncy_Core.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Spreading Heat",
+          "description": "Hitting an enemy suffering from status effects or that are Stunned, Slowed, Frozen or Rooted deals the same damage to a nearby enemy.",
+          "icon": "forge/Spreading_Heat.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Repeating Blasts",
+          "description": "Plasma Launcher explosions have a 60% chance of triggering again. Additional explosions can also trigger again, but have a 20% decreased chance per explosion.",
+          "icon": "forge/Repeating_Blasts.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "id": "Fish_Deity",
+      "name": "Fish Deity",
+      "modes": [
+        {
+          "name": "Rapid Goo",
+          "type": "Primary",
+          "damage": "120 x3",
+          "weakspotDamage": "240 x3",
+          "special": "Fires multiple arching orbs of goop.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Rapid_Goo.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 120,
+              "max": 120,
+              "count": 3
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 240,
+              "max": 240,
+              "count": 3
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.5,
+          "clipSize": 9,
+          "reloadTime": 2.4,
+          "projectilesPerShot": 3,
+          "estimated": true
+        },
+        {
+          "name": "Fish Spit",
+          "type": "Primary",
+          "damage": "240",
+          "weakspotDamage": "480",
+          "special": "Fires an arching orb of goop that makes enemies more susceptible to stabs. Changes magazine size from 9 to 7.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Free Throw",
+          "icon": "weapons/Fish_Spit.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 240,
+              "max": 240,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 480,
+              "max": 480,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.2,
+          "clipSize": 7,
+          "reloadTime": 2.4,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Hazardous Goo",
+          "type": "Primary",
+          "damage": "50 (Hit) / 13 x10 (DoT)",
+          "weakspotDamage": "100 (Hit) / 13 x10 (DoT)",
+          "special": "Fires an arching orb of goop that deals damage over time to targets hit. The effect stacks but disappears after a short duration.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Open Wide",
+          "icon": "weapons/Hazardous_Goo.png",
+          "damageComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 50,
+              "max": 50,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 13,
+              "max": 13,
+              "count": 10
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 100,
+              "max": 100,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 13,
+              "max": 13,
+              "count": 10
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.4,
+          "clipSize": 9,
+          "reloadTime": 2.4,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Piercing Stab",
+          "type": "Secondary",
+          "damage": "170",
+          "weakspotDamage": "340",
+          "special": "Stabs forward, piercing enemies and dealing high Weakspot damage.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Piercing_Stab.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 170,
+              "max": 170,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 340,
+              "max": 340,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.3,
+          "clipSize": null,
+          "reloadTime": 0.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Wide Stab",
+          "type": "Secondary",
+          "damage": "240",
+          "weakspotDamage": "480",
+          "special": "Wide stab that knocks enemies back.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Go Fish!",
+          "icon": "weapons/Wide_Stab.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 240,
+              "max": 240,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 480,
+              "max": 480,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.0,
+          "clipSize": null,
+          "reloadTime": 0.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Chainsaw",
+          "type": "Secondary",
+          "damage": "30 - 75",
+          "weakspotDamage": "60 - 150",
+          "special": "Repeatedly slashes, dealing more damage each time the target is hit.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Hooked",
+          "icon": "weapons/Chainsaw.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 30,
+              "max": 75,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 60,
+              "max": 150,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 4.0,
+          "clipSize": null,
+          "reloadTime": 0.0,
+          "projectilesPerShot": 1,
+          "estimated": true
+        }
+      ],
+      "forgeUpgrades": [
+        {
+          "name": "Discharging Reload",
+          "description": "A discarded Fish Deity explodes in a 8-meter radius after reloading, dealing 2000 damage and stunning enemies hit.",
+          "icon": "forge/Discharging_Reload.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Elastic Goo",
+          "description": "Projectiles bounce, exploding and dealing 25% more damage for each bounce.",
+          "icon": "forge/Elastic_Goo.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Softening Acid",
+          "description": "Enemies hit by your Primary take 50% more damage from your next Secondary.",
+          "icon": "forge/Softening_Acid.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.5,
+              "note": "amplifier on affected enemies"
+            }
+          ]
+        },
+        {
+          "name": "Weakening Jabs",
+          "description": "Enemies hit by your Secondary are Weakened and Slowed.",
+          "icon": "forge/Weakening_Jabs.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Repeating Jabs",
+          "description": "Weakspot stabs create a second stab.",
+          "icon": "forge/Repeating_Jabs.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Pursuing Horn",
+          "description": "Killing an enemy refreshes Dash. Dashing increases your Secondary damage by 25% for 2 sec.",
+          "icon": "forge/Pursuing_Horn.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Long Horn",
+          "description": "Secondary Range increases by 50%",
+          "icon": "forge/Long_Horn.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Stunning Strike",
+          "description": "Increase the Fish Deity's Stun duration by 300%.",
+          "icon": "forge/Stunning_Strike.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "id": "Harpoon_Gun",
+      "name": "Harpoon Gun",
+      "modes": [
+        {
+          "name": "Piercing Harpoons",
+          "type": "Primary",
+          "damage": "200",
+          "weakspotDamage": "400",
+          "special": "Piercing Harpoons with high knockback on Weakspot hits. Generates Combo Points on hit.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Piercing_Harpoons.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 200,
+              "max": 200,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 400,
+              "max": 400,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.2,
+          "clipSize": 8,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Ricocheting Harpoons",
+          "type": "Primary",
+          "damage": "200",
+          "weakspotDamage": "400",
+          "special": "Harpoons that ricochet to a new target on Weakspot hits. Generates Combo Points on hit.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Fishing Season",
+          "icon": "weapons/Ricocheting_Harpoons.png",
+          "damageComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 200,
+              "max": 200,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": null,
+              "kind": "impact",
+              "min": 400,
+              "max": 400,
+              "count": 1
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.2,
+          "clipSize": 8,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Pinning Harpoons",
+          "type": "Primary",
+          "damage": "100 (Hit) / 100 x7 (DoT)",
+          "weakspotDamage": "200 (Hit) / 100 x7 (DoT)",
+          "special": "Harpoons that attach to enemies, dealing damage over time. Generates Combo Points while attached.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Slaying a White Whale",
+          "icon": "weapons/Pinning_Harpoons.png",
+          "damageComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 100,
+              "max": 100,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 100,
+              "max": 100,
+              "count": 7
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 200,
+              "max": 200,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 100,
+              "max": 100,
+              "count": 7
+            }
+          ],
+          "damageParsed": "auto",
+          "fireRate": 1.2,
+          "clipSize": 8,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Barbed Harpoons",
+          "type": "Secondary",
+          "damage": "50 (Hit) / 600 x3 (DoT) (4 Combo Points)",
+          "weakspotDamage": "100 (Hit) / 600 x3 (DoT) (4 Combo Points)",
+          "special": "Consume Combo Points to deal damage over a short duration.",
+          "unlockedByDefault": true,
+          "unlockCondition": null,
+          "icon": "weapons/Barbed_Harpoons.png",
+          "damageComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 50,
+              "max": 50,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 600,
+              "max": 600,
+              "count": 3
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 100,
+              "max": 100,
+              "count": 1
+            },
+            {
+              "label": "DoT",
+              "kind": "dot",
+              "min": 600,
+              "max": 600,
+              "count": 3
+            }
+          ],
+          "comboCost": 4,
+          "damageParsed": "manual",
+          "fireRate": 0.5,
+          "clipSize": 4,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Binding Harpoons",
+          "type": "Secondary",
+          "damage": "100 (Hit) + 1000 (Pull) (Single Target) (4 Combo Points) / 100 (Hit) + 450 (Pull) (Multiple Targets) (4 Combo Points)",
+          "weakspotDamage": "200 (Hit) + 2000 (Pull) (Single Target) (4 Combo Points) / 200 (Hit) + 450 (Pull) (Multiple Targets) (4 Combo Points)",
+          "special": "Pull enemies toward the harpoon when it hits. Deals more damage and targets more enemies per Combo Point consumed.",
+          "unlockedByDefault": false,
+          "unlockCondition": "C-C-C-OCOMBO",
+          "icon": "weapons/Binding_Harpoons.png",
+          "damageComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 100,
+              "max": 100,
+              "count": 1
+            },
+            {
+              "label": "Pull (single target)",
+              "kind": "pull",
+              "min": 1000,
+              "max": 1000,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 200,
+              "max": 200,
+              "count": 1
+            },
+            {
+              "label": "Pull (single target)",
+              "kind": "pull",
+              "min": 2000,
+              "max": 2000,
+              "count": 1
+            }
+          ],
+          "comboCost": 4,
+          "variantNote": "Against multiple targets the pull deals 450 instead (200/450 on weakspot hits).",
+          "damageParsed": "manual",
+          "fireRate": 0.5,
+          "clipSize": 4,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        },
+        {
+          "name": "Brine-Powered Harpoons",
+          "type": "Secondary",
+          "damage": "1200 (Hit) + 1200 (AoE) (4 Combo Points)",
+          "weakspotDamage": "2400 (Hit) + 1200 (AoE) (4 Combo Points)",
+          "special": "A large piercing harpoon that deals increased damage and knockback per Combo Point consumed.",
+          "unlockedByDefault": false,
+          "unlockCondition": "Hook, Line and Skewer",
+          "icon": "weapons/Brine-Powered_Harpoons.png",
+          "damageComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 1200,
+              "max": 1200,
+              "count": 1
+            },
+            {
+              "label": "AoE",
+              "kind": "aoe",
+              "min": 1200,
+              "max": 1200,
+              "count": 1
+            }
+          ],
+          "weakspotComponents": [
+            {
+              "label": "Hit",
+              "kind": "impact",
+              "min": 2400,
+              "max": 2400,
+              "count": 1
+            },
+            {
+              "label": "AoE",
+              "kind": "aoe",
+              "min": 1200,
+              "max": 1200,
+              "count": 1
+            }
+          ],
+          "comboCost": 4,
+          "damageParsed": "manual",
+          "fireRate": 0.5,
+          "clipSize": 4,
+          "reloadTime": 2.2,
+          "projectilesPerShot": 1,
+          "estimated": true
+        }
+      ],
+      "forgeUpgrades": [
+        {
+          "name": "Increased Combo",
+          "description": "Increases maximum Combo Points by 1.",
+          "icon": "forge/Increased_Combo.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Plentiful Combo",
+          "description": "For each consumed Combo Point, refill 1 ammo.",
+          "icon": "forge/Increased_Combo.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Precise Combo",
+          "description": "Marks a random Combo Point. Spending that amount of Combo Points increases the effect as if it consumed the maximum amount +1.",
+          "icon": "forge/Increased_Combo.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Charged Harpoons",
+          "description": "Primary and Secondary can be charged, causing up to 6 harpoons to be fired in quick succession.",
+          "icon": "forge/Increased_Combo.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Rapid Harpoons",
+          "description": "Increases fire rate by 50%",
+          "icon": "forge/Increased_Combo.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.5
+            }
+          ]
+        },
+        {
+          "name": "Splitting Harpoons",
+          "description": "Weakspots create an additional harpoon that seeks out a new target.",
+          "icon": "forge/Increased_Combo.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "name": "Blessed Harpoons",
+          "description": "Primary and Secondary deals 10% more damage for every Minor and Major Blessing.",
+          "icon": "forge/Increased_Combo.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "secondary",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "name": "Charmed Harpoons",
+          "description": "Gain buffs based on your Charms.\n\nCommon: +20% fire rate and +20% damage.\nRare: +30% reload speed and +20% Blessing trigger chance.\nLegendary: Shoot an extra harpoon.",
+          "icon": "forge/Increased_Combo.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "triggerChance",
+              "scope": "all",
+              "value": 0.0,
+              "note": "see description for magnitude"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "rateNote": "fireRate (shots/sec), clipSize and reloadTime are NOT published by the wiki -- they are estimates, flagged per mode with \"estimated\": true. Damage values are from the wiki."
+}
