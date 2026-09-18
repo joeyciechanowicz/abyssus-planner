@@ -1,0 +1,482 @@
+{
+  "source": "https://abyssus.wiki.gg/wiki/Soul_Wheel",
+  "note": "Row N requires a minimum number of points invested in lower rows. Enhanced Weapons / Abyssal Stamina / Ability Abundance / Bountiful Bottles have separate I and II entries that stack.",
+  "rows": [
+    {
+      "row": 1,
+      "costPerPoint": 1,
+      "skills": [
+        {
+          "id": "enhanced_weapons",
+          "name": "Enhanced Weapons",
+          "description": "Increases weapon damage by 10%.",
+          "icon": "soulwheel/Enhanced_Weapons_I.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "id": "plague",
+          "name": "Plague",
+          "description": "Damage over Time effects deal 20% more damage.",
+          "icon": "soulwheel/Plague.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "dotDamage",
+              "scope": "dot",
+              "value": 0.2
+            }
+          ]
+        },
+        {
+          "id": "bountiful_bottles",
+          "name": "Bountiful Bottles",
+          "description": "Increases the number of Syringe charges by 1.",
+          "icon": "soulwheel/Bountiful_Bottles.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "ancient_forge",
+          "name": "Ancient Forge",
+          "description": "A forge that upgrades your weapon or ability can now be found during an expedition.",
+          "icon": "soulwheel/Ancient_Forge.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "controlled_chaos",
+          "name": "Controlled Chaos",
+          "description": "Increases Area of Effect damage by 20%.",
+          "icon": "soulwheel/Controlled_Chaos.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "aoeDamage",
+              "scope": "all",
+              "value": 0.2
+            }
+          ]
+        },
+        {
+          "id": "picky_worship",
+          "name": "Picky Worship",
+          "description": "Allows you to reroll the available categories at Blessing Altars. [Rerolls available: 3]",
+          "icon": "soulwheel/Picky_Worship.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "bartering",
+          "name": "Bartering",
+          "description": "Allows you to reroll your options at the merchant for Gold.",
+          "icon": "soulwheel/Bartering.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "row": 2,
+      "costPerPoint": 3,
+      "skills": [
+        {
+          "id": "abyssal_stamina",
+          "name": "Abyssal Stamina",
+          "description": "Increases max Health by 100.",
+          "icon": "soulwheel/Abyssal_Stamina_I.png",
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "maxHealth",
+              "scope": "all",
+              "value": 100.0
+            }
+          ]
+        },
+        {
+          "id": "ability_abundance",
+          "name": "Ability Abundance",
+          "description": "Increases the number of charges of your equipped ability by 1.",
+          "icon": "soulwheel/Ability_Abundance.png",
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "abilityCharges",
+              "scope": "ability",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "id": "hastened_dash",
+          "name": "Hastened Dash",
+          "description": "Reduces dash cooldown by 20%.",
+          "icon": "soulwheel/Hastened_Dash.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "first_rest",
+          "name": "First Rest",
+          "description": "A healing shrine can now be found in the Abandoned Temple and Submarine.",
+          "icon": "soulwheel/Temples_Rest.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "upgraded_inventions",
+          "name": "Upgraded Inventions",
+          "description": "Increases the damage done by your equipped ability by 20%.",
+          "icon": "soulwheel/Upgraded_Inventions.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "abilityDamage",
+              "scope": "ability",
+              "value": 0.2
+            }
+          ]
+        },
+        {
+          "id": "rare_supplies",
+          "name": "Rare Supplies",
+          "description": "Regular chests have an increased chance to provide higher rarity rewards.",
+          "icon": "soulwheel/Rare_Supplies.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "starting_funds",
+          "name": "Starting Funds",
+          "description": "Start the run with 2 keys and 100 Gold.",
+          "icon": "soulwheel/Starting_Funds.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "row": 3,
+      "costPerPoint": 6,
+      "skills": [
+        {
+          "id": "abyssal_stamina_ii",
+          "name": "Abyssal Stamina II",
+          "description": "Increases max Health by 100.",
+          "icon": "soulwheel/Abyssal_Stamina_II.png",
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "maxHealth",
+              "scope": "all",
+              "value": 100.0
+            }
+          ]
+        },
+        {
+          "id": "keen_vision",
+          "name": "Keen Vision",
+          "description": "Increases Weakspot damage by 10%.",
+          "icon": "soulwheel/Keen_Vision.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "weakspotDamage",
+              "scope": "all",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "id": "magazine_madness",
+          "name": "Magazine Madness",
+          "description": "Increases reload speed by 15%.",
+          "icon": "soulwheel/Magazine_Madness.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "reloadSpeed",
+              "scope": "all",
+              "value": 0.15
+            }
+          ]
+        },
+        {
+          "id": "garden_s_rest",
+          "name": "Garden's Rest",
+          "description": "A healing shrine can now be found in the Gardens.",
+          "icon": "soulwheel/Gardens_Rest.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "favorite_customer",
+          "name": "Favorite Customer",
+          "description": "Decrease the cost of Wishing Wells and Merchants by 15%.",
+          "icon": "soulwheel/Favorite_Customer.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "ascended_blessings",
+          "name": "Ascended Blessings",
+          "description": "Upgrade altars can now be found during an expedition.",
+          "icon": "soulwheel/Ascended_Blessings.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "gambler",
+          "name": "Gambler",
+          "description": "Wishing Wells and Sacrifice Altars can now be found during an expedition.",
+          "icon": "soulwheel/Gambler.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "row": 4,
+      "costPerPoint": 10,
+      "skills": [
+        {
+          "id": "enhanced_weapons_ii",
+          "name": "Enhanced Weapons II",
+          "description": "Increases weapon damage by 10%.",
+          "icon": "soulwheel/Enhanced_Weapons_II.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "id": "ability_abundance_ii",
+          "name": "Ability Abundance II",
+          "description": "Increases the number of charges of your equipped ability by 1.",
+          "icon": "soulwheel/Ability_Abundance_II.png",
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "abilityCharges",
+              "scope": "ability",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "id": "bountiful_bottles_ii",
+          "name": "Bountiful Bottles II",
+          "description": "Increases the number of Syringe charges by 1.",
+          "icon": "soulwheel/Bountiful_Bottles_II.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "combat_medic",
+          "name": "Combat Medic",
+          "description": "Syringes increase fire rate by 25% and remove the ammo cost for 5 sec.",
+          "icon": "soulwheel/Combat_Medic.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.25
+            }
+          ]
+        },
+        {
+          "id": "growing_chain",
+          "name": "Growing Chain",
+          "description": "Discounted Merchant items can now appear during expeditions.",
+          "icon": "soulwheel/Growing_Chain.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "abundance",
+          "name": "Abundance",
+          "description": "Additional options are available at the merchant.",
+          "icon": "soulwheel/Abundance.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "reserve_stock",
+          "name": "Reserve Stock",
+          "description": "Provides a locked chest by Merchants.",
+          "icon": "soulwheel/Reserve_Stock.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "row": 5,
+      "costPerPoint": 15,
+      "skills": [
+        {
+          "id": "rapid_fire",
+          "name": "Rapid Fire",
+          "description": "Increases weapon fire rate by 15%.",
+          "icon": "soulwheel/Rapid_Fire.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.15
+            }
+          ]
+        },
+        {
+          "id": "second_wind",
+          "name": "Second Wind",
+          "description": "Once per expedition, revive with 100% Health when you would have died.",
+          "icon": "soulwheel/Second_Wind.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "devout",
+          "name": "Devout",
+          "description": "See a third option when choosing Blessings or Ancient Forge mods.",
+          "icon": "soulwheel/Devout.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "sanctuary_s_rest",
+          "name": "Sanctuary's Rest",
+          "description": "A healing shrine can now be found in the Sanctuary.",
+          "icon": "soulwheel/Sanctuarys_Rest.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "treasure_map",
+          "name": "Treasure Map",
+          "description": "3 chests can now appear in encounters.",
+          "icon": "soulwheel/Timely_Reward.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "beginner_s_charm",
+          "name": "Beginner's Charm",
+          "description": "The first starting room of an expedition provides a random Charm.",
+          "icon": "soulwheel/Beginners_Charm.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "timely_reward",
+          "name": "Timely Reward",
+          "description": "Completing areas quickly grants extra loot.",
+          "icon": "soulwheel/Timely_Reward.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "row": 6,
+      "costPerPoint": 20,
+      "skills": [
+        {
+          "id": "execution",
+          "name": "Execution",
+          "description": "Melee hits can execute enemies below 20% Health.",
+          "icon": "soulwheel/Execution.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "misty_dash",
+          "name": "Misty Dash",
+          "description": "Brief invulnerability while dashing.",
+          "icon": "soulwheel/Misty_Dash.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "finer_charms",
+          "name": "Finer Charms",
+          "description": "Increases chance to gain higher rarity Charms.",
+          "icon": "soulwheel/Finer_Charms.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "padded_suit",
+          "name": "Padded Suit",
+          "description": "Reduces damage taken by 25%.",
+          "icon": "soulwheel/Padded_Suit.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damageTaken",
+              "scope": "all",
+              "value": -0.25
+            }
+          ]
+        },
+        {
+          "id": "picky_worship_ii",
+          "name": "Picky Worship II",
+          "description": "Allows spending Soul Fragments in order to reroll categories.",
+          "icon": "soulwheel/Picky_Worship_II.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "row": 7,
+      "costPerPoint": 30,
+      "skills": [
+        {
+          "id": "charm_power",
+          "name": "Charm Power",
+          "description": "Allows equipping a second Charm.",
+          "icon": "soulwheel/Charm_Power.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "even_spread",
+          "name": "Even Spread",
+          "description": "Blessing triggers deal 5% more damage for every Blessing equipped on a different trigger.",
+          "icon": "soulwheel/Even_Spread.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.05
+            }
+          ]
+        },
+        {
+          "id": "artificer",
+          "name": "Artificer",
+          "description": "You can choose mods for both your weapon and ability at the Ancient Forge.",
+          "icon": "soulwheel/Artificer.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+import {
+  abilityById,
+  blessingById,
+  charmById,
+  sharedAbilityUpgrades,
+  soulSkillById,
+  weaponById,
+  type DamageComponent,
+} from '../model/data';
+import { defaultOptions, type Build, type SimOptions } from '../model/build';
+import { Modifiers, applyEffects } from './stacking';
+
+export interface SimResult {
+  /** Average damage of one landed hit, weakspot chance blended in. */
+  perHit: number;
+  /** Damage of one trigger pull (all projectiles). */
+  perShot: number;
+  /** Damage of a full magazine. */
+  perMagazine: number;
+  /** Sustained weapon DPS including reloads. */
+  weaponDps: number;
+  /** Damage-over-time contribution per second from the mode's own DoT components. */
+  dotDps: number;
+  /** Ability damage amortised over its cooldown. */
+  abilityDps: number;
+  /** weaponDps + dotDps + abilityDps. */
+  totalDps: number;
+  /** Effective stats after modifiers. */
+  stats: {
+    fireRate: number;
+    clipSize: number | null;
+    reloadTime: number;
+    damageMultiplier: number;
+    weakspotMultiplier: number;
+  };
+  /** Per-source contributions, biggest first. */
+  breakdown: { source: string; stat: string; scope: string; value: number }[];
+  /** Picks whose text the DSL could not express; their effect is NOT in the number. */
+  unmodeled: { name: string; reason: string }[];
+  /** True when any input used estimated rate-of-fire values (it almost always is). */
+  usesEstimates: boolean;
+  warnings: string[];
+}
+
+/** Sum a set of damage components at the given charge level. */
+function componentTotal(
+  components: DamageComponent[] | null,
+  kinds: DamageComponent['kind'][],
+  chargeLevel: number,
+): number {
+  if (!components) return 0;
+  let total = 0;
+  for (const c of components) {
+    if (!kinds.includes(c.kind)) continue;
+    const value = c.min + (c.max - c.min) * chargeLevel;
+    total += value * c.count;
+  }
+  return total;
+}
+
+const ASPECT_SLOTS = ['primary', 'secondary', 'ability'] as const;
+
+export function simulate(build: Build, options: Partial<SimOptions> = {}): SimResult {
+  const opts: SimOptions = { ...defaultOptions, ...options };
+  const warnings: string[] = [];
+  const unmodeled: { name: string; reason: string }[] = [];
+  const mods = new Modifiers();
+
+  const weapon = weaponById.get(build.weaponId);
+  if (!weapon) throw new Error(`unknown weapon: ${build.weaponId}`);
+  const mode = weapon.modes.find((m) => m.name === build.modeName);
+  if (!mode) throw new Error(`unknown mode: ${build.modeName} on ${build.weaponId}`);
+
+  const collect = (name: string, effects: Parameters<typeof applyEffects>[1], reason?: string) => {
+    if (effects.length === 0 && reason) unmodeled.push({ name, reason });
+    applyEffects(mods, effects, name, opts);
+  };
+
+  // --- Blessings, restricted to aspects actually equipped -------------------
+  const equippedAspects = new Set(
+    ASPECT_SLOTS.map((s) => build.aspects[s]).filter((a): a is string => a !== null),
+  );
+  for (const id of build.blessingIds) {
+    const b = blessingById.get(id);
+    if (!b) {
+      warnings.push(`unknown blessing: ${id}`);
+      continue;
+    }
+    if (!equippedAspects.has(b.aspect)) {
+      warnings.push(`${b.name} ignored: its aspect (${b.aspect}) is not equipped`);
+      continue;
+    }
+    collect(b.name, b.effects, b.unmodeled);
+  }
+
+  for (const id of build.charmIds) {
+    const c = charmById.get(id);
+    if (c) collect(c.name, c.effects, c.unmodeled);
+    else warnings.push(`unknown charm: ${id}`);
+  }
+
+  for (const id of build.soulSkillIds) {
+    const s = soulSkillById.get(id);
+    if (s) collect(s.name, s.effects, s.unmodeled);
+    else warnings.push(`unknown soul skill: ${id}`);
+  }
+
+  for (const name of build.weaponUpgrades) {
+    const u = weapon.forgeUpgrades.find((x) => x.name === name);
+    if (u) collect(u.name, u.effects, u.unmodeled);
+    else warnings.push(`${weapon.name} has no forge upgrade "${name}"`);
+  }
+  if (build.weaponUpgrades.length > 3) {
+    warnings.push('more than 3 weapon Forge Upgrades: the game allows at most 3');
+  }
+
+  const ability = build.abilityId ? abilityById.get(build.abilityId) : undefined;
+  if (ability) {
+    for (const name of build.abilityUpgrades) {
+      const u =
+        ability.forgeUpgrades.find((x) => x.name === name) ??
+        sharedAbilityUpgrades.find((x) => x.name === name);
+      if (u) collect(u.name, u.effects, u.unmodeled);
+      else warnings.push(`${ability.name} has no forge upgrade "${name}"`);
+    }
+    if (build.abilityUpgrades.length > 3) {
+      warnings.push('more than 3 ability Forge Upgrades: the game allows at most 3');
+    }
+  } else if (build.abilityUpgrades.length > 0) {
+    warnings.push('ability upgrades selected but no ability equipped');
+  }
+
+  if (build.charmIds.length > 1 && !build.soulSkillIds.includes('charm_power')) {
+    warnings.push('a second Charm requires the Charm Power soul skill');
+  }
+
+  // --- Damage -------------------------------------------------------------
+  const scope = mode.type.toLowerCase() as 'primary' | 'secondary';
+
+  const baseImpact = componentTotal(mode.damageComponents, ['impact'], opts.chargeLevel);
+  const baseWeakspot =
+    componentTotal(mode.weakspotComponents, ['impact'], opts.chargeLevel) || baseImpact * 2;
+  const baseExtra = componentTotal(
+    mode.damageComponents,
+    ['explosion', 'pull', 'aoe'],
+    opts.chargeLevel,
+  );
+
+  const damageMult = 1 + mods.multFor('damage', scope);
+  const weakspotMult = 1 + mods.multFor('weakspotDamage', scope);
+  const aoeMult = 1 + mods.multFor('aoeDamage', scope);
+
+  // Weakspot damage is already the doubled figure in the wiki's own table, so the
+  // weakspot bonus scales that rather than re-applying the x2.
+  const normalHit = baseImpact * damageMult;
+  const weakspotHit = baseWeakspot * damageMult * weakspotMult;
+  const blendedImpact =
+    normalHit * (1 - opts.weakspotAccuracy) + weakspotHit * opts.weakspotAccuracy;
+
+  const procDamage = mods.procs.reduce((sum, p) => {
+    const base =
+      p.of === 'flat'
+        ? p.amount
+        : p.of === 'onHitDamage' || p.of === 'weaponDamage'
+          ? blendedImpact * p.amount
+          : p.of === 'abilityDamage'
+            ? (ability?.damage ?? 0) * p.amount
+            : 0;
+    return sum + base * p.chance;
+  }, 0);
+
+  const perShot = (blendedImpact + baseExtra * aoeMult + procDamage) * opts.accuracy;
+
+  // --- Rate ---------------------------------------------------------------
+  const fireRate = mode.fireRate * (1 + mods.multFor('fireRate', scope));
+  const reloadTime = mode.reloadTime / (1 + mods.multFor('reloadSpeed', scope));
+  const clipSize =
+    mode.clipSize === null
+      ? null
+      : Math.max(1, Math.round(mode.clipSize * (1 + mods.multFor('clipSize', scope)) +
+          mods.flatFor('clipSize')));
+
+  const shotsPerCycle = clipSize ?? fireRate; // no clip => one second of uninterrupted fire
+  const cycleTime = shotsPerCycle / fireRate + (clipSize === null ? 0 : reloadTime);
+  const perMagazine = perShot * shotsPerCycle;
+  const weaponDps = cycleTime > 0 ? perMagazine / cycleTime : 0;
+
+  // --- DoT ----------------------------------------------------------------
+  const dotMult = 1 + mods.multFor('dotDamage', 'dot');
+  const dotPerApplication = componentTotal(mode.damageComponents, ['dot'], opts.chargeLevel);
+  // A DoT is refreshed by fire, so treat it as landing once per shot but not
+  // stacking beyond a single application at a time.
+  const dotDps = dotPerApplication > 0 ? dotPerApplication * dotMult * Math.min(fireRate, 1) : 0;
+
+  // --- Ability ------------------------------------------------------------
+  let abilityDps = 0;
+  if (ability) {
+    const abilityMult =
+      1 + mods.multFor('abilityDamage', 'ability') + mods.multFor('damage', 'ability');
+    const charges = ability.charges + mods.flatFor('abilityCharges');
+    const pulses = ability.pulses ? ability.pulses.count * ability.pulses.damage : 0;
+    const perCast = ((ability.damage ?? ability.weakspotDamage ?? 0) + pulses) * abilityMult;
+    // Charges refill at the end of an encounter; amortise over a nominal 30s fight.
+    const encounterSeconds = 30;
+    abilityDps = (perCast * charges) / encounterSeconds;
+  }
+
+  const breakdown = [...mods.log].sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
+
+  return {
+    perHit: blendedImpact,
+    perShot,
+    perMagazine,
+    weaponDps,
+    dotDps,
+    abilityDps,
+    totalDps: weaponDps + dotDps + abilityDps,
+    stats: {
+      fireRate,
+      clipSize,
+      reloadTime,
+      damageMultiplier: damageMult,
+      weakspotMultiplier: weakspotMult,
+    },
+    breakdown,
+    unmodeled,
+    usesEstimates: mode.estimated,
+    warnings,
+  };
+}

@@ -1,0 +1,829 @@
+{
+  "source": "https://abyssus.wiki.gg/wiki/Abilities",
+  "note": "Each ability also gets the 5 shared Forge Upgrades in data/ancient_forge.json -> abilityUpgrades.shared. Only one ability may be equipped, and at most 3 Forge Upgrades applied to it.",
+  "abilities": [
+    {
+      "name": "Frag Grenade",
+      "damage": 200,
+      "weakspotDamage": 400,
+      "charges": 3,
+      "tags": [
+        "explosion",
+        "aoe"
+      ],
+      "notes": "Counts as an explosion (benefits from Mr. Boom). Wide area.",
+      "id": "frag_grenade",
+      "source": "https://abyssus.wiki.gg/wiki/Frag Grenade",
+      "forgeUpgrades": [
+        {
+          "id": "exposure_blast",
+          "name": "Exposure Blast",
+          "description": "Enemies hit by grenade explosions take 15% additional damage.",
+          "icon": "forge/Exposure_Blast.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.15,
+              "note": "amplifier on affected enemies"
+            }
+          ]
+        },
+        {
+          "id": "domino",
+          "name": "Domino",
+          "description": "Enemies killed by your grenade's explosion or killed shortly after being hit by your grenade also explode, dealing 60% ability damage.",
+          "icon": "forge/Domino.png",
+          "effects": [
+            {
+              "op": "proc",
+              "amount": 0.6,
+              "of": "abilityDamage",
+              "chance": 1.0,
+              "scope": "ability"
+            }
+          ]
+        },
+        {
+          "id": "explosive_culling",
+          "name": "Explosive Culling",
+          "description": "Your grenade deals bonus damage based on enemies' missing Health.",
+          "icon": "forge/Explosive_Culling.png",
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "targetHealthBelow",
+              "threshold": 1.0,
+              "then": [],
+              "note": "scales with missing Health; magnitude unstated"
+            }
+          ]
+        },
+        {
+          "id": "implosive_force",
+          "name": "Implosive Force",
+          "description": "Grenade explosions pull enemies in and stun them for 1 sec.",
+          "icon": "forge/Implosive_Force.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "cluster_bomb",
+          "name": "Cluster Bomb",
+          "description": "Grenades split into explosive fragments on detonation.",
+          "icon": "forge/Cluster_Bomb.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "compact_grenade",
+          "name": "Compact Grenade",
+          "description": "Grenades deal triple damage, but the number of ability stacks is halved (rounded up).",
+          "icon": "forge/Compact_Grenade.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "ability",
+              "value": 2.0,
+              "note": "triple damage"
+            }
+          ]
+        },
+        {
+          "id": "shrapnel",
+          "name": "Shrapnel",
+          "description": "Enemies hit by grenades take 25% grenade damage continuously for 3 sec.",
+          "icon": "forge/Shrapnel.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "bouncy_bomb",
+          "name": "Bouncy Bomb",
+          "description": "Grenades explode each time they bounce and are no longer destroyed on impact with enemies. Bounce explosions have halved range and damage.",
+          "icon": "forge/Shrapnel.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "gas_grenade",
+          "name": "Gas Grenade",
+          "description": "Grenades leave behind a cloud of gas that deals 50% grenade damage continuously.",
+          "icon": "forge/Shrapnel.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "gashing_shell",
+          "name": "Gashing Shell",
+          "description": "Grenades deal 25% more damage to enemies suffering from status effects or that are Stunned, Slowed, Frozen or Rooted.",
+          "icon": "forge/Gashing_Shell.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.25
+            }
+          ]
+        },
+        {
+          "id": "sharp_shell",
+          "name": "Sharp Shell",
+          "description": "Weakspot hits with grenades make the explosions deal 25% more damage and restores 25% of the cooldown.",
+          "icon": "forge/Sharp_Shell.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Anchor",
+      "damage": 600,
+      "weakspotDamage": null,
+      "charges": 2,
+      "tags": [
+        "explosion",
+        "aoe",
+        "melee"
+      ],
+      "notes": "Swung from behind the player. Counts as an explosion (Mr. Boom).",
+      "id": "anchor",
+      "source": "https://abyssus.wiki.gg/wiki/Anchor",
+      "forgeUpgrades": [
+        {
+          "id": "self_sustaining",
+          "name": "Self-sustaining",
+          "description": "10% ability cooldown reduction for every enemy hit by the anchor.",
+          "icon": "forge/Self-sustaining.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "the_thrill",
+          "name": "The Thrill",
+          "description": "Increases movement speed by 10% for 5 sec. per enemy hit by the anchor.",
+          "icon": "forge/The_Thrill.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "movementSpeed",
+              "scope": "all",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "id": "grenanchor",
+          "name": "Grenanchor",
+          "description": "The anchor is now thrown.",
+          "icon": "forge/Grenanchor.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "brine",
+          "name": "Brine",
+          "description": "Creates a toxic pool on the ground that repeatedly deals 25% of the anchor's damage to nearby enemies.",
+          "icon": "forge/Brine.png",
+          "effects": [
+            {
+              "op": "proc",
+              "amount": 0.25,
+              "of": "onHitDamage",
+              "chance": 1.0,
+              "scope": "all",
+              "note": "scales from anchor"
+            }
+          ]
+        },
+        {
+          "id": "bulwark",
+          "name": "Bulwark",
+          "description": "Gain brief invulnerability while swinging the anchor.",
+          "icon": "forge/Bulwark.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "fearless",
+          "name": "Fearless",
+          "description": "Deal 50% more damage to enemies within 5 meters.",
+          "icon": "forge/Fearless.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.5,
+              "note": "only within 5 meters"
+            }
+          ]
+        },
+        {
+          "id": "anchored",
+          "name": "Anchored",
+          "description": "Flying enemies fall when hit by the anchor, and take 100% more damage for 5 sec.",
+          "icon": "forge/Anchored.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 1.0,
+              "note": "amplifier on affected enemies"
+            }
+          ]
+        },
+        {
+          "id": "bonebreaker",
+          "name": "Bonebreaker",
+          "description": "Enemies hit by the anchor deal 25% less damage for 5 sec.",
+          "icon": "forge/Bonebreaker.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": -0.25
+            }
+          ]
+        },
+        {
+          "id": "mighty",
+          "name": "Mighty",
+          "description": "Enemies hit by the anchor are knocked back.",
+          "icon": "forge/Mighty.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "geyser",
+          "name": "Geyser",
+          "description": "Causes a delayed explosion where the anchor hits, dealing 150% of the anchor's damage.",
+          "icon": "forge/Geyser.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "death_slam",
+          "name": "Death Slam",
+          "description": "Deal 50% additional damage to enemies at full Health.",
+          "icon": "forge/Death_Slam.png",
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "targetHealthAbove",
+              "threshold": 0.999,
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "damage",
+                  "scope": "all",
+                  "value": 0.5
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Smiting Spear",
+      "damage": 200,
+      "weakspotDamage": null,
+      "charges": 1,
+      "tags": [
+        "explosion",
+        "aoe",
+        "dot"
+      ],
+      "pulses": {
+        "count": 8,
+        "damage": 50
+      },
+      "maxActive": 6,
+      "notes": "200 impact damage plus 8 pulses of 50 in a medium radius. Pulses scale with explosive damage modifiers. Up to 6 spears active at once.",
+      "id": "smiting_spear",
+      "source": "https://abyssus.wiki.gg/wiki/Smiting Spear",
+      "forgeUpgrades": [
+        {
+          "id": "shockwave",
+          "name": "Shockwave",
+          "description": "Spears create shockwaves when sticking and for every 3 hits. Shockwaves deal 40 damage.",
+          "icon": "forge/Shockwave.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "chain_pulse",
+          "name": "Chain Pulse",
+          "description": "The pulse from one spear has a 60% chance to cause other spears to pulsate.",
+          "icon": "forge/Shockwave.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "charmed_spear",
+          "name": "Charmed Spear",
+          "description": "Gain buffs based on your Charms.\n\nCommon: +20% pulse damage.\nRare: +50% duration.\nLegendary: +1 pulse.",
+          "icon": "forge/Shockwave.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "sticking_spear",
+          "name": "Sticking Spear",
+          "description": "Spears that stick to enemies deal 20% increased pulse damage.",
+          "icon": "forge/Shockwave.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "weakspot_spear",
+          "name": "Weakspot Spear",
+          "description": "Spears that stick on a Weakspot have 25% increased damage and range.",
+          "icon": "forge/Shockwave.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "fragmenting_spear",
+          "name": "Fragmenting Spear",
+          "description": "Spears send a fragment toward a nearby enemy when sticking, dealing 40 damage. Sends additional fragments for every spear stuck in the enemy.",
+          "icon": "forge/Shockwave.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "spear_grid",
+          "name": "Spear Grid",
+          "description": "Spears that are stuck create a field between them that deals 30 damage to enemies that enter it.",
+          "icon": "forge/Shockwave.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "split_spear",
+          "name": "Split Spear",
+          "description": "Throw additional spears diagonally left and right.",
+          "icon": "forge/Shockwave.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "enduring_spear",
+          "name": "Enduring Spear",
+          "description": "If an enemy dies from, or shortly after, being hit by a spear, the spear's duration resets.",
+          "icon": "forge/Shockwave.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "environmental_spear",
+          "name": "Environmental Spear",
+          "description": "Spears that stick to the environment Slow nearby enemies and increase their damage taken by 5%.",
+          "icon": "forge/Shockwave.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "charged_spear",
+          "name": "Charged Spear",
+          "description": "Spears can be charged before being thrown, consuming stacks to increase damage and duration, while decreasing damage intervals, by 50% per stack.",
+          "icon": "forge/Shockwave.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "name": "Ancient Core",
+      "damage": null,
+      "weakspotDamage": 1000,
+      "charges": 2,
+      "tags": [
+        "single-target"
+      ],
+      "notes": "Fires a single ray dealing 1000 base weakspot damage to one enemy.",
+      "id": "ancient_core",
+      "source": "https://abyssus.wiki.gg/wiki/Ancient Core",
+      "forgeUpgrades": [
+        {
+          "id": "cone_blast",
+          "name": "Cone Blast",
+          "description": "The blast from the Ancient Core targets all enemies in a cone instead of the first one.",
+          "icon": "forge/Cone_Blast.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "gold_blast",
+          "name": "Gold Blast",
+          "description": "Enemies killed by the blast from the Ancient Core drop Gold.",
+          "icon": "forge/Gold_Blast.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "stun_blast",
+          "name": "Stun Blast",
+          "description": "The blast from the Ancient Core also stuns on hit.",
+          "icon": "forge/Stun_Blast.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "bounce_blast",
+          "name": "Bounce Blast",
+          "description": "The blast from the Ancient Core also bounces to an additional nearby enemy.",
+          "icon": "forge/Bounce_Blast.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "active_reload",
+          "name": "Active Reload",
+          "description": "Getting a kill with the Ancient Core resets its cooldown.",
+          "icon": "forge/Active_Reload.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "target_lock",
+          "name": "Target Lock",
+          "description": "Deal 10% more damage each time the Ancient Core hits the same enemy.",
+          "icon": "forge/Target_Lock.png",
+          "effects": [
+            {
+              "op": "stacking",
+              "stat": "damage",
+              "scope": "all",
+              "valuePer": 0.1,
+              "per": "hit",
+              "max": null
+            }
+          ]
+        },
+        {
+          "id": "hunters_mark",
+          "name": "Hunters Mark",
+          "description": "Enemies hit by the Ancient Core are marked, increasing all Weakspot damage they receive by 25% for 5 sec.",
+          "icon": "forge/Hunters_Mark.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "laser_sight",
+          "name": "Laser Sight",
+          "description": "Deal up to 50% additional damage the further away the enemy is.",
+          "icon": "forge/Laser_Sight.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.5,
+              "note": "ramping: this is the maximum"
+            }
+          ]
+        },
+        {
+          "id": "death_strike",
+          "name": "Death Strike",
+          "description": "Deal 50% additional damage to enemies at full Health.",
+          "icon": "forge/Death_Strike.png",
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "targetHealthAbove",
+              "threshold": 0.999,
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "damage",
+                  "scope": "all",
+                  "value": 0.5
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "trigger_happy",
+          "name": "Trigger Happy",
+          "description": "Increases damage by 50% if the Ancient Core is used within 2 sec of the cooldown refreshing.",
+          "icon": "forge/Trigger_Happy.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.5
+            }
+          ]
+        },
+        {
+          "id": "explosive_blast",
+          "name": "Explosive Blast",
+          "description": "The blast from the Ancient Core explodes on hit, dealing damage to nearby enemies equivalent to 25% of the hit.",
+          "icon": "forge/Explosive_Blast.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "name": "Brine Field",
+      "damage": 200,
+      "weakspotDamage": null,
+      "charges": 1,
+      "tags": [
+        "aoe",
+        "support",
+        "dot"
+      ],
+      "damagePerTick": 200,
+      "notes": "The only support ability. 200 damage per tick and 50% damage reduction inside its range (non-stackable).",
+      "id": "brine_field",
+      "source": "https://abyssus.wiki.gg/wiki/Brine Field",
+      "forgeUpgrades": [
+        {
+          "id": "quality_over_quantity",
+          "name": "Quality Over Quantity",
+          "description": "Buffs the current active Brine Field instead of placing a new one, increasing its benefits by 20% and its area by 20%.",
+          "icon": "forge/Quality_Over_Quantity.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "personal_space",
+          "name": "Personal Space",
+          "description": "Enemies within the Brine Field take 15% more damage from all sources.",
+          "icon": "forge/Quality_Over_Quantity.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.15,
+              "note": "amplifier on affected enemies"
+            }
+          ]
+        },
+        {
+          "id": "safety_dance",
+          "name": "Safety Dance",
+          "description": "The Brine Field increases your firerate by 30%.",
+          "icon": "forge/Quality_Over_Quantity.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.3
+            }
+          ]
+        },
+        {
+          "id": "lingering_field",
+          "name": "Lingering Field",
+          "description": "The effects of the Brine Field linger for 5 sec. after the player or enemy leaves it.",
+          "icon": "forge/Quality_Over_Quantity.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "steady_field",
+          "name": "Steady Field",
+          "description": "Players deal 30% more Weakspot damage when inside the Brine Field.",
+          "icon": "forge/Quality_Over_Quantity.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "weakspotDamage",
+              "scope": "all",
+              "value": 0.3
+            }
+          ]
+        },
+        {
+          "id": "mobility_field",
+          "name": "Mobility Field",
+          "description": "Decreases the Brine Field's size by 20%, but its attached to you.",
+          "icon": "forge/Quality_Over_Quantity.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "end_with_a_bang",
+          "name": "End With a Bang!",
+          "description": "The Brine Field explodes when it's destroyed, dealing 300 damage in a 10-meter radius.",
+          "icon": "forge/Quality_Over_Quantity.png",
+          "effects": [
+            {
+              "op": "proc",
+              "amount": 300.0,
+              "of": "flat",
+              "chance": 1.0,
+              "scope": "all",
+              "note": "explosion"
+            }
+          ]
+        },
+        {
+          "id": "time_warp",
+          "name": "Time Warp",
+          "description": "Brine Field Slows enemies 20% more and enemy projectiles within its area are Slowed by 70%.",
+          "icon": "forge/Quality_Over_Quantity.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "noxious_bubble",
+          "name": "Noxious Bubble",
+          "description": "Status effect tick at a speed of 200% on enemies within the Brine Field.",
+          "icon": "forge/Quality_Over_Quantity.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "expanding_territory",
+          "name": "Expanding Territory",
+          "description": "The Brine Field continuously increases in size when placed.",
+          "icon": "forge/Quality_Over_Quantity.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "sanctum",
+          "name": "Sanctum",
+          "description": "Blessings on your Brine Field trigger 3% more frequently for every meter of the radius.",
+          "icon": "forge/Quality_Over_Quantity.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        }
+      ]
+    },
+    {
+      "name": "Turret",
+      "damage": 50,
+      "weakspotDamage": null,
+      "charges": 1,
+      "tags": [
+        "summon",
+        "dps"
+      ],
+      "damagePerShot": 50,
+      "notes": "Deployed turret that fires in all directions and expires after a short duration.",
+      "id": "turret",
+      "source": "https://abyssus.wiki.gg/wiki/Turret",
+      "forgeUpgrades": [
+        {
+          "id": "sniper_mode",
+          "name": "Sniper Mode",
+          "description": "Reduce the Turret's Fire Rate by 200%, but increase its damage by 500%. All its hits count as Weakspot hits.",
+          "icon": "forge/Sniper_Mode.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "abilityDamage",
+              "scope": "ability",
+              "value": 5.0
+            },
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "ability",
+              "value": -2.0
+            }
+          ]
+        },
+        {
+          "id": "drones",
+          "name": "Drones",
+          "description": "The Turret now flies, staying in close proximity while shooting nearby enemies.",
+          "icon": "forge/Drones.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "ammo_transfer",
+          "name": "Ammo Transfer",
+          "description": "60% chance when the Turret shoots an enemy to reload 1 ammo into your magazine.",
+          "icon": "forge/Ammo_Transfer.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "buddy_system",
+          "name": "Buddy System",
+          "description": "Lowers the cooldown by 10 sec. and reduces the damage dealt by your Turret. Turrets deal increased damage for each Turret within range",
+          "icon": "forge/Buddy_System.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "unstable_cores",
+          "name": "Unstable Cores",
+          "description": "Your Turret explodes and stuns enemies in a 10-meter radius when it spawns.",
+          "icon": "forge/Unstable_Cores.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "sentinel",
+          "name": "Sentinel",
+          "description": "Increases Turret Fire Rate by 20% for every player within 15-meters.",
+          "icon": "forge/Sentinel.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.2
+            }
+          ]
+        },
+        {
+          "id": "persistent",
+          "name": "Persistent",
+          "description": "Damage is increased by 10% and duration by 50%.",
+          "icon": "forge/Persistent.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "id": "spiked_ammunition",
+          "name": "Spiked Ammunition",
+          "description": "Projectiles explode on hit and deal 25% additional damage.",
+          "icon": "forge/Spiked_Ammunition.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.25
+            }
+          ]
+        },
+        {
+          "id": "guiding_bullet",
+          "name": "Guiding Bullet",
+          "description": "You deal 25% mode damage to your Turret's target.",
+          "icon": "forge/Guiding_Bullet.png",
+          "effects": [],
+          "unmodeled": "no numeric damage effect the DSL can express"
+        },
+        {
+          "id": "teamwork",
+          "name": "Teamwork",
+          "description": "Your Fire Rate is increased by 10% when your Turrets get a kill, and your Turrets' Fire Rate is increased by 10% when you get a kill.",
+          "icon": "forge/Teamwork.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.1
+            },
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "id": "ricochet",
+          "name": "Ricochet",
+          "description": "Turret projectiles bounce to another enemy. Richochets deal 50% less damage.",
+          "icon": "forge/Ricochet.png",
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": -0.5
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

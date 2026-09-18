@@ -1,0 +1,108 @@
+:root {
+  color-scheme: dark;
+  --bg: #0f1115;
+  --panel: #171a21;
+  --panel-2: #1e222b;
+  --line: #2a2f3a;
+  --text: #dfe3ea;
+  --muted: #8b94a5;
+  --accent: #6fb3d2;
+  --warn: #d8a657;
+  --pos: #7fc98a;
+  --neg: #d98080;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.5 system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.app { max-width: 1400px; margin: 0 auto; padding: 24px 16px; }
+
+header h1 { margin: 0 0 4px; font-size: 24px; font-weight: 600; letter-spacing: 0.2px; }
+.disclaimer { margin: 0 0 20px; color: var(--muted); max-width: 70ch; font-size: 13px; }
+
+.columns { display: grid; grid-template-columns: 1fr 380px; gap: 20px; align-items: start; }
+@media (max-width: 1000px) { .columns { grid-template-columns: 1fr; } }
+
+.loadout { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+
+section {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+h2 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; }
+h3 { margin: 10px 0 4px; font-size: 12px; color: var(--muted); font-weight: 600; }
+.cost { color: var(--line); font-weight: 400; }
+
+select, input[type='range'] { width: 100%; }
+select {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 6px 8px;
+  margin-bottom: 6px;
+}
+
+.row { display: grid; grid-template-columns: 90px 1fr; align-items: center; gap: 8px; }
+.row label { color: var(--muted); text-transform: capitalize; font-size: 12px; }
+
+.hint { color: var(--muted); font-size: 12px; margin: 4px 0 0; }
+
+.picker { list-style: none; margin: 4px 0 0; padding: 0; max-height: 260px; overflow-y: auto; }
+.picker li label { display: flex; gap: 7px; align-items: flex-start; padding: 2px 0; cursor: pointer; font-size: 13px; }
+.picker li label:hover { color: #fff; }
+.picker em { color: var(--muted); font-style: normal; font-size: 11px; }
+.picker input { margin-top: 3px; flex: none; }
+
+/* Picks the model can't express are dimmed and dotted, so a build's number is
+   never silently missing something the player thinks they selected. */
+.not-simulated { color: var(--muted); text-decoration: underline dotted var(--warn); }
+
+.group-toggle {
+  background: none; border: none; color: var(--accent);
+  padding: 4px 0; cursor: pointer; font: inherit; font-weight: 600;
+}
+
+.results-col { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 16px; }
+
+.headline { display: flex; align-items: baseline; gap: 8px; }
+.dps { font-size: 38px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+.unit { color: var(--muted); font-size: 12px; }
+
+.stacked-bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin: 10px 0 8px; background: var(--panel-2); }
+.bar-weapon { background: var(--accent); }
+.bar-dot { background: var(--warn); }
+.bar-ability { background: #a08cd0; }
+
+.legend { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 10px; padding: 0; font-size: 12px; color: var(--muted); }
+.legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 4px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.stats th { text-align: left; font-weight: 400; color: var(--muted); padding: 3px 0; }
+.stats td { text-align: right; font-variant-numeric: tabular-nums; }
+
+.breakdown { font-size: 12px; }
+.breakdown td { padding: 2px 0; border-bottom: 1px solid var(--panel-2); }
+.breakdown .stat { color: var(--muted); text-align: right; padding-right: 10px; }
+.breakdown .stat em { font-style: normal; opacity: 0.7; }
+.breakdown .pos { color: var(--pos); text-align: right; font-variant-numeric: tabular-nums; }
+.breakdown .neg { color: var(--neg); text-align: right; font-variant-numeric: tabular-nums; }
+
+.slider { margin-bottom: 6px; }
+.slider label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+
+.footnote { color: var(--muted); font-size: 11px; margin: 6px 0 0; }
+
+.unmodeled-box { border-color: var(--warn); }
+.unmodeled-box ul, .warnings ul { margin: 6px 0 0; padding-left: 18px; font-size: 12px; color: var(--muted); }
+.warnings { border-color: var(--warn); }
+.error { color: var(--neg); }

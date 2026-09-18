@@ -1,0 +1,3433 @@
+{
+  "source": "https://abyssus.wiki.gg/wiki/Blessings",
+  "aspects": [
+    "Blood",
+    "Barrier",
+    "Flares",
+    "Goldburst",
+    "Frozen",
+    "Chain Lightning",
+    "Shadows",
+    "Tentacles",
+    "Spirit",
+    "Windburst",
+    "Brine"
+  ],
+  "blessings": [
+    {
+      "id": "Blood_Primary",
+      "aspect": "Blood",
+      "name": "Blood Primary",
+      "description": "Primary Fire deals 15% additional damage and has a 20% chance to cause Hemorrhage.",
+      "kind": "aspect",
+      "slot": "primary",
+      "logbookIndex": 0,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "primary",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "hemorrhage",
+          "chance": 0.2,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Blood_Secondary",
+      "aspect": "Blood",
+      "name": "Blood Secondary",
+      "description": "Secondary Fire deals 15% additional damage and has a 20% chance to cause Hemorrhage.",
+      "kind": "aspect",
+      "slot": "secondary",
+      "logbookIndex": 1,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "secondary",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "hemorrhage",
+          "chance": 0.2,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Blood_Ability",
+      "aspect": "Blood",
+      "name": "Blood Ability",
+      "description": "Your Ability deals 15% additional damage and has 100% chance to cause Hemorrhage.",
+      "kind": "aspect",
+      "slot": "ability",
+      "logbookIndex": 2,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "ability",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "hemorrhage",
+          "chance": 1.0,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Branding_Blood",
+      "aspect": "Blood",
+      "name": "Branding Blood",
+      "description": "Hemorrhage deals 5% more damage each time the same target is hit by Hemorrhage.",
+      "kind": "blessing",
+      "logbookIndex": 3,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "dotDamage",
+          "scope": "dot",
+          "valuePer": 0.05,
+          "per": "hit",
+          "max": null,
+          "note": "Hemorrhage"
+        }
+      ]
+    },
+    {
+      "id": "Feeble_Blood",
+      "aspect": "Blood",
+      "name": "Feeble Blood",
+      "description": "Hemorrhage deals 5% additional damage for each 5% of your missing Health.",
+      "kind": "blessing",
+      "logbookIndex": 4,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "statusMod",
+          "status": "hemorrhage",
+          "stat": "dotDamage",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "Blood_Offering",
+      "aspect": "Blood",
+      "name": "Blood Offering",
+      "description": "Hemorrhage has a 30% chance to create a Blood Zone. The zone temportatily increases damage by 20%",
+      "kind": "blessing",
+      "logbookIndex": 5,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "Baneful_Blood",
+      "aspect": "Blood",
+      "name": "Baneful Blood",
+      "description": "Hemorrhage deals 20% additional damage to Elites & Bosses.",
+      "kind": "blessing",
+      "logbookIndex": 6,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "statusMod",
+          "status": "hemorrhage",
+          "stat": "dotDamage",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "Contiguous_Blood",
+      "aspect": "Blood",
+      "name": "Contiguous Blood",
+      "description": "Hemorrhage deals up to 100% more damage the closer you are to enemies.",
+      "kind": "blessing",
+      "logbookIndex": 7,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 1.0,
+          "note": "ramping: this is the maximum"
+        }
+      ]
+    },
+    {
+      "id": "Bloodletting",
+      "aspect": "Blood",
+      "name": "Bloodletting",
+      "description": "Hemorrhaged enemies take 10% of the Hemorrhage's damage over 8 seconds.",
+      "kind": "blessing",
+      "logbookIndex": 8,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 0.1,
+          "of": "statusDamage",
+          "chance": 1.0,
+          "scope": "dot",
+          "note": "over 8 seconds"
+        }
+      ]
+    },
+    {
+      "id": "Red-blooded",
+      "aspect": "Blood",
+      "name": "Red-blooded",
+      "description": "Your max Health increases if an enemy dies within 1 sec. of being hit by Hemorrhage.",
+      "kind": "blessing",
+      "logbookIndex": 9,
+      "icon": "blessings/Blood.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Bloody_Execution",
+      "aspect": "Blood",
+      "name": "Bloody Execution",
+      "description": "Hemorrhage executes enemies below 5% Health.",
+      "kind": "blessing",
+      "logbookIndex": 10,
+      "icon": "blessings/Blood.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Steeped_in_Blood",
+      "aspect": "Blood",
+      "name": "Steeped in Blood",
+      "description": "Gain 5% increased Hemorrhage damage for each Hemorrhage until you take Health damage.",
+      "kind": "blessing",
+      "logbookIndex": 11,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "dotDamage",
+          "scope": "dot",
+          "valuePer": 0.05,
+          "per": "stack",
+          "max": null,
+          "note": "Hemorrhage"
+        }
+      ]
+    },
+    {
+      "id": "Bouncing_Blood",
+      "aspect": "Blood",
+      "name": "Bouncing Blood",
+      "description": "Hemorrhage has a 20% chance to bounce to another target.",
+      "kind": "blessing",
+      "logbookIndex": 12,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.2,
+          "then": [],
+          "note": "bounce"
+        }
+      ]
+    },
+    {
+      "id": "Giants_Blood",
+      "aspect": "Blood",
+      "name": "Giant's Blood",
+      "description": "Increase Max Health by 10% for every Boss or Elite killed.",
+      "kind": "blessing",
+      "logbookIndex": 13,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "flat",
+          "stat": "maxHealth",
+          "scope": "all",
+          "value": 1.0
+        }
+      ]
+    },
+    {
+      "id": "Rupturing_Blood",
+      "aspect": "Blood",
+      "name": "Rupturing Blood",
+      "description": "Hemorrhage explodes on hit, dealing 40 damage to nearby targets.",
+      "kind": "blessing",
+      "logbookIndex": 14,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 40.0,
+          "of": "flat",
+          "chance": 1.0,
+          "scope": "all",
+          "note": "explosion"
+        }
+      ]
+    },
+    {
+      "id": "Spiked_Blood",
+      "aspect": "Blood",
+      "name": "Spiked Blood",
+      "description": "Hemorrhage has a 10% chance to Weakspot hit.",
+      "kind": "blessing",
+      "logbookIndex": 15,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.1,
+          "then": [],
+          "note": "weakspot hit"
+        }
+      ]
+    },
+    {
+      "id": "Blood_Reading",
+      "aspect": "Blood",
+      "name": "Blood Reading",
+      "description": "Hemorrhage deals 1% more damage for every 5% of health difference between you and the enemy.",
+      "kind": "blessing",
+      "logbookIndex": 16,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "statusMod",
+          "status": "hemorrhage",
+          "stat": "dotDamage",
+          "value": 0.01
+        }
+      ]
+    },
+    {
+      "id": "Vigorous_Blood",
+      "aspect": "Blood",
+      "name": "Vigorous Blood",
+      "description": "Every Blood Blessing increases your max Health by 5%.",
+      "kind": "blessing",
+      "logbookIndex": 17,
+      "icon": "blessings/Blood.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "maxHealth",
+          "scope": "all",
+          "valuePer": 0.05,
+          "per": "blessing",
+          "max": null,
+          "note": "per Blood Blessing: max Health"
+        }
+      ]
+    },
+    {
+      "id": "Blood_Sphere",
+      "aspect": "Blood",
+      "name": "Blood Sphere",
+      "description": "Hemorrhage has a 25% chance to create a Blood Orb. Damaging the Blood Orb deals 200% of that damage to the enemy that spawned it.",
+      "kind": "blessing",
+      "logbookIndex": 18,
+      "icon": "blessings/Blood_Sphere.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 2.0,
+          "of": "onHitDamage",
+          "chance": 1.0,
+          "scope": "all",
+          "note": "scales from that"
+        }
+      ]
+    },
+    {
+      "id": "Bloodsplosions",
+      "aspect": "Blood",
+      "name": "Bloodsplosions",
+      "description": "Blood Orb now consumes damage dealt to it, and explodes when it expires for the total damage.",
+      "kind": "blessing",
+      "logbookIndex": 19,
+      "icon": "blessings/Bloodsplosions.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Barrier_Ability",
+      "aspect": "Barrier",
+      "name": "Barrier Ability",
+      "description": "Your Ability deals 15% additional damage and fills the Barrier gauge.",
+      "kind": "aspect",
+      "slot": "ability",
+      "logbookIndex": 0,
+      "icon": "blessings/Barrier.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "ability",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Barrier_Secondary",
+      "aspect": "Barrier",
+      "name": "Barrier Secondary",
+      "description": "Secondary Fire deals 15% additional damage and fills the Barrier gauge.",
+      "kind": "aspect",
+      "slot": "secondary",
+      "logbookIndex": 1,
+      "icon": "blessings/Barrier.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "secondary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Barrier_Primary",
+      "aspect": "Barrier",
+      "name": "Barrier Primary",
+      "description": "Primary Fire deals 15% additional damage and fills the Barrier gauge.",
+      "kind": "aspect",
+      "slot": "primary",
+      "logbookIndex": 2,
+      "icon": "blessings/Barrier.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "primary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Stacking_Barrier",
+      "aspect": "Barrier",
+      "name": "Stacking Barrier",
+      "description": "Your Barrier lasts 50% longer.",
+      "kind": "blessing",
+      "logbookIndex": 3,
+      "icon": "blessings/Barrier.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "statusDuration",
+          "scope": "all",
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "id": "Barrier_Burst",
+      "aspect": "Barrier",
+      "name": "Barrier Burst",
+      "description": "Your movement speed is increased by 20% while your Barrier is active.",
+      "kind": "blessing",
+      "logbookIndex": 4,
+      "icon": "blessings/Barrier.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "movementSpeed",
+          "scope": "all",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "Empowering_Barrier",
+      "aspect": "Barrier",
+      "name": "Empowering Barrier",
+      "description": "You deal 35% additional damage while your Barrier is active.",
+      "kind": "blessing",
+      "logbookIndex": 5,
+      "icon": "blessings/Barrier.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.35
+        }
+      ]
+    },
+    {
+      "id": "Panicked_Barrier",
+      "aspect": "Barrier",
+      "name": "Panicked Barrier",
+      "description": "You build your Barrier 50% faster.",
+      "kind": "blessing",
+      "logbookIndex": 6,
+      "icon": "blessings/Barrier.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Energizing_Barrier",
+      "aspect": "Barrier",
+      "name": "Energizing Barrier",
+      "description": "Your Fire Rate is increased by 25% while your Barrier is active.",
+      "kind": "blessing",
+      "logbookIndex": 7,
+      "icon": "blessings/Barrier.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "fireRate",
+          "scope": "all",
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "id": "Recharging_Barrier",
+      "aspect": "Barrier",
+      "name": "Recharging Barrier",
+      "description": "Killing enemies while barrier is active restores barrier. Does not refresh duraition.",
+      "kind": "blessing",
+      "logbookIndex": 8,
+      "icon": "blessings/Barrier.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Retaliating_Barrier",
+      "aspect": "Barrier",
+      "name": "Retaliating Barrier",
+      "description": "Barrier damage is reflected back at the attacker and increased by 10000%.",
+      "kind": "blessing",
+      "logbookIndex": 9,
+      "icon": "blessings/Barrier.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Lasting_Defense",
+      "aspect": "Barrier",
+      "name": "Lasting Defense",
+      "description": "Any excess damage dealt to your Barrier is removed instead of removing Health.",
+      "kind": "blessing",
+      "logbookIndex": 10,
+      "icon": "blessings/Barrier.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Rapid_Barrier",
+      "aspect": "Barrier",
+      "name": "Rapid Barrier",
+      "description": "Your Barrier's recharge cooldown is reduced by 25%.",
+      "kind": "blessing",
+      "logbookIndex": 11,
+      "icon": "blessings/Barrier.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Shared_Defense",
+      "aspect": "Barrier",
+      "name": "Shared Defense",
+      "description": "All players, including you, gain 10 Barrier when your Barrier activates.",
+      "kind": "blessing",
+      "logbookIndex": 12,
+      "icon": "blessings/Barrier.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Suspended_Barrier",
+      "aspect": "Barrier",
+      "name": "Suspended Barrier",
+      "description": "Barrier duration does not begin to decrease until you take at least 15 damage.",
+      "kind": "blessing",
+      "logbookIndex": 13,
+      "icon": "blessings/Barrier.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Explosive_Barrier",
+      "aspect": "Barrier",
+      "name": "Explosive Barrier",
+      "description": "Barrier explodes when it activates, dealing 500 damage around you and knocking enemies back.",
+      "kind": "blessing",
+      "logbookIndex": 14,
+      "icon": "blessings/Barrier.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 500.0,
+          "of": "flat",
+          "chance": 1.0,
+          "scope": "all",
+          "note": "explosion"
+        }
+      ]
+    },
+    {
+      "id": "Dazing_Barrier",
+      "aspect": "Barrier",
+      "name": "Dazing Barrier",
+      "description": "Enemies that hit your Barrier take 15% increased damage for 2 sec. and are Stunned.",
+      "kind": "blessing",
+      "logbookIndex": 15,
+      "icon": "blessings/Barrier.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.15,
+          "note": "amplifier on affected enemies"
+        }
+      ]
+    },
+    {
+      "id": "Vigorous_Defense",
+      "aspect": "Barrier",
+      "name": "Vigorous Defense",
+      "description": "Gain 5% more Barrier for every 20 additional Max Health.",
+      "kind": "blessing",
+      "logbookIndex": 16,
+      "icon": "blessings/Barrier.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Defenders_Touch",
+      "aspect": "Barrier",
+      "name": "Defender's Touch",
+      "description": "Every Defender Blessing reduces the damage you receive by 5%.",
+      "kind": "blessing",
+      "logbookIndex": 17,
+      "icon": "blessings/Barrier.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damageTaken",
+          "scope": "all",
+          "valuePer": -0.05,
+          "per": "blessing",
+          "max": null
+        }
+      ]
+    },
+    {
+      "id": "Enduring_Barrier",
+      "aspect": "Barrier",
+      "name": "Enduring Barrier",
+      "description": "Max amount of Barrier is increased.",
+      "kind": "blessing",
+      "logbookIndex": 18,
+      "icon": "blessings/Enduring_Barrier.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Radiating_Barrier",
+      "aspect": "Barrier",
+      "name": "Radiating Barrier",
+      "description": "While your Barrier is active, you radiate massive damage to nearby enemies.",
+      "kind": "blessing",
+      "logbookIndex": 19,
+      "icon": "blessings/Radiating_Barrier.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Ability_Flares",
+      "aspect": "Flares",
+      "name": "Ability Flares",
+      "description": "Your Ability deals 15% additional damage and has a 100% chance to set enemies on Fire.",
+      "kind": "aspect",
+      "slot": "ability",
+      "logbookIndex": 0,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "ability",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Secondary_Flares",
+      "aspect": "Flares",
+      "name": "Secondary Flares",
+      "description": "Secondary Fire deals 15% additional damage and has a 30% chance to set enemies on Fire.",
+      "kind": "aspect",
+      "slot": "secondary",
+      "logbookIndex": 1,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "secondary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Primary_Flares",
+      "aspect": "Flares",
+      "name": "Primary Flares",
+      "description": "Primary Fire deals 15% additional damage and has a 30% chance to set enemies on Fire.",
+      "kind": "aspect",
+      "slot": "primary",
+      "logbookIndex": 2,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "primary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Spreading_Flames",
+      "aspect": "Flares",
+      "name": "Spreading Flames",
+      "description": "When an enemy dies while on Fire, it spreads to 1 nearby enemy (or enemies).",
+      "kind": "blessing",
+      "logbookIndex": 3,
+      "icon": "blessings/Flares.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Enduring_Flames",
+      "aspect": "Flares",
+      "name": "Enduring Flames",
+      "description": "When an enemy Flares, 0.2 sec. are added to the Fire's duration.",
+      "kind": "blessing",
+      "logbookIndex": 4,
+      "icon": "blessings/Flares.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Critical_Flames",
+      "aspect": "Flares",
+      "name": "Critical Flames",
+      "description": "Weakspots' chance to Flare is increased by 20%.",
+      "kind": "blessing",
+      "logbookIndex": 5,
+      "icon": "blessings/Flares.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Weakening_Flames",
+      "aspect": "Flares",
+      "name": "Weakening Flames",
+      "description": "Weakspot damage to enemies on Fire is increased by 25%.",
+      "kind": "blessing",
+      "logbookIndex": 6,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetHasStatus",
+          "status": "fire",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "weakspotDamage",
+              "scope": "all",
+              "value": 0.25
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Rapid_Flames",
+      "aspect": "Flares",
+      "name": "Rapid Flames",
+      "description": "Damaging effects occur 5% faster each time an enemy has Flared.",
+      "kind": "blessing",
+      "logbookIndex": 7,
+      "icon": "blessings/Flares.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Empowering_Flames",
+      "aspect": "Flares",
+      "name": "Empowering Flames",
+      "description": "Fire dot deals 5% more damage for every second it is on the target.",
+      "kind": "blessing",
+      "logbookIndex": 8,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "Fanning_Flames",
+      "aspect": "Flares",
+      "name": "Fanning Flames",
+      "description": "Enemies take 10% more Flare damage each time they Flare.",
+      "kind": "blessing",
+      "logbookIndex": 9,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "dotDamage",
+          "scope": "dot",
+          "valuePer": 0.1,
+          "per": "application",
+          "max": null,
+          "note": "Flare"
+        }
+      ]
+    },
+    {
+      "id": "Linked_Flames",
+      "aspect": "Flares",
+      "name": "Linked Flames",
+      "description": "Triggering a Flare causes all enemies afflicted by your Fire to also Flare. Excludes Flares triggered by Fire.",
+      "kind": "blessing",
+      "logbookIndex": 10,
+      "icon": "blessings/Flares.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Raging_Flames",
+      "aspect": "Flares",
+      "name": "Raging Flames",
+      "description": "Gain 10% Fire Rate per enemy currently affected by your Fire.",
+      "kind": "blessing",
+      "logbookIndex": 11,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "fireRate",
+          "scope": "all",
+          "valuePer": 0.1,
+          "per": "affectedEnemy",
+          "max": null
+        }
+      ]
+    },
+    {
+      "id": "Miasmic_Flames",
+      "aspect": "Flares",
+      "name": "Miasmic Flames",
+      "description": "Increase Status Effectiveness by 5% per enemy currently affected by your Fire.",
+      "kind": "blessing",
+      "logbookIndex": 12,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "statusEffectiveness",
+          "scope": "all",
+          "valuePer": 0.05,
+          "per": "affectedEnemy",
+          "max": null
+        }
+      ]
+    },
+    {
+      "id": "Explosive_Flares",
+      "aspect": "Flares",
+      "name": "Explosive Flares",
+      "description": "Flares have a 30% chance to explode, dealing 50 damage to nearby enemies.",
+      "kind": "blessing",
+      "logbookIndex": 13,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 50.0,
+          "of": "flat",
+          "chance": 0.3,
+          "scope": "all",
+          "note": "explosion"
+        }
+      ]
+    },
+    {
+      "id": "Critical_Flares",
+      "aspect": "Flares",
+      "name": "Critical Flares",
+      "description": "Flares caused by Weakspot hits deal 20% more damage.",
+      "kind": "blessing",
+      "logbookIndex": 14,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "Scourging_Flames",
+      "aspect": "Flares",
+      "name": "Scourging Flames",
+      "description": "Fire deals 15% more damage for every Status Effect on the enemy, including itself.",
+      "kind": "blessing",
+      "logbookIndex": 15,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "statusMod",
+          "status": "fire",
+          "stat": "dotDamage",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Stunning_Flares",
+      "aspect": "Flares",
+      "name": "Stunning Flares",
+      "description": "Flares have a 10% chance to Stun the target.",
+      "kind": "blessing",
+      "logbookIndex": 16,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.1,
+          "then": [],
+          "note": "stun"
+        }
+      ]
+    },
+    {
+      "id": "Fires_Wrath",
+      "aspect": "Flares",
+      "name": "Fire's Wrath",
+      "description": "Every Fire Blessing increases Status Effectiveness by 10%.",
+      "kind": "blessing",
+      "logbookIndex": 17,
+      "icon": "blessings/Flares.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "statusEffectiveness",
+          "scope": "all",
+          "valuePer": 0.1,
+          "per": "blessing",
+          "max": null,
+          "note": "per Fire Blessing: Status Effectiveness"
+        }
+      ]
+    },
+    {
+      "id": "Stacking_Flames",
+      "aspect": "Flares",
+      "name": "Stacking Flames",
+      "description": "Fire can now stack, increasing fire damage over time. Flaring further increases Fire stacks by 1.",
+      "kind": "blessing",
+      "logbookIndex": 18,
+      "icon": "blessings/Stacking_Flames.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Meteor",
+      "aspect": "Flares",
+      "name": "Meteor",
+      "description": "Flare has a chance to call down Meteors. Chance increases with the number of stacks of Fire on the enemy. Meteors deal massive damage to the main target, but will also explode and set nearby enemies on Fire.",
+      "kind": "blessing",
+      "logbookIndex": 19,
+      "icon": "blessings/Meteor.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Ability_Goldburst",
+      "aspect": "Goldburst",
+      "name": "Ability Goldburst",
+      "description": "Your Ability deals 15% additional damage and has a 100% chance to create a Goldburst.",
+      "kind": "aspect",
+      "slot": "ability",
+      "logbookIndex": 0,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "ability",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "goldburst",
+          "chance": 1.0,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Primary_Goldburst",
+      "aspect": "Goldburst",
+      "name": "Primary Goldburst",
+      "description": "Primary Fire deals 15% additional damage and has a 20% chance to create a Goldburst.",
+      "kind": "aspect",
+      "slot": "primary",
+      "logbookIndex": 1,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "primary",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "goldburst",
+          "chance": 0.2,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Secondary_Goldburst",
+      "aspect": "Goldburst",
+      "name": "Secondary Goldburst",
+      "description": "Secondary Fire deals 15% additional damage and has a 20% chance to create a Goldburst.",
+      "kind": "aspect",
+      "slot": "secondary",
+      "logbookIndex": 2,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "secondary",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "goldburst",
+          "chance": 0.2,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Distracting_Glare",
+      "aspect": "Goldburst",
+      "name": "Distracting Glare",
+      "description": "Goldburst has 10% chance to Stun enemies, with the chance being based on your Gold.",
+      "kind": "blessing",
+      "logbookIndex": 3,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.1,
+          "then": [],
+          "note": "stun"
+        }
+      ]
+    },
+    {
+      "id": "Pot_of_Gold",
+      "aspect": "Goldburst",
+      "name": "Pot of Gold",
+      "description": "Upgrade a random Blessing each time you reach intervals of 750 Gold, from when this Blessing is acquired.",
+      "kind": "blessing",
+      "logbookIndex": 4,
+      "icon": "blessings/Goldburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Exponential_Gold",
+      "aspect": "Goldburst",
+      "name": "Exponential Gold",
+      "description": "Goldburst now deals 20% of your Gold as additional damage.",
+      "kind": "blessing",
+      "logbookIndex": 5,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 0.2,
+          "of": "onHitDamage",
+          "chance": 1.0,
+          "scope": "all",
+          "note": "scales from Gold"
+        }
+      ]
+    },
+    {
+      "id": "Precise_Gold",
+      "aspect": "Goldburst",
+      "name": "Precise Gold",
+      "description": "Goldburst has a 5% chance to Weakspot hit, with the chance being based on your Gold.",
+      "kind": "blessing",
+      "logbookIndex": 6,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.05,
+          "then": [],
+          "note": "weakspot hit"
+        }
+      ]
+    },
+    {
+      "id": "Goldrush",
+      "aspect": "Goldburst",
+      "name": "Goldrush",
+      "description": "Picking up Gold increases Fire Rate by 5% and reload speed by 2% for 5 seconds, stacking 10 times.",
+      "kind": "blessing",
+      "logbookIndex": 7,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "fireRate",
+          "scope": "all",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "Reaching_Gold",
+      "aspect": "Goldburst",
+      "name": "Reaching Gold",
+      "description": "Goldburst has a 20% chance to trigger again, prioritizing new targets within range.",
+      "kind": "blessing",
+      "logbookIndex": 8,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.2,
+          "then": [],
+          "note": "triggers again"
+        }
+      ]
+    },
+    {
+      "id": "Erupting_Gold",
+      "aspect": "Goldburst",
+      "name": "Erupting Gold",
+      "description": "Goldburst has a 20% chance to explode, with the chance being based on your Gold.",
+      "kind": "blessing",
+      "logbookIndex": 9,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.2,
+          "then": [],
+          "note": "explode"
+        }
+      ]
+    },
+    {
+      "id": "Untouched_Gold",
+      "aspect": "Goldburst",
+      "name": "Untouched Gold",
+      "description": "Get 10 extra Gold if you take no damage during an encounter.",
+      "kind": "blessing",
+      "logbookIndex": 10,
+      "icon": "blessings/Goldburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Golden_Skin",
+      "aspect": "Goldburst",
+      "name": "Golden Skin",
+      "description": "Take 2% less damage per 100 Gold you have.",
+      "kind": "blessing",
+      "logbookIndex": 11,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damageTaken",
+          "scope": "all",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "Golden_Haste",
+      "aspect": "Goldburst",
+      "name": "Golden Haste",
+      "description": "Picking up Gold increases movement speed, while decreasing dash cooldown, by 5% for 5 sec. Stacks 10 times.",
+      "kind": "blessing",
+      "logbookIndex": 12,
+      "icon": "blessings/Goldburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Brutish_Gold",
+      "aspect": "Goldburst",
+      "name": "Brutish Gold",
+      "description": "Goldburst now deals 10% of the on-hit damage as additional damage.",
+      "kind": "blessing",
+      "logbookIndex": 13,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 0.1,
+          "of": "onHitDamage",
+          "chance": 1.0,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Golden_Pocket",
+      "aspect": "Goldburst",
+      "name": "Golden Pocket",
+      "description": "Decreases the cost of your Merchants and Wishing Wells by 15%.",
+      "kind": "blessing",
+      "logbookIndex": 14,
+      "icon": "blessings/Goldburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Coin_Flip",
+      "aspect": "Goldburst",
+      "name": "Coin Flip",
+      "description": "Goldburst damage has a 50% chance to double, but also has a 50% chance to halve.",
+      "kind": "blessing",
+      "logbookIndex": 15,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.5,
+          "then": [],
+          "note": "double"
+        }
+      ]
+    },
+    {
+      "id": "Dicey_Wager",
+      "aspect": "Goldburst",
+      "name": "Dicey Wager",
+      "description": "Incoming Gold has a 50% chance to be worth twice as much, but it also has a 50% chance of removing that amount of Gold instead.",
+      "kind": "blessing",
+      "logbookIndex": 16,
+      "icon": "blessings/Goldburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Fortunes_Riches",
+      "aspect": "Goldburst",
+      "name": "Fortune's Riches",
+      "description": "Every Fortune Blessing increases Gold found by 5%.",
+      "kind": "blessing",
+      "logbookIndex": 17,
+      "icon": "blessings/Goldburst.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "all",
+          "valuePer": 0.05,
+          "per": "blessing",
+          "max": null,
+          "note": "per Fortune Blessing: Gold found"
+        }
+      ]
+    },
+    {
+      "id": "Midas_Touch",
+      "aspect": "Goldburst",
+      "name": "Midas Touch",
+      "description": "Enemies that die within 2 sec. of being hit by Goldburst turn to Gold and drop additional Gold.",
+      "kind": "blessing",
+      "logbookIndex": 18,
+      "icon": "blessings/Midas_Touch.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Lethal_Gold",
+      "aspect": "Goldburst",
+      "name": "Lethal Gold",
+      "description": "Goldburst has a 5% chance to instantly turn standard enemies into Gold, with the chance increaseing based on your Gold",
+      "kind": "blessing",
+      "logbookIndex": 19,
+      "icon": "blessings/Lethal_Gold.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Frozen_Primary",
+      "aspect": "Frozen",
+      "name": "Frozen Primary",
+      "description": "Primary Fire deals 15% additional damage and applies Frost buildup on hit.",
+      "kind": "aspect",
+      "slot": "primary",
+      "logbookIndex": 0,
+      "icon": "blessings/Frozen.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "primary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Frozen_Secondary",
+      "aspect": "Frozen",
+      "name": "Frozen Secondary",
+      "description": "Secondary Fire deals 15% additional damage and applies Frost buildup on hit.",
+      "kind": "aspect",
+      "slot": "secondary",
+      "logbookIndex": 1,
+      "icon": "blessings/Frozen.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "secondary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Frozen_Ability",
+      "aspect": "Frozen",
+      "name": "Frozen Ability",
+      "description": "Your Ability deals 15% additional damage and applies Frost buildup on hit.",
+      "kind": "aspect",
+      "slot": "ability",
+      "logbookIndex": 2,
+      "icon": "blessings/Frozen.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "ability",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Heavy_Freeze",
+      "aspect": "Frozen",
+      "name": "Heavy Freeze",
+      "description": "Frozen enemies have a 15% chance to take Weakspot damage.",
+      "kind": "blessing",
+      "logbookIndex": 3,
+      "icon": "blessings/Frozen.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Enduring_Freeze",
+      "aspect": "Frozen",
+      "name": "Enduring Freeze",
+      "description": "Enemies are Frozen 30% longer.",
+      "kind": "blessing",
+      "logbookIndex": 4,
+      "icon": "blessings/Frozen.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "statusDuration",
+          "scope": "all",
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "id": "Quick_Freeze",
+      "aspect": "Frozen",
+      "name": "Quick Freeze",
+      "description": "You apply 80% more Frost buildup.",
+      "kind": "blessing",
+      "logbookIndex": 5,
+      "icon": "blessings/Frozen.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "statusEffectiveness",
+          "scope": "all",
+          "value": 0.8,
+          "note": "Frost buildup"
+        }
+      ]
+    },
+    {
+      "id": "Frostbite",
+      "aspect": "Frozen",
+      "name": "Frostbite",
+      "description": "Increases Freeze damage by 3 percentage points.",
+      "kind": "blessing",
+      "logbookIndex": 6,
+      "icon": "blessings/Frozen.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Brittle_Freeze",
+      "aspect": "Frozen",
+      "name": "Brittle Freeze",
+      "description": "Frozen enemies take 20% more damage.",
+      "kind": "blessing",
+      "logbookIndex": 7,
+      "icon": "blessings/Frozen.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.2,
+          "note": "amplifier on affected enemies"
+        }
+      ]
+    },
+    {
+      "id": "Hypothermia",
+      "aspect": "Frozen",
+      "name": "Hypothermia",
+      "description": "Frozen enemies lose 1% of their current Health per second.",
+      "kind": "blessing",
+      "logbookIndex": 8,
+      "icon": "blessings/Frozen.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Frozen_Shards",
+      "aspect": "Frozen",
+      "name": "Frozen Shards",
+      "description": "Killing a Frozen enemy or an enemy with Frost buildup sends out Ice Shards that deal 2% of their current Health as damage on hit.",
+      "kind": "blessing",
+      "logbookIndex": 9,
+      "icon": "blessings/Frozen.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 0.02,
+          "of": "onHitDamage",
+          "chance": 1.0,
+          "scope": "all",
+          "note": "scales from their current Health as"
+        }
+      ]
+    },
+    {
+      "id": "Gliding_Glacier",
+      "aspect": "Frozen",
+      "name": "Gliding Glacier",
+      "description": "Frozen enemies slide around, dealing and taking 5% of their current Health as damage when hitting something.",
+      "kind": "blessing",
+      "logbookIndex": 10,
+      "icon": "blessings/Frozen.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Coldsnap",
+      "aspect": "Frozen",
+      "name": "Coldsnap",
+      "description": "Frozen enemies lose 6% of their current Health when Freeze is removed.",
+      "kind": "blessing",
+      "logbookIndex": 11,
+      "icon": "blessings/Frozen.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Thawing_Strike",
+      "aspect": "Frozen",
+      "name": "Thawing Strike",
+      "description": "Using Melee on Frozen enemies deals 100% more damage and removes Freeze.",
+      "kind": "blessing",
+      "logbookIndex": 12,
+      "icon": "blessings/Frozen.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 1.0
+        }
+      ]
+    },
+    {
+      "id": "Packed_Snow",
+      "aspect": "Frozen",
+      "name": "Packed Snow",
+      "description": "Enemies become up to 20% Slower and Weaker the higher their Freeze build-up is.",
+      "kind": "blessing",
+      "logbookIndex": 13,
+      "icon": "blessings/Frozen.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Chronic_Cold",
+      "aspect": "Frozen",
+      "name": "Chronic Cold",
+      "description": "Enemies retain 15% of their Freeze build-up after Freeze is removed.",
+      "kind": "blessing",
+      "logbookIndex": 14,
+      "icon": "blessings/Frozen.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Critical_Freeze",
+      "aspect": "Frozen",
+      "name": "Critical Freeze",
+      "description": "Weakspot hits apply 100% more Freeze build-up.",
+      "kind": "blessing",
+      "logbookIndex": 15,
+      "icon": "blessings/Frozen.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "statusEffectiveness",
+          "scope": "all",
+          "value": 1.0,
+          "note": "Freeze buildup"
+        }
+      ]
+    },
+    {
+      "id": "Blightful_Freeze",
+      "aspect": "Frozen",
+      "name": "Blightful Freeze",
+      "description": "Frozen enemies take 15% more damage from Status Effects.",
+      "kind": "blessing",
+      "logbookIndex": 16,
+      "icon": "blessings/Frozen.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.15,
+          "note": "amplifier on affected enemies"
+        }
+      ]
+    },
+    {
+      "id": "Frosts_Knowledge",
+      "aspect": "Frozen",
+      "name": "Frost's Knowledge",
+      "description": "Every Frost Blessing increases damage dealt to Elites and Bosses by 5%.",
+      "kind": "blessing",
+      "logbookIndex": 17,
+      "icon": "blessings/Frozen.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "all",
+          "valuePer": 0.05,
+          "per": "blessing",
+          "max": null,
+          "note": "per Frost Blessing: damage dealt to Elites and Bosses"
+        }
+      ]
+    },
+    {
+      "id": "Erupting_Freeze",
+      "aspect": "Frozen",
+      "name": "Erupting Freeze",
+      "description": "When a Frozen enemy or an enemy with Frost buildup dies, they explode, dealing damage and applying Frost buildup to nearby enemies.",
+      "kind": "blessing",
+      "logbookIndex": 18,
+      "icon": "blessings/Erupting_Freeze.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Everlasting_Winter",
+      "aspect": "Frozen",
+      "name": "Everlasting Winter",
+      "description": "Frozen enemies pulsate damage to themselves and enemies around them, applying Frost buildup.",
+      "kind": "blessing",
+      "logbookIndex": 19,
+      "icon": "blessings/Everlasting_Winter.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Ability_Chain_Lightning",
+      "aspect": "Chain Lightning",
+      "name": "Ability Chain Lightning",
+      "description": "Your Ability deals 15% additional damage and has a 100% chance to create a Chain Lightning.",
+      "kind": "aspect",
+      "slot": "ability",
+      "logbookIndex": 0,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "ability",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "chain lightning",
+          "chance": 1.0,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Primary_Chain_Lightning",
+      "aspect": "Chain Lightning",
+      "name": "Primary Chain Lightning",
+      "description": "Primary Fire deals 15% additional damage and has a 20% chance to create a Chain Lightning.",
+      "kind": "aspect",
+      "slot": "primary",
+      "logbookIndex": 1,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "primary",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "chain lightning",
+          "chance": 0.2,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Secondary_Chain_Lightning",
+      "aspect": "Chain Lightning",
+      "name": "Secondary Chain Lightning",
+      "description": "Secondary Fire deals 15% additional damage and has a 20% chance to create a Chain Lightning.",
+      "kind": "aspect",
+      "slot": "secondary",
+      "logbookIndex": 2,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "secondary",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "chain lightning",
+          "chance": 0.2,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Malignant_Arc",
+      "aspect": "Chain Lightning",
+      "name": "Malignant Arc",
+      "description": "Chain Lightning carries effects from the primary target to other targets in the chain.",
+      "kind": "blessing",
+      "logbookIndex": 3,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Thunder_Strike",
+      "aspect": "Chain Lightning",
+      "name": "Thunder Strike",
+      "description": "Chain Lightning has a 20% chance to call down Thunderstrikes.",
+      "kind": "blessing",
+      "logbookIndex": 4,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Static_Concussion",
+      "aspect": "Chain Lightning",
+      "name": "Static Concussion",
+      "description": "Chain Lightning has a 30% chance to Stun enemies.",
+      "kind": "blessing",
+      "logbookIndex": 5,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.3,
+          "then": [],
+          "note": "stun"
+        }
+      ]
+    },
+    {
+      "id": "Explosive_Static",
+      "aspect": "Chain Lightning",
+      "name": "Explosive Static",
+      "description": "Chain Lightning has a 30% chance to explode around the target.",
+      "kind": "blessing",
+      "logbookIndex": 6,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.3,
+          "then": [],
+          "note": "explode"
+        }
+      ]
+    },
+    {
+      "id": "Charging_Bounce",
+      "aspect": "Chain Lightning",
+      "name": "Charging Bounce",
+      "description": "The last Chain Lightning in a chain is a guaranteed Critical after bouincing the maximum amount of times.",
+      "kind": "blessing",
+      "logbookIndex": 7,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Titan_Arc",
+      "aspect": "Chain Lightning",
+      "name": "Titan Arc",
+      "description": "Chain Lightning deals 50% more damage to targets with more than 90% Health.",
+      "kind": "blessing",
+      "logbookIndex": 8,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [
+        {
+          "op": "statusMod",
+          "status": "lightning",
+          "stat": "dotDamage",
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "id": "Loaded_Bounce",
+      "aspect": "Chain Lightning",
+      "name": "Loaded Bounce",
+      "description": "Chain Lightning deals 5% more damage each time it bounces instead of less.",
+      "kind": "blessing",
+      "logbookIndex": 9,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "Static_Zone",
+      "aspect": "Chain Lightning",
+      "name": "Static Zone",
+      "description": "Chain Lightning has a 5% chance to leave a Static Zone. The zone temporarily increases Critical damage by 25%",
+      "kind": "blessing",
+      "logbookIndex": 10,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "critDamage",
+          "scope": "all",
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "id": "Charged_Bounty",
+      "aspect": "Chain Lightning",
+      "name": "Charged Bounty",
+      "description": "If an enemy dies from a Critical, they have a 30% chance of dropping an item.",
+      "kind": "blessing",
+      "logbookIndex": 11,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Bashing_Lightning",
+      "aspect": "Chain Lightning",
+      "name": "Bashing Lightning",
+      "description": "Chain Lightning Criticals have a 30% to deal 30% more damage, while knocking grounded enemies back and causing flying enemies to fall.",
+      "kind": "blessing",
+      "logbookIndex": 12,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "id": "Extended_Chain",
+      "aspect": "Chain Lightning",
+      "name": "Extended Chain",
+      "description": "If the last Chain Lightning in a chain is a Critical, there is a 20% chance for it to extend the chain by 1.",
+      "kind": "blessing",
+      "logbookIndex": 13,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Hastening_Lightning",
+      "aspect": "Chain Lightning",
+      "name": "Hastening Lightning",
+      "description": "Chain Lightning Criticals increase your movement speed, while decreasing dash and ability cooldown, by 5% for 5 sec. Stacks 3 times.",
+      "kind": "blessing",
+      "logbookIndex": 14,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Distant_Storm",
+      "aspect": "Chain Lightning",
+      "name": "Distant Storm",
+      "description": "Doubles the distance Chain Lightning can bounce, while dealing up to 20% more damage the longer it bounces.",
+      "kind": "blessing",
+      "logbookIndex": 15,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.2,
+          "note": "ramping: this is the maximum"
+        }
+      ]
+    },
+    {
+      "id": "Lightning_Rod",
+      "aspect": "Chain Lightning",
+      "name": "Lightning Rod",
+      "description": "Chain Lightning has a 20% increased Critical Chance on Weakened, Stunned, Slowed and Frozen targets.",
+      "kind": "blessing",
+      "logbookIndex": 16,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Lightnings_Fury",
+      "aspect": "Chain Lightning",
+      "name": "Lightning's Fury",
+      "description": "Every Lightning Blessing increases your Critical Chance by 3%.",
+      "kind": "blessing",
+      "logbookIndex": 17,
+      "icon": "blessings/Chain_Lightning.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "all",
+          "valuePer": 0.03,
+          "per": "blessing",
+          "max": null,
+          "note": "per Lightning Blessing: Critical Chance"
+        }
+      ]
+    },
+    {
+      "id": "Slipping_Arcs",
+      "aspect": "Chain Lightning",
+      "name": "Slipping Arcs",
+      "description": "Chain Lightning forks on Criticals.",
+      "kind": "blessing",
+      "logbookIndex": 18,
+      "icon": "blessings/Slipping_Arcs.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Static_Repetition",
+      "aspect": "Chain Lightning",
+      "name": "Static Repetition",
+      "description": "Chain Lightning bounces an additional time on Critical and can target previously targeted enemies.",
+      "kind": "blessing",
+      "logbookIndex": 19,
+      "icon": "blessings/Static_Repetition.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Ability_Shadows",
+      "aspect": "Shadows",
+      "name": "Ability Shadows",
+      "description": "Your Ability deals 15% additional damage and has a 100% chance to apply Shadows on hit.",
+      "kind": "aspect",
+      "slot": "ability",
+      "logbookIndex": 0,
+      "icon": "blessings/Shadows.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "ability",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "shadows",
+          "chance": 1.0,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Secondary_Shadows",
+      "aspect": "Shadows",
+      "name": "Secondary Shadows",
+      "description": "Secondary Fire deals 15% additional damage and has a 100% chance to apply Shadows on hit.",
+      "kind": "aspect",
+      "slot": "secondary",
+      "logbookIndex": 1,
+      "icon": "blessings/Shadows.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "secondary",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "shadows",
+          "chance": 1.0,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Primary_Shadows",
+      "aspect": "Shadows",
+      "name": "Primary Shadows",
+      "description": "Primary Fire deals 15% additional damage and has a 100% chance to apply Shadows on hit.",
+      "kind": "aspect",
+      "slot": "primary",
+      "logbookIndex": 2,
+      "icon": "blessings/Shadows.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "primary",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "shadows",
+          "chance": 1.0,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Infected_Shadows",
+      "aspect": "Shadows",
+      "name": "Infected Shadows",
+      "description": "Shadows deal 100 damage every second.",
+      "kind": "blessing",
+      "logbookIndex": 3,
+      "icon": "blessings/Shadows.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 100.0,
+          "of": "flat",
+          "chance": 1.0,
+          "scope": "dot",
+          "note": "per second"
+        }
+      ]
+    },
+    {
+      "id": "Creeping_Shadows",
+      "aspect": "Shadows",
+      "name": "Creeping Shadows",
+      "description": "Shadows have up to 20% increased effect the longer a target is affected.",
+      "kind": "blessing",
+      "logbookIndex": 4,
+      "icon": "blessings/Shadows.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Engulfing_Shadows",
+      "aspect": "Shadows",
+      "name": "Engulfing Shadows",
+      "description": "Shadows trigger damage over time effects an additional time when these would be triggered.",
+      "kind": "blessing",
+      "logbookIndex": 5,
+      "icon": "blessings/Shadows.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Returning_Shadows",
+      "aspect": "Shadows",
+      "name": "Returning Shadows",
+      "description": "Shadows have a 50% chance of triggering again on expiration, with a 15% increased effectiveness.",
+      "kind": "blessing",
+      "logbookIndex": 6,
+      "icon": "blessings/Shadows.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Exposing_Shadows",
+      "aspect": "Shadows",
+      "name": "Exposing Shadows",
+      "description": "Shadows are 20% more effective on Weakened, Stunned, Slowed, Frozen and Rooted targets.",
+      "kind": "blessing",
+      "logbookIndex": 7,
+      "icon": "blessings/Shadows.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Weakening_Shadows",
+      "aspect": "Shadows",
+      "name": "Weakening Shadows",
+      "description": "Enemies afflicted by Shadows are Weak.",
+      "kind": "blessing",
+      "logbookIndex": 8,
+      "icon": "blessings/Shadows.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Rupturing_Shadows",
+      "aspect": "Shadows",
+      "name": "Rupturing Shadows",
+      "description": "Shadows explode for 400 damage when they expire or when their target dies.",
+      "kind": "blessing",
+      "logbookIndex": 9,
+      "icon": "blessings/Shadows.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 400.0,
+          "of": "flat",
+          "chance": 1.0,
+          "scope": "all",
+          "note": "explosion"
+        }
+      ]
+    },
+    {
+      "id": "Exponential_Shadows",
+      "aspect": "Shadows",
+      "name": "Exponential Shadows",
+      "description": "Killing an enemy afflicted by Shadows releases a dark cloud unleashing Shadows on other enemies.",
+      "kind": "blessing",
+      "logbookIndex": 10,
+      "icon": "blessings/Shadows.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Enveloping_Shadows",
+      "aspect": "Shadows",
+      "name": "Enveloping Shadows",
+      "description": "Shadows have 5% increased effectiveness for every target afflicted by Shadows.",
+      "kind": "blessing",
+      "logbookIndex": 11,
+      "icon": "blessings/Shadows.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Shadow_Conversion",
+      "aspect": "Shadows",
+      "name": "Shadow Conversion",
+      "description": "Shadows deal an additional 100% of the on-hit damage to an enemy that becomes Shadow-afflicted.",
+      "kind": "blessing",
+      "logbookIndex": 12,
+      "icon": "blessings/Shadows.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 1.0,
+          "of": "onHitDamage",
+          "chance": 1.0,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Critical_Shadows",
+      "aspect": "Shadows",
+      "name": "Critical Shadows",
+      "description": "Shadows-afflicted enemies take 20% more Weakspot damage.",
+      "kind": "blessing",
+      "logbookIndex": 13,
+      "icon": "blessings/Shadows.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "weakspotDamage",
+          "scope": "all",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "Colossal_Shadow",
+      "aspect": "Shadows",
+      "name": "Colossal Shadow",
+      "description": "Deal 20% increased damage to a target if it is the only once that you have inflicted with Shadows.",
+      "kind": "blessing",
+      "logbookIndex": 14,
+      "icon": "blessings/Shadows.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "Volatile_Shadows",
+      "aspect": "Shadows",
+      "name": "Volatile Shadows",
+      "description": "Area of effects deal 30% more damage to Shadow-afflicted enemies.",
+      "kind": "blessing",
+      "logbookIndex": 15,
+      "icon": "blessings/Shadows.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "id": "Retaliating_Shadows",
+      "aspect": "Shadows",
+      "name": "Retaliating Shadows",
+      "description": "Shadow-afflicted enemies take 1000% of the damage they deal as self-damage. Regular enemies also gain a 10% increased attack cooldown.",
+      "kind": "blessing",
+      "logbookIndex": 16,
+      "icon": "blessings/Shadows.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Nights_Patience",
+      "aspect": "Shadows",
+      "name": "Night's Patience",
+      "description": "Every Shadow Blessing increases the duration of all Status Effects by 10%.",
+      "kind": "blessing",
+      "logbookIndex": 17,
+      "icon": "blessings/Shadows.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "all",
+          "valuePer": 0.1,
+          "per": "blessing",
+          "max": null,
+          "note": "per Shadow Blessing: the duration of all Status Effects"
+        }
+      ]
+    },
+    {
+      "id": "Nights_Minor_Blessing",
+      "aspect": "Shadows",
+      "name": "Night's Minor Blessing",
+      "description": "Enemies targeted by Shadows take 30% of on-hit damage to other targets afflicted by Shadows.",
+      "kind": "blessing",
+      "logbookIndex": 18,
+      "icon": "blessings/Nights_Minor_Blessing.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 0.3,
+          "of": "onHitDamage",
+          "chance": 1.0,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Nights_Major_Blessing",
+      "aspect": "Shadows",
+      "name": "Night's Major Blessing",
+      "description": "Enemies targeted by Shadows take 150% of on-hit damage dealt to other targets afflicted by Shadows.",
+      "kind": "blessing",
+      "logbookIndex": 19,
+      "icon": "blessings/Nights_Minor_Blessing.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 1.5,
+          "of": "onHitDamage",
+          "chance": 1.0,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Ability_Tentacles",
+      "aspect": "Tentacles",
+      "name": "Ability Tentacles",
+      "description": "Your Ability deals 15% additional damage and has a 100% chance to create a Tentacle.",
+      "kind": "aspect",
+      "slot": "ability",
+      "logbookIndex": 0,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "ability",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "tentacle",
+          "chance": 1.0,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Primary_Tentacles",
+      "aspect": "Tentacles",
+      "name": "Primary Tentacles",
+      "description": "Primary Fire deals 15% additional damage and has a 30% chance to create a Tentacle.",
+      "kind": "aspect",
+      "slot": "primary",
+      "logbookIndex": 1,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "primary",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "tentacle",
+          "chance": 0.3,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Secondary_Tentacles",
+      "aspect": "Tentacles",
+      "name": "Secondary Tentacles",
+      "description": "Secondary Fire deals 15% additional damage and has a 30% chance to create a Tentacle.",
+      "kind": "aspect",
+      "slot": "secondary",
+      "logbookIndex": 2,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "secondary",
+          "value": 0.15
+        },
+        {
+          "op": "applyStatus",
+          "status": "tentacle",
+          "chance": 0.3,
+          "scope": "all"
+        }
+      ]
+    },
+    {
+      "id": "Focused_Tentacles",
+      "aspect": "Tentacles",
+      "name": "Focused Tentacles",
+      "description": "Tentacles deal 25% more damage if there is only one enemy near the Tentacle.",
+      "kind": "blessing",
+      "logbookIndex": 3,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "statusMod",
+          "status": "tentacles",
+          "stat": "dotDamage",
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "id": "Explosives",
+      "aspect": "Tentacles",
+      "name": "Explosives",
+      "description": "Adds Explosives to the pool of objects, dealing 50% additional damage in an area on hit.",
+      "kind": "blessing",
+      "logbookIndex": 4,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "aoeDamage",
+          "scope": "all",
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "id": "Acid",
+      "aspect": "Tentacles",
+      "name": "Acid",
+      "description": "Adds Acid to the pool of objects, dealing 5% of the Tentacle's damage over time.",
+      "kind": "blessing",
+      "logbookIndex": 5,
+      "icon": "blessings/Tentacles.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Vitamins",
+      "aspect": "Tentacles",
+      "name": "Vitamins",
+      "description": "Adds Vitamins to the pool of objects, temporarily increasing players' Fire Rate by 5% and damage by 5%.",
+      "kind": "blessing",
+      "logbookIndex": 6,
+      "icon": "blessings/Tentacles.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Rapid_Tentacles",
+      "aspect": "Tentacles",
+      "name": "Rapid Tentacles",
+      "description": "Your Tentacles' Fire Rate is increased by 10% for every living Tentacle.",
+      "kind": "blessing",
+      "logbookIndex": 7,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "fireRate",
+          "scope": "all",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "Anchors",
+      "aspect": "Tentacles",
+      "name": "Anchors",
+      "description": "Adds Anchors to the pool of objects, which Stun enemies for 2 sec.",
+      "kind": "blessing",
+      "logbookIndex": 8,
+      "icon": "blessings/Tentacles.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Crystals",
+      "aspect": "Tentacles",
+      "name": "Crystals",
+      "description": "Adds Crystals to the pool of objects, which deal 150% additional damage.",
+      "kind": "blessing",
+      "logbookIndex": 9,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 1.5
+        }
+      ]
+    },
+    {
+      "id": "Team_Tentacles",
+      "aspect": "Tentacles",
+      "name": "Team Tentacles",
+      "description": "Allows for 2 more Tentacles at a time. Also increases Tentacle lifetime by 1 sec.",
+      "kind": "blessing",
+      "logbookIndex": 10,
+      "icon": "blessings/Tentacles.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Snails",
+      "aspect": "Tentacles",
+      "name": "Snails",
+      "description": "Adds Snails to the pool of objects, which Slow the enemy by 20% and increase the damage they take by 15%.",
+      "kind": "blessing",
+      "logbookIndex": 11,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.15,
+          "note": "amplifier on affected enemies"
+        }
+      ]
+    },
+    {
+      "id": "Regenerating_Tentacles",
+      "aspect": "Tentacles",
+      "name": "Regenerating Tentacles",
+      "description": "Tentacles have a 30% chance of regaining their duration instead of disappearing, dealing 30% increased damage.",
+      "kind": "blessing",
+      "logbookIndex": 12,
+      "icon": "blessings/Tentacles.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Maturing_Tentacles",
+      "aspect": "Tentacles",
+      "name": "Maturing Tentacles",
+      "description": "Tentacles deal 1% more damage for every sec. they are alive.",
+      "kind": "blessing",
+      "logbookIndex": 13,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "statusMod",
+          "status": "tentacles",
+          "stat": "dotDamage",
+          "value": 0.01
+        }
+      ]
+    },
+    {
+      "id": "Electrical_Orb",
+      "aspect": "Tentacles",
+      "name": "Electrical Orb",
+      "description": "Adds Electrical Orbs to the pool of objects, which have a 30% chance to bounce to another target.",
+      "kind": "blessing",
+      "logbookIndex": 14,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.3,
+          "then": [],
+          "note": "bounce"
+        }
+      ]
+    },
+    {
+      "id": "Hoarding_Tentacles",
+      "aspect": "Tentacles",
+      "name": "Hoarding Tentacles",
+      "description": "Tentacles deal 5% more damage for every object available in the pool.",
+      "kind": "blessing",
+      "logbookIndex": 15,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "statusMod",
+          "status": "tentacles",
+          "stat": "dotDamage",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "Supercharged_Tentacles",
+      "aspect": "Tentacles",
+      "name": "Supercharged Tentacles",
+      "description": "Tentacles have a 30% chance to be supercharged when they appear, increasing damage and Fire Rate by 20%",
+      "kind": "blessing",
+      "logbookIndex": 16,
+      "icon": "blessings/Tentacles.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Oceans_Embrace",
+      "aspect": "Tentacles",
+      "name": "Ocean's Embrace",
+      "description": "Damage dealt is increased for each nearby ally. Every Ocean Blessing increases this bonus by 3%.",
+      "kind": "blessing",
+      "logbookIndex": 17,
+      "icon": "blessings/Tentacles.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "all",
+          "valuePer": 0.03,
+          "per": "blessing",
+          "max": null,
+          "note": "per Ocean Blessing: this bonus"
+        }
+      ]
+    },
+    {
+      "id": "Oceanic_Supplies",
+      "aspect": "Tentacles",
+      "name": "Oceanic Supplies",
+      "description": "Tentacles have a chance to throw up to 5 types of objects at once.",
+      "kind": "blessing",
+      "logbookIndex": 18,
+      "icon": "blessings/Oceanic_Supplies.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Oceanic_Arsenal",
+      "aspect": "Tentacles",
+      "name": "Oceanic Arsenal",
+      "description": "Tentacles have a 3% chance to throw all available types of objects at once.",
+      "kind": "blessing",
+      "logbookIndex": 19,
+      "icon": "blessings/Oceanic_Arsenal.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Spirit_Ability",
+      "aspect": "Spirit",
+      "name": "Spirit Ability",
+      "description": "Your Ability deals 15% additional damage and fills the Spirit Charge.",
+      "kind": "aspect",
+      "slot": "ability",
+      "logbookIndex": 0,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "ability",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Spirit_Primary",
+      "aspect": "Spirit",
+      "name": "Spirit Primary",
+      "description": "Primary Fire deals 15% additional damage and fills the Spirit Charge.",
+      "kind": "aspect",
+      "slot": "primary",
+      "logbookIndex": 1,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "primary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Spirit_Secondary",
+      "aspect": "Spirit",
+      "name": "Spirit Secondary",
+      "description": "Secondary Fire deals 15% additional damage and fills the Spirit Charge.",
+      "kind": "aspect",
+      "slot": "secondary",
+      "logbookIndex": 2,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "secondary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Barraging_Spirits",
+      "aspect": "Spirit",
+      "name": "Barraging Spirits",
+      "description": "Spirits deal 1% additional damage per hit in the same burst window, up to 100% additional damage.",
+      "kind": "blessing",
+      "logbookIndex": 3,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 1.0,
+          "note": "ramping: this is the maximum"
+        },
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.01
+        }
+      ]
+    },
+    {
+      "id": "Exploitative_Spirits",
+      "aspect": "Spirit",
+      "name": "Exploitative Spirits",
+      "description": "Spirits deal 20% additional damage per Status Effect on the enemy.",
+      "kind": "blessing",
+      "logbookIndex": 4,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "Exploding_Spirits",
+      "aspect": "Spirit",
+      "name": "Exploding Spirits",
+      "description": "Spirits cause an explosion dealing 80 damage.",
+      "kind": "blessing",
+      "logbookIndex": 5,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 80.0,
+          "of": "flat",
+          "chance": 1.0,
+          "scope": "all",
+          "note": "explosion"
+        }
+      ]
+    },
+    {
+      "id": "Generative_Spirits",
+      "aspect": "Spirit",
+      "name": "Generative Spirits",
+      "description": "If Spirits Weakspot hit, they generate 75 Spirit Charge.",
+      "kind": "blessing",
+      "logbookIndex": 6,
+      "icon": "blessings/Spirit.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Rapid_Spirits",
+      "aspect": "Spirit",
+      "name": "Rapid Spirits",
+      "description": "You gain 50% more Spirit Charge.",
+      "kind": "blessing",
+      "logbookIndex": 7,
+      "icon": "blessings/Spirit.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Consuming_Spirits",
+      "aspect": "Spirit",
+      "name": "Consuming Spirits",
+      "description": "An enemy that dies within 2 sec. of being hit by a Spirit generates 100 Spirit Charge.",
+      "kind": "blessing",
+      "logbookIndex": 8,
+      "icon": "blessings/Spirit.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Bouncing_Spirits",
+      "aspect": "Spirit",
+      "name": "Bouncing Spirits",
+      "description": "Spirits have a 25% chance to bounce to an additional target.",
+      "kind": "blessing",
+      "logbookIndex": 9,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.25,
+          "then": [],
+          "note": "bounce"
+        }
+      ]
+    },
+    {
+      "id": "Friendly_Possession",
+      "aspect": "Spirit",
+      "name": "Friendly Possession",
+      "description": "Spirits have a 20% chance to give the player increased damage and 3% increased dash recharge.",
+      "kind": "blessing",
+      "logbookIndex": 10,
+      "icon": "blessings/Spirit.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Aggression_Possession",
+      "aspect": "Spirit",
+      "name": "Aggression Possession",
+      "description": "Spirits deal 5 damage over time per Spirit that hit the target.",
+      "kind": "blessing",
+      "logbookIndex": 11,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 5.0,
+          "of": "flat",
+          "chance": 1.0,
+          "scope": "dot",
+          "note": "per stack"
+        }
+      ]
+    },
+    {
+      "id": "Spiritual_Exchange",
+      "aspect": "Spirit",
+      "name": "Spiritual Exchange",
+      "description": "Spirits cost 20% less Spirit Charge to spawn, but also deal 15% less damage.",
+      "kind": "blessing",
+      "logbookIndex": 12,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": -0.15
+        }
+      ]
+    },
+    {
+      "id": "Growing_Spirits",
+      "aspect": "Spirit",
+      "name": "Growing Spirits",
+      "description": "Spirits deal 20% more damage for every sec. the Spirit Gauge drains.",
+      "kind": "blessing",
+      "logbookIndex": 13,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "Heavy_Spirits",
+      "aspect": "Spirit",
+      "name": "Heavy Spirits",
+      "description": "Spirits have a 20% to become a Heavy Spirit that is slower, but guarantees a Weakspot hit and knocks enemies back.",
+      "kind": "blessing",
+      "logbookIndex": 14,
+      "icon": "blessings/Spirit.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Suffering_Soul",
+      "aspect": "Spirit",
+      "name": "Suffering Soul",
+      "description": "Gain 2% more Spirit Charge for every 10% of the enemy's missing Health.",
+      "kind": "blessing",
+      "logbookIndex": 15,
+      "icon": "blessings/Spirit.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Spiritual_Fulfillment",
+      "aspect": "Spirit",
+      "name": "Spiritual Fulfillment",
+      "description": "Increases Fire Rate by 15% and decreases ability cooldown by 10% after filling the Spirit Gauge. Lasts until the Spirit Gauge empties.",
+      "kind": "blessing",
+      "logbookIndex": 16,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "fireRate",
+          "scope": "all",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Spirits_Grace",
+      "aspect": "Spirit",
+      "name": "Spirit's Grace",
+      "description": "Deal increased damage to enemies below 50% Health. Every Spirit Blessing increases this bonus by 5%.",
+      "kind": "blessing",
+      "logbookIndex": 17,
+      "icon": "blessings/Spirit.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "all",
+          "valuePer": 0.05,
+          "per": "blessing",
+          "max": null,
+          "note": "per Spirit Blessing: this bonus"
+        }
+      ]
+    },
+    {
+      "id": "Plentiful_Spirits",
+      "aspect": "Spirit",
+      "name": "Plentiful Spirits",
+      "description": "Spirit Cost is reduced by 50%.",
+      "kind": "blessing",
+      "logbookIndex": 18,
+      "icon": "blessings/Plentiful_Spirits.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Overwhelming_Spirits",
+      "aspect": "Spirit",
+      "name": "Overwhelming Spirits",
+      "description": "There is a 5% chance to gain a full Spirit Charge on hit.",
+      "kind": "blessing",
+      "logbookIndex": 19,
+      "icon": "blessings/Overwhelming_Spirits.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Windburst_Primary",
+      "aspect": "Windburst",
+      "name": "Primary Windburst",
+      "description": "Primary Fire deals 15% additional damage and has a 20% chance to create a Windburst on targets hit.",
+      "kind": "aspect",
+      "slot": "primary",
+      "logbookIndex": 0,
+      "icon": "blessings/Windburst.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "primary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Windburst_Secondary",
+      "aspect": "Windburst",
+      "name": "Secondary Windburst",
+      "description": "Secondary Fire deals 15% additional damage and has a 20% chance to create a Windburst on targets hit.",
+      "kind": "aspect",
+      "slot": "secondary",
+      "logbookIndex": 1,
+      "icon": "blessings/Windburst.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "secondary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Windburst_Ability",
+      "aspect": "Windburst",
+      "name": "Ability Windburst",
+      "description": "Your Ability deals 15% additional damage and has a 100% chance to create a Windburst on targets hit.",
+      "kind": "aspect",
+      "slot": "ability",
+      "logbookIndex": 2,
+      "icon": "blessings/Windburst.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "ability",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Enveloping_Winds",
+      "aspect": "Windburst",
+      "name": "Enveloping Winds",
+      "description": "Windburst deals 10% more damage for every enemy hit.",
+      "kind": "blessing",
+      "logbookIndex": 3,
+      "icon": "blessings/Windburst.png",
+      "effects": [
+        {
+          "op": "statusMod",
+          "status": "windburst",
+          "stat": "dotDamage",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "Updraft",
+      "aspect": "Windburst",
+      "name": "Updraft",
+      "description": "Windburst has a 10% chance to leave behind an Updraft. Updraft temporarily increases your Fire Rate by 20%.",
+      "kind": "blessing",
+      "logbookIndex": 4,
+      "icon": "blessings/Windburst.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "fireRate",
+          "scope": "all",
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "id": "Whirling_Winds",
+      "aspect": "Windburst",
+      "name": "Whirling Winds",
+      "description": "Windburst has a 20% chance to pull enemies in.",
+      "kind": "blessing",
+      "logbookIndex": 5,
+      "icon": "blessings/Windburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Culling_Winds",
+      "aspect": "Windburst",
+      "name": "Culling Winds",
+      "description": "Windburst deals 4% more damage for every 10% of health that the enemy is missing.",
+      "kind": "blessing",
+      "logbookIndex": 6,
+      "icon": "blessings/Windburst.png",
+      "effects": [
+        {
+          "op": "statusMod",
+          "status": "windburst",
+          "stat": "dotDamage",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "Propelling_Wind",
+      "aspect": "Windburst",
+      "name": "Propelling Wind",
+      "description": "Windburst has a 25% chance of sending a small gust of wind toward a nearby enemy. Deals 100 Weakspot damage and increases by 25 per Wind Blessing.",
+      "kind": "blessing",
+      "logbookIndex": 7,
+      "icon": "blessings/Windburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Headwind",
+      "aspect": "Windburst",
+      "name": "Headwind",
+      "description": "Windburst Slows enemies for 3 seconds. The enemies' projectiles are Slowed by 50% and deal 25% less damage.",
+      "kind": "blessing",
+      "logbookIndex": 8,
+      "icon": "blessings/Windburst.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": -0.25
+        }
+      ]
+    },
+    {
+      "id": "Eye_of_the_Storm",
+      "aspect": "Windburst",
+      "name": "Eye of the Storm",
+      "description": "Windburst deals up to 25% additional damage the closer the enemies are to the middle of the Windburst.",
+      "kind": "blessing",
+      "logbookIndex": 9,
+      "icon": "blessings/Windburst.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.25,
+          "note": "ramping: this is the maximum"
+        }
+      ]
+    },
+    {
+      "id": "Destructive_Winds",
+      "aspect": "Windburst",
+      "name": "Destructive Winds",
+      "description": "Windbursts deal 40% additional area damage but their area size is reduced by 40%.",
+      "kind": "blessing",
+      "logbookIndex": 10,
+      "icon": "blessings/Windburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Ramping_Winds",
+      "aspect": "Windburst",
+      "name": "Ramping Winds",
+      "description": "Enemies that die within 1 sec. of being hit by a Windburst create an additional Windburst.",
+      "kind": "blessing",
+      "logbookIndex": 11,
+      "icon": "blessings/Ramping_Winds.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Raging_Storm",
+      "aspect": "Windburst",
+      "name": "Raging Storm",
+      "description": "Windburst damage now scales with 100% of its area of effect size.",
+      "kind": "blessing",
+      "logbookIndex": 12,
+      "icon": "blessings/Windburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Storm_Belt",
+      "aspect": "Windburst",
+      "name": "Storm Belt",
+      "description": "Windburst deals 10% more damage each time it triggers on the same enemy. Up to 5 times.",
+      "kind": "blessing",
+      "logbookIndex": 13,
+      "icon": "blessings/Windburst.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "all",
+          "valuePer": 0.1,
+          "per": "trigger",
+          "max": 5.0
+        }
+      ]
+    },
+    {
+      "id": "Storm_Caller",
+      "aspect": "Windburst",
+      "name": "Storm Caller",
+      "description": "Windbursts that trigger from Weakspots have a 30% increased radius.",
+      "kind": "blessing",
+      "logbookIndex": 14,
+      "icon": "blessings/Windburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Lifting_Wind",
+      "aspect": "Windburst",
+      "name": "Lifting Winds",
+      "description": "Windbursts have a 20% chance to launch enemies into the air. Launched enemies are Stunned and take 50% of the Windburst's damage when they land.",
+      "kind": "blessing",
+      "logbookIndex": 15,
+      "icon": "blessings/Windburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Squall",
+      "aspect": "Windburst",
+      "name": "Squall",
+      "description": "Windburst radius has a 20% chance to increase by 30%.",
+      "kind": "blessing",
+      "logbookIndex": 16,
+      "icon": "blessings/Windburst.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Winds_Devastation",
+      "aspect": "Windburst",
+      "name": "Wind's Devastation",
+      "description": "Every Wind Blessing increases the size of all areas of effect by 5%.",
+      "kind": "blessing",
+      "logbookIndex": 17,
+      "icon": "blessings/Windburst.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "all",
+          "valuePer": 0.05,
+          "per": "blessing",
+          "max": null,
+          "note": "per Wind Blessing: the size of all areas of effect"
+        }
+      ]
+    },
+    {
+      "id": "Roaring_Winds",
+      "aspect": "Windburst",
+      "name": "Roaring Winds",
+      "description": "Windburst occurs two times, with a larger area on the second activation.",
+      "kind": "blessing",
+      "logbookIndex": 18,
+      "icon": "blessings/Roaring_Winds.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Raging_Winds",
+      "aspect": "Windburst",
+      "name": "Raging Winds",
+      "description": "Windburst occurs three times, with a larger area each time it triggers.",
+      "kind": "blessing",
+      "logbookIndex": 19,
+      "icon": "blessings/Raging_Winds.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Brine_Primary",
+      "aspect": "Brine",
+      "name": "Brine Primary",
+      "description": "Your Primary deals 15% more damage and fills the Brine Vials.",
+      "kind": "aspect",
+      "slot": "primary",
+      "logbookIndex": 0,
+      "icon": "blessings/Brine.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "primary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Brine_Secondary",
+      "aspect": "Brine",
+      "name": "Brine Secondary",
+      "description": "Your Secondary deals 15% more damage and fills the Brine Vials.",
+      "kind": "aspect",
+      "slot": "secondary",
+      "logbookIndex": 1,
+      "icon": "blessings/Brine.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "secondary",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Brine_Ability",
+      "aspect": "Brine",
+      "name": "Brine Ability",
+      "description": "Your Ability deals 15% more damage and fills the Brine Vials.",
+      "kind": "aspect",
+      "slot": "ability",
+      "logbookIndex": 2,
+      "icon": "blessings/Brine.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "ability",
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": "Splattering_Brine",
+      "aspect": "Brine",
+      "name": "Splattering Brine",
+      "description": "The Brine Ball has a 30% chance to split into smaller balls on impact, which deal 20% of the Brine Ball's damage.",
+      "kind": "blessing",
+      "logbookIndex": 3,
+      "icon": "blessings/Brine.png",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 0.2,
+          "of": "onHitDamage",
+          "chance": 1.0,
+          "scope": "all",
+          "note": "scales from Brine Ball"
+        }
+      ]
+    },
+    {
+      "id": "Detonating_Brine",
+      "aspect": "Brine",
+      "name": "Detonating Brine",
+      "description": "The Brine Ball has a 25% chance to create a pool of brine on impact. The pool explodes after a short delay, dealing 50% of the Brine Ball's Damage.",
+      "kind": "blessing",
+      "logbookIndex": 4,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Expanding_Brine",
+      "aspect": "Brine",
+      "name": "Expanding Brine",
+      "description": "The Brine Ball grows in size and damage by up to 25% the further it travels before bouncing.",
+      "kind": "blessing",
+      "logbookIndex": 5,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Accelerated_Brine",
+      "aspect": "Brine",
+      "name": "Accelerated Brine",
+      "description": "The Brine Ball travels 40% faster.",
+      "kind": "blessing",
+      "logbookIndex": 6,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Acidic_Brine",
+      "aspect": "Brine",
+      "name": "Acidic Brine",
+      "description": "Enemies hit by the Brine Ball take 15% of the Brine Ball's damage over a short duration.",
+      "kind": "blessing",
+      "logbookIndex": 7,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Unstable_Vials",
+      "aspect": "Brine",
+      "name": "Unstable Vials",
+      "description": "Brine Vials can now be overcharged 3 times by filling them after they are full, increasing the Brine Ball's damage by 50% per overcharge.",
+      "kind": "blessing",
+      "logbookIndex": 8,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Mucous_Brine",
+      "aspect": "Brine",
+      "name": "Mucous Brine",
+      "description": "Enemies hit by the Brine Ball get Slowed and take 20% extra damage for a short duration.",
+      "kind": "blessing",
+      "logbookIndex": 9,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Solid_Brine",
+      "aspect": "Brine",
+      "name": "Solid Brine",
+      "description": "Increases the Brine Ball's base damage by 100.",
+      "kind": "blessing",
+      "logbookIndex": 10,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Absorbing_Vials",
+      "aspect": "Brine",
+      "name": "Absorbing Vials",
+      "description": "The Brine Ball fills 6.0% of a Brine Vial when hitting an enemy.",
+      "kind": "blessing",
+      "logbookIndex": 11,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Invigorating_Brine",
+      "aspect": "Brine",
+      "name": "Invigorating Brine",
+      "description": "The Brine Ball temporarily increases the damage of all nearby Allies by 10% on hit.",
+      "kind": "blessing",
+      "logbookIndex": 12,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Magnetic_Brine",
+      "aspect": "Brine",
+      "name": "Magnetic Brine",
+      "description": "The Brine Ball deals 10% more damage and homes in toward enemies after bouncing. The damage increases by 10% after each bounce.",
+      "kind": "blessing",
+      "logbookIndex": 13,
+      "icon": "blessings/Brine.png",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "all",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "Vial_Repeater",
+      "aspect": "Brine",
+      "name": "Vial Repeater",
+      "description": "Consuming one Brine Vial has a 20% chance to consume all available Brine Vials to create additional Brine Balls.",
+      "kind": "blessing",
+      "logbookIndex": 14,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Vial_Pouch",
+      "aspect": "Brine",
+      "name": "Vial Pouch",
+      "description": "Gain 3 Brine Vials and increase the speed they fill up by 10%.",
+      "kind": "blessing",
+      "logbookIndex": 15,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Lethal_Brine",
+      "aspect": "Brine",
+      "name": "Lethal Brine",
+      "description": "The Brine Ball has a 5% chance to execute enemies below 25% health.",
+      "kind": "blessing",
+      "logbookIndex": 16,
+      "icon": "blessings/Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Mutagenic_Brine",
+      "aspect": "Brine",
+      "name": "Mutagenic Brine",
+      "description": "Every Brine Blessing increases the damage of all areas of effect by 3%.",
+      "kind": "blessing",
+      "logbookIndex": 17,
+      "icon": "blessings/Brine.png",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "all",
+          "valuePer": 0.03,
+          "per": "blessing",
+          "max": null,
+          "note": "per Brine Blessing: the damage of all areas of effect"
+        }
+      ]
+    },
+    {
+      "id": "Brine_Mitosis",
+      "aspect": "Brine",
+      "name": "Brine Mitosis",
+      "description": "The Brine Ball splits in 2 when it bounces.",
+      "kind": "blessing",
+      "logbookIndex": 18,
+      "icon": "blessings/Brine_Mitosis.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    },
+    {
+      "id": "Bouncing_Brine",
+      "aspect": "Brine",
+      "name": "Bouncing Brine",
+      "description": "The Brine Ball can now bounce 2 times before being destroyed, exploding on each bounce.",
+      "kind": "blessing",
+      "logbookIndex": 19,
+      "icon": "blessings/Bouncing_Brine.png",
+      "effects": [],
+      "unmodeled": "no numeric damage effect the DSL can express"
+    }
+  ]
+}
