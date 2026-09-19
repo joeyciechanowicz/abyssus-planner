@@ -858,8 +858,9 @@
           "name": "Compact Transformer",
           "description": "Secondary charges twice as fast.",
           "icon": "forge/Spark_Gap.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "mult", "stat": "fireRate", "scope": "secondary", "value": 1.0 }
+          ]
         },
         {
           "name": "Larger Battery",
@@ -1423,8 +1424,9 @@
           "name": "Spare Discs",
           "description": "+3 maximum stored discs.",
           "icon": "forge/Spare_Discs.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "flat", "stat": "clipSize", "scope": "all", "value": 3 }
+          ]
         },
         {
           "name": "Slim Discs",
@@ -1757,8 +1759,9 @@
           "name": "Elastic String",
           "description": "Takes less time to fully charge, and continuing to charge further increases the damage by up to 50%.",
           "icon": "forge/Elastic_String.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "mult", "stat": "damage", "scope": "all", "value": 0.5, "note": "ramping: this is the maximum; charge-time reduction not modeled" }
+          ]
         },
         {
           "name": "True Form",
@@ -2065,8 +2068,9 @@
           "name": "Molotov Fuel",
           "description": "Enemies take 50% continuous weapon damage for 5 sec. after being hit.",
           "icon": "forge/Molotov_Fuel.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "proc", "amount": 0.5, "of": "weaponDamage", "chance": 1.0, "scope": "dot" }
+          ]
         },
         {
           "name": "Revolving Valve",
@@ -2093,8 +2097,9 @@
           "name": "Bouncy Core",
           "description": "Projectiles bounce 2 times or until an enemy is directly hit, exploding each bounce and dealing 25% more damage.",
           "icon": "forge/Bouncy_Core.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "stacking", "stat": "damage", "scope": "all", "valuePer": 0.25, "per": "bounce", "max": 2 }
+          ]
         },
         {
           "name": "Spreading Heat",
@@ -2340,15 +2345,17 @@
           "name": "Discharging Reload",
           "description": "A discarded Fish Deity explodes in a 8-meter radius after reloading, dealing 2000 damage and stunning enemies hit.",
           "icon": "forge/Discharging_Reload.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "trigger", "on": "reload", "chance": 1.0, "then": [{ "op": "proc", "amount": 2000, "of": "flat", "scope": "all" }] }
+          ]
         },
         {
           "name": "Elastic Goo",
           "description": "Projectiles bounce, exploding and dealing 25% more damage for each bounce.",
           "icon": "forge/Elastic_Goo.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "stacking", "stat": "damage", "scope": "all", "valuePer": 0.25, "per": "bounce", "max": null }
+          ]
         },
         {
           "name": "Softening Acid",
@@ -2358,7 +2365,7 @@
             {
               "op": "mult",
               "stat": "damage",
-              "scope": "all",
+              "scope": "secondary",
               "value": 0.5,
               "note": "amplifier on affected enemies"
             }
@@ -2375,15 +2382,23 @@
           "name": "Repeating Jabs",
           "description": "Weakspot stabs create a second stab.",
           "icon": "forge/Repeating_Jabs.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "trigger", "on": "weakspot", "chance": 1.0, "then": [{ "op": "proc", "amount": 1.0, "of": "onHitDamage", "scope": "all" }] }
+          ]
         },
         {
           "name": "Pursuing Horn",
           "description": "Killing an enemy refreshes Dash. Dashing increases your Secondary damage by 25% for 2 sec.",
           "icon": "forge/Pursuing_Horn.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "trigger",
+              "on": "dash",
+              "chance": 1.0,
+              "then": [{ "op": "mult", "stat": "damage", "scope": "secondary", "value": 0.25 }],
+              "note": "kill-refreshes-Dash resource loop not modeled"
+            }
+          ]
         },
         {
           "name": "Long Horn",
@@ -2716,14 +2731,21 @@
           "name": "Splitting Harpoons",
           "description": "Weakspots create an additional harpoon that seeks out a new target.",
           "icon": "forge/Increased_Combo.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "trigger", "on": "weakspot", "chance": 1.0, "then": [{ "op": "proc", "amount": 1.0, "of": "onHitDamage", "scope": "all" }] }
+          ]
         },
         {
           "name": "Blessed Harpoons",
           "description": "Primary and Secondary deals 10% more damage for every Minor and Major Blessing.",
           "icon": "forge/Increased_Combo.webp",
           "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "primary",
+              "value": 0.1
+            },
             {
               "op": "mult",
               "stat": "damage",
@@ -2736,15 +2758,8 @@
           "name": "Charmed Harpoons",
           "description": "Gain buffs based on your Charms.\n\nCommon: +20% fire rate and +20% damage.\nRare: +30% reload speed and +20% Blessing trigger chance.\nLegendary: Shoot an extra harpoon.",
           "icon": "forge/Increased_Combo.webp",
-          "effects": [
-            {
-              "op": "mult",
-              "stat": "triggerChance",
-              "scope": "all",
-              "value": 0.0,
-              "note": "see description for magnitude"
-            }
-          ]
+          "effects": [],
+          "unmodeled": "per-rarity-tier bonuses can't be keyed off owned charm rarity in the current conditions vocabulary; triggerChance also isn't consumed by the engine"
         }
       ]
     }

@@ -50,15 +50,8 @@
           "name": "Explosive Culling",
           "description": "Your grenade deals bonus damage based on enemies' missing Health.",
           "icon": "forge/Explosive_Culling.webp",
-          "effects": [
-            {
-              "op": "conditional",
-              "when": "targetHealthBelow",
-              "threshold": 1.0,
-              "then": [],
-              "note": "scales with missing Health; magnitude unstated"
-            }
-          ]
+          "effects": [],
+          "unmodeled": "scales continuously with missing Health; magnitude unstated"
         },
         {
           "id": "implosive_force",
@@ -201,14 +194,8 @@
           "name": "The Thrill",
           "description": "Increases movement speed by 10% for 5 sec. per enemy hit by the anchor.",
           "icon": "forge/The_Thrill.webp",
-          "effects": [
-            {
-              "op": "mult",
-              "stat": "movementSpeed",
-              "scope": "all",
-              "value": 0.1
-            }
-          ]
+          "effects": [],
+          "unmodeled": "movementSpeed isn't consumed by the engine -- no DPS impact regardless of magnitude"
         },
         {
           "id": "grenanchor",
@@ -299,8 +286,9 @@
           "name": "Geyser",
           "description": "Causes a delayed explosion where the anchor hits, dealing 150% of the anchor's damage.",
           "icon": "forge/Geyser.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "proc", "amount": 1.5, "of": "onHitDamage", "chance": 1.0, "scope": "all" }
+          ]
         },
         {
           "id": "death_slam",
@@ -349,8 +337,16 @@
           "name": "Shockwave",
           "description": "Spears create shockwaves when sticking and for every 3 hits. Shockwaves deal 40 damage.",
           "icon": "forge/Shockwave.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "proc", "amount": 40, "of": "flat", "chance": 1.0, "scope": "all", "note": "guaranteed on-stick shockwave" },
+            {
+              "op": "trigger",
+              "on": "hit",
+              "chance": 0.33,
+              "then": [{ "op": "proc", "amount": 40, "of": "flat", "chance": 1.0, "scope": "all" }],
+              "note": "approximates 'every 3 hits'"
+            }
+          ]
         },
         {
           "id": "chain_pulse",
@@ -381,8 +377,15 @@
           "name": "Weakspot Spear",
           "description": "Spears that stick on a Weakspot have 25% increased damage and range.",
           "icon": "forge/Shockwave.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "trigger",
+              "on": "weakspot",
+              "chance": 1.0,
+              "then": [{ "op": "mult", "stat": "abilityDamage", "scope": "ability", "value": 0.25 }],
+              "note": "scaled by assumed weakspot hit rate; range bonus not modeled"
+            }
+          ]
         },
         {
           "id": "fragmenting_spear",
@@ -507,8 +510,9 @@
           "name": "Hunters Mark",
           "description": "Enemies hit by the Ancient Core are marked, increasing all Weakspot damage they receive by 25% for 5 sec.",
           "icon": "forge/Hunters_Mark.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "mult", "stat": "weakspotDamage", "scope": "all", "value": 0.25, "note": "modeled as always-active rather than tracking the 5s window" }
+          ]
         },
         {
           "id": "laser_sight",
@@ -565,8 +569,9 @@
           "name": "Explosive Blast",
           "description": "The blast from the Ancient Core explodes on hit, dealing damage to nearby enemies equivalent to 25% of the hit.",
           "icon": "forge/Explosive_Blast.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            { "op": "proc", "amount": 0.25, "of": "onHitDamage", "chance": 1.0, "scope": "all" }
+          ]
         }
       ]
     },

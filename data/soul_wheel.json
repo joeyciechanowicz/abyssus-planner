@@ -423,14 +423,8 @@
           "name": "Padded Suit",
           "description": "Reduces damage taken by 25%.",
           "icon": "soulwheel/Padded_Suit.webp",
-          "effects": [
-            {
-              "op": "mult",
-              "stat": "damageTaken",
-              "scope": "all",
-              "value": -0.25
-            }
-          ]
+          "effects": [],
+          "unmodeled": "damageTaken isn't consumed by the engine -- no DPS impact regardless of magnitude"
         },
         {
           "id": "picky_worship_ii",

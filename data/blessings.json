@@ -260,14 +260,8 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "statusMod",
-          "status": "hemorrhage",
-          "stat": "dotDamage",
-          "value": 0.05
-        }
-      ],
+      "effects": [],
+      "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale",
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -387,15 +381,8 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "statusMod",
-          "status": "hemorrhage",
-          "stat": "dotDamage",
-          "value": 0.2,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale",
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -491,17 +478,8 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 0.1,
-          "of": "statusDamage",
-          "chance": 1.0,
-          "scope": "dot",
-          "note": "over 8 seconds",
-          "scalesWith": "{DamgePercent}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "modifies the Hemorrhage status's damage (of: 'statusDamage' isn't consumed by the engine either), but Hemorrhage also has no base tick-damage magnitude anywhere in the data -- nothing to scale",
       "upgrades": [
         {
           "variable": "{DamgePercent}",
@@ -691,16 +669,8 @@
       "kind": "blessing",
       "logbookIndex": 12,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.2,
-          "then": [],
-          "note": "bounce",
-          "scalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "bounces Hemorrhage to another target, but Hemorrhage itself has no base damage magnitude to bounce",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -819,16 +789,8 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.1,
-          "then": [],
-          "note": "weakspot hit",
-          "scalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "converts a hit into a guaranteed Weakspot hit; weakspot rate is a player-set assumption in this simulator, not something a per-effect override can change",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -862,15 +824,8 @@
       "kind": "blessing",
       "logbookIndex": 16,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "statusMod",
-          "status": "hemorrhage",
-          "stat": "dotDamage",
-          "value": 0.01,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale",
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -2382,15 +2337,8 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Flares.webp",
-      "effects": [
-        {
-          "op": "statusMod",
-          "status": "fire",
-          "stat": "dotDamage",
-          "value": 0.15,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "per-status-effect-count scaling on the Fire DoT -- statusMod isn't consumed by the engine, and this is a per-count effect (needs stacking) with no status-effect-count 'per' concept either",
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -2424,16 +2372,8 @@
       "kind": "blessing",
       "logbookIndex": 16,
       "icon": "blessings/Flares.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.1,
-          "then": [],
-          "note": "stun",
-          "scalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "pure crowd control (Stun), no damage component",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -2750,16 +2690,8 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Goldburst.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.1,
-          "then": [],
-          "note": "stun",
-          "scalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "pure crowd control (Stun), no damage component; chance also depends on a Gold economy value not tracked here",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -2872,16 +2804,8 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Goldburst.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.05,
-          "then": [],
-          "note": "weakspot hit",
-          "scalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "converts a hit into a guaranteed Weakspot hit; weakspot rate is a player-set assumption in this simulator, not something a per-effect override can change",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -3022,16 +2946,8 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Goldburst.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.2,
-          "then": [],
-          "note": "triggers again",
-          "scalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "re-triggers Goldburst on a new target; no retrigger construct in the DSL",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -3084,16 +3000,8 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Goldburst.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.2,
-          "then": [],
-          "note": "explode",
-          "scalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "explosion damage magnitude isn't published",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -3374,15 +3282,8 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Goldburst.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.5,
-          "then": [],
-          "note": "double"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "a 50/50 double-or-halve swing isn't a fixed multiplier the DSL can express",
       "upgrades": [
         {
           "variable": "{IncreaseChance}",
@@ -4578,8 +4479,18 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 50.0,
+          "of": "flat",
+          "chance": 0.2,
+          "scope": "all",
+          "note": "Thunderstrike",
+          "scalesWith": "{Damage}",
+          "chanceScalesWith": "{Chance}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -4632,16 +4543,8 @@
       "kind": "blessing",
       "logbookIndex": 5,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.3,
-          "then": [],
-          "note": "stun",
-          "scalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "pure crowd control (Stun), no damage component",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -4675,16 +4578,8 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.3,
-          "then": [],
-          "note": "explode",
-          "scalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "explosion damage magnitude isn't published",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -4748,15 +4643,8 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [
-        {
-          "op": "statusMod",
-          "status": "lightning",
-          "stat": "dotDamage",
-          "value": 0.5,
-          "scalesWith": "{PercentDamage}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "modifies the Chain Lightning status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
       "upgrades": [
         {
           "variable": "{PercentDamage}",
@@ -6007,17 +5895,8 @@
       "kind": "blessing",
       "logbookIndex": 17,
       "icon": "blessings/Shadows.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "damage",
-          "scope": "all",
-          "valuePer": 0.1,
-          "per": "blessing",
-          "max": null,
-          "note": "per Shadow Blessing: the duration of all Status Effects"
-        }
-      ]
+      "effects": [],
+      "unmodeled": "increases status effect duration (statusDuration), which the engine doesn't consume -- no DPS impact regardless of magnitude"
     },
     {
       "id": "Nights_Minor_Blessing",
@@ -6248,15 +6127,8 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Tentacles.webp",
-      "effects": [
-        {
-          "op": "statusMod",
-          "status": "tentacles",
-          "stat": "dotDamage",
-          "value": 0.25,
-          "scalesWith": "{DamageIncreasePercentage}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
       "upgrades": [
         {
           "variable": "{DamageIncreasePercentage}",
@@ -6445,10 +6317,12 @@
       "icon": "blessings/Tentacles.webp",
       "effects": [
         {
-          "op": "mult",
+          "op": "stacking",
           "stat": "fireRate",
           "scope": "all",
-          "value": 0.1,
+          "valuePer": 0.1,
+          "per": "tentacle",
+          "max": null,
           "scalesWith": "{AttackSpeedIncrease}"
         }
       ],
@@ -6741,15 +6615,8 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Tentacles.webp",
-      "effects": [
-        {
-          "op": "statusMod",
-          "status": "tentacles",
-          "stat": "dotDamage",
-          "value": 0.01,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -6783,16 +6650,8 @@
       "kind": "blessing",
       "logbookIndex": 14,
       "icon": "blessings/Tentacles.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.3,
-          "then": [],
-          "note": "bounce",
-          "scalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "adds a new pool object with its own unpublished base damage, plus a bounce chance with no magnitude to bounce",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -6826,15 +6685,8 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Tentacles.webp",
-      "effects": [
-        {
-          "op": "statusMod",
-          "status": "tentacles",
-          "stat": "dotDamage",
-          "value": 0.05,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -7187,10 +7039,12 @@
       "icon": "blessings/Spirit.webp",
       "effects": [
         {
-          "op": "mult",
+          "op": "stacking",
           "stat": "damage",
           "scope": "all",
-          "value": 0.2,
+          "valuePer": 0.2,
+          "per": "statusEffectOnEnemy",
+          "max": null,
           "scalesWith": "{DamageIncrease}"
         }
       ],
@@ -7398,16 +7252,8 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Spirit.webp",
-      "effects": [
-        {
-          "op": "trigger",
-          "on": "hit",
-          "chance": 0.25,
-          "then": [],
-          "note": "bounce",
-          "scalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "bounces to an additional target, but Spirit summons have no base damage magnitude tracked in the data",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -8016,15 +7862,8 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Windburst.webp",
-      "effects": [
-        {
-          "op": "statusMod",
-          "status": "windburst",
-          "stat": "dotDamage",
-          "value": 0.1,
-          "scalesWith": "{DamageIncreasePer}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "modifies the Windburst status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
       "upgrades": [
         {
           "variable": "{DamageIncreasePer}",
@@ -8060,11 +7899,20 @@
       "icon": "blessings/Windburst.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "fireRate",
-          "scope": "all",
-          "value": 0.2,
-          "scalesWith": "{FireRateIncrease}"
+          "op": "trigger",
+          "on": "hit",
+          "chance": 0.1,
+          "then": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.2,
+              "scalesWith": "{FireRateIncrease}"
+            }
+          ],
+          "note": "10% chance per hit to spawn an Updraft; modeled as always-up while active rather than tracking its own duration",
+          "scalesWith": "{SpawnChance}"
         }
       ],
       "upgrades": [
@@ -8157,15 +8005,8 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Windburst.webp",
-      "effects": [
-        {
-          "op": "statusMod",
-          "status": "windburst",
-          "stat": "dotDamage",
-          "value": 0.04,
-          "scalesWith": "{DamageIncreasePercentage}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "modifies the Windburst status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
       "upgrades": [
         {
           "variable": "{DamageIncreasePercentage}",
@@ -8269,15 +8110,8 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Windburst.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": -0.25,
-          "scalesWith": "{DamageReductionPercentage}"
-        }
-      ],
+      "effects": [],
+      "unmodeled": "weakens damage from enemy projectiles hitting the player -- a mitigation effect, not a player-damage stat",
       "upgrades": [
         {
           "variable": "{Duration}",
@@ -8398,8 +8232,9 @@
       "kind": "blessing",
       "logbookIndex": 10,
       "icon": "blessings/Windburst.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        { "op": "mult", "stat": "aoeDamage", "scope": "all", "value": 0.4, "scalesWith": "{Damage}", "note": "area-size reduction not modeled (aoeSize isn't DPS-consumed)" }
+      ],
       "upgrades": [
         {
           "variable": "{Damage}",

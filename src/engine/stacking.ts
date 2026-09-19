@@ -89,8 +89,10 @@ export function applyEffects(
         break;
 
       case 'statusMod':
+        // Not logged to mods.log: statusMods is never read for the DPS number
+        // (no consumer exists yet), so logging it would misleadingly show up
+        // as a counted Contribution when it changes nothing.
         mods.statusMods.set(e.status, (mods.statusMods.get(e.status) ?? 0) + e.value);
-        mods.log.push({ source, stat: `status:${e.status}`, scope: 'dot', value: e.value });
         break;
 
       case 'applyStatus': {
@@ -126,9 +128,13 @@ export function applyEffects(
         // often the *effect* procs given a weakspot hit, not how often a
         // weakspot hit happens at all.
         const effectiveChance = e.on === 'weakspot' ? e.chance * opts.weakspotAccuracy : e.chance;
-        const scaled = e.then.map((inner) =>
-          inner.op === 'mult' ? { ...inner, value: inner.value * effectiveChance } : inner,
-        );
+        const scaled = e.then.map((inner) => {
+          if (inner.op === 'mult') return { ...inner, value: inner.value * effectiveChance };
+          // A nested `proc`'s own `chance` is independent of the trigger firing at
+          // all -- compose them by multiplying, same expected-value math as `mult`.
+          if (inner.op === 'proc') return { ...inner, chance: (inner.chance ?? 1) * effectiveChance };
+          return inner;
+        });
         applyEffects(mods, scaled as Effect[], `${source} (on ${e.on})`, opts, ctx);
         break;
       }
