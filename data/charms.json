@@ -8,7 +8,7 @@
       "description": "Deal up to 30% more damage to enemies the further away they are.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Squint",
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "mult",
@@ -26,7 +26,7 @@
       "description": "Deal 25% more damage to enemies within 10 meters of you.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "mult",
@@ -44,7 +44,7 @@
       "description": "Using an ability grants a 50% increased fire rate for 5 sec.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -55,7 +55,7 @@
       "description": "10% chance for any hit to do triple damage.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: No Need",
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -66,7 +66,7 @@
       "description": "Reduce dash cooldown by half and increases movement speed by 15%.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "mult",
@@ -83,7 +83,7 @@
       "description": "Increases damage and movement speed by 2% for every 10 Health you are missing.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Speedster",
-      "icon": "charms/Rare.png",
+      "icon": "charms/Rare.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -94,7 +94,7 @@
       "description": "Merchant prices are 25% cheaper for all players.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Legendary.png",
+      "icon": "charms/Legendary.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -105,7 +105,7 @@
       "description": "You shoot two additional projectiles diagonally left and right.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Legendary.png",
+      "icon": "charms/Legendary.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -116,7 +116,7 @@
       "description": "Projectiles have a 50% chance to explode on hit.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Lightbringer",
-      "icon": "charms/Rare.png",
+      "icon": "charms/Rare.webp",
       "effects": [
         {
           "op": "trigger",
@@ -134,7 +134,7 @@
       "description": "Your explosions trigger twice.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: It's A Blast",
-      "icon": "charms/Legendary.png",
+      "icon": "charms/Legendary.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -145,7 +145,7 @@
       "description": "Loot Golems appear 10 times more often.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Wealthy",
-      "icon": "charms/Legendary.png",
+      "icon": "charms/Legendary.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -156,7 +156,7 @@
       "description": "Using your ability has a 50% chance to not trigger the cooldown.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Legendary.png",
+      "icon": "charms/Legendary.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -167,7 +167,7 @@
       "description": "30% chance to not take damage when hit.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Meat Shield",
-      "icon": "charms/Rare.png",
+      "icon": "charms/Rare.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -178,7 +178,7 @@
       "description": "Revives and fully heals you. Charm breaks when activated.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Legendary.png",
+      "icon": "charms/Legendary.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -189,7 +189,7 @@
       "description": "Deal 40% more damage while above 80% Health.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "conditional",
@@ -213,7 +213,7 @@
       "description": "Increase max Health by 25% while equipped.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "flat",
@@ -230,7 +230,7 @@
       "description": "Killing an enemy doubles the damage of your next hit.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "trigger",
@@ -255,7 +255,7 @@
       "description": "Projectiles pierce enemies, and deal 100% more damage for each pierce.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "mult",
@@ -272,7 +272,7 @@
       "description": "Deal 50% more damage for the first 10 sec. of an encounter.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "mult",
@@ -289,7 +289,7 @@
       "description": "Increase all damage by 3% for every Depth completed while this Charm is equipped.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Rare.png",
+      "icon": "charms/Rare.webp",
       "effects": [
         {
           "op": "mult",
@@ -306,7 +306,7 @@
       "description": "Increase max Health by 3% for every Depth completed while this Charm is equipped.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Thick-Skinned",
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -317,7 +317,7 @@
       "description": "Increase damage by 1% every 2 sec. of an encounter. Caps at 50%. Resets at the end of the encounter.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Unbeatable",
-      "icon": "charms/Rare.png",
+      "icon": "charms/Rare.webp",
       "effects": [
         {
           "op": "mult",
@@ -334,7 +334,7 @@
       "description": "Automatically upgrades the next upgradeable Blessing you pick up. Breaks when activated or dropped.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Legendary.png",
+      "icon": "charms/Legendary.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -345,7 +345,7 @@
       "description": "Health pickups no longer restore Health, but give 50% of the healing value in Gold instead. This includes Healing Shrines.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Rare.png",
+      "icon": "charms/Rare.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -356,7 +356,7 @@
       "description": "Increase damage by 1% for each hit; the damage bonus resets on a miss. Caps at 50%.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "mult",
@@ -373,7 +373,7 @@
       "description": "Opens all locks without expending keys.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Locksmith",
-      "icon": "charms/Legendary.png",
+      "icon": "charms/Legendary.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -384,7 +384,7 @@
       "description": "Any overkill damage is transferred from the killed enemy to the nearest enemy.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Exterminate",
-      "icon": "charms/Legendary.png",
+      "icon": "charms/Legendary.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -395,7 +395,7 @@
       "description": "Deal 20% more damage to Bosses & Elites.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "mult",
@@ -412,7 +412,7 @@
       "description": "Increases damage by 40% but decreases damage boost by 1% for every minute elapsed since the start of the expedition.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "mult",
@@ -429,7 +429,7 @@
       "description": "Deal 50% more damage against enemies with modifiers.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Redo",
-      "icon": "charms/Rare.png",
+      "icon": "charms/Rare.webp",
       "effects": [
         {
           "op": "mult",
@@ -446,7 +446,7 @@
       "description": "Take 50% less damage while under 50% health.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "mult",
@@ -463,7 +463,7 @@
       "description": "Increases damage, fire rate, and movement speed by 30%. Charm breaks after taking damage.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -474,7 +474,7 @@
       "description": "Wishing Well has a 20% increased success rate for all players.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Head Or Tails? Wrong.",
-      "icon": "charms/Rare.png",
+      "icon": "charms/Rare.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -485,7 +485,7 @@
       "description": "Deal 60% more damage to the last enemy that killed you.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: First Of Many",
-      "icon": "charms/Rare.png",
+      "icon": "charms/Rare.webp",
       "effects": [
         {
           "op": "mult",
@@ -502,7 +502,7 @@
       "description": "Increase Status Effect effectiveness by 25%.",
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Torment",
-      "icon": "charms/Rare.png",
+      "icon": "charms/Rare.webp",
       "effects": [
         {
           "op": "mult",
@@ -519,7 +519,7 @@
       "description": "Allies (excluding you) deal 15% more damage.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "mult",
@@ -536,7 +536,7 @@
       "description": "Doubles the contents of chests for you.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Legendary.png",
+      "icon": "charms/Legendary.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -547,7 +547,7 @@
       "description": "Deal 10% more damage for every Minor and Major Blessing.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Rare.png",
+      "icon": "charms/Rare.webp",
       "effects": [
         {
           "op": "mult",
@@ -564,7 +564,7 @@
       "description": "Gain twice as many Soul Fragments.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Legendary.png",
+      "icon": "charms/Legendary.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -575,7 +575,7 @@
       "description": "All players deal 200% additional damage to Room Objectives and charge them 200% faster.",
       "unlockedByDefault": true,
       "unlockCondition": null,
-      "icon": "charms/Common.png",
+      "icon": "charms/Common.webp",
       "effects": [
         {
           "op": "mult",

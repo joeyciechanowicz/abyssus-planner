@@ -13,7 +13,7 @@
       {
         "name": "Extra Pockets",
         "description": "Gain 3 Ability stacks.",
-        "icon": "forge/Ability_Shared.png",
+        "icon": "forge/Ability_Shared.webp",
         "effects": [
           {
             "op": "flat",
@@ -26,21 +26,21 @@
       {
         "name": "Increased Efficiency",
         "description": "Kills Lower the cooldown of your Ability.",
-        "icon": "forge/Ability_Shared.png",
+        "icon": "forge/Ability_Shared.webp",
         "effects": [],
         "unmodeled": "no numeric damage effect the DSL can express"
       },
       {
         "name": "Rich Get Richer",
         "description": "Decreases cooldown by 10% for every Ability stack.",
-        "icon": "forge/Ability_Shared.png",
+        "icon": "forge/Ability_Shared.webp",
         "effects": [],
         "unmodeled": "no numeric damage effect the DSL can express"
       },
       {
         "name": "Investment",
         "description": "Increases Ability damage by 10% for each God Blessing on your Ability.",
-        "icon": "forge/Ability_Shared.png",
+        "icon": "forge/Ability_Shared.webp",
         "effects": [
           {
             "op": "mult",
@@ -53,7 +53,7 @@
       {
         "name": "Double Trouble",
         "description": "Blessings on your Ability have 30% chance to trigger twice.",
-        "icon": "forge/Ability_Shared.png",
+        "icon": "forge/Ability_Shared.webp",
         "effects": [],
         "unmodeled": "no numeric damage effect the DSL can express"
       }
