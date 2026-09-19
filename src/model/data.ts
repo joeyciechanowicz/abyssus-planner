@@ -20,6 +20,16 @@ const codified = {
   unmodeled: z.string().optional(),
 };
 
+/** One scaling variable on a blessing, e.g. "{DamageIncrease}" going 15/30/45/60%... by rank. */
+export const blessingUpgradeVariableSchema = z.object({
+  variable: z.string(),
+  label: z.string().nullable(),
+  isPercent: z.boolean(),
+  // Absolute value at each rank (not deltas), rank 1 first. Scaling is not linear.
+  ranks: z.array(z.number()),
+});
+export type BlessingUpgradeVariable = z.infer<typeof blessingUpgradeVariableSchema>;
+
 export const blessingSchema = z.object({
   id: z.string(),
   aspect: z.string(),
@@ -27,6 +37,8 @@ export const blessingSchema = z.object({
   // Only the 33 aspect cards carry a slot; plain blessings omit the key entirely.
   slot: z.enum(['primary', 'secondary', 'ability']).nullable().default(null),
   logbookIndex: z.number(),
+  // Absent for capstone-style blessings that have no per-rank scaling variables.
+  upgrades: z.array(blessingUpgradeVariableSchema).optional(),
   ...codified,
 });
 export type Blessing = z.infer<typeof blessingSchema>;

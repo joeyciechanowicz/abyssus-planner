@@ -43,3 +43,41 @@ write `.png` icon paths, which `optimize_images.py` converts and repoints to
 - **Card text is not in the wikitext.** Blessings and forge upgrades exist only as
   card images, so their text is read visually off tiled crop sheets. There is no
   OCR binary on this machine.
+
+## Blessing upgrade values (from the game files, not the wiki)
+
+The wiki only shows each blessing's base (rank 1) text. The full per-rank scaling —
+`upgrades` on each entry in `data/blessings.json` — is pulled directly from the
+game's `.pak` instead, because the wiki simply doesn't have it. This is a separate,
+heavier pipeline from the wiki extractors above and only needs re-running after a
+game update changes blessing numbers:
+
+```
+1. Launch Abyssus, then inject Dumper-7 (github.com/Encryqed/Dumper-7) into the
+   running RGame-Win64-Shipping.exe process. This dumps a fresh
+   Mappings/<version>.usmap to C:\Dumper-7\<version>\ — required because the game
+   ships Unreal's compact "unversioned" property format, which has no field names
+   without this mappings file. Dumper-7 reads the live reflection data out of the
+   game's memory; there is no way to generate it from the shipped files alone.
+
+2. dotnet run --project scripts/extract/dump_mutators -- \
+     "<path to>\Abyssus\RGame\Content\Paks" \
+     "C:\Dumper-7\<version>\Mappings\<version>.usmap" \
+     <output dir>
+   This uses CUE4Parse to read every PrimaryAssets/CharacterMutators (etc.) uasset
+   straight out of the pak and dumps each one's resolved properties to JSON.
+
+3. python scripts/extract/blessing_upgrades.py <output dir>
+   Matches each dumped RCharacterMutatorPrimaryAsset to a blessing in
+   data/blessings.json by name and writes its MutatorDescriptionVariables (each a
+   {variable, label, isPercent, ranks} tuple, `ranks` being the absolute value at
+   each rank, not a delta) onto that blessing's `upgrades` field. Blessings with no
+   multi-rank variable (mostly capstone-style blessings) are left without an
+   `upgrades` field — that's expected, not a bug.
+```
+
+Internally, "Blessings" are called "Mutators" (class `RCharacterMutatorPrimaryAsset`,
+base class `RMutatorPrimaryAsset`). Scaling numbers live on each instance's
+`MutatorDescriptionVariables` array; `RankValues` holds one int per upgrade rank.
+The dump_mutators output is not committed (it's large, machine/build-specific, and
+regeneratable) — only the merged `upgrades` field in `data/blessings.json` is.
