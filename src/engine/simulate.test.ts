@@ -368,6 +368,96 @@ describe('ability-cooldown and ability-charge effects', () => {
   });
 });
 
+describe('audit fixes: correctness bugs', () => {
+  it('Softening Acid boosts Secondary only, matching "your next Secondary"', () => {
+    const primary: Build = {
+      ...emptyBuild,
+      weaponId: 'Fish_Deity',
+      modeName: 'Rapid Goo', // Primary
+      weaponUpgrades: ['Softening Acid'],
+    };
+    const bare: Build = { ...primary, weaponUpgrades: [] };
+    expect(simulate(primary).stats.damageMultiplier).toBeCloseTo(simulate(bare).stats.damageMultiplier, 5);
+
+    const secondary: Build = { ...primary, modeName: 'Piercing Stab' }; // Secondary
+    expect(simulate(secondary).stats.damageMultiplier).toBeGreaterThan(
+      simulate({ ...secondary, weaponUpgrades: [] }).stats.damageMultiplier,
+    );
+  });
+
+  it('Blessed Harpoons boosts both Primary and Secondary', () => {
+    const primary: Build = {
+      ...emptyBuild,
+      weaponId: 'Harpoon_Gun',
+      modeName: 'Piercing Harpoons', // Primary
+      weaponUpgrades: ['Blessed Harpoons'],
+    };
+    const secondary: Build = { ...primary, modeName: 'Barbed Harpoons' }; // Secondary
+    expect(simulate(primary).stats.damageMultiplier).toBeCloseTo(1.1, 5);
+    expect(simulate(secondary).stats.damageMultiplier).toBeCloseTo(1.1, 5);
+  });
+
+  it('Rapid Tentacles scales with the assumed tentacle stack count, not a flat bonus', () => {
+    const b: Build = {
+      ...emptyBuild,
+      weaponId: 'Engine_Rifle',
+      modeName: 'Automatic Fire',
+      aspects: { primary: 'Tentacles', secondary: null, ability: null },
+      blessings: { Rapid_Tentacles: 1 },
+    };
+    // Uncapped stacking: 5 stacks x 0.5 default stackFullness x 10% = +25%, not +10%.
+    expect(simulate(b).stats.fireRate).toBeCloseTo(10 * 1.25, 5);
+  });
+
+  it("Headwind no longer subtracts from the player's own damage", () => {
+    const b: Build = {
+      ...emptyBuild,
+      weaponId: 'Engine_Rifle',
+      modeName: 'Automatic Fire',
+      aspects: { primary: null, secondary: null, ability: 'Windburst' },
+      blessings: { Headwind: 1 },
+    };
+    expect(simulate(b).stats.damageMultiplier).toBe(1);
+  });
+});
+
+describe('audit fixes: new DSL-expressible effects', () => {
+  it('Hate Forged (10% chance for triple damage) raises the average damage multiplier', () => {
+    const b: Build = { ...emptyBuild, charmIds: ['hate_forged'] };
+    expect(simulate(b).stats.damageMultiplier).toBeCloseTo(1.2, 5); // 0.1 chance x (3x - 1x)
+  });
+
+  it('a trigger-nested proc is scaled by the trigger chance, not applied at full strength', () => {
+    const b: Build = {
+      ...emptyBuild,
+      weaponId: 'Fish_Deity',
+      modeName: 'Piercing Stab',
+      abilityId: 'smiting_spear',
+      abilityUpgrades: ['Shockwave'],
+    };
+    const withUpgrade = simulate(b);
+    const bare = simulate({ ...b, abilityUpgrades: [] });
+    // Guaranteed on-stick 40 flat + ~1/3 chance of another 40 -- strictly more
+    // than the guaranteed hit alone, and less than double it.
+    const gain = withUpgrade.weaponDps - bare.weaponDps;
+    expect(gain).toBeGreaterThan(0);
+  });
+
+  it('Repeating Jabs scales its extra stab with weakspotAccuracy via the trigger fix', () => {
+    const b: Build = {
+      ...emptyBuild,
+      weaponId: 'Harpoon_Gun',
+      modeName: 'Piercing Harpoons',
+      weaponUpgrades: ['Repeating Jabs'],
+    };
+    const low = simulate(b, { weakspotAccuracy: 0 });
+    const high = simulate(b, { weakspotAccuracy: 1 });
+    const bare = simulate({ ...b, weaponUpgrades: [] }, { weakspotAccuracy: 0 });
+    expect(low.weaponDps).toBeCloseTo(bare.weaponDps, 5);
+    expect(high.weaponDps).toBeGreaterThan(low.weaponDps);
+  });
+});
+
 describe('data integrity', () => {
   it('has the expected entity counts', () => {
     expect(blessings).toHaveLength(220);
