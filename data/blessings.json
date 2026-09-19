@@ -22,7 +22,7 @@
       "kind": "aspect",
       "slot": "primary",
       "logbookIndex": 0,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "mult",
@@ -46,7 +46,7 @@
       "kind": "aspect",
       "slot": "secondary",
       "logbookIndex": 1,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "mult",
@@ -70,7 +70,7 @@
       "kind": "aspect",
       "slot": "ability",
       "logbookIndex": 2,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "mult",
@@ -93,7 +93,7 @@
       "description": "Hemorrhage deals 5% more damage each time the same target is hit by Hemorrhage.",
       "kind": "blessing",
       "logbookIndex": 3,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "stacking",
@@ -113,7 +113,7 @@
       "description": "Hemorrhage deals 5% additional damage for each 5% of your missing Health.",
       "kind": "blessing",
       "logbookIndex": 4,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "statusMod",
@@ -130,7 +130,7 @@
       "description": "Hemorrhage has a 30% chance to create a Blood Zone. The zone temportatily increases damage by 20%",
       "kind": "blessing",
       "logbookIndex": 5,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "mult",
@@ -147,7 +147,7 @@
       "description": "Hemorrhage deals 20% additional damage to Elites & Bosses.",
       "kind": "blessing",
       "logbookIndex": 6,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "statusMod",
@@ -164,7 +164,7 @@
       "description": "Hemorrhage deals up to 100% more damage the closer you are to enemies.",
       "kind": "blessing",
       "logbookIndex": 7,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "mult",
@@ -182,7 +182,7 @@
       "description": "Hemorrhaged enemies take 10% of the Hemorrhage's damage over 8 seconds.",
       "kind": "blessing",
       "logbookIndex": 8,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "proc",
@@ -201,7 +201,7 @@
       "description": "Your max Health increases if an enemy dies within 1 sec. of being hit by Hemorrhage.",
       "kind": "blessing",
       "logbookIndex": 9,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -212,7 +212,7 @@
       "description": "Hemorrhage executes enemies below 5% Health.",
       "kind": "blessing",
       "logbookIndex": 10,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -223,7 +223,7 @@
       "description": "Gain 5% increased Hemorrhage damage for each Hemorrhage until you take Health damage.",
       "kind": "blessing",
       "logbookIndex": 11,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "stacking",
@@ -243,7 +243,7 @@
       "description": "Hemorrhage has a 20% chance to bounce to another target.",
       "kind": "blessing",
       "logbookIndex": 12,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "trigger",
@@ -261,7 +261,7 @@
       "description": "Increase Max Health by 10% for every Boss or Elite killed.",
       "kind": "blessing",
       "logbookIndex": 13,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "flat",
@@ -278,7 +278,7 @@
       "description": "Hemorrhage explodes on hit, dealing 40 damage to nearby targets.",
       "kind": "blessing",
       "logbookIndex": 14,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "proc",
@@ -297,7 +297,7 @@
       "description": "Hemorrhage has a 10% chance to Weakspot hit.",
       "kind": "blessing",
       "logbookIndex": 15,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "trigger",
@@ -315,7 +315,7 @@
       "description": "Hemorrhage deals 1% more damage for every 5% of health difference between you and the enemy.",
       "kind": "blessing",
       "logbookIndex": 16,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "statusMod",
@@ -332,7 +332,7 @@
       "description": "Every Blood Blessing increases your max Health by 5%.",
       "kind": "blessing",
       "logbookIndex": 17,
-      "icon": "blessings/Blood.png",
+      "icon": "blessings/Blood.webp",
       "effects": [
         {
           "op": "stacking",
@@ -352,7 +352,7 @@
       "description": "Hemorrhage has a 25% chance to create a Blood Orb. Damaging the Blood Orb deals 200% of that damage to the enemy that spawned it.",
       "kind": "blessing",
       "logbookIndex": 18,
-      "icon": "blessings/Blood_Sphere.png",
+      "icon": "blessings/Blood_Sphere.webp",
       "effects": [
         {
           "op": "proc",
@@ -371,7 +371,7 @@
       "description": "Blood Orb now consumes damage dealt to it, and explodes when it expires for the total damage.",
       "kind": "blessing",
       "logbookIndex": 19,
-      "icon": "blessings/Bloodsplosions.png",
+      "icon": "blessings/Bloodsplosions.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -383,7 +383,7 @@
       "kind": "aspect",
       "slot": "ability",
       "logbookIndex": 0,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [
         {
           "op": "mult",
@@ -401,7 +401,7 @@
       "kind": "aspect",
       "slot": "secondary",
       "logbookIndex": 1,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [
         {
           "op": "mult",
@@ -419,7 +419,7 @@
       "kind": "aspect",
       "slot": "primary",
       "logbookIndex": 2,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [
         {
           "op": "mult",
@@ -436,7 +436,7 @@
       "description": "Your Barrier lasts 50% longer.",
       "kind": "blessing",
       "logbookIndex": 3,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [
         {
           "op": "mult",
@@ -453,7 +453,7 @@
       "description": "Your movement speed is increased by 20% while your Barrier is active.",
       "kind": "blessing",
       "logbookIndex": 4,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [
         {
           "op": "mult",
@@ -470,7 +470,7 @@
       "description": "You deal 35% additional damage while your Barrier is active.",
       "kind": "blessing",
       "logbookIndex": 5,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [
         {
           "op": "mult",
@@ -487,7 +487,7 @@
       "description": "You build your Barrier 50% faster.",
       "kind": "blessing",
       "logbookIndex": 6,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -498,7 +498,7 @@
       "description": "Your Fire Rate is increased by 25% while your Barrier is active.",
       "kind": "blessing",
       "logbookIndex": 7,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [
         {
           "op": "mult",
@@ -515,7 +515,7 @@
       "description": "Killing enemies while barrier is active restores barrier. Does not refresh duraition.",
       "kind": "blessing",
       "logbookIndex": 8,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -526,7 +526,7 @@
       "description": "Barrier damage is reflected back at the attacker and increased by 10000%.",
       "kind": "blessing",
       "logbookIndex": 9,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -537,7 +537,7 @@
       "description": "Any excess damage dealt to your Barrier is removed instead of removing Health.",
       "kind": "blessing",
       "logbookIndex": 10,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -548,7 +548,7 @@
       "description": "Your Barrier's recharge cooldown is reduced by 25%.",
       "kind": "blessing",
       "logbookIndex": 11,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -559,7 +559,7 @@
       "description": "All players, including you, gain 10 Barrier when your Barrier activates.",
       "kind": "blessing",
       "logbookIndex": 12,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -570,7 +570,7 @@
       "description": "Barrier duration does not begin to decrease until you take at least 15 damage.",
       "kind": "blessing",
       "logbookIndex": 13,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -581,7 +581,7 @@
       "description": "Barrier explodes when it activates, dealing 500 damage around you and knocking enemies back.",
       "kind": "blessing",
       "logbookIndex": 14,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [
         {
           "op": "proc",
@@ -600,7 +600,7 @@
       "description": "Enemies that hit your Barrier take 15% increased damage for 2 sec. and are Stunned.",
       "kind": "blessing",
       "logbookIndex": 15,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [
         {
           "op": "mult",
@@ -618,7 +618,7 @@
       "description": "Gain 5% more Barrier for every 20 additional Max Health.",
       "kind": "blessing",
       "logbookIndex": 16,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -629,7 +629,7 @@
       "description": "Every Defender Blessing reduces the damage you receive by 5%.",
       "kind": "blessing",
       "logbookIndex": 17,
-      "icon": "blessings/Barrier.png",
+      "icon": "blessings/Barrier.webp",
       "effects": [
         {
           "op": "stacking",
@@ -648,7 +648,7 @@
       "description": "Max amount of Barrier is increased.",
       "kind": "blessing",
       "logbookIndex": 18,
-      "icon": "blessings/Enduring_Barrier.png",
+      "icon": "blessings/Enduring_Barrier.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -659,7 +659,7 @@
       "description": "While your Barrier is active, you radiate massive damage to nearby enemies.",
       "kind": "blessing",
       "logbookIndex": 19,
-      "icon": "blessings/Radiating_Barrier.png",
+      "icon": "blessings/Radiating_Barrier.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -671,7 +671,7 @@
       "kind": "aspect",
       "slot": "ability",
       "logbookIndex": 0,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "mult",
@@ -689,7 +689,7 @@
       "kind": "aspect",
       "slot": "secondary",
       "logbookIndex": 1,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "mult",
@@ -707,7 +707,7 @@
       "kind": "aspect",
       "slot": "primary",
       "logbookIndex": 2,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "mult",
@@ -724,7 +724,7 @@
       "description": "When an enemy dies while on Fire, it spreads to 1 nearby enemy (or enemies).",
       "kind": "blessing",
       "logbookIndex": 3,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -735,7 +735,7 @@
       "description": "When an enemy Flares, 0.2 sec. are added to the Fire's duration.",
       "kind": "blessing",
       "logbookIndex": 4,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -746,7 +746,7 @@
       "description": "Weakspots' chance to Flare is increased by 20%.",
       "kind": "blessing",
       "logbookIndex": 5,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -757,7 +757,7 @@
       "description": "Weakspot damage to enemies on Fire is increased by 25%.",
       "kind": "blessing",
       "logbookIndex": 6,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "conditional",
@@ -781,7 +781,7 @@
       "description": "Damaging effects occur 5% faster each time an enemy has Flared.",
       "kind": "blessing",
       "logbookIndex": 7,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -792,7 +792,7 @@
       "description": "Fire dot deals 5% more damage for every second it is on the target.",
       "kind": "blessing",
       "logbookIndex": 8,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "mult",
@@ -809,7 +809,7 @@
       "description": "Enemies take 10% more Flare damage each time they Flare.",
       "kind": "blessing",
       "logbookIndex": 9,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "stacking",
@@ -829,7 +829,7 @@
       "description": "Triggering a Flare causes all enemies afflicted by your Fire to also Flare. Excludes Flares triggered by Fire.",
       "kind": "blessing",
       "logbookIndex": 10,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -840,7 +840,7 @@
       "description": "Gain 10% Fire Rate per enemy currently affected by your Fire.",
       "kind": "blessing",
       "logbookIndex": 11,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "stacking",
@@ -859,7 +859,7 @@
       "description": "Increase Status Effectiveness by 5% per enemy currently affected by your Fire.",
       "kind": "blessing",
       "logbookIndex": 12,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "stacking",
@@ -878,7 +878,7 @@
       "description": "Flares have a 30% chance to explode, dealing 50 damage to nearby enemies.",
       "kind": "blessing",
       "logbookIndex": 13,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "proc",
@@ -897,7 +897,7 @@
       "description": "Flares caused by Weakspot hits deal 20% more damage.",
       "kind": "blessing",
       "logbookIndex": 14,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "mult",
@@ -914,7 +914,7 @@
       "description": "Fire deals 15% more damage for every Status Effect on the enemy, including itself.",
       "kind": "blessing",
       "logbookIndex": 15,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "statusMod",
@@ -931,7 +931,7 @@
       "description": "Flares have a 10% chance to Stun the target.",
       "kind": "blessing",
       "logbookIndex": 16,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "trigger",
@@ -949,7 +949,7 @@
       "description": "Every Fire Blessing increases Status Effectiveness by 10%.",
       "kind": "blessing",
       "logbookIndex": 17,
-      "icon": "blessings/Flares.png",
+      "icon": "blessings/Flares.webp",
       "effects": [
         {
           "op": "stacking",
@@ -969,7 +969,7 @@
       "description": "Fire can now stack, increasing fire damage over time. Flaring further increases Fire stacks by 1.",
       "kind": "blessing",
       "logbookIndex": 18,
-      "icon": "blessings/Stacking_Flames.png",
+      "icon": "blessings/Stacking_Flames.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -980,7 +980,7 @@
       "description": "Flare has a chance to call down Meteors. Chance increases with the number of stacks of Fire on the enemy. Meteors deal massive damage to the main target, but will also explode and set nearby enemies on Fire.",
       "kind": "blessing",
       "logbookIndex": 19,
-      "icon": "blessings/Meteor.png",
+      "icon": "blessings/Meteor.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -992,7 +992,7 @@
       "kind": "aspect",
       "slot": "ability",
       "logbookIndex": 0,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "mult",
@@ -1016,7 +1016,7 @@
       "kind": "aspect",
       "slot": "primary",
       "logbookIndex": 1,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "mult",
@@ -1040,7 +1040,7 @@
       "kind": "aspect",
       "slot": "secondary",
       "logbookIndex": 2,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "mult",
@@ -1063,7 +1063,7 @@
       "description": "Goldburst has 10% chance to Stun enemies, with the chance being based on your Gold.",
       "kind": "blessing",
       "logbookIndex": 3,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "trigger",
@@ -1081,7 +1081,7 @@
       "description": "Upgrade a random Blessing each time you reach intervals of 750 Gold, from when this Blessing is acquired.",
       "kind": "blessing",
       "logbookIndex": 4,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1092,7 +1092,7 @@
       "description": "Goldburst now deals 20% of your Gold as additional damage.",
       "kind": "blessing",
       "logbookIndex": 5,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "proc",
@@ -1111,7 +1111,7 @@
       "description": "Goldburst has a 5% chance to Weakspot hit, with the chance being based on your Gold.",
       "kind": "blessing",
       "logbookIndex": 6,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "trigger",
@@ -1129,7 +1129,7 @@
       "description": "Picking up Gold increases Fire Rate by 5% and reload speed by 2% for 5 seconds, stacking 10 times.",
       "kind": "blessing",
       "logbookIndex": 7,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "mult",
@@ -1146,7 +1146,7 @@
       "description": "Goldburst has a 20% chance to trigger again, prioritizing new targets within range.",
       "kind": "blessing",
       "logbookIndex": 8,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "trigger",
@@ -1164,7 +1164,7 @@
       "description": "Goldburst has a 20% chance to explode, with the chance being based on your Gold.",
       "kind": "blessing",
       "logbookIndex": 9,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "trigger",
@@ -1182,7 +1182,7 @@
       "description": "Get 10 extra Gold if you take no damage during an encounter.",
       "kind": "blessing",
       "logbookIndex": 10,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1193,7 +1193,7 @@
       "description": "Take 2% less damage per 100 Gold you have.",
       "kind": "blessing",
       "logbookIndex": 11,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "mult",
@@ -1210,7 +1210,7 @@
       "description": "Picking up Gold increases movement speed, while decreasing dash cooldown, by 5% for 5 sec. Stacks 10 times.",
       "kind": "blessing",
       "logbookIndex": 12,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1221,7 +1221,7 @@
       "description": "Goldburst now deals 10% of the on-hit damage as additional damage.",
       "kind": "blessing",
       "logbookIndex": 13,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "proc",
@@ -1239,7 +1239,7 @@
       "description": "Decreases the cost of your Merchants and Wishing Wells by 15%.",
       "kind": "blessing",
       "logbookIndex": 14,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1250,7 +1250,7 @@
       "description": "Goldburst damage has a 50% chance to double, but also has a 50% chance to halve.",
       "kind": "blessing",
       "logbookIndex": 15,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "trigger",
@@ -1268,7 +1268,7 @@
       "description": "Incoming Gold has a 50% chance to be worth twice as much, but it also has a 50% chance of removing that amount of Gold instead.",
       "kind": "blessing",
       "logbookIndex": 16,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1279,7 +1279,7 @@
       "description": "Every Fortune Blessing increases Gold found by 5%.",
       "kind": "blessing",
       "logbookIndex": 17,
-      "icon": "blessings/Goldburst.png",
+      "icon": "blessings/Goldburst.webp",
       "effects": [
         {
           "op": "stacking",
@@ -1299,7 +1299,7 @@
       "description": "Enemies that die within 2 sec. of being hit by Goldburst turn to Gold and drop additional Gold.",
       "kind": "blessing",
       "logbookIndex": 18,
-      "icon": "blessings/Midas_Touch.png",
+      "icon": "blessings/Midas_Touch.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1310,7 +1310,7 @@
       "description": "Goldburst has a 5% chance to instantly turn standard enemies into Gold, with the chance increaseing based on your Gold",
       "kind": "blessing",
       "logbookIndex": 19,
-      "icon": "blessings/Lethal_Gold.png",
+      "icon": "blessings/Lethal_Gold.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1322,7 +1322,7 @@
       "kind": "aspect",
       "slot": "primary",
       "logbookIndex": 0,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [
         {
           "op": "mult",
@@ -1340,7 +1340,7 @@
       "kind": "aspect",
       "slot": "secondary",
       "logbookIndex": 1,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [
         {
           "op": "mult",
@@ -1358,7 +1358,7 @@
       "kind": "aspect",
       "slot": "ability",
       "logbookIndex": 2,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [
         {
           "op": "mult",
@@ -1375,7 +1375,7 @@
       "description": "Frozen enemies have a 15% chance to take Weakspot damage.",
       "kind": "blessing",
       "logbookIndex": 3,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1386,7 +1386,7 @@
       "description": "Enemies are Frozen 30% longer.",
       "kind": "blessing",
       "logbookIndex": 4,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [
         {
           "op": "mult",
@@ -1403,7 +1403,7 @@
       "description": "You apply 80% more Frost buildup.",
       "kind": "blessing",
       "logbookIndex": 5,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [
         {
           "op": "mult",
@@ -1421,7 +1421,7 @@
       "description": "Increases Freeze damage by 3 percentage points.",
       "kind": "blessing",
       "logbookIndex": 6,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1432,7 +1432,7 @@
       "description": "Frozen enemies take 20% more damage.",
       "kind": "blessing",
       "logbookIndex": 7,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [
         {
           "op": "mult",
@@ -1450,7 +1450,7 @@
       "description": "Frozen enemies lose 1% of their current Health per second.",
       "kind": "blessing",
       "logbookIndex": 8,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1461,7 +1461,7 @@
       "description": "Killing a Frozen enemy or an enemy with Frost buildup sends out Ice Shards that deal 2% of their current Health as damage on hit.",
       "kind": "blessing",
       "logbookIndex": 9,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [
         {
           "op": "proc",
@@ -1480,7 +1480,7 @@
       "description": "Frozen enemies slide around, dealing and taking 5% of their current Health as damage when hitting something.",
       "kind": "blessing",
       "logbookIndex": 10,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1491,7 +1491,7 @@
       "description": "Frozen enemies lose 6% of their current Health when Freeze is removed.",
       "kind": "blessing",
       "logbookIndex": 11,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1502,7 +1502,7 @@
       "description": "Using Melee on Frozen enemies deals 100% more damage and removes Freeze.",
       "kind": "blessing",
       "logbookIndex": 12,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [
         {
           "op": "mult",
@@ -1519,7 +1519,7 @@
       "description": "Enemies become up to 20% Slower and Weaker the higher their Freeze build-up is.",
       "kind": "blessing",
       "logbookIndex": 13,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1530,7 +1530,7 @@
       "description": "Enemies retain 15% of their Freeze build-up after Freeze is removed.",
       "kind": "blessing",
       "logbookIndex": 14,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1541,7 +1541,7 @@
       "description": "Weakspot hits apply 100% more Freeze build-up.",
       "kind": "blessing",
       "logbookIndex": 15,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [
         {
           "op": "mult",
@@ -1559,7 +1559,7 @@
       "description": "Frozen enemies take 15% more damage from Status Effects.",
       "kind": "blessing",
       "logbookIndex": 16,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [
         {
           "op": "mult",
@@ -1577,7 +1577,7 @@
       "description": "Every Frost Blessing increases damage dealt to Elites and Bosses by 5%.",
       "kind": "blessing",
       "logbookIndex": 17,
-      "icon": "blessings/Frozen.png",
+      "icon": "blessings/Frozen.webp",
       "effects": [
         {
           "op": "stacking",
@@ -1597,7 +1597,7 @@
       "description": "When a Frozen enemy or an enemy with Frost buildup dies, they explode, dealing damage and applying Frost buildup to nearby enemies.",
       "kind": "blessing",
       "logbookIndex": 18,
-      "icon": "blessings/Erupting_Freeze.png",
+      "icon": "blessings/Erupting_Freeze.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1608,7 +1608,7 @@
       "description": "Frozen enemies pulsate damage to themselves and enemies around them, applying Frost buildup.",
       "kind": "blessing",
       "logbookIndex": 19,
-      "icon": "blessings/Everlasting_Winter.png",
+      "icon": "blessings/Everlasting_Winter.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1620,7 +1620,7 @@
       "kind": "aspect",
       "slot": "ability",
       "logbookIndex": 0,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [
         {
           "op": "mult",
@@ -1644,7 +1644,7 @@
       "kind": "aspect",
       "slot": "primary",
       "logbookIndex": 1,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [
         {
           "op": "mult",
@@ -1668,7 +1668,7 @@
       "kind": "aspect",
       "slot": "secondary",
       "logbookIndex": 2,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [
         {
           "op": "mult",
@@ -1691,7 +1691,7 @@
       "description": "Chain Lightning carries effects from the primary target to other targets in the chain.",
       "kind": "blessing",
       "logbookIndex": 3,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1702,7 +1702,7 @@
       "description": "Chain Lightning has a 20% chance to call down Thunderstrikes.",
       "kind": "blessing",
       "logbookIndex": 4,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1713,7 +1713,7 @@
       "description": "Chain Lightning has a 30% chance to Stun enemies.",
       "kind": "blessing",
       "logbookIndex": 5,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [
         {
           "op": "trigger",
@@ -1731,7 +1731,7 @@
       "description": "Chain Lightning has a 30% chance to explode around the target.",
       "kind": "blessing",
       "logbookIndex": 6,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [
         {
           "op": "trigger",
@@ -1749,7 +1749,7 @@
       "description": "The last Chain Lightning in a chain is a guaranteed Critical after bouincing the maximum amount of times.",
       "kind": "blessing",
       "logbookIndex": 7,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1760,7 +1760,7 @@
       "description": "Chain Lightning deals 50% more damage to targets with more than 90% Health.",
       "kind": "blessing",
       "logbookIndex": 8,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [
         {
           "op": "statusMod",
@@ -1777,7 +1777,7 @@
       "description": "Chain Lightning deals 5% more damage each time it bounces instead of less.",
       "kind": "blessing",
       "logbookIndex": 9,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [
         {
           "op": "mult",
@@ -1794,7 +1794,7 @@
       "description": "Chain Lightning has a 5% chance to leave a Static Zone. The zone temporarily increases Critical damage by 25%",
       "kind": "blessing",
       "logbookIndex": 10,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [
         {
           "op": "mult",
@@ -1811,7 +1811,7 @@
       "description": "If an enemy dies from a Critical, they have a 30% chance of dropping an item.",
       "kind": "blessing",
       "logbookIndex": 11,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1822,7 +1822,7 @@
       "description": "Chain Lightning Criticals have a 30% to deal 30% more damage, while knocking grounded enemies back and causing flying enemies to fall.",
       "kind": "blessing",
       "logbookIndex": 12,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [
         {
           "op": "mult",
@@ -1839,7 +1839,7 @@
       "description": "If the last Chain Lightning in a chain is a Critical, there is a 20% chance for it to extend the chain by 1.",
       "kind": "blessing",
       "logbookIndex": 13,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1850,7 +1850,7 @@
       "description": "Chain Lightning Criticals increase your movement speed, while decreasing dash and ability cooldown, by 5% for 5 sec. Stacks 3 times.",
       "kind": "blessing",
       "logbookIndex": 14,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1861,7 +1861,7 @@
       "description": "Doubles the distance Chain Lightning can bounce, while dealing up to 20% more damage the longer it bounces.",
       "kind": "blessing",
       "logbookIndex": 15,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [
         {
           "op": "mult",
@@ -1879,7 +1879,7 @@
       "description": "Chain Lightning has a 20% increased Critical Chance on Weakened, Stunned, Slowed and Frozen targets.",
       "kind": "blessing",
       "logbookIndex": 16,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1890,7 +1890,7 @@
       "description": "Every Lightning Blessing increases your Critical Chance by 3%.",
       "kind": "blessing",
       "logbookIndex": 17,
-      "icon": "blessings/Chain_Lightning.png",
+      "icon": "blessings/Chain_Lightning.webp",
       "effects": [
         {
           "op": "stacking",
@@ -1910,7 +1910,7 @@
       "description": "Chain Lightning forks on Criticals.",
       "kind": "blessing",
       "logbookIndex": 18,
-      "icon": "blessings/Slipping_Arcs.png",
+      "icon": "blessings/Slipping_Arcs.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1921,7 +1921,7 @@
       "description": "Chain Lightning bounces an additional time on Critical and can target previously targeted enemies.",
       "kind": "blessing",
       "logbookIndex": 19,
-      "icon": "blessings/Static_Repetition.png",
+      "icon": "blessings/Static_Repetition.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -1933,7 +1933,7 @@
       "kind": "aspect",
       "slot": "ability",
       "logbookIndex": 0,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [
         {
           "op": "mult",
@@ -1957,7 +1957,7 @@
       "kind": "aspect",
       "slot": "secondary",
       "logbookIndex": 1,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [
         {
           "op": "mult",
@@ -1981,7 +1981,7 @@
       "kind": "aspect",
       "slot": "primary",
       "logbookIndex": 2,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [
         {
           "op": "mult",
@@ -2004,7 +2004,7 @@
       "description": "Shadows deal 100 damage every second.",
       "kind": "blessing",
       "logbookIndex": 3,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [
         {
           "op": "proc",
@@ -2023,7 +2023,7 @@
       "description": "Shadows have up to 20% increased effect the longer a target is affected.",
       "kind": "blessing",
       "logbookIndex": 4,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2034,7 +2034,7 @@
       "description": "Shadows trigger damage over time effects an additional time when these would be triggered.",
       "kind": "blessing",
       "logbookIndex": 5,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2045,7 +2045,7 @@
       "description": "Shadows have a 50% chance of triggering again on expiration, with a 15% increased effectiveness.",
       "kind": "blessing",
       "logbookIndex": 6,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2056,7 +2056,7 @@
       "description": "Shadows are 20% more effective on Weakened, Stunned, Slowed, Frozen and Rooted targets.",
       "kind": "blessing",
       "logbookIndex": 7,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2067,7 +2067,7 @@
       "description": "Enemies afflicted by Shadows are Weak.",
       "kind": "blessing",
       "logbookIndex": 8,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2078,7 +2078,7 @@
       "description": "Shadows explode for 400 damage when they expire or when their target dies.",
       "kind": "blessing",
       "logbookIndex": 9,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [
         {
           "op": "proc",
@@ -2097,7 +2097,7 @@
       "description": "Killing an enemy afflicted by Shadows releases a dark cloud unleashing Shadows on other enemies.",
       "kind": "blessing",
       "logbookIndex": 10,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2108,7 +2108,7 @@
       "description": "Shadows have 5% increased effectiveness for every target afflicted by Shadows.",
       "kind": "blessing",
       "logbookIndex": 11,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2119,7 +2119,7 @@
       "description": "Shadows deal an additional 100% of the on-hit damage to an enemy that becomes Shadow-afflicted.",
       "kind": "blessing",
       "logbookIndex": 12,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [
         {
           "op": "proc",
@@ -2137,7 +2137,7 @@
       "description": "Shadows-afflicted enemies take 20% more Weakspot damage.",
       "kind": "blessing",
       "logbookIndex": 13,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [
         {
           "op": "mult",
@@ -2154,7 +2154,7 @@
       "description": "Deal 20% increased damage to a target if it is the only once that you have inflicted with Shadows.",
       "kind": "blessing",
       "logbookIndex": 14,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [
         {
           "op": "mult",
@@ -2171,7 +2171,7 @@
       "description": "Area of effects deal 30% more damage to Shadow-afflicted enemies.",
       "kind": "blessing",
       "logbookIndex": 15,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [
         {
           "op": "mult",
@@ -2188,7 +2188,7 @@
       "description": "Shadow-afflicted enemies take 1000% of the damage they deal as self-damage. Regular enemies also gain a 10% increased attack cooldown.",
       "kind": "blessing",
       "logbookIndex": 16,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2199,7 +2199,7 @@
       "description": "Every Shadow Blessing increases the duration of all Status Effects by 10%.",
       "kind": "blessing",
       "logbookIndex": 17,
-      "icon": "blessings/Shadows.png",
+      "icon": "blessings/Shadows.webp",
       "effects": [
         {
           "op": "stacking",
@@ -2219,7 +2219,7 @@
       "description": "Enemies targeted by Shadows take 30% of on-hit damage to other targets afflicted by Shadows.",
       "kind": "blessing",
       "logbookIndex": 18,
-      "icon": "blessings/Nights_Minor_Blessing.png",
+      "icon": "blessings/Nights_Minor_Blessing.webp",
       "effects": [
         {
           "op": "proc",
@@ -2237,7 +2237,7 @@
       "description": "Enemies targeted by Shadows take 150% of on-hit damage dealt to other targets afflicted by Shadows.",
       "kind": "blessing",
       "logbookIndex": 19,
-      "icon": "blessings/Nights_Minor_Blessing.png",
+      "icon": "blessings/Nights_Minor_Blessing.webp",
       "effects": [
         {
           "op": "proc",
@@ -2256,7 +2256,7 @@
       "kind": "aspect",
       "slot": "ability",
       "logbookIndex": 0,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "mult",
@@ -2280,7 +2280,7 @@
       "kind": "aspect",
       "slot": "primary",
       "logbookIndex": 1,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "mult",
@@ -2304,7 +2304,7 @@
       "kind": "aspect",
       "slot": "secondary",
       "logbookIndex": 2,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "mult",
@@ -2327,7 +2327,7 @@
       "description": "Tentacles deal 25% more damage if there is only one enemy near the Tentacle.",
       "kind": "blessing",
       "logbookIndex": 3,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "statusMod",
@@ -2344,7 +2344,7 @@
       "description": "Adds Explosives to the pool of objects, dealing 50% additional damage in an area on hit.",
       "kind": "blessing",
       "logbookIndex": 4,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "mult",
@@ -2361,7 +2361,7 @@
       "description": "Adds Acid to the pool of objects, dealing 5% of the Tentacle's damage over time.",
       "kind": "blessing",
       "logbookIndex": 5,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2372,7 +2372,7 @@
       "description": "Adds Vitamins to the pool of objects, temporarily increasing players' Fire Rate by 5% and damage by 5%.",
       "kind": "blessing",
       "logbookIndex": 6,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2383,7 +2383,7 @@
       "description": "Your Tentacles' Fire Rate is increased by 10% for every living Tentacle.",
       "kind": "blessing",
       "logbookIndex": 7,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "mult",
@@ -2400,7 +2400,7 @@
       "description": "Adds Anchors to the pool of objects, which Stun enemies for 2 sec.",
       "kind": "blessing",
       "logbookIndex": 8,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2411,7 +2411,7 @@
       "description": "Adds Crystals to the pool of objects, which deal 150% additional damage.",
       "kind": "blessing",
       "logbookIndex": 9,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "mult",
@@ -2428,7 +2428,7 @@
       "description": "Allows for 2 more Tentacles at a time. Also increases Tentacle lifetime by 1 sec.",
       "kind": "blessing",
       "logbookIndex": 10,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2439,7 +2439,7 @@
       "description": "Adds Snails to the pool of objects, which Slow the enemy by 20% and increase the damage they take by 15%.",
       "kind": "blessing",
       "logbookIndex": 11,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "mult",
@@ -2457,7 +2457,7 @@
       "description": "Tentacles have a 30% chance of regaining their duration instead of disappearing, dealing 30% increased damage.",
       "kind": "blessing",
       "logbookIndex": 12,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2468,7 +2468,7 @@
       "description": "Tentacles deal 1% more damage for every sec. they are alive.",
       "kind": "blessing",
       "logbookIndex": 13,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "statusMod",
@@ -2485,7 +2485,7 @@
       "description": "Adds Electrical Orbs to the pool of objects, which have a 30% chance to bounce to another target.",
       "kind": "blessing",
       "logbookIndex": 14,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "trigger",
@@ -2503,7 +2503,7 @@
       "description": "Tentacles deal 5% more damage for every object available in the pool.",
       "kind": "blessing",
       "logbookIndex": 15,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "statusMod",
@@ -2520,7 +2520,7 @@
       "description": "Tentacles have a 30% chance to be supercharged when they appear, increasing damage and Fire Rate by 20%",
       "kind": "blessing",
       "logbookIndex": 16,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2531,7 +2531,7 @@
       "description": "Damage dealt is increased for each nearby ally. Every Ocean Blessing increases this bonus by 3%.",
       "kind": "blessing",
       "logbookIndex": 17,
-      "icon": "blessings/Tentacles.png",
+      "icon": "blessings/Tentacles.webp",
       "effects": [
         {
           "op": "stacking",
@@ -2551,7 +2551,7 @@
       "description": "Tentacles have a chance to throw up to 5 types of objects at once.",
       "kind": "blessing",
       "logbookIndex": 18,
-      "icon": "blessings/Oceanic_Supplies.png",
+      "icon": "blessings/Oceanic_Supplies.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2562,7 +2562,7 @@
       "description": "Tentacles have a 3% chance to throw all available types of objects at once.",
       "kind": "blessing",
       "logbookIndex": 19,
-      "icon": "blessings/Oceanic_Arsenal.png",
+      "icon": "blessings/Oceanic_Arsenal.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2574,7 +2574,7 @@
       "kind": "aspect",
       "slot": "ability",
       "logbookIndex": 0,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "mult",
@@ -2592,7 +2592,7 @@
       "kind": "aspect",
       "slot": "primary",
       "logbookIndex": 1,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "mult",
@@ -2610,7 +2610,7 @@
       "kind": "aspect",
       "slot": "secondary",
       "logbookIndex": 2,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "mult",
@@ -2627,7 +2627,7 @@
       "description": "Spirits deal 1% additional damage per hit in the same burst window, up to 100% additional damage.",
       "kind": "blessing",
       "logbookIndex": 3,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "mult",
@@ -2651,7 +2651,7 @@
       "description": "Spirits deal 20% additional damage per Status Effect on the enemy.",
       "kind": "blessing",
       "logbookIndex": 4,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "mult",
@@ -2668,7 +2668,7 @@
       "description": "Spirits cause an explosion dealing 80 damage.",
       "kind": "blessing",
       "logbookIndex": 5,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "proc",
@@ -2687,7 +2687,7 @@
       "description": "If Spirits Weakspot hit, they generate 75 Spirit Charge.",
       "kind": "blessing",
       "logbookIndex": 6,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2698,7 +2698,7 @@
       "description": "You gain 50% more Spirit Charge.",
       "kind": "blessing",
       "logbookIndex": 7,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2709,7 +2709,7 @@
       "description": "An enemy that dies within 2 sec. of being hit by a Spirit generates 100 Spirit Charge.",
       "kind": "blessing",
       "logbookIndex": 8,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2720,7 +2720,7 @@
       "description": "Spirits have a 25% chance to bounce to an additional target.",
       "kind": "blessing",
       "logbookIndex": 9,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "trigger",
@@ -2738,7 +2738,7 @@
       "description": "Spirits have a 20% chance to give the player increased damage and 3% increased dash recharge.",
       "kind": "blessing",
       "logbookIndex": 10,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2749,7 +2749,7 @@
       "description": "Spirits deal 5 damage over time per Spirit that hit the target.",
       "kind": "blessing",
       "logbookIndex": 11,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "proc",
@@ -2768,7 +2768,7 @@
       "description": "Spirits cost 20% less Spirit Charge to spawn, but also deal 15% less damage.",
       "kind": "blessing",
       "logbookIndex": 12,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "mult",
@@ -2785,7 +2785,7 @@
       "description": "Spirits deal 20% more damage for every sec. the Spirit Gauge drains.",
       "kind": "blessing",
       "logbookIndex": 13,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "mult",
@@ -2802,7 +2802,7 @@
       "description": "Spirits have a 20% to become a Heavy Spirit that is slower, but guarantees a Weakspot hit and knocks enemies back.",
       "kind": "blessing",
       "logbookIndex": 14,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2813,7 +2813,7 @@
       "description": "Gain 2% more Spirit Charge for every 10% of the enemy's missing Health.",
       "kind": "blessing",
       "logbookIndex": 15,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2824,7 +2824,7 @@
       "description": "Increases Fire Rate by 15% and decreases ability cooldown by 10% after filling the Spirit Gauge. Lasts until the Spirit Gauge empties.",
       "kind": "blessing",
       "logbookIndex": 16,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "mult",
@@ -2841,7 +2841,7 @@
       "description": "Deal increased damage to enemies below 50% Health. Every Spirit Blessing increases this bonus by 5%.",
       "kind": "blessing",
       "logbookIndex": 17,
-      "icon": "blessings/Spirit.png",
+      "icon": "blessings/Spirit.webp",
       "effects": [
         {
           "op": "stacking",
@@ -2861,7 +2861,7 @@
       "description": "Spirit Cost is reduced by 50%.",
       "kind": "blessing",
       "logbookIndex": 18,
-      "icon": "blessings/Plentiful_Spirits.png",
+      "icon": "blessings/Plentiful_Spirits.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2872,7 +2872,7 @@
       "description": "There is a 5% chance to gain a full Spirit Charge on hit.",
       "kind": "blessing",
       "logbookIndex": 19,
-      "icon": "blessings/Overwhelming_Spirits.png",
+      "icon": "blessings/Overwhelming_Spirits.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2884,7 +2884,7 @@
       "kind": "aspect",
       "slot": "primary",
       "logbookIndex": 0,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [
         {
           "op": "mult",
@@ -2902,7 +2902,7 @@
       "kind": "aspect",
       "slot": "secondary",
       "logbookIndex": 1,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [
         {
           "op": "mult",
@@ -2920,7 +2920,7 @@
       "kind": "aspect",
       "slot": "ability",
       "logbookIndex": 2,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [
         {
           "op": "mult",
@@ -2937,7 +2937,7 @@
       "description": "Windburst deals 10% more damage for every enemy hit.",
       "kind": "blessing",
       "logbookIndex": 3,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [
         {
           "op": "statusMod",
@@ -2954,7 +2954,7 @@
       "description": "Windburst has a 10% chance to leave behind an Updraft. Updraft temporarily increases your Fire Rate by 20%.",
       "kind": "blessing",
       "logbookIndex": 4,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [
         {
           "op": "mult",
@@ -2971,7 +2971,7 @@
       "description": "Windburst has a 20% chance to pull enemies in.",
       "kind": "blessing",
       "logbookIndex": 5,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -2982,7 +2982,7 @@
       "description": "Windburst deals 4% more damage for every 10% of health that the enemy is missing.",
       "kind": "blessing",
       "logbookIndex": 6,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [
         {
           "op": "statusMod",
@@ -2999,7 +2999,7 @@
       "description": "Windburst has a 25% chance of sending a small gust of wind toward a nearby enemy. Deals 100 Weakspot damage and increases by 25 per Wind Blessing.",
       "kind": "blessing",
       "logbookIndex": 7,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3010,7 +3010,7 @@
       "description": "Windburst Slows enemies for 3 seconds. The enemies' projectiles are Slowed by 50% and deal 25% less damage.",
       "kind": "blessing",
       "logbookIndex": 8,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [
         {
           "op": "mult",
@@ -3027,7 +3027,7 @@
       "description": "Windburst deals up to 25% additional damage the closer the enemies are to the middle of the Windburst.",
       "kind": "blessing",
       "logbookIndex": 9,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [
         {
           "op": "mult",
@@ -3045,7 +3045,7 @@
       "description": "Windbursts deal 40% additional area damage but their area size is reduced by 40%.",
       "kind": "blessing",
       "logbookIndex": 10,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3056,7 +3056,7 @@
       "description": "Enemies that die within 1 sec. of being hit by a Windburst create an additional Windburst.",
       "kind": "blessing",
       "logbookIndex": 11,
-      "icon": "blessings/Ramping_Winds.png",
+      "icon": "blessings/Ramping_Winds.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3067,7 +3067,7 @@
       "description": "Windburst damage now scales with 100% of its area of effect size.",
       "kind": "blessing",
       "logbookIndex": 12,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3078,7 +3078,7 @@
       "description": "Windburst deals 10% more damage each time it triggers on the same enemy. Up to 5 times.",
       "kind": "blessing",
       "logbookIndex": 13,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [
         {
           "op": "stacking",
@@ -3097,7 +3097,7 @@
       "description": "Windbursts that trigger from Weakspots have a 30% increased radius.",
       "kind": "blessing",
       "logbookIndex": 14,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3108,7 +3108,7 @@
       "description": "Windbursts have a 20% chance to launch enemies into the air. Launched enemies are Stunned and take 50% of the Windburst's damage when they land.",
       "kind": "blessing",
       "logbookIndex": 15,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3119,7 +3119,7 @@
       "description": "Windburst radius has a 20% chance to increase by 30%.",
       "kind": "blessing",
       "logbookIndex": 16,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3130,7 +3130,7 @@
       "description": "Every Wind Blessing increases the size of all areas of effect by 5%.",
       "kind": "blessing",
       "logbookIndex": 17,
-      "icon": "blessings/Windburst.png",
+      "icon": "blessings/Windburst.webp",
       "effects": [
         {
           "op": "stacking",
@@ -3150,7 +3150,7 @@
       "description": "Windburst occurs two times, with a larger area on the second activation.",
       "kind": "blessing",
       "logbookIndex": 18,
-      "icon": "blessings/Roaring_Winds.png",
+      "icon": "blessings/Roaring_Winds.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3161,7 +3161,7 @@
       "description": "Windburst occurs three times, with a larger area each time it triggers.",
       "kind": "blessing",
       "logbookIndex": 19,
-      "icon": "blessings/Raging_Winds.png",
+      "icon": "blessings/Raging_Winds.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3173,7 +3173,7 @@
       "kind": "aspect",
       "slot": "primary",
       "logbookIndex": 0,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [
         {
           "op": "mult",
@@ -3191,7 +3191,7 @@
       "kind": "aspect",
       "slot": "secondary",
       "logbookIndex": 1,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [
         {
           "op": "mult",
@@ -3209,7 +3209,7 @@
       "kind": "aspect",
       "slot": "ability",
       "logbookIndex": 2,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [
         {
           "op": "mult",
@@ -3226,7 +3226,7 @@
       "description": "The Brine Ball has a 30% chance to split into smaller balls on impact, which deal 20% of the Brine Ball's damage.",
       "kind": "blessing",
       "logbookIndex": 3,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [
         {
           "op": "proc",
@@ -3245,7 +3245,7 @@
       "description": "The Brine Ball has a 25% chance to create a pool of brine on impact. The pool explodes after a short delay, dealing 50% of the Brine Ball's Damage.",
       "kind": "blessing",
       "logbookIndex": 4,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3256,7 +3256,7 @@
       "description": "The Brine Ball grows in size and damage by up to 25% the further it travels before bouncing.",
       "kind": "blessing",
       "logbookIndex": 5,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3267,7 +3267,7 @@
       "description": "The Brine Ball travels 40% faster.",
       "kind": "blessing",
       "logbookIndex": 6,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3278,7 +3278,7 @@
       "description": "Enemies hit by the Brine Ball take 15% of the Brine Ball's damage over a short duration.",
       "kind": "blessing",
       "logbookIndex": 7,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3289,7 +3289,7 @@
       "description": "Brine Vials can now be overcharged 3 times by filling them after they are full, increasing the Brine Ball's damage by 50% per overcharge.",
       "kind": "blessing",
       "logbookIndex": 8,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3300,7 +3300,7 @@
       "description": "Enemies hit by the Brine Ball get Slowed and take 20% extra damage for a short duration.",
       "kind": "blessing",
       "logbookIndex": 9,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3311,7 +3311,7 @@
       "description": "Increases the Brine Ball's base damage by 100.",
       "kind": "blessing",
       "logbookIndex": 10,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3322,7 +3322,7 @@
       "description": "The Brine Ball fills 6.0% of a Brine Vial when hitting an enemy.",
       "kind": "blessing",
       "logbookIndex": 11,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3333,7 +3333,7 @@
       "description": "The Brine Ball temporarily increases the damage of all nearby Allies by 10% on hit.",
       "kind": "blessing",
       "logbookIndex": 12,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3344,7 +3344,7 @@
       "description": "The Brine Ball deals 10% more damage and homes in toward enemies after bouncing. The damage increases by 10% after each bounce.",
       "kind": "blessing",
       "logbookIndex": 13,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [
         {
           "op": "mult",
@@ -3361,7 +3361,7 @@
       "description": "Consuming one Brine Vial has a 20% chance to consume all available Brine Vials to create additional Brine Balls.",
       "kind": "blessing",
       "logbookIndex": 14,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3372,7 +3372,7 @@
       "description": "Gain 3 Brine Vials and increase the speed they fill up by 10%.",
       "kind": "blessing",
       "logbookIndex": 15,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3383,7 +3383,7 @@
       "description": "The Brine Ball has a 5% chance to execute enemies below 25% health.",
       "kind": "blessing",
       "logbookIndex": 16,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3394,7 +3394,7 @@
       "description": "Every Brine Blessing increases the damage of all areas of effect by 3%.",
       "kind": "blessing",
       "logbookIndex": 17,
-      "icon": "blessings/Brine.png",
+      "icon": "blessings/Brine.webp",
       "effects": [
         {
           "op": "stacking",
@@ -3414,7 +3414,7 @@
       "description": "The Brine Ball splits in 2 when it bounces.",
       "kind": "blessing",
       "logbookIndex": 18,
-      "icon": "blessings/Brine_Mitosis.png",
+      "icon": "blessings/Brine_Mitosis.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -3425,7 +3425,7 @@
       "description": "The Brine Ball can now bounce 2 times before being destroyed, exploding on each bounce.",
       "kind": "blessing",
       "logbookIndex": 19,
-      "icon": "blessings/Bouncing_Brine.png",
+      "icon": "blessings/Bouncing_Brine.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     }

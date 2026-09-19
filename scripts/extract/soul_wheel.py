@@ -58,13 +58,24 @@ def main():
                         "have separate I and II entries that stack.",
                 "rows": rows})
 
+    # Report what actually landed on disk, not how many URLs resolved: those two
+    # numbers diverged once (the API normalises underscores in the titles it echoes
+    # back) and 36 of 43 icons were silently never downloaded.
     urls = image_urls(icons.keys())
+    have = unresolved = 0
     for title, fname in icons.items():
-        if title in urls:
-            dest = os.path.join(PUBLIC, "soulwheel", fname)
-            if not os.path.exists(dest):
-                download(urls[title], dest)
-    print(f"icons: {len(icons)} referenced, {len(urls)} resolved")
+        dest = os.path.join(PUBLIC, "soulwheel", fname)
+        if not os.path.exists(dest) and os.path.exists(dest[:-4] + ".webp"):
+            have += 1
+            continue
+        if title not in urls:
+            print("  !! unresolved:", title)
+            unresolved += 1
+            continue
+        if not os.path.exists(dest):
+            download(urls[title], dest)
+        have += 1
+    print(f"icons: {len(icons)} referenced, {have} on disk, {unresolved} unresolved")
 
 
 if __name__ == "__main__":
