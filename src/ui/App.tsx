@@ -13,6 +13,7 @@ import { simulate } from '../engine/simulate';
 import { decodeBuild, encodeBuild } from './share';
 import { Results } from './Results';
 import { BlessingBoard } from './BlessingBoard';
+import { Tooltip } from './Tooltip';
 
 function toggle<T>(list: T[], value: T): T[] {
   return list.includes(value) ? list.filter((x) => x !== value) : [...list, value];
@@ -84,14 +85,16 @@ export function App() {
             <ul className="picker">
               {weapon.forgeUpgrades.map((u) => (
                 <li key={u.name}>
-                  <label title={u.description}>
-                    <input
-                      type="checkbox"
-                      checked={build.weaponUpgrades.includes(u.name)}
-                      onChange={() => set({ weaponUpgrades: toggle(build.weaponUpgrades, u.name) })}
-                    />
-                    <span className={u.effects.length === 0 ? 'not-simulated' : ''}>{u.name}</span>
-                  </label>
+                  <Tooltip content={u.description}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={build.weaponUpgrades.includes(u.name)}
+                        onChange={() => set({ weaponUpgrades: toggle(build.weaponUpgrades, u.name) })}
+                      />
+                      <span className={u.effects.length === 0 ? 'not-simulated' : ''}>{u.name}</span>
+                    </label>
+                  </Tooltip>
                 </li>
               ))}
             </ul>
@@ -116,18 +119,20 @@ export function App() {
                 <ul className="picker">
                   {[...ability.forgeUpgrades, ...sharedAbilityUpgrades].map((u) => (
                     <li key={u.name}>
-                      <label title={u.description}>
-                        <input
-                          type="checkbox"
-                          checked={build.abilityUpgrades.includes(u.name)}
-                          onChange={() =>
-                            set({ abilityUpgrades: toggle(build.abilityUpgrades, u.name) })
-                          }
-                        />
-                        <span className={u.effects.length === 0 ? 'not-simulated' : ''}>
-                          {u.name}
-                        </span>
-                      </label>
+                      <Tooltip content={u.description}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={build.abilityUpgrades.includes(u.name)}
+                            onChange={() =>
+                              set({ abilityUpgrades: toggle(build.abilityUpgrades, u.name) })
+                            }
+                          />
+                          <span className={u.effects.length === 0 ? 'not-simulated' : ''}>
+                            {u.name}
+                          </span>
+                        </label>
+                      </Tooltip>
                     </li>
                   ))}
                 </ul>
@@ -140,16 +145,18 @@ export function App() {
             <ul className="picker">
               {charms.map((c) => (
                 <li key={c.id}>
-                  <label title={c.description}>
-                    <input
-                      type="checkbox"
-                      checked={build.charmIds.includes(c.id)}
-                      onChange={() => set({ charmIds: toggle(build.charmIds, c.id) })}
-                    />
-                    <span className={c.effects.length === 0 ? 'not-simulated' : ''}>
-                      {c.name} <em>{c.rarity}</em>
-                    </span>
-                  </label>
+                  <Tooltip content={c.description}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={build.charmIds.includes(c.id)}
+                        onChange={() => set({ charmIds: toggle(build.charmIds, c.id) })}
+                      />
+                      <span className={c.effects.length === 0 ? 'not-simulated' : ''}>
+                        {c.name} <em>{c.rarity}</em>
+                      </span>
+                    </label>
+                  </Tooltip>
                 </li>
               ))}
             </ul>
@@ -165,16 +172,18 @@ export function App() {
                 <ul className="picker">
                   {row.skills.map((s) => (
                     <li key={s.id}>
-                      <label title={s.description}>
-                        <input
-                          type="checkbox"
-                          checked={build.soulSkillIds.includes(s.id)}
-                          onChange={() => set({ soulSkillIds: toggle(build.soulSkillIds, s.id) })}
-                        />
-                        <span className={s.effects.length === 0 ? 'not-simulated' : ''}>
-                          {s.name}
-                        </span>
-                      </label>
+                      <Tooltip content={s.description}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={build.soulSkillIds.includes(s.id)}
+                            onChange={() => set({ soulSkillIds: toggle(build.soulSkillIds, s.id) })}
+                          />
+                          <span className={s.effects.length === 0 ? 'not-simulated' : ''}>
+                            {s.name}
+                          </span>
+                        </label>
+                      </Tooltip>
                     </li>
                   ))}
                 </ul>

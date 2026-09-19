@@ -9,6 +9,7 @@ import {
 } from '../model/data';
 import { isFullyRankLinked } from '../engine/blessingScaling';
 import type { Build } from '../model/build';
+import { Tooltip } from './Tooltip';
 
 const SLOTS = ['primary', 'secondary', 'ability'] as const;
 type Slot = (typeof SLOTS)[number];
@@ -174,19 +175,31 @@ function BlessingTile({
   onRemove?: () => void;
   pinned?: boolean;
 }) {
-  const [expanded, setExpanded] = useState(false);
   const max = maxBlessingRank(blessing);
   const hasRank = max > 1;
   const fullyLinked = isFullyRankLinked(blessing);
   const icon = iconSrc(blessing.icon);
 
+  const tooltip = (
+    <>
+      {renderBlessingDescription(blessing, rank)}
+      {hasRank && !fullyLinked && (
+        <em className="tile-note"> (rank shown for reference; simulated at base value)</em>
+      )}
+    </>
+  );
+
   return (
     <div className={`blessing-tile${pinned ? ' aspect' : ''}`}>
-      <button type="button" className="tile-main" onClick={() => setExpanded((v) => !v)}>
-        {icon ? <img src={icon} alt="" /> : <span className="icon-fallback" />}
-        <span className="tile-name">{blessing.name}</span>
-        {hasRank && <span className="rank-badge">+{rank}</span>}
-      </button>
+      <Tooltip content={tooltip}>
+        <button type="button" className="tile-main">
+          {icon ? <img src={icon} alt="" /> : <span className="icon-fallback" />}
+          <span className={`tile-name${hasRank && !fullyLinked ? ' not-simulated' : ''}`}>
+            {blessing.name}
+          </span>
+          {hasRank && <span className="rank-badge">+{rank}</span>}
+        </button>
+      </Tooltip>
       {onRemove && (
         <button type="button" className="tile-remove" onClick={onRemove} title="remove">
           &times;
@@ -206,15 +219,6 @@ function BlessingTile({
             {rank}/{max}
           </span>
         </div>
-      )}
-
-      {expanded && (
-        <p className={`tile-desc${hasRank && !fullyLinked ? ' not-simulated' : ''}`}>
-          {renderBlessingDescription(blessing, rank)}
-          {hasRank && !fullyLinked && (
-            <em className="tile-note"> (rank shown for reference; simulated at base value)</em>
-          )}
-        </p>
       )}
     </div>
   );
