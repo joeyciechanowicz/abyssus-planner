@@ -10,8 +10,11 @@ export const buildSchema = z.object({
     secondary: z.string().nullable().default(null),
     ability: z.string().nullable().default(null),
   }),
-  /** Blessing ids. Only blessings belonging to an equipped aspect are counted. */
-  blessingIds: z.array(z.string()).default([]),
+  /**
+   * Equipped blessing id -> selected rank (1-based). Only blessings belonging to
+   * an equipped aspect are counted; rank is clamped to the blessing's own range.
+   */
+  blessings: z.record(z.string(), z.number()).default({}),
   /** 1 charm, or 2 with the Charm Power soul skill. */
   charmIds: z.array(z.string()).default([]),
   abilityId: z.string().nullable().default(null),
@@ -51,7 +54,7 @@ export const emptyBuild: Build = {
   weaponId: 'Engine_Rifle',
   modeName: 'Automatic Fire',
   aspects: { primary: null, secondary: null, ability: null },
-  blessingIds: [],
+  blessings: {},
   charmIds: [],
   abilityId: null,
   weaponUpgrades: [],

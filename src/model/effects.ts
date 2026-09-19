@@ -70,12 +70,22 @@ export type Condition = (typeof CONDITIONS)[number];
 const scope = z.enum(SCOPES).default('all');
 const stat = z.enum(STATS);
 
+/**
+ * On a blessing effect, names the `upgrades[].variable` (e.g. `"{DamageIncrease}"`)
+ * whose per-rank values scale this leaf. Set by scripts/link_blessing_upgrades.py;
+ * left unset where the link is ambiguous or the blessing has no upgrades at all --
+ * scaleBlessingEffects() must leave such a leaf at its baked rank-1 value rather
+ * than guess. Meaningless (and always absent) outside blessings.
+ */
+const scalesWith = z.string().optional();
+
 /** `{op:'mult', stat:'damage', scope:'primary', value:0.15}` = +15% primary damage. */
 const multSchema = z.object({
   op: z.literal('mult'),
   stat,
   scope,
   value: z.number(),
+  scalesWith,
   note: z.string().optional(),
 });
 
@@ -85,6 +95,7 @@ const flatSchema = z.object({
   stat,
   scope,
   value: z.number(),
+  scalesWith,
   note: z.string().optional(),
 });
 
@@ -94,6 +105,7 @@ const applyStatusSchema = z.object({
   status: z.string(),
   chance: z.number().min(0).max(1),
   scope,
+  scalesWith,
   note: z.string().optional(),
 });
 
@@ -103,6 +115,7 @@ const statusModSchema = z.object({
   status: z.string(),
   stat,
   value: z.number(),
+  scalesWith,
   note: z.string().optional(),
 });
 
@@ -117,6 +130,7 @@ const stackingSchema = z.object({
   valuePer: z.number(),
   per: z.string(),
   max: z.number().nullable().default(null),
+  scalesWith,
   note: z.string().optional(),
 });
 
@@ -131,6 +145,9 @@ const procSchema = z.object({
   of: z.enum(['flat', 'weaponDamage', 'abilityDamage', 'statusDamage', 'onHitDamage']),
   chance: z.number().min(0).max(1).default(1),
   scope,
+  scalesWith,
+  /** Like `scalesWith`, but for `chance` -- a proc can scale either independently. */
+  chanceScalesWith: z.string().optional(),
   note: z.string().optional(),
 });
 
@@ -142,7 +159,7 @@ export type Effect =
   | z.infer<typeof statusModSchema>
   | z.infer<typeof stackingSchema>
   | { op: 'conditional'; when: Condition; threshold?: number; status?: string; then: Effect[]; note?: string }
-  | { op: 'trigger'; on: Trigger; chance: number; then: Effect[]; note?: string };
+  | { op: 'trigger'; on: Trigger; chance: number; scalesWith?: string; then: Effect[]; note?: string };
 
 export const effectSchema: z.ZodType<Effect> = z.lazy(() =>
   z.discriminatedUnion('op', [
@@ -164,6 +181,7 @@ export const effectSchema: z.ZodType<Effect> = z.lazy(() =>
       op: z.literal('trigger'),
       on: z.enum(TRIGGERS),
       chance: z.number().min(0).max(1),
+      scalesWith,
       then: z.array(effectSchema),
       note: z.string().optional(),
     }),

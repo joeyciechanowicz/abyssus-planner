@@ -9,6 +9,7 @@ import {
 } from '../model/data';
 import { defaultOptions, type Build, type SimOptions } from '../model/build';
 import { Modifiers, applyEffects } from './stacking';
+import { scaleBlessingEffects } from './blessingScaling';
 
 export interface SimResult {
   /** Average damage of one landed hit, weakspot chance blended in. */
@@ -80,7 +81,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   const equippedAspects = new Set(
     ASPECT_SLOTS.map((s) => build.aspects[s]).filter((a): a is string => a !== null),
   );
-  for (const id of build.blessingIds) {
+  for (const [id, rank] of Object.entries(build.blessings)) {
     const b = blessingById.get(id);
     if (!b) {
       warnings.push(`unknown blessing: ${id}`);
@@ -90,7 +91,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       warnings.push(`${b.name} ignored: its aspect (${b.aspect}) is not equipped`);
       continue;
     }
-    collect(b.name, b.effects, b.unmodeled);
+    collect(b.name, scaleBlessingEffects(b, rank), b.unmodeled);
   }
 
   for (const id of build.charmIds) {
