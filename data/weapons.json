@@ -13,7 +13,7 @@
           "special": "Fast automatic fire.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Automatic_Fire.png",
+          "icon": "weapons/Automatic_Fire.webp",
           "damageComponents": [
             {
               "label": null,
@@ -47,7 +47,7 @@
           "special": "Semi-automatic bursts.",
           "unlockedByDefault": false,
           "unlockCondition": "Gun Meets Crown",
-          "icon": "weapons/Burst_Fire.png",
+          "icon": "weapons/Burst_Fire.webp",
           "damageComponents": [
             {
               "label": null,
@@ -81,7 +81,7 @@
           "special": "Increases Fire Rate the longer you shoot.",
           "unlockedByDefault": false,
           "unlockCondition": "Eco Warfare",
-          "icon": "weapons/Gatling_Fire.png",
+          "icon": "weapons/Gatling_Fire.webp",
           "damageComponents": [
             {
               "label": null,
@@ -115,7 +115,7 @@
           "special": "High Fire Rate but increases Heat.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Engine_Rev.png",
+          "icon": "weapons/Engine_Rev.webp",
           "damageComponents": [
             {
               "label": null,
@@ -149,7 +149,7 @@
           "special": "Fires multiple in an unpredictable pattern but increases Heat.",
           "unlockedByDefault": false,
           "unlockCondition": "Drumfire",
-          "icon": "weapons/Split_Shot.png",
+          "icon": "weapons/Split_Shot.webp",
           "damageComponents": [
             {
               "label": null,
@@ -183,7 +183,7 @@
           "special": "Semi automatic fire that knocks enemies back but increases Heat.",
           "unlockedByDefault": false,
           "unlockCondition": "Deadline",
-          "icon": "weapons/Concentrated_Shot.png",
+          "icon": "weapons/Concentrated_Shot.webp",
           "damageComponents": [
             {
               "label": null,
@@ -214,21 +214,21 @@
         {
           "name": "Prolonged Revving",
           "description": "Shooting enemies reduces Heat.",
-          "icon": "forge/Prolonged_Revving.png",
+          "icon": "forge/Prolonged_Revving.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Greased Barrel",
           "description": "Increases damage the longer you fire without letting go of your Primary or Secondary.",
-          "icon": "forge/Prolonged_Revving.png",
+          "icon": "forge/Prolonged_Revving.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Insulated Barrel",
           "description": "Increases fire rate by up to 100% the higher your Heat is.",
-          "icon": "forge/Prolonged_Revving.png",
+          "icon": "forge/Prolonged_Revving.webp",
           "effects": [
             {
               "op": "mult",
@@ -241,7 +241,7 @@
         {
           "name": "Heat Converter",
           "description": "Deal up to 100% more damage the higher your Heat is.",
-          "icon": "forge/Heat_Converter.png",
+          "icon": "forge/Heat_Converter.webp",
           "effects": [
             {
               "op": "mult",
@@ -255,21 +255,21 @@
         {
           "name": "Binary Cooling",
           "description": "Heat no longer decreases over time after Overheating, but is cleared after 5 sec.",
-          "icon": "forge/Prolonged_Revving.png",
+          "icon": "forge/Prolonged_Revving.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Burst Cooling",
           "description": "Stops Heat from increasing for 5 sec. after Overheated is cleared.",
-          "icon": "forge/Heat_Converter.png",
+          "icon": "forge/Heat_Converter.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Large Capacity",
           "description": "Increases the max clip size and the Overheat threshold by 100%.",
-          "icon": "forge/Heat_Converter.png",
+          "icon": "forge/Heat_Converter.webp",
           "effects": [
             {
               "op": "mult",
@@ -282,7 +282,7 @@
         {
           "name": "Heat Expulsion",
           "description": "Explodes in a 15-meter radius once Overheated, dealing 1000% weapon damage.",
-          "icon": "forge/Prolonged_Revving.png",
+          "icon": "forge/Prolonged_Revving.webp",
           "effects": [
             {
               "op": "proc",
@@ -307,7 +307,7 @@
           "special": "Semi-automatic pump shotgun.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Semi-automatic_Shotgun.png",
+          "icon": "weapons/Semi-automatic_Shotgun.webp",
           "damageComponents": [
             {
               "label": null,
@@ -341,7 +341,7 @@
           "special": "Fully automatic shotgun. Changes magazine size from 6 to 12.",
           "unlockedByDefault": false,
           "unlockCondition": "Triple Kill!",
-          "icon": "weapons/Full-automatic.png",
+          "icon": "weapons/Full-automatic.webp",
           "damageComponents": [
             {
               "label": null,
@@ -375,7 +375,7 @@
           "special": "Precise shots with increased Weakspot damage.",
           "unlockedByDefault": false,
           "unlockCondition": "Up Close & Personal",
-          "icon": "weapons/Superheavy_Slug.png",
+          "icon": "weapons/Superheavy_Slug.webp",
           "damageComponents": [
             {
               "label": null,
@@ -409,7 +409,7 @@
           "special": "Fires a powerful blast, knocking yourself backwards.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Buckshot.png",
+          "icon": "weapons/Buckshot.webp",
           "damageComponents": [
             {
               "label": null,
@@ -443,7 +443,7 @@
           "special": "Fires all bullets in quick succession, dealing more damage with each shot.",
           "unlockedByDefault": false,
           "unlockCondition": "Ricky's Creed",
-          "icon": "weapons/Unload.png",
+          "icon": "weapons/Unload.webp",
           "damageComponents": [
             {
               "label": null,
@@ -480,7 +480,7 @@
           "special": "Stuns and knocks enemies backwards.",
           "unlockedByDefault": false,
           "unlockCondition": "Boomstick",
-          "icon": "weapons/Pressure_Shot.png",
+          "icon": "weapons/Pressure_Shot.webp",
           "damageComponents": [
             {
               "label": null,
@@ -511,7 +511,7 @@
         {
           "name": "Light Frame",
           "description": "Moving during combat builds Momentum that increased fire rate by up to 80% and movement speed by up to 80%. Clears outside of combat and drains while standing still.",
-          "icon": "forge/Light_Frame.png",
+          "icon": "forge/Light_Frame.webp",
           "effects": [
             {
               "op": "mult",
@@ -525,7 +525,7 @@
         {
           "name": "Long Barrel",
           "description": "Reduces spread by 50% and increases Weakspot damage by 50%.",
-          "icon": "forge/Long_Barrel.png",
+          "icon": "forge/Long_Barrel.webp",
           "effects": [
             {
               "op": "mult",
@@ -538,7 +538,7 @@
         {
           "name": "Sawed-Off Barrel",
           "description": "Increases Damage by 50%, but also increases spread by 50%.",
-          "icon": "forge/Light_Frame.png",
+          "icon": "forge/Light_Frame.webp",
           "effects": [
             {
               "op": "mult",
@@ -551,14 +551,14 @@
         {
           "name": "Heavy Shell",
           "description": "Secondary Fire applies Slow and Weak on enemies hit.",
-          "icon": "forge/Heavy_Shell.png",
+          "icon": "forge/Heavy_Shell.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Compact Shell",
           "description": "Killing an enemy makes the next shot deal 100% more damage. Does not stack.",
-          "icon": "forge/Heavy_Shell.png",
+          "icon": "forge/Heavy_Shell.webp",
           "effects": [
             {
               "op": "mult",
@@ -571,7 +571,7 @@
         {
           "name": "Optimized Gauge",
           "description": "Deal 50% additional damage to Stunned, Slowed, Frozen or Rooted enemies.",
-          "icon": "forge/Heavy_Shell.png",
+          "icon": "forge/Heavy_Shell.webp",
           "effects": [
             {
               "op": "mult",
@@ -584,7 +584,7 @@
         {
           "name": "Automatic Trigger",
           "description": "Using your Primary makes the next Secondary attack deal 80% more damage.",
-          "icon": "forge/Light_Frame.png",
+          "icon": "forge/Light_Frame.webp",
           "effects": [
             {
               "op": "mult",
@@ -597,7 +597,7 @@
         {
           "name": "Automatic Action",
           "description": "Using your Secondary makes the next Primary attack deal 80% more damage.",
-          "icon": "forge/Light_Frame.png",
+          "icon": "forge/Light_Frame.webp",
           "effects": [
             {
               "op": "mult",
@@ -621,7 +621,7 @@
           "special": "A continuous beam of electricity.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Electrical_Beam.png",
+          "icon": "weapons/Electrical_Beam.webp",
           "damageComponents": [
             {
               "label": null,
@@ -655,7 +655,7 @@
           "special": "Overload targets when hitting their weakspots. (Deals 300-332 damage)",
           "unlockedByDefault": false,
           "unlockCondition": "Battery",
-          "icon": "weapons/Charge_Beam.png",
+          "icon": "weapons/Charge_Beam.webp",
           "damageComponents": [
             {
               "label": null,
@@ -689,7 +689,7 @@
           "special": "Lock on to nearby enemies.",
           "unlockedByDefault": false,
           "unlockCondition": "Caged No More",
-          "icon": "weapons/Unstable_Coil.png",
+          "icon": "weapons/Unstable_Coil.webp",
           "damageComponents": [
             {
               "label": null,
@@ -723,7 +723,7 @@
           "special": "Charge up a slow moving orb that zaps nearby enemies.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Spark_Orb.png",
+          "icon": "weapons/Spark_Orb.webp",
           "damageComponents": [
             {
               "label": null,
@@ -760,7 +760,7 @@
           "special": "Charge up an orb that explodes on impact and deals damage over time.",
           "unlockedByDefault": false,
           "unlockCondition": "Battery",
-          "icon": "weapons/Charge_Orb.png",
+          "icon": "weapons/Charge_Orb.webp",
           "damageComponents": [
             {
               "label": "Explosion",
@@ -809,7 +809,7 @@
           "special": "Charge up a storm of electricity.",
           "unlockedByDefault": false,
           "unlockCondition": "Electrifying",
-          "icon": "weapons/Magnetic_Storm.png",
+          "icon": "weapons/Magnetic_Storm.webp",
           "damageComponents": [
             {
               "label": null,
@@ -843,42 +843,42 @@
         {
           "name": "Spark Gap",
           "description": "Increase fire rate the longer you fire without letting go of your Primary.",
-          "icon": "forge/Spark_Gap.png",
+          "icon": "forge/Spark_Gap.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Streamlined Transistor",
           "description": "Increase damage the longer you fire without letting go of your Primary.",
-          "icon": "forge/Spark_Gap.png",
+          "icon": "forge/Spark_Gap.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Compact Transformer",
           "description": "Secondary charges twice as fast.",
-          "icon": "forge/Spark_Gap.png",
+          "icon": "forge/Spark_Gap.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Larger Battery",
           "description": "Secondary can be charged an additional 2 steps, increasing its effect.",
-          "icon": "forge/Spark_Gap.png",
+          "icon": "forge/Spark_Gap.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Wireless Transmitter",
           "description": "Your Secondary's duration is increased by 20% for each active Secondary effect.",
-          "icon": "forge/Spark_Gap.png",
+          "icon": "forge/Spark_Gap.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "High Voltage",
           "description": "Deal 20% more Primary damage to enemies currently being hit by the Secondary.",
-          "icon": "forge/Spark_Gap.png",
+          "icon": "forge/Spark_Gap.webp",
           "effects": [
             {
               "op": "mult",
@@ -891,14 +891,14 @@
         {
           "name": "High-Frequency",
           "description": "Increases range/radius of your Secondary by 50%",
-          "icon": "forge/Spark_Gap.png",
+          "icon": "forge/Spark_Gap.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Backup Battery",
           "description": "Increase magazine size by 50. Killing enemies grants 10 stacks of Backup Battery. When you run out of ammo, stacks of Backup Battery are consumed to instantly refund 1 ammo per stack.",
-          "icon": "forge/Spark_Gap.png",
+          "icon": "forge/Spark_Gap.webp",
           "effects": [
             {
               "op": "flat",
@@ -922,7 +922,7 @@
           "special": "Semi-automatic fire.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Semi-automatic_Revolver.png",
+          "icon": "weapons/Semi-automatic_Revolver.webp",
           "damageComponents": [
             {
               "label": null,
@@ -956,7 +956,7 @@
           "special": "Fires a burst of bullets.",
           "unlockedByDefault": false,
           "unlockCondition": "High Noon",
-          "icon": "weapons/Burst_Fire_Revolver.png",
+          "icon": "weapons/Burst_Fire_Revolver.webp",
           "damageComponents": [
             {
               "label": null,
@@ -990,7 +990,7 @@
           "special": "Deals high damage and increased Weakspot damage.",
           "unlockedByDefault": false,
           "unlockCondition": "Good, Bad and Ugly",
-          "icon": "weapons/Large_Caliber.png",
+          "icon": "weapons/Large_Caliber.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1024,7 +1024,7 @@
           "special": "Reliable damage while scoped.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Steady_Scope.png",
+          "icon": "weapons/Steady_Scope.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1058,7 +1058,7 @@
           "special": "Fire quickly after scoping for increased damage.",
           "unlockedByDefault": false,
           "unlockCondition": "Town Ain't Big Enough",
-          "icon": "weapons/Quick_Scope.png",
+          "icon": "weapons/Quick_Scope.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1092,7 +1092,7 @@
           "special": "Deals more damage on full charge.",
           "unlockedByDefault": false,
           "unlockCondition": "Sharpshooter",
-          "icon": "weapons/Charge_Scope.png",
+          "icon": "weapons/Charge_Scope.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1123,7 +1123,7 @@
         {
           "name": "Combustion Muzzle",
           "description": "Reloading empowers the next bullet, making it deal 50% more damage.",
-          "icon": "forge/Combustion_Muzzle.png",
+          "icon": "forge/Combustion_Muzzle.webp",
           "effects": [
             {
               "op": "mult",
@@ -1136,14 +1136,14 @@
         {
           "name": "Critical Cylinder",
           "description": "Weakspot hits have a chance to recover 1 ammo.",
-          "icon": "forge/Combustion_Muzzle.png",
+          "icon": "forge/Combustion_Muzzle.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Fast Trigger",
           "description": "A bullet fired within 0.8 sec. of the last one deals 25% increased damage. Damage stacks until reload.",
-          "icon": "forge/Combustion_Muzzle.png",
+          "icon": "forge/Combustion_Muzzle.webp",
           "effects": [
             {
               "op": "mult",
@@ -1156,7 +1156,7 @@
         {
           "name": "Critical Bullets",
           "description": "Each consecutive Weakspot hit increases damage by 5%. Reloading resets the damage bonus.",
-          "icon": "forge/Combustion_Muzzle.png",
+          "icon": "forge/Combustion_Muzzle.webp",
           "effects": [
             {
               "op": "stacking",
@@ -1172,7 +1172,7 @@
         {
           "name": "Accelerating Bullets",
           "description": "Deals 50% more Weakspot damage to enemies beyond 20 meters.",
-          "icon": "forge/Combustion_Muzzle.png",
+          "icon": "forge/Combustion_Muzzle.webp",
           "effects": [
             {
               "op": "mult",
@@ -1185,7 +1185,7 @@
         {
           "name": "Overload Bullets",
           "description": "Adds stacks of \"Overload\" to the player. Overload stacks are consumed when shooting an enemy with your Secondary. Your Secondary deals 25% additional damage per stack of Overload at the time of firing.",
-          "icon": "forge/Combustion_Muzzle.png",
+          "icon": "forge/Combustion_Muzzle.webp",
           "effects": [
             {
               "op": "mult",
@@ -1198,14 +1198,14 @@
         {
           "name": "Boosted Cylinder",
           "description": "Hitting an enemy with your Secondary increases fire rate for 3 sec.",
-          "icon": "forge/Combustion_Muzzle.png",
+          "icon": "forge/Combustion_Muzzle.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Exploitative Bullets",
           "description": "Your damage over time multiplier is increased by 50% while scoped.",
-          "icon": "forge/Combustion_Muzzle.png",
+          "icon": "forge/Combustion_Muzzle.webp",
           "effects": [
             {
               "op": "mult",
@@ -1229,7 +1229,7 @@
           "special": "Fires discs that return after a hit.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Automatic.png",
+          "icon": "weapons/Automatic.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1263,7 +1263,7 @@
           "special": "Fires discs in a fan pattern.",
           "unlockedByDefault": false,
           "unlockCondition": "Disco Fever!",
-          "icon": "weapons/Fan_Fire.png",
+          "icon": "weapons/Fan_Fire.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1297,7 +1297,7 @@
           "special": "Fires discs that bounce between enemies before returning.",
           "unlockedByDefault": false,
           "unlockCondition": "Dynamo",
-          "icon": "weapons/Dynamo.png",
+          "icon": "weapons/Dynamo.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1331,7 +1331,7 @@
           "special": "Causes an explosion around discs.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Inferno Discs.png",
+          "icon": "weapons/Inferno Discs.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1357,7 +1357,7 @@
           "special": "Creates arcs of electricity between discs.",
           "unlockedByDefault": false,
           "unlockCondition": "Dr. Discstein",
-          "icon": "weapons/Electron Conductors.png",
+          "icon": "weapons/Electron Conductors.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1391,7 +1391,7 @@
           "special": "Redirects discs towards their nearest enemy and destroy them on impact.",
           "unlockedByDefault": false,
           "unlockCondition": "Frisbee",
-          "icon": "weapons/Search and Destroy.png",
+          "icon": "weapons/Search and Destroy.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1422,21 +1422,21 @@
         {
           "name": "Spare Discs",
           "description": "+3 maximum stored discs.",
-          "icon": "forge/Spare_Discs.png",
+          "icon": "forge/Spare_Discs.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Slim Discs",
           "description": "Increases disc speed by 100% and reduces spread and damage falloff.",
-          "icon": "forge/Slim_Discs.png",
+          "icon": "forge/Slim_Discs.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Twin Discs",
           "description": "Weakspot hits fire an additional disc that deals 70% less damage and is destroyed on impact.",
-          "icon": "forge/Twin_Discs.png",
+          "icon": "forge/Twin_Discs.webp",
           "effects": [
             {
               "op": "mult",
@@ -1449,7 +1449,7 @@
         {
           "name": "Whetting Bounce",
           "description": "Discs deal 120% more damage if they bounce on the environment before hitting an enemy.",
-          "icon": "forge/Whetting_Bounce.png",
+          "icon": "forge/Whetting_Bounce.webp",
           "effects": [
             {
               "op": "mult",
@@ -1462,7 +1462,7 @@
         {
           "name": "Elemental Overcharge",
           "description": "Your Secondary deals 50% more damage each time the same disc triggers its effect.",
-          "icon": "forge/Elemental_Overcharge.png",
+          "icon": "forge/Elemental_Overcharge.webp",
           "effects": [
             {
               "op": "mult",
@@ -1475,21 +1475,21 @@
         {
           "name": "Halting Discs",
           "description": "Discs spin in place for 2 sec. after hitting an enemy, then continue their arc. They deal continuous damage to nearby enemies while spinning.",
-          "icon": "forge/Halting_Discs.png",
+          "icon": "forge/Halting_Discs.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Automatic Detonation",
           "description": "Weakspot hits with your Primary automatically trigger your Secondary.",
-          "icon": "forge/Automatic_Detonation.png",
+          "icon": "forge/Automatic_Detonation.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Priming Flight",
           "description": "Primary and Secondary deals up to 100% increased damage based on distance traveled.",
-          "icon": "forge/Priming_Flight.png",
+          "icon": "forge/Priming_Flight.webp",
           "effects": [
             {
               "op": "mult",
@@ -1514,7 +1514,7 @@
           "special": "Charged arrow that deals more damage when shot during its Sweetspot.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Precision_Shot.png",
+          "icon": "weapons/Precision_Shot.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1548,7 +1548,7 @@
           "special": "A piercing arrow that deals increased damage per enemy hit.",
           "unlockedByDefault": false,
           "unlockCondition": "Robin Hood",
-          "icon": "weapons/Pierce.png",
+          "icon": "weapons/Pierce.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1582,7 +1582,7 @@
           "special": "Gain increased damage and Fire Rate when picking up arrows or shooting during Sweetspots. [+10% damage per stack]",
           "unlockedByDefault": false,
           "unlockCondition": "Bottomless Quiver",
-          "icon": "weapons/Return_Arrow.png",
+          "icon": "weapons/Return_Arrow.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1616,7 +1616,7 @@
           "special": "Fires a barrage of arrows.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Multi-Shot.png",
+          "icon": "weapons/Multi-Shot.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1650,7 +1650,7 @@
           "special": "An arrow that bounces between enemies and surfaces.",
           "unlockedByDefault": false,
           "unlockCondition": "X Marks the Spot",
-          "icon": "weapons/Smart_Arrow.png",
+          "icon": "weapons/Smart_Arrow.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1684,7 +1684,7 @@
           "special": "An arrow that explodes on hit.",
           "unlockedByDefault": false,
           "unlockCondition": "Three For One",
-          "icon": "weapons/Exploding_Arrow.png",
+          "icon": "weapons/Exploding_Arrow.webp",
           "damageComponents": [
             {
               "label": "Hit",
@@ -1729,7 +1729,7 @@
         {
           "name": "Pressure Arrow",
           "description": "Arrows have an aura around them that damages enemies it passes through, dealing 50% weapon damage.",
-          "icon": "forge/Pressure_Arrow.png",
+          "icon": "forge/Pressure_Arrow.webp",
           "effects": [
             {
               "op": "proc",
@@ -1743,7 +1743,7 @@
         {
           "name": "Stable String",
           "description": "Each consecutive Weakspot hit deals 10% increased damage. Stacks 25 times.",
-          "icon": "forge/Stable_String.png",
+          "icon": "forge/Stable_String.webp",
           "effects": [
             {
               "op": "mult",
@@ -1756,21 +1756,21 @@
         {
           "name": "Elastic String",
           "description": "Takes less time to fully charge, and continuing to charge further increases the damage by up to 50%.",
-          "icon": "forge/Elastic_String.png",
+          "icon": "forge/Elastic_String.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "True Form",
           "description": "Sweetspots always count as Weakspot hits.",
-          "icon": "forge/True_Form.png",
+          "icon": "forge/True_Form.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Consistent Scope",
           "description": "Sweetspots shoot an additional arrow that deals 50% less damage.",
-          "icon": "forge/Consistent_Scope.png",
+          "icon": "forge/Consistent_Scope.webp",
           "effects": [
             {
               "op": "mult",
@@ -1783,7 +1783,7 @@
         {
           "name": "Spined Arrow",
           "description": "Arrows deal 25% weapon damage as damage over time. Can stack, but all stacks disappear after 5 sec.",
-          "icon": "forge/Spined_Arrow.png",
+          "icon": "forge/Spined_Arrow.webp",
           "effects": [
             {
               "op": "proc",
@@ -1797,7 +1797,7 @@
         {
           "name": "Longbow",
           "description": "Arrows deal up to 50% more Weakspot damage based on the distance traveled.",
-          "icon": "forge/Longbow.png",
+          "icon": "forge/Longbow.webp",
           "effects": [
             {
               "op": "mult",
@@ -1810,7 +1810,7 @@
         {
           "name": "Shortbow",
           "description": "Arrows are automatically shot once fully charged. Can be held to shoot continuously.",
-          "icon": "forge/Shortbow.png",
+          "icon": "forge/Shortbow.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         }
@@ -1828,7 +1828,7 @@
           "special": "Fires explosive plasma orbs.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Semi-automatic.png",
+          "icon": "weapons/Semi-automatic.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1862,7 +1862,7 @@
           "special": "Fires fast plasma orbs.",
           "unlockedByDefault": false,
           "unlockCondition": "Kaboom!",
-          "icon": "weapons/Flak_Cannon.png",
+          "icon": "weapons/Flak_Cannon.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1896,7 +1896,7 @@
           "special": "Hold to acquire targets and release a barrage of plasma orbs.",
           "unlockedByDefault": false,
           "unlockCondition": "Boom!",
-          "icon": "weapons/Seekers.png",
+          "icon": "weapons/Seekers.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1930,7 +1930,7 @@
           "special": "Fires a devastating beam of plasma that pierces through enemies.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Disintegration_Beam.png",
+          "icon": "weapons/Disintegration_Beam.webp",
           "damageComponents": [
             {
               "label": null,
@@ -1964,7 +1964,7 @@
           "special": "Creates a black hole on impact that damages and slows.",
           "unlockedByDefault": false,
           "unlockCondition": "Shot, Chaser",
-          "icon": "weapons/Void_Infusion.png",
+          "icon": "weapons/Void_Infusion.webp",
           "damageComponents": [
             {
               "label": "Hit",
@@ -2012,7 +2012,7 @@
           "special": "Fires a plasma orb which sticks to the target and explodes continuously.",
           "unlockedByDefault": false,
           "unlockCondition": "Plasmaster",
-          "icon": "weapons/Adhesive_Compound.png",
+          "icon": "weapons/Adhesive_Compound.webp",
           "damageComponents": [
             {
               "label": "Hit",
@@ -2057,56 +2057,56 @@
         {
           "name": "Seismic Fuel",
           "description": "Hitting 3 enemies increases the explosion radius for 5 sec.",
-          "icon": "forge/Seismic_Fuel.png",
+          "icon": "forge/Seismic_Fuel.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Molotov Fuel",
           "description": "Enemies take 50% continuous weapon damage for 5 sec. after being hit.",
-          "icon": "forge/Molotov_Fuel.png",
+          "icon": "forge/Molotov_Fuel.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Revolving Valve",
           "description": "Lasting attacks have doubled duration, charged attacks have halved buildup.",
-          "icon": "forge/Revolving_Valve.png",
+          "icon": "forge/Revolving_Valve.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Explosive Valve",
           "description": "Damage now scales with the projectile's explosion radius.",
-          "icon": "forge/Explosive_Valve.png",
+          "icon": "forge/Explosive_Valve.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Accelerating Core",
           "description": "Explosions increase in size the further the projectile travels. Up to 100%.",
-          "icon": "forge/Accelerating_Core.png",
+          "icon": "forge/Accelerating_Core.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Bouncy Core",
           "description": "Projectiles bounce 2 times or until an enemy is directly hit, exploding each bounce and dealing 25% more damage.",
-          "icon": "forge/Bouncy_Core.png",
+          "icon": "forge/Bouncy_Core.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Spreading Heat",
           "description": "Hitting an enemy suffering from status effects or that are Stunned, Slowed, Frozen or Rooted deals the same damage to a nearby enemy.",
-          "icon": "forge/Spreading_Heat.png",
+          "icon": "forge/Spreading_Heat.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Repeating Blasts",
           "description": "Plasma Launcher explosions have a 60% chance of triggering again. Additional explosions can also trigger again, but have a 20% decreased chance per explosion.",
-          "icon": "forge/Repeating_Blasts.png",
+          "icon": "forge/Repeating_Blasts.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         }
@@ -2124,7 +2124,7 @@
           "special": "Fires multiple arching orbs of goop.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Rapid_Goo.png",
+          "icon": "weapons/Rapid_Goo.webp",
           "damageComponents": [
             {
               "label": null,
@@ -2158,7 +2158,7 @@
           "special": "Fires an arching orb of goop that makes enemies more susceptible to stabs. Changes magazine size from 9 to 7.",
           "unlockedByDefault": false,
           "unlockCondition": "Free Throw",
-          "icon": "weapons/Fish_Spit.png",
+          "icon": "weapons/Fish_Spit.webp",
           "damageComponents": [
             {
               "label": null,
@@ -2192,7 +2192,7 @@
           "special": "Fires an arching orb of goop that deals damage over time to targets hit. The effect stacks but disappears after a short duration.",
           "unlockedByDefault": false,
           "unlockCondition": "Open Wide",
-          "icon": "weapons/Hazardous_Goo.png",
+          "icon": "weapons/Hazardous_Goo.webp",
           "damageComponents": [
             {
               "label": "Hit",
@@ -2240,7 +2240,7 @@
           "special": "Stabs forward, piercing enemies and dealing high Weakspot damage.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Piercing_Stab.png",
+          "icon": "weapons/Piercing_Stab.webp",
           "damageComponents": [
             {
               "label": null,
@@ -2274,7 +2274,7 @@
           "special": "Wide stab that knocks enemies back.",
           "unlockedByDefault": false,
           "unlockCondition": "Go Fish!",
-          "icon": "weapons/Wide_Stab.png",
+          "icon": "weapons/Wide_Stab.webp",
           "damageComponents": [
             {
               "label": null,
@@ -2308,7 +2308,7 @@
           "special": "Repeatedly slashes, dealing more damage each time the target is hit.",
           "unlockedByDefault": false,
           "unlockCondition": "Hooked",
-          "icon": "weapons/Chainsaw.png",
+          "icon": "weapons/Chainsaw.webp",
           "damageComponents": [
             {
               "label": null,
@@ -2339,21 +2339,21 @@
         {
           "name": "Discharging Reload",
           "description": "A discarded Fish Deity explodes in a 8-meter radius after reloading, dealing 2000 damage and stunning enemies hit.",
-          "icon": "forge/Discharging_Reload.png",
+          "icon": "forge/Discharging_Reload.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Elastic Goo",
           "description": "Projectiles bounce, exploding and dealing 25% more damage for each bounce.",
-          "icon": "forge/Elastic_Goo.png",
+          "icon": "forge/Elastic_Goo.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Softening Acid",
           "description": "Enemies hit by your Primary take 50% more damage from your next Secondary.",
-          "icon": "forge/Softening_Acid.png",
+          "icon": "forge/Softening_Acid.webp",
           "effects": [
             {
               "op": "mult",
@@ -2367,35 +2367,35 @@
         {
           "name": "Weakening Jabs",
           "description": "Enemies hit by your Secondary are Weakened and Slowed.",
-          "icon": "forge/Weakening_Jabs.png",
+          "icon": "forge/Weakening_Jabs.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Repeating Jabs",
           "description": "Weakspot stabs create a second stab.",
-          "icon": "forge/Repeating_Jabs.png",
+          "icon": "forge/Repeating_Jabs.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Pursuing Horn",
           "description": "Killing an enemy refreshes Dash. Dashing increases your Secondary damage by 25% for 2 sec.",
-          "icon": "forge/Pursuing_Horn.png",
+          "icon": "forge/Pursuing_Horn.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Long Horn",
           "description": "Secondary Range increases by 50%",
-          "icon": "forge/Long_Horn.png",
+          "icon": "forge/Long_Horn.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Stunning Strike",
           "description": "Increase the Fish Deity's Stun duration by 300%.",
-          "icon": "forge/Stunning_Strike.png",
+          "icon": "forge/Stunning_Strike.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         }
@@ -2413,7 +2413,7 @@
           "special": "Piercing Harpoons with high knockback on Weakspot hits. Generates Combo Points on hit.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Piercing_Harpoons.png",
+          "icon": "weapons/Piercing_Harpoons.webp",
           "damageComponents": [
             {
               "label": null,
@@ -2447,7 +2447,7 @@
           "special": "Harpoons that ricochet to a new target on Weakspot hits. Generates Combo Points on hit.",
           "unlockedByDefault": false,
           "unlockCondition": "Fishing Season",
-          "icon": "weapons/Ricocheting_Harpoons.png",
+          "icon": "weapons/Ricocheting_Harpoons.webp",
           "damageComponents": [
             {
               "label": null,
@@ -2481,7 +2481,7 @@
           "special": "Harpoons that attach to enemies, dealing damage over time. Generates Combo Points while attached.",
           "unlockedByDefault": false,
           "unlockCondition": "Slaying a White Whale",
-          "icon": "weapons/Pinning_Harpoons.png",
+          "icon": "weapons/Pinning_Harpoons.webp",
           "damageComponents": [
             {
               "label": "Hit",
@@ -2529,7 +2529,7 @@
           "special": "Consume Combo Points to deal damage over a short duration.",
           "unlockedByDefault": true,
           "unlockCondition": null,
-          "icon": "weapons/Barbed_Harpoons.png",
+          "icon": "weapons/Barbed_Harpoons.webp",
           "damageComponents": [
             {
               "label": "Hit",
@@ -2578,7 +2578,7 @@
           "special": "Pull enemies toward the harpoon when it hits. Deals more damage and targets more enemies per Combo Point consumed.",
           "unlockedByDefault": false,
           "unlockCondition": "C-C-C-OCOMBO",
-          "icon": "weapons/Binding_Harpoons.png",
+          "icon": "weapons/Binding_Harpoons.webp",
           "damageComponents": [
             {
               "label": "Hit",
@@ -2628,7 +2628,7 @@
           "special": "A large piercing harpoon that deals increased damage and knockback per Combo Point consumed.",
           "unlockedByDefault": false,
           "unlockCondition": "Hook, Line and Skewer",
-          "icon": "weapons/Brine-Powered_Harpoons.png",
+          "icon": "weapons/Brine-Powered_Harpoons.webp",
           "damageComponents": [
             {
               "label": "Hit",
@@ -2674,35 +2674,35 @@
         {
           "name": "Increased Combo",
           "description": "Increases maximum Combo Points by 1.",
-          "icon": "forge/Increased_Combo.png",
+          "icon": "forge/Increased_Combo.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Plentiful Combo",
           "description": "For each consumed Combo Point, refill 1 ammo.",
-          "icon": "forge/Increased_Combo.png",
+          "icon": "forge/Increased_Combo.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Precise Combo",
           "description": "Marks a random Combo Point. Spending that amount of Combo Points increases the effect as if it consumed the maximum amount +1.",
-          "icon": "forge/Increased_Combo.png",
+          "icon": "forge/Increased_Combo.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Charged Harpoons",
           "description": "Primary and Secondary can be charged, causing up to 6 harpoons to be fired in quick succession.",
-          "icon": "forge/Increased_Combo.png",
+          "icon": "forge/Increased_Combo.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Rapid Harpoons",
           "description": "Increases fire rate by 50%",
-          "icon": "forge/Increased_Combo.png",
+          "icon": "forge/Increased_Combo.webp",
           "effects": [
             {
               "op": "mult",
@@ -2715,14 +2715,14 @@
         {
           "name": "Splitting Harpoons",
           "description": "Weakspots create an additional harpoon that seeks out a new target.",
-          "icon": "forge/Increased_Combo.png",
+          "icon": "forge/Increased_Combo.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
         {
           "name": "Blessed Harpoons",
           "description": "Primary and Secondary deals 10% more damage for every Minor and Major Blessing.",
-          "icon": "forge/Increased_Combo.png",
+          "icon": "forge/Increased_Combo.webp",
           "effects": [
             {
               "op": "mult",
@@ -2735,7 +2735,7 @@
         {
           "name": "Charmed Harpoons",
           "description": "Gain buffs based on your Charms.\n\nCommon: +20% fire rate and +20% damage.\nRare: +30% reload speed and +20% Blessing trigger chance.\nLegendary: Shoot an extra harpoon.",
-          "icon": "forge/Increased_Combo.png",
+          "icon": "forge/Increased_Combo.webp",
           "effects": [
             {
               "op": "mult",

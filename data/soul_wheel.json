@@ -10,7 +10,7 @@
           "id": "enhanced_weapons",
           "name": "Enhanced Weapons",
           "description": "Increases weapon damage by 10%.",
-          "icon": "soulwheel/Enhanced_Weapons_I.png",
+          "icon": "soulwheel/Enhanced_Weapons_I.webp",
           "effects": [
             {
               "op": "mult",
@@ -24,7 +24,7 @@
           "id": "plague",
           "name": "Plague",
           "description": "Damage over Time effects deal 20% more damage.",
-          "icon": "soulwheel/Plague.png",
+          "icon": "soulwheel/Plague.webp",
           "effects": [
             {
               "op": "mult",
@@ -38,7 +38,7 @@
           "id": "bountiful_bottles",
           "name": "Bountiful Bottles",
           "description": "Increases the number of Syringe charges by 1.",
-          "icon": "soulwheel/Bountiful_Bottles.png",
+          "icon": "soulwheel/Bountiful_Bottles.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -46,7 +46,7 @@
           "id": "ancient_forge",
           "name": "Ancient Forge",
           "description": "A forge that upgrades your weapon or ability can now be found during an expedition.",
-          "icon": "soulwheel/Ancient_Forge.png",
+          "icon": "soulwheel/Ancient_Forge.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -54,7 +54,7 @@
           "id": "controlled_chaos",
           "name": "Controlled Chaos",
           "description": "Increases Area of Effect damage by 20%.",
-          "icon": "soulwheel/Controlled_Chaos.png",
+          "icon": "soulwheel/Controlled_Chaos.webp",
           "effects": [
             {
               "op": "mult",
@@ -68,7 +68,7 @@
           "id": "picky_worship",
           "name": "Picky Worship",
           "description": "Allows you to reroll the available categories at Blessing Altars. [Rerolls available: 3]",
-          "icon": "soulwheel/Picky_Worship.png",
+          "icon": "soulwheel/Picky_Worship.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -76,7 +76,7 @@
           "id": "bartering",
           "name": "Bartering",
           "description": "Allows you to reroll your options at the merchant for Gold.",
-          "icon": "soulwheel/Bartering.png",
+          "icon": "soulwheel/Bartering.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         }
@@ -90,7 +90,7 @@
           "id": "abyssal_stamina",
           "name": "Abyssal Stamina",
           "description": "Increases max Health by 100.",
-          "icon": "soulwheel/Abyssal_Stamina_I.png",
+          "icon": "soulwheel/Abyssal_Stamina_I.webp",
           "effects": [
             {
               "op": "flat",
@@ -104,7 +104,7 @@
           "id": "ability_abundance",
           "name": "Ability Abundance",
           "description": "Increases the number of charges of your equipped ability by 1.",
-          "icon": "soulwheel/Ability_Abundance.png",
+          "icon": "soulwheel/Ability_Abundance.webp",
           "effects": [
             {
               "op": "flat",
@@ -118,7 +118,7 @@
           "id": "hastened_dash",
           "name": "Hastened Dash",
           "description": "Reduces dash cooldown by 20%.",
-          "icon": "soulwheel/Hastened_Dash.png",
+          "icon": "soulwheel/Hastened_Dash.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -126,7 +126,7 @@
           "id": "first_rest",
           "name": "First Rest",
           "description": "A healing shrine can now be found in the Abandoned Temple and Submarine.",
-          "icon": "soulwheel/Temples_Rest.png",
+          "icon": "soulwheel/Temples_Rest.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -134,7 +134,7 @@
           "id": "upgraded_inventions",
           "name": "Upgraded Inventions",
           "description": "Increases the damage done by your equipped ability by 20%.",
-          "icon": "soulwheel/Upgraded_Inventions.png",
+          "icon": "soulwheel/Upgraded_Inventions.webp",
           "effects": [
             {
               "op": "mult",
@@ -148,7 +148,7 @@
           "id": "rare_supplies",
           "name": "Rare Supplies",
           "description": "Regular chests have an increased chance to provide higher rarity rewards.",
-          "icon": "soulwheel/Rare_Supplies.png",
+          "icon": "soulwheel/Rare_Supplies.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -156,7 +156,7 @@
           "id": "starting_funds",
           "name": "Starting Funds",
           "description": "Start the run with 2 keys and 100 Gold.",
-          "icon": "soulwheel/Starting_Funds.png",
+          "icon": "soulwheel/Starting_Funds.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         }
@@ -170,7 +170,7 @@
           "id": "abyssal_stamina_ii",
           "name": "Abyssal Stamina II",
           "description": "Increases max Health by 100.",
-          "icon": "soulwheel/Abyssal_Stamina_II.png",
+          "icon": "soulwheel/Abyssal_Stamina_II.webp",
           "effects": [
             {
               "op": "flat",
@@ -184,7 +184,7 @@
           "id": "keen_vision",
           "name": "Keen Vision",
           "description": "Increases Weakspot damage by 10%.",
-          "icon": "soulwheel/Keen_Vision.png",
+          "icon": "soulwheel/Keen_Vision.webp",
           "effects": [
             {
               "op": "mult",
@@ -198,7 +198,7 @@
           "id": "magazine_madness",
           "name": "Magazine Madness",
           "description": "Increases reload speed by 15%.",
-          "icon": "soulwheel/Magazine_Madness.png",
+          "icon": "soulwheel/Magazine_Madness.webp",
           "effects": [
             {
               "op": "mult",
@@ -212,7 +212,7 @@
           "id": "garden_s_rest",
           "name": "Garden's Rest",
           "description": "A healing shrine can now be found in the Gardens.",
-          "icon": "soulwheel/Gardens_Rest.png",
+          "icon": "soulwheel/Gardens_Rest.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -220,7 +220,7 @@
           "id": "favorite_customer",
           "name": "Favorite Customer",
           "description": "Decrease the cost of Wishing Wells and Merchants by 15%.",
-          "icon": "soulwheel/Favorite_Customer.png",
+          "icon": "soulwheel/Favorite_Customer.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -228,7 +228,7 @@
           "id": "ascended_blessings",
           "name": "Ascended Blessings",
           "description": "Upgrade altars can now be found during an expedition.",
-          "icon": "soulwheel/Ascended_Blessings.png",
+          "icon": "soulwheel/Ascended_Blessings.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -236,7 +236,7 @@
           "id": "gambler",
           "name": "Gambler",
           "description": "Wishing Wells and Sacrifice Altars can now be found during an expedition.",
-          "icon": "soulwheel/Gambler.png",
+          "icon": "soulwheel/Gambler.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         }
@@ -250,7 +250,7 @@
           "id": "enhanced_weapons_ii",
           "name": "Enhanced Weapons II",
           "description": "Increases weapon damage by 10%.",
-          "icon": "soulwheel/Enhanced_Weapons_II.png",
+          "icon": "soulwheel/Enhanced_Weapons_II.webp",
           "effects": [
             {
               "op": "mult",
@@ -264,7 +264,7 @@
           "id": "ability_abundance_ii",
           "name": "Ability Abundance II",
           "description": "Increases the number of charges of your equipped ability by 1.",
-          "icon": "soulwheel/Ability_Abundance_II.png",
+          "icon": "soulwheel/Ability_Abundance_II.webp",
           "effects": [
             {
               "op": "flat",
@@ -278,7 +278,7 @@
           "id": "bountiful_bottles_ii",
           "name": "Bountiful Bottles II",
           "description": "Increases the number of Syringe charges by 1.",
-          "icon": "soulwheel/Bountiful_Bottles_II.png",
+          "icon": "soulwheel/Bountiful_Bottles_II.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -286,7 +286,7 @@
           "id": "combat_medic",
           "name": "Combat Medic",
           "description": "Syringes increase fire rate by 25% and remove the ammo cost for 5 sec.",
-          "icon": "soulwheel/Combat_Medic.png",
+          "icon": "soulwheel/Combat_Medic.webp",
           "effects": [
             {
               "op": "mult",
@@ -300,7 +300,7 @@
           "id": "growing_chain",
           "name": "Growing Chain",
           "description": "Discounted Merchant items can now appear during expeditions.",
-          "icon": "soulwheel/Growing_Chain.png",
+          "icon": "soulwheel/Growing_Chain.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -308,7 +308,7 @@
           "id": "abundance",
           "name": "Abundance",
           "description": "Additional options are available at the merchant.",
-          "icon": "soulwheel/Abundance.png",
+          "icon": "soulwheel/Abundance.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -316,7 +316,7 @@
           "id": "reserve_stock",
           "name": "Reserve Stock",
           "description": "Provides a locked chest by Merchants.",
-          "icon": "soulwheel/Reserve_Stock.png",
+          "icon": "soulwheel/Reserve_Stock.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         }
@@ -330,7 +330,7 @@
           "id": "rapid_fire",
           "name": "Rapid Fire",
           "description": "Increases weapon fire rate by 15%.",
-          "icon": "soulwheel/Rapid_Fire.png",
+          "icon": "soulwheel/Rapid_Fire.webp",
           "effects": [
             {
               "op": "mult",
@@ -344,7 +344,7 @@
           "id": "second_wind",
           "name": "Second Wind",
           "description": "Once per expedition, revive with 100% Health when you would have died.",
-          "icon": "soulwheel/Second_Wind.png",
+          "icon": "soulwheel/Second_Wind.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -352,7 +352,7 @@
           "id": "devout",
           "name": "Devout",
           "description": "See a third option when choosing Blessings or Ancient Forge mods.",
-          "icon": "soulwheel/Devout.png",
+          "icon": "soulwheel/Devout.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -360,7 +360,7 @@
           "id": "sanctuary_s_rest",
           "name": "Sanctuary's Rest",
           "description": "A healing shrine can now be found in the Sanctuary.",
-          "icon": "soulwheel/Sanctuarys_Rest.png",
+          "icon": "soulwheel/Sanctuarys_Rest.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -368,7 +368,7 @@
           "id": "treasure_map",
           "name": "Treasure Map",
           "description": "3 chests can now appear in encounters.",
-          "icon": "soulwheel/Timely_Reward.png",
+          "icon": "soulwheel/Timely_Reward.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -376,7 +376,7 @@
           "id": "beginner_s_charm",
           "name": "Beginner's Charm",
           "description": "The first starting room of an expedition provides a random Charm.",
-          "icon": "soulwheel/Beginners_Charm.png",
+          "icon": "soulwheel/Beginners_Charm.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -384,7 +384,7 @@
           "id": "timely_reward",
           "name": "Timely Reward",
           "description": "Completing areas quickly grants extra loot.",
-          "icon": "soulwheel/Timely_Reward.png",
+          "icon": "soulwheel/Timely_Reward.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         }
@@ -398,7 +398,7 @@
           "id": "execution",
           "name": "Execution",
           "description": "Melee hits can execute enemies below 20% Health.",
-          "icon": "soulwheel/Execution.png",
+          "icon": "soulwheel/Execution.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -406,7 +406,7 @@
           "id": "misty_dash",
           "name": "Misty Dash",
           "description": "Brief invulnerability while dashing.",
-          "icon": "soulwheel/Misty_Dash.png",
+          "icon": "soulwheel/Misty_Dash.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -414,7 +414,7 @@
           "id": "finer_charms",
           "name": "Finer Charms",
           "description": "Increases chance to gain higher rarity Charms.",
-          "icon": "soulwheel/Finer_Charms.png",
+          "icon": "soulwheel/Finer_Charms.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -422,7 +422,7 @@
           "id": "padded_suit",
           "name": "Padded Suit",
           "description": "Reduces damage taken by 25%.",
-          "icon": "soulwheel/Padded_Suit.png",
+          "icon": "soulwheel/Padded_Suit.webp",
           "effects": [
             {
               "op": "mult",
@@ -436,7 +436,7 @@
           "id": "picky_worship_ii",
           "name": "Picky Worship II",
           "description": "Allows spending Soul Fragments in order to reroll categories.",
-          "icon": "soulwheel/Picky_Worship_II.png",
+          "icon": "soulwheel/Picky_Worship_II.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         }
@@ -450,7 +450,7 @@
           "id": "charm_power",
           "name": "Charm Power",
           "description": "Allows equipping a second Charm.",
-          "icon": "soulwheel/Charm_Power.png",
+          "icon": "soulwheel/Charm_Power.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         },
@@ -458,7 +458,7 @@
           "id": "even_spread",
           "name": "Even Spread",
           "description": "Blessing triggers deal 5% more damage for every Blessing equipped on a different trigger.",
-          "icon": "soulwheel/Even_Spread.png",
+          "icon": "soulwheel/Even_Spread.webp",
           "effects": [
             {
               "op": "mult",
@@ -472,7 +472,7 @@
           "id": "artificer",
           "name": "Artificer",
           "description": "You can choose mods for both your weapon and ability at the Ancient Forge.",
-          "icon": "soulwheel/Artificer.png",
+          "icon": "soulwheel/Artificer.webp",
           "effects": [],
           "unmodeled": "no numeric damage effect the DSL can express"
         }

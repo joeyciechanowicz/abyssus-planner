@@ -8,7 +8,7 @@
       "stackable": null,
       "maxStacks": null,
       "sources": "Melee Attack; Blessing: Static Concussion; Blessing: Anchors",
-      "icon": "status/Stunned_Status_Effect.png",
+      "icon": "status/Stunned_Status_Effect.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -19,7 +19,7 @@
       "stackable": null,
       "maxStacks": null,
       "sources": "Aspect: Frozen",
-      "icon": "status/Frozen_Status_Effect.png",
+      "icon": "status/Frozen_Status_Effect.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -30,7 +30,7 @@
       "stackable": null,
       "maxStacks": null,
       "sources": "Blessing: Weaking Shadows; Forge Upgrade: Bonebreaker",
-      "icon": "status/Weakened_Status_Effect.png",
+      "icon": "status/Weakened_Status_Effect.webp",
       "effects": [
         {
           "op": "mult",
@@ -60,7 +60,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Secondary: Quick Scope",
-      "icon": "status/Damage_Up_Status_Effect.png",
+      "icon": "status/Damage_Up_Status_Effect.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -71,7 +71,7 @@
       "stackable": true,
       "maxStacks": 10,
       "sources": "Secondary: Return Arrow",
-      "icon": "status/Return_Arrow_Status_Effect.png",
+      "icon": "status/Return_Arrow_Status_Effect.webp",
       "effects": [
         {
           "op": "stacking",
@@ -98,7 +98,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Anchor Forge Upgrade: Bulwark",
-      "icon": "status/Generic_Status_Effect.png",
+      "icon": "status/Generic_Status_Effect.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -109,7 +109,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Ability: Brine Field",
-      "icon": "status/Armor_Up_Status_Effect.png",
+      "icon": "status/Armor_Up_Status_Effect.webp",
       "effects": [
         {
           "op": "mult",
@@ -126,7 +126,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Brine Field Forge Upgrade: Safety Dance",
-      "icon": "status/Generic_Status_Effect.png",
+      "icon": "status/Generic_Status_Effect.webp",
       "effects": [
         {
           "op": "mult",
@@ -143,7 +143,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Brine Field Forge Upgrade: Steady Field",
-      "icon": "status/Generic_Status_Effect.png",
+      "icon": "status/Generic_Status_Effect.webp",
       "effects": [
         {
           "op": "mult",
@@ -160,7 +160,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Blessing: Blood Offering",
-      "icon": "status/Blood_Zone_Status_Effect.png",
+      "icon": "status/Blood_Zone_Status_Effect.webp",
       "effects": [
         {
           "op": "mult",
@@ -177,7 +177,7 @@
       "stackable": true,
       "maxStacks": 20,
       "sources": "Blessing: Steeped in Blood",
-      "icon": "status/Blood_Zone_Status_Effect.png",
+      "icon": "status/Blood_Zone_Status_Effect.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -188,7 +188,7 @@
       "stackable": true,
       "maxStacks": null,
       "sources": "Blessing: Raging Flames",
-      "icon": "status/Flares_Fire_Rate_Status_Effect.png",
+      "icon": "status/Flares_Fire_Rate_Status_Effect.webp",
       "effects": [
         {
           "op": "stacking",
@@ -207,7 +207,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Blessing: Static Zone",
-      "icon": "status/Lightning_Static_Zone_Status_Effect.png",
+      "icon": "status/Lightning_Static_Zone_Status_Effect.webp",
       "effects": [
         {
           "op": "mult",
@@ -224,7 +224,7 @@
       "stackable": true,
       "maxStacks": null,
       "sources": "Aspect: Tentacles",
-      "icon": "status/Tentacle_Status_Effect.png",
+      "icon": "status/Tentacle_Status_Effect.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -235,7 +235,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Blessing: Vitamins",
-      "icon": "status/Damage_Fire_Rate_Up_Status_Effect.png",
+      "icon": "status/Damage_Fire_Rate_Up_Status_Effect.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -246,7 +246,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Blessing: Friendly Possession",
-      "icon": "status/Friendly_Possession_Status_Effect.png",
+      "icon": "status/Friendly_Possession_Status_Effect.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -257,7 +257,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Blessing: Updraft",
-      "icon": "status/Updraft_Status_Effect.png",
+      "icon": "status/Updraft_Status_Effect.webp",
       "effects": [
         {
           "op": "mult",
@@ -274,7 +274,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Charm: Activate Gun Mode",
-      "icon": "status/Fire_Rate_Up_Status_Effect.png",
+      "icon": "status/Fire_Rate_Up_Status_Effect.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -285,7 +285,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Charm: Consistent Killer",
-      "icon": "status/Damage_Up_Status_Effect.png",
+      "icon": "status/Damage_Up_Status_Effect.webp",
       "effects": [
         {
           "op": "trigger",
@@ -310,7 +310,7 @@
       "stackable": true,
       "maxStacks": null,
       "sources": "Charm: Violent Commitment",
-      "icon": "status/Violent_Commitment_Status_Effect.png",
+      "icon": "status/Violent_Commitment_Status_Effect.webp",
       "effects": [
         {
           "op": "mult",
@@ -327,7 +327,7 @@
       "stackable": true,
       "maxStacks": null,
       "sources": "Charm: Healthy Commitment",
-      "icon": "status/Healthy_Commitment_Status_Effect.png",
+      "icon": "status/Healthy_Commitment_Status_Effect.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -338,7 +338,7 @@
       "stackable": true,
       "maxStacks": 50,
       "sources": "Charm: Slow Power",
-      "icon": "status/Damage_Up_Status_Effect.png",
+      "icon": "status/Damage_Up_Status_Effect.webp",
       "effects": [
         {
           "op": "mult",
@@ -355,7 +355,7 @@
       "stackable": true,
       "maxStacks": 50,
       "sources": "Charm: Marksman",
-      "icon": "status/Damage_Up_Status_Effect.png",
+      "icon": "status/Damage_Up_Status_Effect.webp",
       "effects": [
         {
           "op": "mult",
@@ -372,7 +372,7 @@
       "stackable": true,
       "maxStacks": 40,
       "sources": "Charm: Headstart",
-      "icon": "status/Damage_Up_Status_Effect.png",
+      "icon": "status/Damage_Up_Status_Effect.webp",
       "effects": [
         {
           "op": "mult",
@@ -391,7 +391,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Enemy Modifier: Malicious",
-      "icon": "status/Malicious_Icon.png",
+      "icon": "status/Malicious_Icon.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -402,7 +402,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Enemy Modifier: Lethargic",
-      "icon": "status/Lethargic_Icon.png",
+      "icon": "status/Lethargic_Icon.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     },
@@ -413,7 +413,7 @@
       "stackable": false,
       "maxStacks": null,
       "sources": "Enemy Modifier: Poisonous Enemy: General Kri'su Mechanics: Soul Water",
-      "icon": "status/Poisonous_Icon.png",
+      "icon": "status/Poisonous_Icon.webp",
       "effects": [],
       "unmodeled": "no numeric damage effect the DSL can express"
     }

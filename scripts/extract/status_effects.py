@@ -80,13 +80,22 @@ def main():
         "playerNegative": neg,
     })
 
+    # Count files on disk, not resolved URLs -- see the note in soul_wheel.py.
     urls = image_urls(ICONS.keys())
+    have = unresolved = 0
     for title, fname in ICONS.items():
-        if title in urls:
-            dest = os.path.join(PUBLIC, "status", fname)
-            if not os.path.exists(dest):
-                download(urls[title], dest)
-    print(f"icons: {len(ICONS)} referenced, {len(urls)} resolved")
+        dest = os.path.join(PUBLIC, "status", fname)
+        if not os.path.exists(dest) and os.path.exists(dest[:-4] + ".webp"):
+            have += 1
+            continue
+        if title not in urls:
+            print("  !! unresolved:", title)
+            unresolved += 1
+            continue
+        if not os.path.exists(dest):
+            download(urls[title], dest)
+        have += 1
+    print(f"icons: {len(ICONS)} referenced, {have} on disk, {unresolved} unresolved")
 
 
 if __name__ == "__main__":
