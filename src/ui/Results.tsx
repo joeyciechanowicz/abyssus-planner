@@ -82,10 +82,15 @@ export function Results({ result }: { result: SimResult }) {
         {result.usesEstimates && (
           <p className="footnote">* estimated &mdash; the wiki publishes no rate-of-fire data.</p>
         )}
-        {result.weave && (
+        {(result.weave || result.weaponUptime < 1) && (
           <p className="footnote">
-            Per-hit/shot/magazine and the multipliers above reflect {result.mode.name} only
-            &mdash; {result.weave.modeName} feeds into the DPS total via the weave rate.
+            Per-hit/shot/magazine and the multipliers above reflect {result.mode.name} only.
+            {result.weave && (
+              <> {result.weave.modeName} feeds into the DPS total via the weave rate.</>
+            )}
+            {result.weaponUptime < 1 && (
+              <> Weapon DPS is further scaled to {Math.round(result.weaponUptime * 100)}% for weapon uptime.</>
+            )}
           </p>
         )}
       </section>

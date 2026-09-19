@@ -88,6 +88,13 @@
               "scope": "ability",
               "value": 2.0,
               "note": "triple damage"
+            },
+            {
+              "op": "mult",
+              "stat": "abilityCharges",
+              "scope": "ability",
+              "value": -0.5,
+              "note": "halved stacks"
             }
           ]
         },
@@ -140,6 +147,20 @@
               "stat": "damage",
               "scope": "all",
               "value": 0.25
+            },
+            {
+              "op": "trigger",
+              "on": "weakspot",
+              "chance": 1.0,
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "abilityCooldown",
+                  "scope": "ability",
+                  "value": -0.25
+                }
+              ],
+              "note": "scaled by assumed weakspot hit rate"
             }
           ]
         }
@@ -164,8 +185,16 @@
           "name": "Self-sustaining",
           "description": "10% ability cooldown reduction for every enemy hit by the anchor.",
           "icon": "forge/Self-sustaining.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "stacking",
+              "stat": "abilityCooldown",
+              "scope": "ability",
+              "valuePer": -0.1,
+              "per": "enemyHitByAbility",
+              "max": null
+            }
+          ]
         },
         {
           "id": "the_thrill",

@@ -269,6 +269,105 @@ describe('breakdown accuracy', () => {
   });
 });
 
+describe('weapon uptime', () => {
+  const base: Build = {
+    ...emptyBuild,
+    weaponId: 'Engine_Rifle',
+    modeName: 'Automatic Fire',
+    abilityId: 'frag_grenade',
+  };
+
+  it('defaults to 1.0, matching pre-existing behavior', () => {
+    const r = simulate(base);
+    const withDefault = simulate(base, { weaponUptime: 1.0 });
+    expect(r.weaponDps).toBeCloseTo(withDefault.weaponDps, 5);
+  });
+
+  it('zeroes weapon and DoT DPS while leaving ability DPS untouched', () => {
+    const full = simulate(base, { weaponUptime: 1 });
+    const pureAbility = simulate(base, { weaponUptime: 0 });
+    expect(pureAbility.weaponDps).toBe(0);
+    expect(pureAbility.dotDps).toBe(0);
+    expect(pureAbility.abilityDps).toBeCloseTo(full.abilityDps, 5);
+  });
+
+  it('scales weaponDps proportionally, including a blended weave', () => {
+    const withWeave: Build = { ...base, weaveModeName: 'Engine Rev' };
+    const full = simulate(withWeave, { weaveRate: 0.3, weaponUptime: 1 });
+    const half = simulate(withWeave, { weaveRate: 0.3, weaponUptime: 0.4 });
+    expect(half.weaponDps).toBeCloseTo(full.weaponDps * 0.4, 5);
+    expect(half.weave!.weaponDps).toBeCloseTo(full.weave!.weaponDps * 0.4, 5);
+  });
+
+  it('is ignored (treated as 1) when no ability is equipped', () => {
+    const noAbility: Build = { ...base, abilityId: null };
+    const r = simulate(noAbility, { weaponUptime: 0 });
+    expect(r.weaponDps).toBeGreaterThan(0);
+  });
+
+  it('excludes primary/secondary breakdown contributions entirely when zeroed', () => {
+    const b: Build = {
+      ...base,
+      aspects: { primary: 'Blood', secondary: null, ability: null },
+      blessings: { Blood_Primary: 1 },
+    };
+    const r = simulate(b, { weaponUptime: 0 });
+    expect(r.breakdown.some((entry) => entry.source === 'Blood Primary')).toBe(false);
+  });
+});
+
+describe('ability-cooldown and ability-charge effects', () => {
+  it('Freebie (abilityCooldown -50%) raises abilityDps', () => {
+    const bare: Build = { ...emptyBuild, abilityId: 'frag_grenade' };
+    const withFreebie: Build = { ...bare, charmIds: ['freebie'] };
+    const r = simulate(withFreebie);
+    expect(r.abilityDps).toBeCloseTo(simulate(bare).abilityDps * 2, 5);
+  });
+
+  it('Compact Grenade halves effective charges alongside tripling damage', () => {
+    const b: Build = {
+      ...emptyBuild,
+      abilityId: 'frag_grenade',
+      abilityUpgrades: ['Compact Grenade'],
+    };
+    const r = simulate(b);
+    // damage 200 x3 (mult +2.0) x2 charges (3 rounded-halved) / 30s
+    expect(r.abilityDps).toBeCloseTo((200 * 3 * 2) / 30, 5);
+  });
+
+  it("Activate Gun Mode raises weaponDps only when an ability is equipped", () => {
+    const base: Build = {
+      ...emptyBuild,
+      weaponId: 'Engine_Rifle',
+      modeName: 'Automatic Fire',
+      abilityId: 'frag_grenade',
+    };
+    const withCharm: Build = { ...base, charmIds: ['activate_gun_mode'] };
+    expect(simulate(withCharm).weaponDps).toBeGreaterThan(simulate(base).weaponDps);
+
+    const noAbility: Build = { ...base, abilityId: null, charmIds: ['activate_gun_mode'] };
+    const noAbilityBare: Build = { ...base, abilityId: null };
+    expect(simulate(noAbility).weaponDps).toBeCloseTo(simulate(noAbilityBare).weaponDps, 5);
+  });
+
+  it('Sharp Shell scales its cooldown restore by weakspotAccuracy', () => {
+    const b: Build = {
+      ...emptyBuild,
+      abilityId: 'frag_grenade',
+      abilityUpgrades: ['Sharp Shell'],
+    };
+    const low = simulate(b, { weakspotAccuracy: 0 });
+    const high = simulate(b, { weakspotAccuracy: 1 });
+    expect(high.abilityDps).toBeGreaterThan(low.abilityDps);
+  });
+
+  it('Self-sustaining (stacking abilityCooldown) raises abilityDps for the Anchor', () => {
+    const bare: Build = { ...emptyBuild, abilityId: 'anchor' };
+    const withUpgrade: Build = { ...bare, abilityUpgrades: ['Self-sustaining'] };
+    expect(simulate(withUpgrade).abilityDps).toBeGreaterThan(simulate(bare).abilityDps);
+  });
+});
+
 describe('data integrity', () => {
   it('has the expected entity counts', () => {
     expect(blessings).toHaveLength(220);

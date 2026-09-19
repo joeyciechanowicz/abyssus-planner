@@ -28,14 +28,14 @@
         "description": "Kills Lower the cooldown of your Ability.",
         "icon": "forge/Ability_Shared.webp",
         "effects": [],
-        "unmodeled": "no numeric damage effect the DSL can express"
+        "unmodeled": "structurally a trigger-on-kill cooldown reduction, but the wiki text gives no magnitude to model"
       },
       {
         "name": "Rich Get Richer",
         "description": "Decreases cooldown by 10% for every Ability stack.",
         "icon": "forge/Ability_Shared.webp",
         "effects": [],
-        "unmodeled": "no numeric damage effect the DSL can express"
+        "unmodeled": "scales with currently-held ability charges, a standing resource level the DSL's stacking op can't express (it only counts triggered events)"
       },
       {
         "name": "Investment",

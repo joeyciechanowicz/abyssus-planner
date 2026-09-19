@@ -15,6 +15,7 @@ import { decodeBuild, encodeBuild } from './share';
 import { Results } from './Results';
 import { BlessingBoard } from './BlessingBoard';
 import { Tooltip } from './Tooltip';
+import { PLAYSTYLES, applyPlaystyle, detectPlaystyle, type Playstyle } from './playstyle';
 
 function toggle<T>(list: T[], value: T): T[] {
   return list.includes(value) ? list.filter((x) => x !== value) : [...list, value];
@@ -26,6 +27,7 @@ export function App() {
   );
   const [opts, setOpts] = useState<SimOptions>(defaultOptions);
   const [soulWheelOpen, setSoulWheelOpen] = useState(false);
+  const [pendingPlaystyle, setPendingPlaystyle] = useState<Playstyle | null>(null);
 
   useEffect(() => {
     history.replaceState(null, '', '#' + encodeBuild(build));
@@ -64,6 +66,7 @@ export function App() {
               value={build.weaponId}
               onChange={(e) => {
                 const w = weaponById.get(e.target.value)!;
+                setPendingPlaystyle(null);
                 set({
                   weaponId: w.id,
                   modeName: w.modes[0].name,
@@ -85,6 +88,7 @@ export function App() {
                 const weaveMode = weapon.modes.find((m) => m.name === build.weaveModeName);
                 const patch: Partial<Build> = { modeName: newMode.name };
                 if (weaveMode && weaveMode.type === newMode.type) patch.weaveModeName = null;
+                setPendingPlaystyle(null);
                 set(patch);
               }}
             >
@@ -96,11 +100,47 @@ export function App() {
             </select>
             <p className="hint">{mode.special}</p>
 
+            {ability && (
+              <div className="row">
+                <label>Playstyle</label>
+                <select
+                  value={pendingPlaystyle ?? detectPlaystyle(build, opts, mode) ?? ''}
+                  onChange={(e) => {
+                    const id = e.target.value as Playstyle;
+                    setPendingPlaystyle(id);
+                    const { buildPatch, optsPatch } = applyPlaystyle(id, build, weapon, mode);
+                    set(buildPatch);
+                    setOpts((o) => ({ ...o, ...optsPatch }));
+                  }}
+                >
+                  <option value="" disabled hidden>
+                    Custom
+                  </option>
+                  {PLAYSTYLES.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+            {(() => {
+              const activeId = pendingPlaystyle ?? detectPlaystyle(build, opts, mode);
+              const chosen = PLAYSTYLES.find((p) => p.id === activeId);
+              if (chosen?.requiresType && chosen.requiresType !== mode.type) {
+                return <p className="hint">Pick a {chosen.requiresType} mode above to complete this playstyle.</p>;
+              }
+              return null;
+            })()}
+
             <div className="row">
               <label>Weave in</label>
               <select
                 value={build.weaveModeName ?? ''}
-                onChange={(e) => set({ weaveModeName: e.target.value || null })}
+                onChange={(e) => {
+                  setPendingPlaystyle(null);
+                  set({ weaveModeName: e.target.value || null });
+                }}
               >
                 <option value="">&mdash; no weave &mdash;</option>
                 {weapon.modes
@@ -277,6 +317,21 @@ export function App() {
                   step={0.05}
                   value={opts.weaveRate}
                   onChange={(e) => setOpts({ ...opts, weaveRate: Number(e.target.value) })}
+                />
+              </div>
+            )}
+            {ability && (
+              <div className="slider">
+                <label>
+                  Weapon uptime <b>{Math.round(opts.weaponUptime * 100)}%</b>
+                </label>
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={opts.weaponUptime}
+                  onChange={(e) => setOpts({ ...opts, weaponUptime: Number(e.target.value) })}
                 />
               </div>
             )}
