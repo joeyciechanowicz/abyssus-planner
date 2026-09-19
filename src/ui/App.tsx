@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   abilities,
-  aspects,
-  blessingsByAspect,
   charms,
   sharedAbilityUpgrades,
   soulWheel,
@@ -14,8 +12,7 @@ import { defaultOptions, emptyBuild, type Build, type SimOptions } from '../mode
 import { simulate } from '../engine/simulate';
 import { decodeBuild, encodeBuild } from './share';
 import { Results } from './Results';
-
-const SLOTS = ['primary', 'secondary', 'ability'] as const;
+import { BlessingBoard } from './BlessingBoard';
 
 function toggle<T>(list: T[], value: T): T[] {
   return list.includes(value) ? list.filter((x) => x !== value) : [...list, value];
@@ -24,7 +21,6 @@ function toggle<T>(list: T[], value: T): T[] {
 export function App() {
   const [build, setBuild] = useState<Build>(() => decodeBuild(location.hash) ?? emptyBuild);
   const [opts, setOpts] = useState<SimOptions>(defaultOptions);
-  const [openAspect, setOpenAspect] = useState<string | null>(null);
 
   useEffect(() => {
     history.replaceState(null, '', '#' + encodeBuild(build));
@@ -42,8 +38,6 @@ export function App() {
   }, [build, opts]);
 
   const set = (patch: Partial<Build>) => setBuild((b) => ({ ...b, ...patch }));
-
-  const equippedAspects = SLOTS.map((s) => build.aspects[s]).filter(Boolean) as string[];
 
   return (
     <div className="app">
@@ -83,69 +77,7 @@ export function App() {
             <p className="hint">{weapon.modes.find((m) => m.name === build.modeName)?.special}</p>
           </section>
 
-          <section>
-            <h2>Aspects</h2>
-            {SLOTS.map((slot) => (
-              <div key={slot} className="row">
-                <label>{slot}</label>
-                <select
-                  value={build.aspects[slot] ?? ''}
-                  onChange={(e) => {
-                    const value = e.target.value || null;
-                    const next = { ...build.aspects, [slot]: value };
-                    const kept = build.blessingIds.filter((id) => {
-                      const aspect = [...blessingsByAspect.entries()].find(([, list]) =>
-                        list.some((b) => b.id === id),
-                      )?.[0];
-                      return aspect ? Object.values(next).includes(aspect) : false;
-                    });
-                    set({ aspects: next, blessingIds: kept });
-                  }}
-                >
-                  <option value="">&mdash; none &mdash;</option>
-                  {aspects.map((a) => (
-                    <option key={a} value={a}>
-                      {a}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            ))}
-          </section>
-
-          {equippedAspects.length > 0 && (
-            <section>
-              <h2>Blessings ({build.blessingIds.length})</h2>
-              {equippedAspects.map((aspect) => (
-                <div key={aspect} className="aspect-group">
-                  <button
-                    className="group-toggle"
-                    onClick={() => setOpenAspect(openAspect === aspect ? null : aspect)}
-                  >
-                    {openAspect === aspect ? '▾' : '▸'} {aspect}
-                  </button>
-                  {openAspect === aspect && (
-                    <ul className="picker">
-                      {(blessingsByAspect.get(aspect) ?? []).map((b) => (
-                        <li key={b.id}>
-                          <label title={b.description}>
-                            <input
-                              type="checkbox"
-                              checked={build.blessingIds.includes(b.id)}
-                              onChange={() => set({ blessingIds: toggle(build.blessingIds, b.id) })}
-                            />
-                            <span className={b.effects.length === 0 ? 'not-simulated' : ''}>
-                              {b.name}
-                            </span>
-                          </label>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </section>
-          )}
+          <BlessingBoard build={build} onChange={set} />
 
           <section>
             <h2>Forge Upgrades &mdash; weapon ({build.weaponUpgrades.length}/3)</h2>

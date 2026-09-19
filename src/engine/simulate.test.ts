@@ -111,7 +111,7 @@ describe('simulate', () => {
     const wrongAspect: Build = {
       ...base,
       aspects: { primary: 'Blood', secondary: null, ability: null },
-      blessingIds: ['Primary_Flares'],
+      blessings: { Primary_Flares: 1 },
     };
     const r = simulate(wrongAspect, { weakspotAccuracy: 0 });
     expect(r.warnings.some((w) => w.includes('not equipped'))).toBe(true);
@@ -122,7 +122,7 @@ describe('simulate', () => {
     const bloodPrimary: Build = {
       ...base,
       aspects: { primary: 'Blood', secondary: null, ability: null },
-      blessingIds: ['Blood_Primary'],
+      blessings: { Blood_Primary: 1 },
     };
     const onPrimary = simulate(bloodPrimary, { weakspotAccuracy: 0 });
     expect(onPrimary.stats.damageMultiplier).toBeCloseTo(1.15, 5);
@@ -153,7 +153,7 @@ describe('simulate', () => {
     const b: Build = {
       ...base,
       aspects: { primary: 'Barrier', secondary: null, ability: null },
-      blessingIds: ['Lasting_Defense'],
+      blessings: { Lasting_Defense: 1 },
     };
     const r = simulate(b);
     expect(r.unmodeled.length).toBeGreaterThan(0);

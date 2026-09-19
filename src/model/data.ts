@@ -27,6 +27,10 @@ export const blessingUpgradeVariableSchema = z.object({
   isPercent: z.boolean(),
   // Absolute value at each rank (not deltas), rank 1 first. Scaling is not linear.
   ranks: z.array(z.number()),
+  // [start, end) offset of this variable's rank-1 value inside `description`, so
+  // renderBlessingDescription() can substitute in a different rank's value. Null
+  // when scripts/link_blessing_upgrades.py couldn't find an unambiguous match.
+  descriptionSpan: z.tuple([z.number(), z.number()]).nullable().optional(),
 });
 export type BlessingUpgradeVariable = z.infer<typeof blessingUpgradeVariableSchema>;
 
@@ -150,6 +154,41 @@ for (const b of blessings) {
   const list = blessingsByAspect.get(b.aspect) ?? [];
   list.push(b);
   blessingsByAspect.set(b.aspect, list);
+}
+
+/**
+ * Highest selectable rank for a blessing; 1 for capstones with no `upgrades`.
+ * A blessing's variables don't always share one rank count (e.g. Golden Skin's
+ * Gold-threshold variable has 11 steps but its damage-reduction variable only 2),
+ * so this is the longest of them -- shorter variables just clamp at their own max.
+ */
+export function maxBlessingRank(b: Blessing): number {
+  if (!b.upgrades || b.upgrades.length === 0) return 1;
+  return Math.max(...b.upgrades.map((u) => u.ranks.length));
+}
+
+/**
+ * `b.description` with each upgrade variable's placeholder substituted for its
+ * value at `rank` (1-based, clamped to the blessing's range). Variables without a
+ * `descriptionSpan` (scripts/link_blessing_upgrades.py couldn't place them
+ * unambiguously) are left as their rank-1 text.
+ */
+export function renderBlessingDescription(b: Blessing, rank: number): string {
+  const upgrades = b.upgrades ?? [];
+  const spans = upgrades
+    .filter((u) => u.descriptionSpan)
+    .map((u) => ({ ...u, descriptionSpan: u.descriptionSpan! }))
+    .sort((a, b2) => b2.descriptionSpan[0] - a.descriptionSpan[0]);
+
+  let text = b.description;
+  for (const u of spans) {
+    const clamped = Math.min(Math.max(rank, 1), u.ranks.length);
+    const value = u.ranks[clamped - 1];
+    const rendered = u.isPercent ? `${value}%` : `${value}`;
+    const [start, end] = u.descriptionSpan;
+    text = text.slice(0, start) + rendered + text.slice(end);
+  }
+  return text;
 }
 
 export const weaponById = new Map(weapons.map((w) => [w.id, w]));
