@@ -6,27 +6,37 @@ import {
   soulSkillById,
   weaponById,
   type DamageComponent,
+  type WeaponMode,
 } from '../model/data';
 import { defaultOptions, type Build, type SimOptions } from '../model/build';
 import { Modifiers, applyEffects } from './stacking';
 import { scaleBlessingEffects } from './blessingScaling';
 
 export interface SimResult {
-  /** Average damage of one landed hit, weakspot chance blended in. */
+  /** Average damage of one landed hit, weakspot chance blended in. Main mode only. */
   perHit: number;
-  /** Damage of one trigger pull (all projectiles). */
+  /** Damage of one trigger pull (all projectiles). Main mode only. */
   perShot: number;
-  /** Damage of a full magazine. */
+  /** Damage of a full magazine. Main mode only. */
   perMagazine: number;
-  /** Sustained weapon DPS including reloads. */
+  /** Sustained weapon DPS including reloads -- blended with the weave mode, if any. */
   weaponDps: number;
-  /** Damage-over-time contribution per second from the mode's own DoT components. */
+  /** Damage-over-time contribution per second -- blended with the weave mode, if any. */
   dotDps: number;
   /** Ability damage amortised over its cooldown. */
   abilityDps: number;
   /** weaponDps + dotDps + abilityDps. */
   totalDps: number;
-  /** Effective stats after modifiers. */
+  /** The main mode being simulated (`build.modeName`). */
+  mode: { name: string; type: 'Primary' | 'Secondary' };
+  /**
+   * Present when `build.weaveModeName` names a valid mode of the other fire
+   * type. `weaponDps`/`dotDps` here are already weighted by `rate` -- they are
+   * this mode's literal share of the top-level `weaponDps`/`dotDps` above, not
+   * that mode's own bare numbers.
+   */
+  weave?: { modeName: string; modeType: 'Primary' | 'Secondary'; rate: number; weaponDps: number; dotDps: number };
+  /** Effective stats after modifiers. Main mode only, see `weave` above. */
   stats: {
     fireRate: number;
     clipSize: number | null;
@@ -60,6 +70,100 @@ function componentTotal(
 }
 
 const ASPECT_SLOTS = ['primary', 'secondary', 'ability'] as const;
+
+interface ModeOutput {
+  perHit: number;
+  perShot: number;
+  perMagazine: number;
+  weaponDps: number;
+  dotDps: number;
+  fireRate: number;
+  clipSize: number | null;
+  reloadTime: number;
+  damageMultiplier: number;
+  weakspotMultiplier: number;
+}
+
+/**
+ * Damage/rate/DoT math for one weapon mode, given modifiers already
+ * accumulated from the whole build. Pure function of `mode` and `mods` so it
+ * can be called once for the main mode and once more for a weave mode without
+ * re-collecting any picks' effects.
+ */
+function computeModeOutput(
+  mode: WeaponMode,
+  mods: Modifiers,
+  opts: SimOptions,
+  abilityDamage: number,
+): ModeOutput {
+  const scope = mode.type.toLowerCase() as 'primary' | 'secondary';
+
+  const baseImpact = componentTotal(mode.damageComponents, ['impact'], opts.chargeLevel);
+  const baseWeakspot =
+    componentTotal(mode.weakspotComponents, ['impact'], opts.chargeLevel) || baseImpact * 2;
+  const baseExtra = componentTotal(
+    mode.damageComponents,
+    ['explosion', 'pull', 'aoe'],
+    opts.chargeLevel,
+  );
+
+  const damageMult = 1 + mods.multFor('damage', scope);
+  const weakspotMult = 1 + mods.multFor('weakspotDamage', scope);
+  const aoeMult = 1 + mods.multFor('aoeDamage', scope);
+
+  // Weakspot damage is already the doubled figure in the wiki's own table, so the
+  // weakspot bonus scales that rather than re-applying the x2.
+  const normalHit = baseImpact * damageMult;
+  const weakspotHit = baseWeakspot * damageMult * weakspotMult;
+  const blendedImpact =
+    normalHit * (1 - opts.weakspotAccuracy) + weakspotHit * opts.weakspotAccuracy;
+
+  const procDamage = mods.procs.reduce((sum, p) => {
+    const base =
+      p.of === 'flat'
+        ? p.amount
+        : p.of === 'onHitDamage' || p.of === 'weaponDamage'
+          ? blendedImpact * p.amount
+          : p.of === 'abilityDamage'
+            ? abilityDamage * p.amount
+            : 0;
+    return sum + base * p.chance;
+  }, 0);
+
+  const perShot = (blendedImpact + baseExtra * aoeMult + procDamage) * opts.accuracy;
+
+  const fireRate = mode.fireRate * (1 + mods.multFor('fireRate', scope));
+  const reloadTime = mode.reloadTime / (1 + mods.multFor('reloadSpeed', scope));
+  const clipSize =
+    mode.clipSize === null
+      ? null
+      : Math.max(1, Math.round(mode.clipSize * (1 + mods.multFor('clipSize', scope)) +
+          mods.flatFor('clipSize')));
+
+  const shotsPerCycle = clipSize ?? fireRate; // no clip => one second of uninterrupted fire
+  const cycleTime = shotsPerCycle / fireRate + (clipSize === null ? 0 : reloadTime);
+  const perMagazine = perShot * shotsPerCycle;
+  const weaponDps = cycleTime > 0 ? perMagazine / cycleTime : 0;
+
+  const dotMult = 1 + mods.multFor('dotDamage', 'dot');
+  const dotPerApplication = componentTotal(mode.damageComponents, ['dot'], opts.chargeLevel);
+  // A DoT is refreshed by fire, so treat it as landing once per shot but not
+  // stacking beyond a single application at a time.
+  const dotDps = dotPerApplication > 0 ? dotPerApplication * dotMult * Math.min(fireRate, 1) : 0;
+
+  return {
+    perHit: blendedImpact,
+    perShot,
+    perMagazine,
+    weaponDps,
+    dotDps,
+    fireRate,
+    clipSize,
+    reloadTime,
+    damageMultiplier: damageMult,
+    weakspotMultiplier: weakspotMult,
+  };
+}
 
 export function simulate(build: Build, options: Partial<SimOptions> = {}): SimResult {
   const opts: SimOptions = { ...defaultOptions, ...options };
@@ -135,63 +239,31 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     warnings.push('a second Charm requires the Charm Power soul skill');
   }
 
-  // --- Damage -------------------------------------------------------------
-  const scope = mode.type.toLowerCase() as 'primary' | 'secondary';
+  // --- Modes: main + optional weave ----------------------------------------
+  const abilityDamage = ability?.damage ?? 0;
+  const main = computeModeOutput(mode, mods, opts, abilityDamage);
 
-  const baseImpact = componentTotal(mode.damageComponents, ['impact'], opts.chargeLevel);
-  const baseWeakspot =
-    componentTotal(mode.weakspotComponents, ['impact'], opts.chargeLevel) || baseImpact * 2;
-  const baseExtra = componentTotal(
-    mode.damageComponents,
-    ['explosion', 'pull', 'aoe'],
-    opts.chargeLevel,
-  );
+  let weaveMode: WeaponMode | undefined;
+  let weaveOutput: ModeOutput | undefined;
+  if (build.weaveModeName) {
+    weaveMode = weapon.modes.find((m) => m.name === build.weaveModeName);
+    if (!weaveMode) {
+      warnings.push(`${weapon.name} has no mode "${build.weaveModeName}" to weave in`);
+    } else if (weaveMode.type === mode.type) {
+      warnings.push(
+        `weave mode must be the other fire type (main mode is already ${mode.type})`,
+      );
+      weaveMode = undefined;
+    } else {
+      weaveOutput = computeModeOutput(weaveMode, mods, opts, abilityDamage);
+    }
+  }
 
-  const damageMult = 1 + mods.multFor('damage', scope);
-  const weakspotMult = 1 + mods.multFor('weakspotDamage', scope);
-  const aoeMult = 1 + mods.multFor('aoeDamage', scope);
-
-  // Weakspot damage is already the doubled figure in the wiki's own table, so the
-  // weakspot bonus scales that rather than re-applying the x2.
-  const normalHit = baseImpact * damageMult;
-  const weakspotHit = baseWeakspot * damageMult * weakspotMult;
-  const blendedImpact =
-    normalHit * (1 - opts.weakspotAccuracy) + weakspotHit * opts.weakspotAccuracy;
-
-  const procDamage = mods.procs.reduce((sum, p) => {
-    const base =
-      p.of === 'flat'
-        ? p.amount
-        : p.of === 'onHitDamage' || p.of === 'weaponDamage'
-          ? blendedImpact * p.amount
-          : p.of === 'abilityDamage'
-            ? (ability?.damage ?? 0) * p.amount
-            : 0;
-    return sum + base * p.chance;
-  }, 0);
-
-  const perShot = (blendedImpact + baseExtra * aoeMult + procDamage) * opts.accuracy;
-
-  // --- Rate ---------------------------------------------------------------
-  const fireRate = mode.fireRate * (1 + mods.multFor('fireRate', scope));
-  const reloadTime = mode.reloadTime / (1 + mods.multFor('reloadSpeed', scope));
-  const clipSize =
-    mode.clipSize === null
-      ? null
-      : Math.max(1, Math.round(mode.clipSize * (1 + mods.multFor('clipSize', scope)) +
-          mods.flatFor('clipSize')));
-
-  const shotsPerCycle = clipSize ?? fireRate; // no clip => one second of uninterrupted fire
-  const cycleTime = shotsPerCycle / fireRate + (clipSize === null ? 0 : reloadTime);
-  const perMagazine = perShot * shotsPerCycle;
-  const weaponDps = cycleTime > 0 ? perMagazine / cycleTime : 0;
-
-  // --- DoT ----------------------------------------------------------------
-  const dotMult = 1 + mods.multFor('dotDamage', 'dot');
-  const dotPerApplication = componentTotal(mode.damageComponents, ['dot'], opts.chargeLevel);
-  // A DoT is refreshed by fire, so treat it as landing once per shot but not
-  // stacking beyond a single application at a time.
-  const dotDps = dotPerApplication > 0 ? dotPerApplication * dotMult * Math.min(fireRate, 1) : 0;
+  const weaveRate = weaveOutput ? Math.min(Math.max(opts.weaveRate, 0), 1) : 0;
+  const weaveWeaponDps = (weaveOutput?.weaponDps ?? 0) * weaveRate;
+  const weaveDotDps = (weaveOutput?.dotDps ?? 0) * weaveRate;
+  const weaponDps = main.weaponDps * (1 - weaveRate) + weaveWeaponDps;
+  const dotDps = main.dotDps * (1 - weaveRate) + weaveDotDps;
 
   // --- Ability ------------------------------------------------------------
   let abilityDps = 0;
@@ -206,26 +278,45 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     abilityDps = (perCast * charges) / encounterSeconds;
   }
 
-  const breakdown = [...mods.log].sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
+  // A primary/secondary-scoped contribution is only real if that fire type is
+  // actually being simulated (the main mode, or an active weave) -- otherwise
+  // it's dead weight the player never sees reflected in the DPS number above.
+  const activeTypes = new Set<'Primary' | 'Secondary'>([mode.type, ...(weaveMode ? [weaveMode.type] : [])]);
+  const breakdown = mods.log
+    .filter((entry) => {
+      if (entry.scope !== 'primary' && entry.scope !== 'secondary') return true;
+      return activeTypes.has(entry.scope === 'primary' ? 'Primary' : 'Secondary');
+    })
+    .sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
 
   return {
-    perHit: blendedImpact,
-    perShot,
-    perMagazine,
+    perHit: main.perHit,
+    perShot: main.perShot,
+    perMagazine: main.perMagazine,
     weaponDps,
     dotDps,
     abilityDps,
     totalDps: weaponDps + dotDps + abilityDps,
+    mode: { name: mode.name, type: mode.type },
+    weave: weaveOutput
+      ? {
+          modeName: weaveMode!.name,
+          modeType: weaveMode!.type,
+          rate: weaveRate,
+          weaponDps: weaveWeaponDps,
+          dotDps: weaveDotDps,
+        }
+      : undefined,
     stats: {
-      fireRate,
-      clipSize,
-      reloadTime,
-      damageMultiplier: damageMult,
-      weakspotMultiplier: weakspotMult,
+      fireRate: main.fireRate,
+      clipSize: main.clipSize,
+      reloadTime: main.reloadTime,
+      damageMultiplier: main.damageMultiplier,
+      weakspotMultiplier: main.weakspotMultiplier,
     },
     breakdown,
     unmodeled,
-    usesEstimates: mode.estimated,
+    usesEstimates: mode.estimated || (weaveMode?.estimated ?? false),
     warnings,
   };
 }

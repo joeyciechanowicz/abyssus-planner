@@ -5,10 +5,17 @@ const fmt = (n: number) =>
 
 export function Results({ result }: { result: SimResult }) {
   const parts = [
-    { label: 'Weapon', value: result.weaponDps, cls: 'bar-weapon' },
+    result.weave
+      ? { label: result.mode.type, value: result.weaponDps - result.weave.weaponDps, cls: 'bar-weapon' }
+      : { label: 'Weapon', value: result.weaponDps, cls: 'bar-weapon' },
+    result.weave && {
+      label: `${result.weave.modeType} (weave)`,
+      value: result.weave.weaponDps,
+      cls: 'bar-weapon-weave',
+    },
     { label: 'Damage over time', value: result.dotDps, cls: 'bar-dot' },
     { label: 'Ability', value: result.abilityDps, cls: 'bar-ability' },
-  ].filter((p) => p.value > 0);
+  ].filter((p): p is { label: string; value: number; cls: string } => !!p && p.value > 0);
 
   return (
     <>
@@ -74,6 +81,12 @@ export function Results({ result }: { result: SimResult }) {
         </table>
         {result.usesEstimates && (
           <p className="footnote">* estimated &mdash; the wiki publishes no rate-of-fire data.</p>
+        )}
+        {result.weave && (
+          <p className="footnote">
+            Per-hit/shot/magazine and the multipliers above reflect {result.mode.name} only
+            &mdash; {result.weave.modeName} feeds into the DPS total via the weave rate.
+          </p>
         )}
       </section>
 

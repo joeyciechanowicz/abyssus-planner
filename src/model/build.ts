@@ -4,6 +4,10 @@ import { z } from 'zod';
 export const buildSchema = z.object({
   weaponId: z.string(),
   modeName: z.string(),
+  /** A second mode (of the other fire type) to occasionally fire, e.g. to apply
+   * a blessing effect, then return to `modeName`. Null means single-mode, as
+   * before this field existed. */
+  weaveModeName: z.string().nullable().default(null),
   /** One aspect per slot; a slot may be left empty. */
   aspects: z.object({
     primary: z.string().nullable().default(null),
@@ -39,6 +43,9 @@ export interface SimOptions {
   stackFullness: number;
   /** Charge-based modes: 0 = tap, 1 = fully charged. */
   chargeLevel: number;
+  /** Fraction of the time spent firing `weaveModeName` instead of `modeName`.
+   * Meaningless (and ignored) when no weave mode is set. */
+  weaveRate: number;
 }
 
 export const defaultOptions: SimOptions = {
@@ -48,11 +55,13 @@ export const defaultOptions: SimOptions = {
   targetHealthFraction: 1.0,
   stackFullness: 0.5,
   chargeLevel: 1.0,
+  weaveRate: 0.2,
 };
 
 export const emptyBuild: Build = {
   weaponId: 'Engine_Rifle',
   modeName: 'Automatic Fire',
+  weaveModeName: null,
   aspects: { primary: null, secondary: null, ability: null },
   blessings: {},
   charmIds: [],

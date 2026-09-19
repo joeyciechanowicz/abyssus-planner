@@ -80,6 +80,7 @@ select {
 
 .stacked-bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin: 10px 0 8px; background: var(--panel-2); }
 .bar-weapon { background: var(--accent); }
+.bar-weapon-weave { background: var(--accent); opacity: 0.5; }
 .bar-dot { background: var(--warn); }
 .bar-ability { background: #a08cd0; }
 

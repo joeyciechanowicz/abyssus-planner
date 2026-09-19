@@ -183,6 +183,92 @@ describe('simulate', () => {
   });
 });
 
+describe('weave mode', () => {
+  const base: Build = { ...emptyBuild, weaponId: 'Engine_Rifle', modeName: 'Automatic Fire' };
+
+  it('is absent from the result when unset', () => {
+    expect(simulate(base).weave).toBeUndefined();
+  });
+
+  it('blends main and weave mode weaponDps by the weave rate', () => {
+    const withBlessing: Build = {
+      ...base,
+      modeName: 'Engine Rev', // Secondary
+      weaveModeName: 'Automatic Fire', // Primary
+      aspects: { primary: 'Blood', secondary: null, ability: null },
+      blessings: { Blood_Primary: 1 },
+    };
+    const rate = 0.3;
+    const r = simulate(withBlessing, { weakspotAccuracy: 0, weaveRate: rate });
+
+    const mainOnly = simulate({ ...withBlessing, weaveModeName: null }, { weakspotAccuracy: 0 });
+    const weaveOnly = simulate(
+      { ...withBlessing, modeName: 'Automatic Fire', weaveModeName: null },
+      { weakspotAccuracy: 0 },
+    );
+
+    expect(r.weaponDps).toBeCloseTo(mainOnly.weaponDps * (1 - rate) + weaveOnly.weaponDps * rate, 5);
+    expect(r.weave?.rate).toBeCloseTo(rate, 5);
+
+    // The Primary-scoped blessing helps Automatic Fire's own DPS...
+    const bareAutoFire = simulate({ ...base, modeName: 'Automatic Fire' }, { weakspotAccuracy: 0 });
+    expect(weaveOnly.weaponDps).toBeGreaterThan(bareAutoFire.weaponDps);
+    // ...but not Engine Rev's, since the blessing is Primary-scoped.
+    const bareEngineRev = simulate({ ...base, modeName: 'Engine Rev' }, { weakspotAccuracy: 0 });
+    expect(mainOnly.weaponDps).toBeCloseTo(bareEngineRev.weaponDps, 5);
+  });
+
+  it("doesn't blend per-hit/per-shot/stats -- those stay main-mode only", () => {
+    const withWeave: Build = { ...base, weaveModeName: 'Engine Rev' };
+    const r = simulate(withWeave, { weaveRate: 0.5 });
+    const mainOnly = simulate(base);
+    expect(r.perHit).toBeCloseTo(mainOnly.perHit, 5);
+    expect(r.stats.damageMultiplier).toBeCloseTo(mainOnly.stats.damageMultiplier, 5);
+  });
+
+  it('warns and ignores a weave mode of the same fire type as the main mode', () => {
+    const b: Build = { ...base, weaveModeName: 'Burst Fire' }; // also Primary
+    const r = simulate(b, { weaveRate: 0.5 });
+    expect(r.weave).toBeUndefined();
+    expect(r.warnings.some((w) => w.includes('other fire type'))).toBe(true);
+    expect(r.weaponDps).toBeCloseTo(simulate(base).weaponDps, 5);
+  });
+
+  it('warns and ignores an unknown weave mode name', () => {
+    const b: Build = { ...base, weaveModeName: 'Not A Real Mode' };
+    const r = simulate(b, { weaveRate: 0.5 });
+    expect(r.weave).toBeUndefined();
+    expect(r.warnings.some((w) => w.includes('Not A Real Mode'))).toBe(true);
+  });
+});
+
+describe('breakdown accuracy', () => {
+  const base: Build = { ...emptyBuild, weaponId: 'Engine_Rifle', modeName: 'Automatic Fire' };
+
+  it('excludes a scope-locked contribution that is not part of the simulated mode(s)', () => {
+    const b: Build = {
+      ...base,
+      modeName: 'Engine Rev', // Secondary
+      aspects: { primary: 'Blood', secondary: null, ability: null },
+      blessings: { Blood_Primary: 1 },
+    };
+    const r = simulate(b, { weakspotAccuracy: 0 });
+    expect(r.breakdown.some((entry) => entry.source === 'Blood Primary')).toBe(false);
+  });
+
+  it('includes a scope-locked contribution once a matching weave mode is added', () => {
+    const b: Build = {
+      ...base,
+      modeName: 'Engine Rev',
+      weaveModeName: 'Automatic Fire',
+      aspects: { primary: 'Blood', secondary: null, ability: null },
+      blessings: { Blood_Primary: 1 },
+    };
+    const r = simulate(b, { weakspotAccuracy: 0, weaveRate: 0.3 });
+    expect(r.breakdown.some((entry) => entry.source === 'Blood Primary')).toBe(true);
+  });
+});
+
 describe('data integrity', () => {
   it('has the expected entity counts', () => {
     expect(blessings).toHaveLength(220);

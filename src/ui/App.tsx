@@ -28,6 +28,7 @@ export function App() {
   }, [build]);
 
   const weapon = weaponById.get(build.weaponId)!;
+  const mode = weapon.modes.find((m) => m.name === build.modeName)!;
   const ability = build.abilityId ? abilityById.get(build.abilityId) : undefined;
 
   const result = useMemo(() => {
@@ -59,7 +60,12 @@ export function App() {
               value={build.weaponId}
               onChange={(e) => {
                 const w = weaponById.get(e.target.value)!;
-                set({ weaponId: w.id, modeName: w.modes[0].name, weaponUpgrades: [] });
+                set({
+                  weaponId: w.id,
+                  modeName: w.modes[0].name,
+                  weaveModeName: null,
+                  weaponUpgrades: [],
+                });
               }}
             >
               {weapons.map((w) => (
@@ -68,14 +74,44 @@ export function App() {
                 </option>
               ))}
             </select>
-            <select value={build.modeName} onChange={(e) => set({ modeName: e.target.value })}>
+            <select
+              value={build.modeName}
+              onChange={(e) => {
+                const newMode = weapon.modes.find((m) => m.name === e.target.value)!;
+                const weaveMode = weapon.modes.find((m) => m.name === build.weaveModeName);
+                const patch: Partial<Build> = { modeName: newMode.name };
+                if (weaveMode && weaveMode.type === newMode.type) patch.weaveModeName = null;
+                set(patch);
+              }}
+            >
               {weapon.modes.map((m) => (
                 <option key={m.name} value={m.name}>
                   {m.type}: {m.name} ({m.damage})
                 </option>
               ))}
             </select>
-            <p className="hint">{weapon.modes.find((m) => m.name === build.modeName)?.special}</p>
+            <p className="hint">{mode.special}</p>
+
+            <div className="row">
+              <label>Weave in</label>
+              <select
+                value={build.weaveModeName ?? ''}
+                onChange={(e) => set({ weaveModeName: e.target.value || null })}
+              >
+                <option value="">&mdash; no weave &mdash;</option>
+                {weapon.modes
+                  .filter((m) => m.type !== mode.type)
+                  .map((m) => (
+                    <option key={m.name} value={m.name}>
+                      {m.type}: {m.name} ({m.damage})
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <p className="hint">
+              Occasionally fire this mode too (e.g. to apply a blessing effect), then return to
+              your main mode above.
+            </p>
           </section>
 
           <BlessingBoard build={build} onChange={set} />
@@ -219,6 +255,21 @@ export function App() {
                 />
               </div>
             ))}
+            {build.weaveModeName && (
+              <div className="slider">
+                <label>
+                  Weave-in rate <b>{Math.round(opts.weaveRate * 100)}%</b>
+                </label>
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={opts.weaveRate}
+                  onChange={(e) => setOpts({ ...opts, weaveRate: Number(e.target.value) })}
+                />
+              </div>
+            )}
           </section>
 
           {result instanceof Error ? (
