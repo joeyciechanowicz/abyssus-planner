@@ -148,3 +148,7 @@ scripts/uncodified.txt
 # Python bytecode from scripts/extract
 __pycache__/
 *.pyc
+
+# .NET build output from scripts/extract/dump_mutators
+scripts/extract/dump_mutators/bin/
+scripts/extract/dump_mutators/obj/
