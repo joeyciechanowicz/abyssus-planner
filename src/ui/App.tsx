@@ -4,6 +4,7 @@ import {
   charms,
   sharedAbilityUpgrades,
   soulWheel,
+  soulSkills,
   weapons,
   weaponById,
   abilityById,
@@ -20,8 +21,11 @@ function toggle<T>(list: T[], value: T): T[] {
 }
 
 export function App() {
-  const [build, setBuild] = useState<Build>(() => decodeBuild(location.hash) ?? emptyBuild);
+  const [build, setBuild] = useState<Build>(
+    () => decodeBuild(location.hash) ?? { ...emptyBuild, soulSkillIds: soulSkills.map((s) => s.id) },
+  );
   const [opts, setOpts] = useState<SimOptions>(defaultOptions);
+  const [soulWheelOpen, setSoulWheelOpen] = useState(false);
 
   useEffect(() => {
     history.replaceState(null, '', '#' + encodeBuild(build));
@@ -199,8 +203,14 @@ export function App() {
           </section>
 
           <section>
-            <h2>Soul Wheel</h2>
-            {soulWheel.map((row) => (
+            <button
+              type="button"
+              className="section-toggle"
+              onClick={() => setSoulWheelOpen((v) => !v)}
+            >
+              {soulWheelOpen ? '▾' : '▸'} Soul Wheel ({build.soulSkillIds.length}/{soulSkills.length})
+            </button>
+            {soulWheelOpen && soulWheel.map((row) => (
               <div key={row.row} className="soul-row">
                 <h3>
                   Row {row.row} <span className="cost">{row.costPerPoint} fragments each</span>
