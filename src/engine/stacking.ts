@@ -66,6 +66,7 @@ export function applyEffects(
   effects: Effect[],
   source: string,
   opts: SimOptions,
+  ctx: { hasAbility: boolean } = { hasAbility: true },
 ): void {
   for (const e of effects) {
     switch (e.op) {
@@ -109,16 +110,26 @@ export function applyEffects(
 
       case 'conditional':
         if (conditionHolds(e.when, e.threshold, opts)) {
-          applyEffects(mods, e.then, `${source} (${e.when})`, opts);
+          applyEffects(mods, e.then, `${source} (${e.when})`, opts, ctx);
         }
         break;
 
       case 'trigger': {
+        // 'abilityUse' can only ever fire if an ability is actually equipped --
+        // without this, an effect like "using an ability grants +50% fire
+        // rate" would silently apply to builds with no ability at all.
+        if (e.on === 'abilityUse' && !ctx.hasAbility) break;
+
         // Expected value: inner effects scaled by how often the trigger fires.
+        // A 'weakspot' trigger additionally needs the player's own assumed
+        // weakspot hit rate folded in -- its `chance` alone only says how
+        // often the *effect* procs given a weakspot hit, not how often a
+        // weakspot hit happens at all.
+        const effectiveChance = e.on === 'weakspot' ? e.chance * opts.weakspotAccuracy : e.chance;
         const scaled = e.then.map((inner) =>
-          inner.op === 'mult' ? { ...inner, value: inner.value * e.chance } : inner,
+          inner.op === 'mult' ? { ...inner, value: inner.value * effectiveChance } : inner,
         );
-        applyEffects(mods, scaled as Effect[], `${source} (on ${e.on})`, opts);
+        applyEffects(mods, scaled as Effect[], `${source} (on ${e.on})`, opts, ctx);
         break;
       }
     }

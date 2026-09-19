@@ -36,6 +36,13 @@ export interface SimResult {
    * that mode's own bare numbers.
    */
   weave?: { modeName: string; modeType: 'Primary' | 'Secondary'; rate: number; weaponDps: number; dotDps: number };
+  /**
+   * Effective `opts.weaponUptime` (1 when no ability is equipped, since it's
+   * meaningless without one). `weaponDps`/`dotDps` above are already scaled by
+   * it; `perHit`/`perShot`/`perMagazine`/`stats.*` are not (main-mode-only,
+   * see `weave` above) -- the UI should call this out whenever it's < 1.
+   */
+  weaponUptime: number;
   /** Effective stats after modifiers. Main mode only, see `weave` above. */
   stats: {
     fireRate: number;
@@ -175,10 +182,11 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   if (!weapon) throw new Error(`unknown weapon: ${build.weaponId}`);
   const mode = weapon.modes.find((m) => m.name === build.modeName);
   if (!mode) throw new Error(`unknown mode: ${build.modeName} on ${build.weaponId}`);
+  const ability = build.abilityId ? abilityById.get(build.abilityId) : undefined;
 
   const collect = (name: string, effects: Parameters<typeof applyEffects>[1], reason?: string) => {
     if (effects.length === 0 && reason) unmodeled.push({ name, reason });
-    applyEffects(mods, effects, name, opts);
+    applyEffects(mods, effects, name, opts, { hasAbility: !!ability });
   };
 
   // --- Blessings, restricted to aspects actually equipped -------------------
@@ -219,7 +227,6 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     warnings.push('more than 3 weapon Forge Upgrades: the game allows at most 3');
   }
 
-  const ability = build.abilityId ? abilityById.get(build.abilityId) : undefined;
   if (ability) {
     for (const name of build.abilityUpgrades) {
       const u =
@@ -260,28 +267,42 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   }
 
   const weaveRate = weaveOutput ? Math.min(Math.max(opts.weaveRate, 0), 1) : 0;
-  const weaveWeaponDps = (weaveOutput?.weaponDps ?? 0) * weaveRate;
-  const weaveDotDps = (weaveOutput?.dotDps ?? 0) * weaveRate;
-  const weaponDps = main.weaponDps * (1 - weaveRate) + weaveWeaponDps;
-  const dotDps = main.dotDps * (1 - weaveRate) + weaveDotDps;
+  const weaponUptime = ability ? Math.min(Math.max(opts.weaponUptime, 0), 1) : 1;
+  const weaveWeaponDps = (weaveOutput?.weaponDps ?? 0) * weaveRate * weaponUptime;
+  const weaveDotDps = (weaveOutput?.dotDps ?? 0) * weaveRate * weaponUptime;
+  const weaponDps = main.weaponDps * (1 - weaveRate) * weaponUptime + weaveWeaponDps;
+  const dotDps = main.dotDps * (1 - weaveRate) * weaponUptime + weaveDotDps;
 
   // --- Ability ------------------------------------------------------------
   let abilityDps = 0;
   if (ability) {
     const abilityMult =
       1 + mods.multFor('abilityDamage', 'ability') + mods.multFor('damage', 'ability');
-    const charges = ability.charges + mods.flatFor('abilityCharges');
+    const charges = Math.max(
+      1,
+      Math.round(
+        (ability.charges + mods.flatFor('abilityCharges')) *
+          (1 + mods.multFor('abilityCharges', 'ability')),
+      ),
+    );
     const pulses = ability.pulses ? ability.pulses.count * ability.pulses.damage : 0;
     const perCast = ((ability.damage ?? ability.weakspotDamage ?? 0) + pulses) * abilityMult;
     // Charges refill at the end of an encounter; amortise over a nominal 30s fight.
-    const encounterSeconds = 30;
+    // abilityCooldown mods shorten/lengthen the effective encounter window --
+    // negative values fit more casts into the same 30s.
+    const cooldownMult = Math.max(0.1, 1 + mods.multFor('abilityCooldown', 'ability'));
+    const encounterSeconds = 30 * cooldownMult;
     abilityDps = (perCast * charges) / encounterSeconds;
   }
 
   // A primary/secondary-scoped contribution is only real if that fire type is
   // actually being simulated (the main mode, or an active weave) -- otherwise
   // it's dead weight the player never sees reflected in the DPS number above.
-  const activeTypes = new Set<'Primary' | 'Secondary'>([mode.type, ...(weaveMode ? [weaveMode.type] : [])]);
+  // No weapon fire type is real at all when weaponUptime is zeroed out.
+  const activeTypes =
+    weaponUptime === 0
+      ? new Set<'Primary' | 'Secondary'>()
+      : new Set<'Primary' | 'Secondary'>([mode.type, ...(weaveMode ? [weaveMode.type] : [])]);
   const breakdown = mods.log
     .filter((entry) => {
       if (entry.scope !== 'primary' && entry.scope !== 'secondary') return true;
@@ -307,6 +328,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
           dotDps: weaveDotDps,
         }
       : undefined,
+    weaponUptime,
     stats: {
       fireRate: main.fireRate,
       clipSize: main.clipSize,

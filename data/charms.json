@@ -45,8 +45,22 @@
       "unlockedByDefault": true,
       "unlockCondition": null,
       "icon": "charms/Common.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "abilityUse",
+          "chance": 1.0,
+          "then": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.5
+            }
+          ],
+          "note": "modeled as always-up rather than a 5s window after each cast"
+        }
+      ]
     },
     {
       "id": "hate_forged",
@@ -157,8 +171,15 @@
       "unlockedByDefault": true,
       "unlockCondition": null,
       "icon": "charms/Legendary.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "abilityCooldown",
+          "scope": "ability",
+          "value": -0.5,
+          "note": "approximated as a flat 50% effective cooldown reduction (expected value), not a per-cast chance"
+        }
+      ]
     },
     {
       "id": "bandage",

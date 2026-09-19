@@ -46,6 +46,11 @@ export interface SimOptions {
   /** Fraction of the time spent firing `weaveModeName` instead of `modeName`.
    * Meaningless (and ignored) when no weave mode is set. */
   weaveRate: number;
+  /** Fraction of combat time spent shooting at all, vs. purely using your
+   * ability. 1 = guns as normal (default, unchanged from before this
+   * existed); 0 = pure-ability build, weaponDps/dotDps go to zero.
+   * Meaningless (and ignored) when no ability is equipped. */
+  weaponUptime: number;
 }
 
 export const defaultOptions: SimOptions = {
@@ -56,6 +61,7 @@ export const defaultOptions: SimOptions = {
   stackFullness: 0.5,
   chargeLevel: 1.0,
   weaveRate: 0.2,
+  weaponUptime: 1.0,
 };
 
 export const emptyBuild: Build = {
