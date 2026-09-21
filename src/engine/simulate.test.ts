@@ -87,13 +87,14 @@ describe('simulate', () => {
   const base: Build = { ...emptyBuild, weaponId: 'Engine_Rifle', modeName: 'Automatic Fire' };
 
   it('computes bare-weapon DPS from the mode stats', () => {
-    // Automatic Fire: 32 damage, 64 weakspot, 10 shots/s, clip 100, reload 2.2s.
+    // Automatic Fire: 32 damage, 64 weakspot, 8 shots/s, clip 30, reload 1.6s
+    // (real game values, extracted from data/weapons.json's own RBaseWeaponSettings).
     // At 50% weakspot accuracy: (32 + 64) / 2 = 48 per hit, x0.95 accuracy = 45.6
-    // Cycle: 100/10 + 2.2 = 12.2s for 100 shots => 4560 / 12.2 = 373.8 dps
+    // Cycle: 30/8 + 1.6 = 5.35s for 30 shots => 1368 / 5.35 = 255.7 dps
     const r = simulate(base, { weakspotAccuracy: 0.5, accuracy: 0.95 });
     expect(r.perHit).toBeCloseTo(48, 5);
     expect(r.perShot).toBeCloseTo(45.6, 5);
-    expect(r.weaponDps).toBeCloseTo(373.77, 1);
+    expect(r.weaponDps).toBeCloseTo(255.7, 1);
   });
 
   it('applies weapon damage soul skills additively', () => {
@@ -145,7 +146,7 @@ describe('simulate', () => {
     const b: Build = { ...base, soulSkillIds: ['rapid_fire'] };
     const bare = simulate(base);
     const fast = simulate(b);
-    expect(fast.stats.fireRate).toBeCloseTo(11.5, 5);
+    expect(fast.stats.fireRate).toBeCloseTo(9.2, 5);
     expect(fast.weaponDps).toBeGreaterThan(bare.weaponDps);
   });
 
@@ -406,7 +407,8 @@ describe('audit fixes: correctness bugs', () => {
       blessings: { Rapid_Tentacles: 1 },
     };
     // Uncapped stacking: 5 stacks x 0.5 default stackFullness x 10% = +25%, not +10%.
-    expect(simulate(b).stats.fireRate).toBeCloseTo(10 * 1.25, 5);
+    // (Automatic Fire's real base fire rate is 8/s, not the old wiki estimate of 10/s.)
+    expect(simulate(b).stats.fireRate).toBeCloseTo(8 * 1.25, 5);
   });
 
   it("Headwind no longer subtracts from the player's own damage", () => {

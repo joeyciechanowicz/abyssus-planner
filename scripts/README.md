@@ -81,3 +81,51 @@ base class `RMutatorPrimaryAsset`). Scaling numbers live on each instance's
 `MutatorDescriptionVariables` array; `RankValues` holds one int per upgrade rank.
 The dump_mutators output is not committed (it's large, machine/build-specific, and
 regeneratable) — only the merged `upgrades` field in `data/blessings.json` is.
+
+## Weapon mode stats (from the game files, not the wiki)
+
+The wiki never publishes fire rate at all (every mode was `estimated: true`
+for it), and reload time/clip size are guessed too. Damage is usually right
+from the wiki's tables, but a handful of modes clearly had a guessed number
+there as well. The real numbers come from the same `dump_mutators` tool used
+for blessing upgrades, pointed at a different asset class:
+
+```
+1. Same Dumper-7 injection + usmap as the blessing-upgrade pipeline above (skip
+   if you still have a `.usmap` from a previous run of this game version).
+
+2. dotnet run --project scripts/extract/dump_mutators -- \
+     "<path to>\Abyssus\RGame\Content\Paks" \
+     "C:\Dumper-7\<version>\Mappings\<version>.usmap" \
+     <output dir>
+   `targetDirs` in Program.cs includes `RGame/Content/Blueprints/Weapons`,
+   which is where every fire mode's own `RBaseWeaponSettings` data asset
+   lives (named `DA_<Weapon>_<Mode>_ModStats`).
+
+3. python scripts/extract/weapon_mod_stats.py <output dir>
+   Matches each dumped asset to a `data/weapons.json` mode (normalized name,
+   falling back to a small hardcoded table for ~14 modes whose internal
+   codename doesn't match the wiki's display name at all — see the
+   `MANUAL_PAIRS` dict in that script for the reasoning behind each one) and
+   overwrites `fireRate`/`reloadTime`/`clipSize`/`estimated`, plus the impact
+   damage/weakspot components when it's safe to (see the script's docstring
+   for the guardrails: charge/ramp-range modes and combo-point-scaled Harpoon
+   Gun secondaries are deliberately left alone rather than guessed at).
+```
+
+Unlike blessings (a plain `PrimaryDataAsset`), fire modes are backed by
+`RBaseWeaponSettings` (`UDataAsset`), holding `BaseWeaponDamage`,
+`BaseWeaponCriticalMultiplier` (the real weakspot multiplier — the engine's
+own `x2` fallback is only used when a mode has no weakspot data at all),
+`BaseRateOfFire`, `BaseReloadTime`, `BaseClipSize`, each a small struct with a
+plain `BaseValue` float/int — the same shape as the Mutator `RankValues`
+array, and just as easy to read via CUE4Parse. This is *not* true of every
+game system: status-effect DoT magnitudes (Hemorrhage, Goldburst, etc.) were
+checked the same way and turned out to be a dead end — their Blueprint
+classes have zero exposed properties, so those numbers are almost certainly
+hard-coded in Kismet graph logic instead, which this pipeline can't read.
+
+3 of the 54 tracked fire modes have no confident match in the dump (Combat
+Bow's Exploding Arrow, Tesla Gun's Spark Orb and Magnetic Storm — all have
+wiki-documented multi-tier charge damage that doesn't correspond to a single
+`BaseWeaponDamage` figure anywhere) and stay on their wiki-estimated numbers.

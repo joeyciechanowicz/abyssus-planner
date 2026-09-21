@@ -26,6 +26,16 @@ provider.Initialize();
 provider.Mount();
 Console.WriteLine($"Mounted. Files: {provider.Files.Count}");
 
+if (args.Length > 3 && args[3] == "discover")
+{
+    foreach (var kv in provider.Files)
+    {
+        if (kv.Key.Contains("ModStats", StringComparison.OrdinalIgnoreCase))
+            Console.WriteLine(kv.Key);
+    }
+    return 0;
+}
+
 var jsonSettings = new JsonSerializerSettings
 {
     Formatting = Formatting.Indented,
@@ -40,6 +50,7 @@ string[] targetDirs = new[]
     "RGame/Content/Data/StringTables",
     "RGame/Content/Data/Localization",
     "RGame/Content/Data/MutatorRewardCategoryData",
+    "RGame/Content/Blueprints/Weapons",
 };
 
 int ok = 0, fail = 0;
