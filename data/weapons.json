@@ -33,11 +33,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 10.0,
-          "clipSize": 100,
-          "reloadTime": 2.2,
+          "fireRate": 8.0,
+          "clipSize": 30,
+          "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Burst Fire",
@@ -67,11 +67,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 2.6,
-          "clipSize": 99,
-          "reloadTime": 2.2,
+          "fireRate": 5.0,
+          "clipSize": 30,
+          "reloadTime": 1.6,
           "projectilesPerShot": 3,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Gatling Fire",
@@ -101,11 +101,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 12.0,
-          "clipSize": 100,
-          "reloadTime": 2.2,
+          "fireRate": 2.0,
+          "clipSize": 30,
+          "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Engine Rev",
@@ -135,11 +135,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 13.0,
-          "clipSize": 120,
-          "reloadTime": 2.5,
+          "fireRate": 10.0,
+          "clipSize": 30,
+          "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Split Shot",
@@ -169,11 +169,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 6.0,
+          "fireRate": 8.0,
           "clipSize": 60,
           "reloadTime": 2.5,
           "projectilesPerShot": 3,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Concentrated Shot",
@@ -203,11 +203,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 2.2,
+          "fireRate": 10.0,
           "clipSize": 30,
-          "reloadTime": 2.5,
+          "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         }
       ],
       "forgeUpgrades": [
@@ -327,17 +327,17 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.6,
-          "clipSize": 6,
-          "reloadTime": 2.6,
+          "fireRate": 1.5,
+          "clipSize": 4,
+          "reloadTime": 1.2,
           "projectilesPerShot": 8,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Full-automatic",
           "type": "Primary",
-          "damage": "35 x8 (280)",
-          "weakspotDamage": "70 x8 (560)",
+          "damage": "25 x8 (200)",
+          "weakspotDamage": "50 x8 (400)",
           "special": "Fully automatic shotgun. Changes magazine size from 6 to 12.",
           "unlockedByDefault": false,
           "unlockCondition": "Triple Kill!",
@@ -346,8 +346,8 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 35,
-              "max": 35,
+              "min": 25.0,
+              "max": 25.0,
               "count": 8
             }
           ],
@@ -355,23 +355,23 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 70,
-              "max": 70,
+              "min": 50.0,
+              "max": 50.0,
               "count": 8
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 3.0,
-          "clipSize": 12,
-          "reloadTime": 3.0,
+          "fireRate": 2.5,
+          "clipSize": 6,
+          "reloadTime": 1.2,
           "projectilesPerShot": 8,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Superheavy Slug",
           "type": "Primary",
           "damage": "65 x4 (260)",
-          "weakspotDamage": "162 x4 (648)",
+          "weakspotDamage": "162.5 x4 (650)",
           "special": "Precise shots with increased Weakspot damage.",
           "unlockedByDefault": false,
           "unlockCondition": "Up Close & Personal",
@@ -389,17 +389,17 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 162,
-              "max": 162,
+              "min": 162.5,
+              "max": 162.5,
               "count": 4
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.2,
-          "clipSize": 6,
-          "reloadTime": 2.6,
+          "fireRate": 1.3,
+          "clipSize": 4,
+          "reloadTime": 2.0,
           "projectilesPerShot": 4,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Buckshot",
@@ -430,8 +430,8 @@
           ],
           "damageParsed": "auto",
           "fireRate": 0.8,
-          "clipSize": 2,
-          "reloadTime": 2.6,
+          "clipSize": 4,
+          "reloadTime": 1.2,
           "projectilesPerShot": 1,
           "estimated": true
         },
@@ -467,8 +467,8 @@
           "damageParsed": "auto",
           "chargeSteps": 2,
           "fireRate": 4.0,
-          "clipSize": 6,
-          "reloadTime": 2.6,
+          "clipSize": 4,
+          "reloadTime": 1.2,
           "projectilesPerShot": 1,
           "estimated": true
         },
@@ -501,8 +501,8 @@
           ],
           "damageParsed": "auto",
           "fireRate": 0.9,
-          "clipSize": 2,
-          "reloadTime": 2.6,
+          "clipSize": 4,
+          "reloadTime": 1.2,
           "projectilesPerShot": 1,
           "estimated": true
         }
@@ -642,8 +642,8 @@
           ],
           "damageParsed": "auto",
           "fireRate": 12.0,
-          "clipSize": 150,
-          "reloadTime": 2.0,
+          "clipSize": 15,
+          "reloadTime": 1.6,
           "projectilesPerShot": 1,
           "estimated": true
         },
@@ -676,8 +676,8 @@
           ],
           "damageParsed": "auto",
           "fireRate": 12.0,
-          "clipSize": 150,
-          "reloadTime": 2.0,
+          "clipSize": 15,
+          "reloadTime": 1.6,
           "projectilesPerShot": 1,
           "estimated": true
         },
@@ -710,8 +710,8 @@
           ],
           "damageParsed": "auto",
           "fireRate": 6.0,
-          "clipSize": 120,
-          "reloadTime": 2.0,
+          "clipSize": 15,
+          "reloadTime": 1.6,
           "projectilesPerShot": 1,
           "estimated": true
         },
@@ -795,11 +795,11 @@
           ],
           "chargeSteps": 4,
           "damageParsed": "manual",
-          "fireRate": 0.6,
-          "clipSize": 30,
-          "reloadTime": 2.2,
+          "fireRate": 2.0,
+          "clipSize": 15,
+          "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Magnetic Storm",
@@ -859,7 +859,12 @@
           "description": "Secondary charges twice as fast.",
           "icon": "forge/Spark_Gap.webp",
           "effects": [
-            { "op": "mult", "stat": "fireRate", "scope": "secondary", "value": 1.0 }
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "secondary",
+              "value": 1.0
+            }
           ]
         },
         {
@@ -943,11 +948,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 3.5,
-          "clipSize": 8,
-          "reloadTime": 1.8,
+          "fireRate": 8.0,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Burst Fire",
@@ -977,11 +982,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.8,
-          "clipSize": 9,
-          "reloadTime": 1.8,
+          "fireRate": 4.0,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 3,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Large Caliber",
@@ -1011,11 +1016,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.6,
-          "clipSize": 5,
+          "fireRate": 2.0,
+          "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Steady Scope",
@@ -1045,11 +1050,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.0,
-          "clipSize": 5,
+          "fireRate": 2.25,
+          "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Quick Scope",
@@ -1079,11 +1084,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.4,
-          "clipSize": 5,
+          "fireRate": 4.0,
+          "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Charge Scope",
@@ -1113,11 +1118,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 0.7,
-          "clipSize": 5,
+          "fireRate": 2.25,
+          "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         }
       ],
       "forgeUpgrades": [
@@ -1250,11 +1255,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 4.0,
-          "clipSize": 20,
-          "reloadTime": 2.0,
+          "fireRate": 5.0,
+          "clipSize": 3,
+          "reloadTime": 0.5,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Fan Fire",
@@ -1284,11 +1289,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 2.0,
-          "clipSize": 21,
+          "fireRate": 4.0,
+          "clipSize": 3,
           "reloadTime": 2.0,
           "projectilesPerShot": 3,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Dynamo",
@@ -1318,11 +1323,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 3.0,
-          "clipSize": 20,
-          "reloadTime": 2.0,
+          "fireRate": 5.0,
+          "clipSize": 3,
+          "reloadTime": 0.5,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Inferno Discs",
@@ -1345,8 +1350,8 @@
           "weakspotComponents": null,
           "damageParsed": "auto",
           "fireRate": 2.0,
-          "clipSize": 12,
-          "reloadTime": 2.2,
+          "clipSize": 3,
+          "reloadTime": 0.5,
           "projectilesPerShot": 1,
           "estimated": true
         },
@@ -1379,16 +1384,16 @@
           ],
           "damageParsed": "auto",
           "fireRate": 2.0,
-          "clipSize": 12,
-          "reloadTime": 2.2,
+          "clipSize": 3,
+          "reloadTime": 0.5,
           "projectilesPerShot": 1,
           "estimated": true
         },
         {
           "name": "Search and Destroy",
           "type": "Secondary",
-          "damage": "50",
-          "weakspotDamage": "100",
+          "damage": "20",
+          "weakspotDamage": "40",
           "special": "Redirects discs towards their nearest enemy and destroy them on impact.",
           "unlockedByDefault": false,
           "unlockCondition": "Frisbee",
@@ -1397,8 +1402,8 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 50,
-              "max": 50,
+              "min": 20.0,
+              "max": 20.0,
               "count": 1
             }
           ],
@@ -1406,15 +1411,15 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 100,
-              "max": 100,
+              "min": 40.0,
+              "max": 40.0,
               "count": 1
             }
           ],
           "damageParsed": "auto",
           "fireRate": 2.5,
-          "clipSize": 12,
-          "reloadTime": 2.2,
+          "clipSize": 3,
+          "reloadTime": 0.5,
           "projectilesPerShot": 1,
           "estimated": true
         }
@@ -1425,7 +1430,12 @@
           "description": "+3 maximum stored discs.",
           "icon": "forge/Spare_Discs.webp",
           "effects": [
-            { "op": "flat", "stat": "clipSize", "scope": "all", "value": 3 }
+            {
+              "op": "flat",
+              "stat": "clipSize",
+              "scope": "all",
+              "value": 3
+            }
           ]
         },
         {
@@ -1536,11 +1546,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.1,
-          "clipSize": 20,
-          "reloadTime": 1.5,
+          "fireRate": 3.0,
+          "clipSize": 1,
+          "reloadTime": 0.8,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Pierce",
@@ -1570,11 +1580,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.0,
+          "fireRate": 3.0,
           "clipSize": 20,
           "reloadTime": 1.5,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Return Arrow",
@@ -1604,11 +1614,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.3,
+          "fireRate": 3.0,
           "clipSize": 20,
           "reloadTime": 1.5,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Multi-Shot",
@@ -1638,11 +1648,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 0.9,
-          "clipSize": 20,
-          "reloadTime": 1.5,
+          "fireRate": 3.0,
+          "clipSize": 1,
+          "reloadTime": 1.2,
           "projectilesPerShot": 5,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Smart Arrow",
@@ -1672,11 +1682,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.1,
-          "clipSize": 20,
-          "reloadTime": 1.5,
+          "fireRate": 6.0,
+          "clipSize": 1,
+          "reloadTime": 1.2,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Exploding Arrow",
@@ -1760,7 +1770,13 @@
           "description": "Takes less time to fully charge, and continuing to charge further increases the damage by up to 50%.",
           "icon": "forge/Elastic_String.webp",
           "effects": [
-            { "op": "mult", "stat": "damage", "scope": "all", "value": 0.5, "note": "ramping: this is the maximum; charge-time reduction not modeled" }
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.5,
+              "note": "ramping: this is the maximum; charge-time reduction not modeled"
+            }
           ]
         },
         {
@@ -1851,11 +1867,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.3,
-          "clipSize": 6,
-          "reloadTime": 2.8,
+          "fireRate": 2.0,
+          "clipSize": 3,
+          "reloadTime": 2.25,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Flak Cannon",
@@ -1885,11 +1901,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 2.5,
-          "clipSize": 10,
-          "reloadTime": 2.8,
+          "fireRate": 4.5,
+          "clipSize": 6,
+          "reloadTime": 2.25,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Seekers",
@@ -1919,11 +1935,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 0.5,
-          "clipSize": 10,
-          "reloadTime": 2.8,
+          "fireRate": 1.1,
+          "clipSize": 3,
+          "reloadTime": 2.25,
           "projectilesPerShot": 5,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Disintegration Beam",
@@ -1954,8 +1970,8 @@
           ],
           "damageParsed": "auto",
           "fireRate": 0.8,
-          "clipSize": 4,
-          "reloadTime": 3.0,
+          "clipSize": 3,
+          "reloadTime": 2.25,
           "projectilesPerShot": 1,
           "estimated": true
         },
@@ -2001,11 +2017,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.0,
-          "clipSize": 5,
-          "reloadTime": 3.0,
+          "fireRate": 1.1,
+          "clipSize": 3,
+          "reloadTime": 2.25,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Adhesive Compound",
@@ -2049,11 +2065,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.2,
-          "clipSize": 6,
-          "reloadTime": 3.0,
+          "fireRate": 1.33,
+          "clipSize": 3,
+          "reloadTime": 2.25,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         }
       ],
       "forgeUpgrades": [
@@ -2069,7 +2085,13 @@
           "description": "Enemies take 50% continuous weapon damage for 5 sec. after being hit.",
           "icon": "forge/Molotov_Fuel.webp",
           "effects": [
-            { "op": "proc", "amount": 0.5, "of": "weaponDamage", "chance": 1.0, "scope": "dot" }
+            {
+              "op": "proc",
+              "amount": 0.5,
+              "of": "weaponDamage",
+              "chance": 1.0,
+              "scope": "dot"
+            }
           ]
         },
         {
@@ -2098,7 +2120,14 @@
           "description": "Projectiles bounce 2 times or until an enemy is directly hit, exploding each bounce and dealing 25% more damage.",
           "icon": "forge/Bouncy_Core.webp",
           "effects": [
-            { "op": "stacking", "stat": "damage", "scope": "all", "valuePer": 0.25, "per": "bounce", "max": 2 }
+            {
+              "op": "stacking",
+              "stat": "damage",
+              "scope": "all",
+              "valuePer": 0.25,
+              "per": "bounce",
+              "max": 2
+            }
           ]
         },
         {
@@ -2149,11 +2178,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.5,
-          "clipSize": 9,
-          "reloadTime": 2.4,
+          "fireRate": 1.3,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 3,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Fish Spit",
@@ -2183,11 +2212,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.2,
-          "clipSize": 7,
-          "reloadTime": 2.4,
+          "fireRate": 1.5,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Hazardous Goo",
@@ -2231,17 +2260,17 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.4,
-          "clipSize": 9,
-          "reloadTime": 2.4,
+          "fireRate": 3.0,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Piercing Stab",
           "type": "Secondary",
           "damage": "170",
-          "weakspotDamage": "340",
+          "weakspotDamage": "510",
           "special": "Stabs forward, piercing enemies and dealing high Weakspot damage.",
           "unlockedByDefault": true,
           "unlockCondition": null,
@@ -2259,23 +2288,23 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 340,
-              "max": 340,
+              "min": 510.0,
+              "max": 510.0,
               "count": 1
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.3,
-          "clipSize": null,
-          "reloadTime": 0.0,
+          "fireRate": 2.0,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Wide Stab",
           "type": "Secondary",
           "damage": "240",
-          "weakspotDamage": "480",
+          "weakspotDamage": "720",
           "special": "Wide stab that knocks enemies back.",
           "unlockedByDefault": false,
           "unlockCondition": "Go Fish!",
@@ -2293,17 +2322,17 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 480,
-              "max": 480,
+              "min": 720.0,
+              "max": 720.0,
               "count": 1
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.0,
-          "clipSize": null,
-          "reloadTime": 0.0,
+          "fireRate": 1.1,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Chainsaw",
@@ -2333,9 +2362,9 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 4.0,
-          "clipSize": null,
-          "reloadTime": 0.0,
+          "fireRate": 10.0,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
           "estimated": true
         }
@@ -2346,7 +2375,19 @@
           "description": "A discarded Fish Deity explodes in a 8-meter radius after reloading, dealing 2000 damage and stunning enemies hit.",
           "icon": "forge/Discharging_Reload.webp",
           "effects": [
-            { "op": "trigger", "on": "reload", "chance": 1.0, "then": [{ "op": "proc", "amount": 2000, "of": "flat", "scope": "all" }] }
+            {
+              "op": "trigger",
+              "on": "reload",
+              "chance": 1.0,
+              "then": [
+                {
+                  "op": "proc",
+                  "amount": 2000,
+                  "of": "flat",
+                  "scope": "all"
+                }
+              ]
+            }
           ]
         },
         {
@@ -2354,7 +2395,14 @@
           "description": "Projectiles bounce, exploding and dealing 25% more damage for each bounce.",
           "icon": "forge/Elastic_Goo.webp",
           "effects": [
-            { "op": "stacking", "stat": "damage", "scope": "all", "valuePer": 0.25, "per": "bounce", "max": null }
+            {
+              "op": "stacking",
+              "stat": "damage",
+              "scope": "all",
+              "valuePer": 0.25,
+              "per": "bounce",
+              "max": null
+            }
           ]
         },
         {
@@ -2383,7 +2431,19 @@
           "description": "Weakspot stabs create a second stab.",
           "icon": "forge/Repeating_Jabs.webp",
           "effects": [
-            { "op": "trigger", "on": "weakspot", "chance": 1.0, "then": [{ "op": "proc", "amount": 1.0, "of": "onHitDamage", "scope": "all" }] }
+            {
+              "op": "trigger",
+              "on": "weakspot",
+              "chance": 1.0,
+              "then": [
+                {
+                  "op": "proc",
+                  "amount": 1.0,
+                  "of": "onHitDamage",
+                  "scope": "all"
+                }
+              ]
+            }
           ]
         },
         {
@@ -2395,7 +2455,14 @@
               "op": "trigger",
               "on": "dash",
               "chance": 1.0,
-              "then": [{ "op": "mult", "stat": "damage", "scope": "secondary", "value": 0.25 }],
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "damage",
+                  "scope": "secondary",
+                  "value": 0.25
+                }
+              ],
               "note": "kill-refreshes-Dash resource loop not modeled"
             }
           ]
@@ -2449,8 +2516,8 @@
           ],
           "damageParsed": "auto",
           "fireRate": 1.2,
-          "clipSize": 8,
-          "reloadTime": 2.2,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
           "estimated": true
         },
@@ -2483,8 +2550,8 @@
           ],
           "damageParsed": "auto",
           "fireRate": 1.2,
-          "clipSize": 8,
-          "reloadTime": 2.2,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
           "estimated": true
         },
@@ -2530,11 +2597,11 @@
             }
           ],
           "damageParsed": "auto",
-          "fireRate": 1.2,
-          "clipSize": 8,
-          "reloadTime": 2.2,
+          "fireRate": 0.9,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Barbed Harpoons",
@@ -2580,8 +2647,8 @@
           "comboCost": 4,
           "damageParsed": "manual",
           "fireRate": 0.5,
-          "clipSize": 4,
-          "reloadTime": 2.2,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
           "estimated": true
         },
@@ -2629,11 +2696,11 @@
           "comboCost": 4,
           "variantNote": "Against multiple targets the pull deals 450 instead (200/450 on weakspot hits).",
           "damageParsed": "manual",
-          "fireRate": 0.5,
-          "clipSize": 4,
-          "reloadTime": 2.2,
+          "fireRate": 0.6,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": false
         },
         {
           "name": "Brine-Powered Harpoons",
@@ -2679,8 +2746,8 @@
           "comboCost": 4,
           "damageParsed": "manual",
           "fireRate": 0.5,
-          "clipSize": 4,
-          "reloadTime": 2.2,
+          "clipSize": 6,
+          "reloadTime": 2.0,
           "projectilesPerShot": 1,
           "estimated": true
         }
@@ -2732,7 +2799,19 @@
           "description": "Weakspots create an additional harpoon that seeks out a new target.",
           "icon": "forge/Increased_Combo.webp",
           "effects": [
-            { "op": "trigger", "on": "weakspot", "chance": 1.0, "then": [{ "op": "proc", "amount": 1.0, "of": "onHitDamage", "scope": "all" }] }
+            {
+              "op": "trigger",
+              "on": "weakspot",
+              "chance": 1.0,
+              "then": [
+                {
+                  "op": "proc",
+                  "amount": 1.0,
+                  "of": "onHitDamage",
+                  "scope": "all"
+                }
+              ]
+            }
           ]
         },
         {
