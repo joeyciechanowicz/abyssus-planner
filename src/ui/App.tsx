@@ -35,7 +35,35 @@ export function App() {
 
   const weapon = weaponById.get(build.weaponId)!;
   const mode = weapon.modes.find((m) => m.name === build.modeName)!;
+  const weaveMode = build.weaveModeName
+    ? weapon.modes.find((m) => m.name === build.weaveModeName)
+    : undefined;
+  // `modeName`/`weaveModeName` don't record which fire type is "main" --
+  // whichever of the two currently matches a given type is displayed (and
+  // edited) in that type's own selector, so the UI can offer clean
+  // "Primary"/"Secondary" pickers without exposing the underlying main/weave
+  // split.
+  const primaryMode = mode.type === 'Primary' ? mode : weaveMode?.type === 'Primary' ? weaveMode : undefined;
+  const secondaryMode = mode.type === 'Secondary' ? mode : weaveMode?.type === 'Secondary' ? weaveMode : undefined;
   const ability = build.abilityId ? abilityById.get(build.abilityId) : undefined;
+
+  const setModeOfType = (type: 'Primary' | 'Secondary', newName: string) => {
+    setPendingPlaystyle(null);
+    const isMainCurrentlyThisType = mode.type === type;
+    if (newName === '') {
+      if (isMainCurrentlyThisType) {
+        // Promote the other slot to main if there is one; otherwise this is
+        // the only mode selected at all, so ignore -- a build always needs a
+        // main fire mode.
+        if (weaveMode) set({ modeName: weaveMode.name, weaveModeName: null });
+        return;
+      }
+      set({ weaveModeName: null });
+      return;
+    }
+    if (isMainCurrentlyThisType) set({ modeName: newName });
+    else set({ weaveModeName: newName });
+  };
 
   const result = useMemo(() => {
     try {
@@ -69,7 +97,7 @@ export function App() {
                 setPendingPlaystyle(null);
                 set({
                   weaponId: w.id,
-                  modeName: w.modes[0].name,
+                  modeName: (w.modes.find((m) => m.type === 'Primary') ?? w.modes[0]).name,
                   weaveModeName: null,
                   weaponUpgrades: [],
                 });
@@ -81,24 +109,39 @@ export function App() {
                 </option>
               ))}
             </select>
-            <select
-              value={build.modeName}
-              onChange={(e) => {
-                const newMode = weapon.modes.find((m) => m.name === e.target.value)!;
-                const weaveMode = weapon.modes.find((m) => m.name === build.weaveModeName);
-                const patch: Partial<Build> = { modeName: newMode.name };
-                if (weaveMode && weaveMode.type === newMode.type) patch.weaveModeName = null;
-                setPendingPlaystyle(null);
-                set(patch);
-              }}
-            >
-              {weapon.modes.map((m) => (
-                <option key={m.name} value={m.name}>
-                  {m.type}: {m.name} ({m.damage})
+            <div className="row">
+              <label>Primary</label>
+              <select value={primaryMode?.name ?? ''} onChange={(e) => setModeOfType('Primary', e.target.value)}>
+                <option value="" disabled={mode.type === 'Primary' && !weaveMode}>
+                  &mdash; none &mdash;
                 </option>
-              ))}
-            </select>
-            <p className="hint">{mode.special}</p>
+                {weapon.modes
+                  .filter((m) => m.type === 'Primary')
+                  .map((m) => (
+                    <option key={m.name} value={m.name}>
+                      {m.name} ({m.damage})
+                    </option>
+                  ))}
+              </select>
+            </div>
+            {primaryMode && <p className="hint">{primaryMode.special}</p>}
+
+            <div className="row">
+              <label>Secondary</label>
+              <select value={secondaryMode?.name ?? ''} onChange={(e) => setModeOfType('Secondary', e.target.value)}>
+                <option value="" disabled={mode.type === 'Secondary' && !weaveMode}>
+                  &mdash; none &mdash;
+                </option>
+                {weapon.modes
+                  .filter((m) => m.type === 'Secondary')
+                  .map((m) => (
+                    <option key={m.name} value={m.name}>
+                      {m.name} ({m.damage})
+                    </option>
+                  ))}
+              </select>
+            </div>
+            {secondaryMode && <p className="hint">{secondaryMode.special}</p>}
 
             {ability && (
               <div className="row">
@@ -133,29 +176,13 @@ export function App() {
               return null;
             })()}
 
-            <div className="row">
-              <label>Weave in</label>
-              <select
-                value={build.weaveModeName ?? ''}
-                onChange={(e) => {
-                  setPendingPlaystyle(null);
-                  set({ weaveModeName: e.target.value || null });
-                }}
-              >
-                <option value="">&mdash; no weave &mdash;</option>
-                {weapon.modes
-                  .filter((m) => m.type !== mode.type)
-                  .map((m) => (
-                    <option key={m.name} value={m.name}>
-                      {m.type}: {m.name} ({m.damage})
-                    </option>
-                  ))}
-              </select>
-            </div>
-            <p className="hint">
-              Occasionally fire this mode too (e.g. to apply a blessing effect), then return to
-              your main mode above.
-            </p>
+            {primaryMode && secondaryMode && (
+              <p className="hint">
+                Your build spends most of its time on one of these and occasionally switches to
+                the other (e.g. to apply a blessing effect) &mdash; set the split with the rate
+                slider under Assumptions.
+              </p>
+            )}
           </section>
 
           <BlessingBoard build={build} onChange={set} />
@@ -305,10 +332,10 @@ export function App() {
                 />
               </div>
             ))}
-            {build.weaveModeName && (
+            {weaveMode && (
               <div className="slider">
                 <label>
-                  Weave-in rate <b>{Math.round(opts.weaveRate * 100)}%</b>
+                  {weaveMode.type} use rate <b>{Math.round(opts.weaveRate * 100)}%</b>
                 </label>
                 <input
                   type="range"
