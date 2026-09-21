@@ -76,6 +76,16 @@ export function BlessingBoard({ build, onChange }: Props) {
       <div className="board-columns">
         {SLOTS.map((slot) => {
           const aspect = build.aspects[slot];
+          // An aspect's blessings are a single shared resource -- equipping the
+          // same aspect in two slots would let the same blessing (and its rank)
+          // show up as "equipped" in both columns at once, so each aspect may
+          // only occupy one slot at a time.
+          const usedElsewhere = new Set(
+            SLOTS.filter((s) => s !== slot)
+              .map((s) => build.aspects[s])
+              .filter((a): a is string => Boolean(a)),
+          );
+          const selectableAspects = aspects.filter((a) => a === aspect || !usedElsewhere.has(a));
           const pool = aspect ? (blessingsByAspect.get(aspect) ?? []) : [];
           const aspectCard = pool.find((b) => b.kind === 'aspect' && b.slot === slot);
           const pickable = pool.filter((b) => b.kind === 'blessing');
@@ -91,7 +101,7 @@ export function BlessingBoard({ build, onChange }: Props) {
                   onChange={(e) => setAspect(slot, e.target.value || null)}
                 >
                   <option value="">&mdash; none &mdash;</option>
-                  {aspects.map((a) => (
+                  {selectableAspects.map((a) => (
                     <option key={a} value={a}>
                       {a}
                     </option>

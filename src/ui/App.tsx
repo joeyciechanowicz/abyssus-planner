@@ -46,6 +46,7 @@ export function App() {
   const primaryMode = mode.type === 'Primary' ? mode : weaveMode?.type === 'Primary' ? weaveMode : undefined;
   const secondaryMode = mode.type === 'Secondary' ? mode : weaveMode?.type === 'Secondary' ? weaveMode : undefined;
   const ability = build.abilityId ? abilityById.get(build.abilityId) : undefined;
+  const maxCharms = build.soulSkillIds.includes('charm_power') ? 2 : 1;
 
   const setModeOfType = (type: 'Primary' | 'Secondary', newName: string) => {
     setPendingPlaystyle(null);
@@ -190,25 +191,30 @@ export function App() {
           <section>
             <h2>Forge Upgrades &mdash; weapon ({build.weaponUpgrades.length}/3)</h2>
             <ul className="picker">
-              {weapon.forgeUpgrades.map((u) => (
-                <li key={u.name}>
-                  <Tooltip content={u.description}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={build.weaponUpgrades.includes(u.name)}
-                        onChange={() => set({ weaponUpgrades: toggle(build.weaponUpgrades, u.name) })}
-                      />
-                      <span className={u.effects.length === 0 ? 'not-simulated' : ''}>{u.name}</span>
-                    </label>
-                  </Tooltip>
-                </li>
-              ))}
+              {weapon.forgeUpgrades.map((u) => {
+                const checked = build.weaponUpgrades.includes(u.name);
+                const atCap = build.weaponUpgrades.length >= 3;
+                return (
+                  <li key={u.name}>
+                    <Tooltip content={u.description}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          disabled={!checked && atCap}
+                          onChange={() => set({ weaponUpgrades: toggle(build.weaponUpgrades, u.name) })}
+                        />
+                        <span className={u.effects.length === 0 ? 'not-simulated' : ''}>{u.name}</span>
+                      </label>
+                    </Tooltip>
+                  </li>
+                );
+              })}
             </ul>
           </section>
 
           <section>
-            <h2>Ability</h2>
+            <h2>Ability{ability ? ` — upgrades (${build.abilityUpgrades.length}/3)` : ''}</h2>
             <select
               value={build.abilityId ?? ''}
               onChange={(e) => set({ abilityId: e.target.value || null, abilityUpgrades: [] })}
@@ -224,48 +230,63 @@ export function App() {
               <>
                 <p className="hint">{ability.notes}</p>
                 <ul className="picker">
-                  {[...ability.forgeUpgrades, ...sharedAbilityUpgrades].map((u) => (
-                    <li key={u.name}>
-                      <Tooltip content={u.description}>
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={build.abilityUpgrades.includes(u.name)}
-                            onChange={() =>
-                              set({ abilityUpgrades: toggle(build.abilityUpgrades, u.name) })
-                            }
-                          />
-                          <span className={u.effects.length === 0 ? 'not-simulated' : ''}>
-                            {u.name}
-                          </span>
-                        </label>
-                      </Tooltip>
-                    </li>
-                  ))}
+                  {[...ability.forgeUpgrades, ...sharedAbilityUpgrades].map((u) => {
+                    const checked = build.abilityUpgrades.includes(u.name);
+                    const atCap = build.abilityUpgrades.length >= 3;
+                    return (
+                      <li key={u.name}>
+                        <Tooltip content={u.description}>
+                          <label>
+                            <input
+                              type="checkbox"
+                              checked={checked}
+                              disabled={!checked && atCap}
+                              onChange={() =>
+                                set({ abilityUpgrades: toggle(build.abilityUpgrades, u.name) })
+                              }
+                            />
+                            <span className={u.effects.length === 0 ? 'not-simulated' : ''}>
+                              {u.name}
+                            </span>
+                          </label>
+                        </Tooltip>
+                      </li>
+                    );
+                  })}
                 </ul>
               </>
             )}
           </section>
 
           <section>
-            <h2>Charms ({build.charmIds.length})</h2>
+            <h2>
+              Charms ({build.charmIds.length}/{maxCharms})
+            </h2>
+            {maxCharms === 1 && (
+              <p className="hint">A second Charm requires the Charm Power soul skill.</p>
+            )}
             <ul className="picker">
-              {charms.map((c) => (
-                <li key={c.id}>
-                  <Tooltip content={c.description}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={build.charmIds.includes(c.id)}
-                        onChange={() => set({ charmIds: toggle(build.charmIds, c.id) })}
-                      />
-                      <span className={c.effects.length === 0 ? 'not-simulated' : ''}>
-                        {c.name} <em>{c.rarity}</em>
-                      </span>
-                    </label>
-                  </Tooltip>
-                </li>
-              ))}
+              {charms.map((c) => {
+                const checked = build.charmIds.includes(c.id);
+                const atCap = build.charmIds.length >= maxCharms;
+                return (
+                  <li key={c.id}>
+                    <Tooltip content={c.description}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          disabled={!checked && atCap}
+                          onChange={() => set({ charmIds: toggle(build.charmIds, c.id) })}
+                        />
+                        <span className={c.effects.length === 0 ? 'not-simulated' : ''}>
+                          {c.name} <em>{c.rarity}</em>
+                        </span>
+                      </label>
+                    </Tooltip>
+                  </li>
+                );
+              })}
             </ul>
           </section>
 
