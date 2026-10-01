@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import type { CSSProperties } from 'react';
 import {
   aspects,
   blessingById,
@@ -9,32 +9,69 @@ import {
 } from '../model/data';
 import { isFullyRankLinked } from '../engine/blessingScaling';
 import type { Build } from '../model/build';
+import { Icon, type PickerItem } from './Picker';
 import { Tooltip } from './Tooltip';
+import type { OpenPicker } from './App';
+import { asset, aspectColor } from './theme';
 
 const SLOTS = ['primary', 'secondary', 'ability'] as const;
 type Slot = (typeof SLOTS)[number];
 
 const SLOT_LABELS: Record<Slot, string> = {
-  primary: 'Primary',
-  secondary: 'Secondary',
+  primary: 'Primary fire',
+  secondary: 'Secondary fire',
   ability: 'Ability',
 };
-
-function iconSrc(icon: string | null | undefined): string | null {
-  return icon ? `${import.meta.env.BASE_URL}${icon}` : null;
-}
 
 interface Props {
   build: Build;
   onChange: (patch: Partial<Build>) => void;
+  openPicker: OpenPicker;
+  /** Show only this column (the phone layout switches between them). */
+  only?: Slot;
 }
 
-/** The 3-column primary/secondary/ability loadout board, modeled on the in-game
- * screen: each column's own aspect card sits pinned at the top, with the
- * player's chosen blessings for that aspect stacked below it as rankable tiles. */
-export function BlessingBoard({ build, onChange }: Props) {
-  const [addingTo, setAddingTo] = useState<Slot | null>(null);
+const aspectCardFor = (aspect: string, slot: Slot) =>
+  blessingsByAspect.get(aspect)?.find((b) => b.kind === 'aspect' && b.slot === slot);
 
+/** How a blessing's rank-dependent numbers read in the picker's rank table. */
+function rankValues(b: Blessing) {
+  return (rank: number) =>
+    (b.upgrades ?? [])
+      .filter((u) => u.ranks.length > 1)
+      .map((u) => {
+        const v = u.ranks[Math.min(rank, u.ranks.length) - 1];
+        return { label: u.label ?? u.variable.replace(/[{}]/g, ''), value: u.isPercent ? `${v}%` : `${v}` };
+      });
+}
+
+function simNote(b: Blessing): string | undefined {
+  return maxBlessingRank(b) > 1 && b.effects.length > 0 && !isFullyRankLinked(b)
+    ? 'Ranks above +1 are shown for reference; the simulator uses the base value.'
+    : undefined;
+}
+
+function blessingItem(b: Blessing): PickerItem {
+  return {
+    id: b.id,
+    name: b.name,
+    icon: asset(b.icon),
+    tag: b.kind === 'aspect' ? 'Aspect' : b.effects.length > 0 ? 'Counted in DPS' : 'Not counted in DPS',
+    simulated: b.effects.length > 0,
+    simNote: simNote(b),
+    maxRank: maxBlessingRank(b),
+    searchText: b.description,
+    describe: (rank) => <p>{renderBlessingDescription(b, rank)}</p>,
+    rankValues: rankValues(b),
+  };
+}
+
+/**
+ * The primary/secondary/ability board, modelled on the in-game screen: each
+ * column's aspect sits at the top, lit in its colour, with the blessings taken
+ * from that aspect stacked beneath it.
+ */
+export function BlessingBoard({ build, onChange, openPicker, only }: Props) {
   function setAspect(slot: Slot, aspect: string | null) {
     const nextAspects = { ...build.aspects, [slot]: aspect };
     const stillEquipped = new Set(Object.values(nextAspects).filter(Boolean) as string[]);
@@ -46,121 +83,113 @@ export function BlessingBoard({ build, onChange }: Props) {
       if (b && stillEquipped.has(b.aspect)) nextBlessings[id] = rank;
     }
     // The new aspect's own card for this slot equips itself automatically.
-    if (aspect) {
-      const card = blessingsByAspect
-        .get(aspect)
-        ?.find((b) => b.kind === 'aspect' && b.slot === slot);
-      if (card) nextBlessings[card.id] = nextBlessings[card.id] ?? 1;
-    }
+    const card = aspect && aspectCardFor(aspect, slot);
+    if (card) nextBlessings[card.id] = nextBlessings[card.id] ?? 1;
     onChange({ aspects: nextAspects, blessings: nextBlessings });
   }
 
-  function setRank(id: string, rank: number) {
-    onChange({ blessings: { ...build.blessings, [id]: rank } });
-  }
-
-  function remove(id: string) {
+  const setRank = (id: string, rank: number) => onChange({ blessings: { ...build.blessings, [id]: rank } });
+  const remove = (id: string) => {
     const next = { ...build.blessings };
     delete next[id];
     onChange({ blessings: next });
+  };
+
+  function pickAspect(slot: Slot) {
+    const current = build.aspects[slot];
+    // An aspect's blessings are one shared pool, so each aspect may only occupy
+    // one slot -- otherwise the same blessing would show as equipped twice.
+    const usedElsewhere = new Set(SLOTS.filter((s) => s !== slot).map((s) => build.aspects[s]));
+    openPicker({
+      title: `Choose the ${SLOT_LABELS[slot].toLowerCase()} aspect`,
+      items: aspects
+        .filter((a) => !usedElsewhere.has(a))
+        .map((a) => {
+          const card = aspectCardFor(a, slot);
+          return {
+            id: a,
+            name: a,
+            icon: asset(card?.icon),
+            tag: `${(blessingsByAspect.get(a) ?? []).filter((b) => b.kind === 'blessing').length} blessings`,
+            describe: () => <p>{card ? renderBlessingDescription(card, 1) : ''}</p>,
+          };
+        }),
+      selectedId: current ?? undefined,
+      confirmLabel: (i) => (i.id === current ? 'Keep aspect' : `Use ${i.name}`),
+      onConfirm: (a) => a !== current && setAspect(slot, a),
+      extraAction: current ? { label: 'Clear slot', onClick: () => setAspect(slot, null) } : undefined,
+    });
   }
 
-  function add(id: string) {
-    onChange({ blessings: { ...build.blessings, [id]: 1 } });
-    setAddingTo(null);
+  function pickBlessing(aspect: string, existing?: Blessing) {
+    const pool = (blessingsByAspect.get(aspect) ?? []).filter((b) => b.kind === 'blessing');
+    const items = existing
+      ? [existing]
+      : pool.filter((b) => build.blessings[b.id] === undefined);
+    openPicker({
+      title: existing ? existing.name : `Add a ${aspect} blessing`,
+      titleIcon: asset(blessingsByAspect.get(aspect)?.[0]?.icon),
+      accent: aspectColor(aspect),
+      items: items.map(blessingItem),
+      selectedId: existing?.id,
+      selectedRank: existing ? build.blessings[existing.id] : 1,
+      emptyText: `Every ${aspect} blessing is already in your build.`,
+      confirmLabel: (_, rank) => (existing ? `Set rank +${rank}` : `Add at rank +${rank}`),
+      onConfirm: (id, rank) => setRank(id, rank),
+      extraAction: existing && existing.kind === 'blessing' ? { label: 'Remove', onClick: () => remove(existing.id) } : undefined,
+    });
   }
 
   return (
-    <section className="blessing-board">
-      <h2>Blessings</h2>
-      <div className="board-columns">
-        {SLOTS.map((slot) => {
+    <section className="board" aria-label="Blessings">
+      <div className="section-head">
+        <h2>Blessings</h2>
+        <span className="sub">One aspect per slot. Its blessings stack beneath it.</span>
+      </div>
+      <div className={`board-columns${only ? ' single' : ''}`}>
+        {SLOTS.filter((s) => !only || s === only).map((slot) => {
           const aspect = build.aspects[slot];
-          // An aspect's blessings are a single shared resource -- equipping the
-          // same aspect in two slots would let the same blessing (and its rank)
-          // show up as "equipped" in both columns at once, so each aspect may
-          // only occupy one slot at a time.
-          const usedElsewhere = new Set(
-            SLOTS.filter((s) => s !== slot)
-              .map((s) => build.aspects[s])
-              .filter((a): a is string => Boolean(a)),
-          );
-          const selectableAspects = aspects.filter((a) => a === aspect || !usedElsewhere.has(a));
+          const color = aspectColor(aspect);
           const pool = aspect ? (blessingsByAspect.get(aspect) ?? []) : [];
-          const aspectCard = pool.find((b) => b.kind === 'aspect' && b.slot === slot);
-          const pickable = pool.filter((b) => b.kind === 'blessing');
-          const equipped = pickable.filter((b) => build.blessings[b.id] !== undefined);
-          const available = pickable.filter((b) => build.blessings[b.id] === undefined);
+          const card = aspect ? aspectCardFor(aspect, slot) : undefined;
+          const equipped = pool.filter((b) => b.kind === 'blessing' && build.blessings[b.id] !== undefined);
+          const left = pool.filter((b) => b.kind === 'blessing').length - equipped.length;
 
           return (
-            <div key={slot} className={`blessing-column${aspect ? '' : ' empty'}`}>
-              <div className="column-header">
-                <label>{SLOT_LABELS[slot]}</label>
-                <select
-                  value={aspect ?? ''}
-                  onChange={(e) => setAspect(slot, e.target.value || null)}
-                >
-                  <option value="">&mdash; none &mdash;</option>
-                  {selectableAspects.map((a) => (
-                    <option key={a} value={a}>
-                      {a}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {!aspect && <p className="empty-hint">Pick an aspect to fill this slot.</p>}
-
-              {aspectCard && (
-                <BlessingTile
-                  blessing={aspectCard}
-                  rank={build.blessings[aspectCard.id] ?? 1}
-                  onRank={(r) => setRank(aspectCard.id, r)}
-                  pinned
-                />
-              )}
+            <div key={slot} className={`panel column${aspect ? '' : ' empty'}`} style={{ '--aspect': color } as CSSProperties}>
+              <button type="button" className="column-head" onClick={() => pickAspect(slot)}>
+                {card ? (
+                  <Icon src={asset(card.icon)} size={64} glow />
+                ) : (
+                  <span className="empty-socket cham" aria-hidden>
+                    +
+                  </span>
+                )}
+                <span className="slot-text">
+                  <span className="sub">{SLOT_LABELS[slot]}</span>
+                  <span className="aspect-name">{aspect ?? 'Choose an aspect'}</span>
+                </span>
+                <svg className="chev" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+                  <path d="M4 6l4 4 4-4" />
+                </svg>
+              </button>
 
               {aspect && (
-                <ul className="blessing-track">
-                  {equipped.map((b) => (
+                <ul className="tiles">
+                  {[card, ...equipped].filter((b): b is Blessing => !!b).map((b) => (
                     <li key={b.id}>
                       <BlessingTile
                         blessing={b}
                         rank={build.blessings[b.id] ?? 1}
-                        onRank={(r) => setRank(b.id, r)}
-                        onRemove={() => remove(b.id)}
+                        pinned={b.kind === 'aspect'}
+                        onClick={() => pickBlessing(aspect, b)}
                       />
                     </li>
                   ))}
                   <li>
-                    {addingTo === slot ? (
-                      <select
-                        className="add-picker"
-                        autoFocus
-                        value=""
-                        onChange={(e) => e.target.value && add(e.target.value)}
-                        onBlur={() => setAddingTo(null)}
-                      >
-                        <option value="">choose a blessing&hellip;</option>
-                        {available.map((b) => (
-                          <option key={b.id} value={b.id}>
-                            {b.name}
-                          </option>
-                        ))}
-                      </select>
-                    ) : (
-                      <button
-                        type="button"
-                        className="add-tile"
-                        disabled={available.length === 0}
-                        onClick={() => setAddingTo(slot)}
-                        title={
-                          available.length === 0 ? `no more ${aspect} blessings` : 'add a blessing'
-                        }
-                      >
-                        +
-                      </button>
-                    )}
+                    <button type="button" className="add-slot cham" disabled={left === 0} onClick={() => pickBlessing(aspect)}>
+                      {left === 0 ? `All ${aspect} blessings taken` : `Add ${aspect} blessing`}
+                    </button>
                   </li>
                 </ul>
               )}
@@ -172,64 +201,25 @@ export function BlessingBoard({ build, onChange }: Props) {
   );
 }
 
-function BlessingTile({
-  blessing,
-  rank,
-  onRank,
-  onRemove,
-  pinned,
-}: {
-  blessing: Blessing;
-  rank: number;
-  onRank: (rank: number) => void;
-  onRemove?: () => void;
-  pinned?: boolean;
-}) {
+function BlessingTile({ blessing, rank, pinned, onClick }: { blessing: Blessing; rank: number; pinned: boolean; onClick: () => void }) {
   const max = maxBlessingRank(blessing);
-  const hasRank = max > 1;
-  const fullyLinked = isFullyRankLinked(blessing);
-  const icon = iconSrc(blessing.icon);
-
-  const tooltip = (
-    <>
-      {renderBlessingDescription(blessing, rank)}
-      {hasRank && !fullyLinked && (
-        <em className="tile-note"> (rank shown for reference; simulated at base value)</em>
-      )}
-    </>
-  );
-
+  const counted = blessing.effects.length > 0;
+  const text = renderBlessingDescription(blessing, rank);
   return (
-    <div className={`blessing-tile${pinned ? ' aspect' : ''}`}>
-      <Tooltip content={tooltip}>
-        <button type="button" className="tile-main">
-          {icon ? <img src={icon} alt="" /> : <span className="icon-fallback" />}
-          <span className={`tile-name${hasRank && !fullyLinked ? ' not-simulated' : ''}`}>
-            {blessing.name}
-          </span>
-          {hasRank && <span className="rank-badge">+{rank}</span>}
-        </button>
-      </Tooltip>
-      {onRemove && (
-        <button type="button" className="tile-remove" onClick={onRemove} title="remove">
-          &times;
-        </button>
-      )}
-
-      {hasRank && (
-        <div className="rank-pips">
-          <input
-            type="range"
-            min={1}
-            max={max}
-            value={rank}
-            onChange={(e) => onRank(Number(e.target.value))}
-          />
-          <span className="rank-readout">
-            {rank}/{max}
-          </span>
-        </div>
-      )}
-    </div>
+    <Tooltip content={text}>
+      <button
+        type="button"
+        className={`tile cham${pinned ? ' pinned' : ''}${counted ? '' : ' uncounted'}`}
+        onClick={onClick}
+        aria-label={`${blessing.name}, rank ${rank} of ${max}${counted ? '' : ', not counted in DPS'}. Edit`}
+      >
+        <Icon src={asset(blessing.icon)} size={40} dim={!counted} />
+        <span className="slot-text">
+          <span className="name">{blessing.name}</span>
+          <span className="sub clamp">{counted ? text : 'Not counted in DPS'}</span>
+        </span>
+        <span className={`rank cham num${max > 1 ? '' : ' fixed'}`}>+{rank}</span>
+      </button>
+    </Tooltip>
   );
 }
