@@ -38,7 +38,8 @@
           "clipSize": 30,
           "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.0
         },
         {
           "name": "Burst Fire",
@@ -72,7 +73,8 @@
           "clipSize": 30,
           "reloadTime": 1.6,
           "projectilesPerShot": 3,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.0
         },
         {
           "name": "Gatling Fire",
@@ -106,7 +108,8 @@
           "clipSize": 30,
           "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.0
         },
         {
           "name": "Engine Rev",
@@ -140,7 +143,8 @@
           "clipSize": 30,
           "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.0
         },
         {
           "name": "Split Shot",
@@ -174,7 +178,8 @@
           "clipSize": 60,
           "reloadTime": 2.5,
           "projectilesPerShot": 3,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.0
         },
         {
           "name": "Concentrated Shot",
@@ -208,7 +213,8 @@
           "clipSize": 30,
           "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.5
         }
       ],
       "forgeUpgrades": [
@@ -333,7 +339,8 @@
           "clipSize": 4,
           "reloadTime": 1.2,
           "projectilesPerShot": 8,
-          "estimated": false
+          "estimated": false,
+          "procChance": 0.6
         },
         {
           "name": "Full-automatic",
@@ -367,7 +374,8 @@
           "clipSize": 6,
           "reloadTime": 1.2,
           "projectilesPerShot": 8,
-          "estimated": false
+          "estimated": false,
+          "procChance": 0.6
         },
         {
           "name": "Superheavy Slug",
@@ -401,7 +409,8 @@
           "clipSize": 4,
           "reloadTime": 2.0,
           "projectilesPerShot": 4,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.2
         },
         {
           "name": "Buckshot",
@@ -435,7 +444,8 @@
           "clipSize": 4,
           "reloadTime": 1.2,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 2.5
         },
         {
           "name": "Unload",
@@ -472,7 +482,8 @@
           "clipSize": 4,
           "reloadTime": 1.2,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 2.0
         },
         {
           "name": "Pressure Shot",
@@ -506,7 +517,8 @@
           "clipSize": 4,
           "reloadTime": 1.2,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 2.5
         }
       ],
       "forgeUpgrades": [
@@ -648,7 +660,8 @@
           "clipSize": 15,
           "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 0.8
         },
         {
           "name": "Charge Beam",
@@ -682,7 +695,8 @@
           "clipSize": 15,
           "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 0.8
         },
         {
           "name": "Unstable Coil",
@@ -716,7 +730,8 @@
           "clipSize": 15,
           "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 0.8
         },
         {
           "name": "Spark Orb",
@@ -802,7 +817,8 @@
           "clipSize": 15,
           "reloadTime": 1.6,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 2.0
         },
         {
           "name": "Magnetic Storm",
@@ -956,7 +972,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.5
         },
         {
           "name": "Burst Fire",
@@ -990,7 +1007,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 3,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.5
         },
         {
           "name": "Large Caliber",
@@ -1024,7 +1042,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 2.0
         },
         {
           "name": "Steady Scope",
@@ -1058,7 +1077,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 2.5
         },
         {
           "name": "Quick Scope",
@@ -1092,7 +1112,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 2.0
         },
         {
           "name": "Charge Scope",
@@ -1126,7 +1147,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 3.0
         }
       ],
       "forgeUpgrades": [
@@ -1264,7 +1286,8 @@
           "clipSize": 3,
           "reloadTime": 0.5,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.2
         },
         {
           "name": "Fan Fire",
@@ -1298,7 +1321,8 @@
           "clipSize": 3,
           "reloadTime": 2.0,
           "projectilesPerShot": 3,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.2
         },
         {
           "name": "Dynamo",
@@ -1332,7 +1356,8 @@
           "clipSize": 3,
           "reloadTime": 0.5,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.2
         },
         {
           "name": "Inferno Discs",
@@ -1358,7 +1383,8 @@
           "clipSize": 3,
           "reloadTime": 0.5,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 2.0
         },
         {
           "name": "Electron Conductors",
@@ -1392,7 +1418,8 @@
           "clipSize": 3,
           "reloadTime": 0.5,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 2.0
         },
         {
           "name": "Search and Destroy",
@@ -1426,7 +1453,8 @@
           "clipSize": 3,
           "reloadTime": 0.5,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 1.5
         }
       ],
       "forgeUpgrades": [
@@ -1556,7 +1584,8 @@
           "clipSize": 1,
           "reloadTime": 0.8,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 3.0
         },
         {
           "name": "Pierce",
@@ -1590,7 +1619,8 @@
           "clipSize": 20,
           "reloadTime": 1.5,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 3.0
         },
         {
           "name": "Return Arrow",
@@ -1624,7 +1654,8 @@
           "clipSize": 20,
           "reloadTime": 1.5,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 3.0
         },
         {
           "name": "Multi-Shot",
@@ -1658,7 +1689,8 @@
           "clipSize": 1,
           "reloadTime": 1.2,
           "projectilesPerShot": 5,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.5
         },
         {
           "name": "Smart Arrow",
@@ -1692,7 +1724,8 @@
           "clipSize": 1,
           "reloadTime": 1.2,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 2.5
         },
         {
           "name": "Exploding Arrow",
@@ -1878,7 +1911,8 @@
           "clipSize": 3,
           "reloadTime": 2.25,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 2.0
         },
         {
           "name": "Flak Cannon",
@@ -1912,7 +1946,8 @@
           "clipSize": 6,
           "reloadTime": 2.25,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.5
         },
         {
           "name": "Seekers",
@@ -1946,7 +1981,8 @@
           "clipSize": 3,
           "reloadTime": 2.25,
           "projectilesPerShot": 5,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.8
         },
         {
           "name": "Disintegration Beam",
@@ -1980,7 +2016,8 @@
           "clipSize": 3,
           "reloadTime": 2.25,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 3.0
         },
         {
           "name": "Void Infusion",
@@ -2028,7 +2065,8 @@
           "clipSize": 3,
           "reloadTime": 2.25,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.0
         },
         {
           "name": "Adhesive Compound",
@@ -2076,7 +2114,8 @@
           "clipSize": 3,
           "reloadTime": 2.25,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.5
         }
       ],
       "forgeUpgrades": [
@@ -2190,7 +2229,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 3,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.5
         },
         {
           "name": "Fish Spit",
@@ -2224,7 +2264,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 2.0
         },
         {
           "name": "Hazardous Goo",
@@ -2272,7 +2313,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 1.5
         },
         {
           "name": "Piercing Stab",
@@ -2306,7 +2348,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 2.0
         },
         {
           "name": "Wide Stab",
@@ -2340,7 +2383,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 2.0
         },
         {
           "name": "Chainsaw",
@@ -2374,7 +2418,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 1.0
         }
       ],
       "forgeUpgrades": [
@@ -2528,7 +2573,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 3.0
         },
         {
           "name": "Ricocheting Harpoons",
@@ -2562,7 +2608,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 3.0
         },
         {
           "name": "Pinning Harpoons",
@@ -2610,7 +2657,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 2.0
         },
         {
           "name": "Barbed Harpoons",
@@ -2659,7 +2707,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 2.5
         },
         {
           "name": "Binding Harpoons",
@@ -2709,7 +2758,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": false
+          "estimated": false,
+          "procChance": 3.0
         },
         {
           "name": "Brine-Powered Harpoons",
@@ -2758,7 +2808,8 @@
           "clipSize": 6,
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
-          "estimated": true
+          "estimated": true,
+          "procChance": 2.5
         }
       ],
       "forgeUpgrades": [

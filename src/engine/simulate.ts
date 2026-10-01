@@ -1,7 +1,9 @@
 import {
   abilityById,
   blessingById,
+  blessingRankValue,
   charmById,
+  payloadByAspect,
   sharedAbilityUpgrades,
   soulSkillById,
   weaponById,
@@ -11,6 +13,7 @@ import {
 import { defaultOptions, enemiesFor, type Build, type SimOptions } from '../model/build';
 import { Modifiers, applyEffects } from './stacking';
 import { scaleBlessingEffects } from './blessingScaling';
+import { payloadDamage, type HitStream } from './payloads';
 
 export interface SimResult {
   /** Average damage of one landed hit, weakspot chance blended in. Main mode only. */
@@ -25,7 +28,13 @@ export interface SimResult {
   dotDps: number;
   /** Ability damage amortised over its cooldown. */
   abilityDps: number;
-  /** weaponDps + dotDps + abilityDps. */
+  /** Aspect payload damage (Hemorrhage, Chain Lightning, Tentacles, ...), all payloads summed. */
+  aspectDps: number;
+  /** Each payload's share of aspectDps, biggest first. */
+  aspects: { name: string; dps: number }[];
+  /** Product of enemy damage-taken multipliers (Shadows, Hemorrhage); already applied to every *Dps. */
+  vulnerability: number;
+  /** weaponDps + dotDps + abilityDps + aspectDps. */
   totalDps: number;
   /** The main mode being simulated (`build.modeName`). */
   mode: { name: string; type: 'Primary' | 'Secondary' };
@@ -81,6 +90,10 @@ function componentTotal(
 const ASPECT_SLOTS = ['primary', 'secondary', 'ability'] as const;
 
 interface ModeOutput {
+  /** Direct (single-target) and area hit events this mode lands, for aspect procs. */
+  stream: Omit<HitStream, 'slot'>;
+  /** Base damage of one projectile after damage bonuses -- the game's current Damage stat. */
+  damageStat: number;
   perHit: number;
   perShot: number;
   perMagazine: number;
@@ -157,6 +170,19 @@ function computeModeOutput(
   const perMagazine = perShot * shotsPerCycle;
   const weaponDps = cycleTime > 0 ? perMagazine / cycleTime : 0;
 
+  const shotsPerSecond = cycleTime > 0 ? shotsPerCycle / cycleTime : 0;
+  const count = (kinds: DamageComponent['kind'][]) =>
+    (mode.damageComponents ?? []).filter((c) => kinds.includes(c.kind)).reduce((n, c) => n + c.count, 0);
+  const directPerShot = count(['impact']);
+  const areaPerShot = count(['explosion', 'pull', 'aoe']);
+  const stream = {
+    directHitsPerSecond: shotsPerSecond * directPerShot * opts.accuracy,
+    directHit: directPerShot > 0 ? blendedImpact / directPerShot : 0,
+    areaEventsPerSecond: shotsPerSecond * areaPerShot * opts.accuracy,
+    areaHit: areaPerShot > 0 ? (baseExtra * aoeMult) / areaPerShot : 0,
+    procMultiplier: mode.procChance,
+  };
+
   const dotMult = 1 + mods.multFor('dotDamage', 'dot');
   const dotPerApplication = componentTotal(mode.damageComponents, ['dot'], opts.chargeLevel);
   // A DoT is refreshed by fire, so treat it as landing once per shot but not
@@ -164,6 +190,8 @@ function computeModeOutput(
   const dotDps = dotPerApplication > 0 ? dotPerApplication * dotMult * Math.min(fireRate, 1) : 0;
 
   return {
+    stream,
+    damageStat: directPerShot > 0 ? (baseImpact / directPerShot) * damageMult : 0,
     perHit: blendedImpact,
     perShot,
     perMagazine,
@@ -284,6 +312,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
 
   // --- Ability ------------------------------------------------------------
   let abilityDps = 0;
+  let abilityStream: HitStream | null = null;
   if (ability) {
     const abilityMult =
       1 + mods.multFor('abilityDamage', 'ability') + mods.multFor('damage', 'ability');
@@ -307,7 +336,89 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     const cooldownMult = Math.max(0.1, 1 + mods.multFor('abilityCooldown', 'ability'));
     const encounterSeconds = 30 * cooldownMult;
     abilityDps = (perCast * charges) / encounterSeconds;
+
+    // Each cast's impact and each pulse is a hit event that can proc the ability's aspect card.
+    const castsPerSecond = charges / encounterSeconds;
+    const events = 1 + (ability.pulses?.count ?? 0);
+    const perEvent = perCast / targetsHit / events;
+    abilityStream = {
+      slot: 'ability',
+      directHitsPerSecond: isArea ? 0 : castsPerSecond * events,
+      directHit: perEvent,
+      areaEventsPerSecond: isArea ? castsPerSecond * events : 0,
+      areaHit: perEvent,
+      procMultiplier: 1,
+    };
   }
+
+  // --- Aspect payloads ------------------------------------------------------
+  const streams: HitStream[] = [];
+  const scaled = (m: ModeOutput, type: WeaponMode['type'], share: number): HitStream => ({
+    ...m.stream,
+    slot: type === 'Primary' ? 'primary' : 'secondary',
+    directHitsPerSecond: m.stream.directHitsPerSecond * share,
+    areaEventsPerSecond: m.stream.areaEventsPerSecond * share,
+  });
+  streams.push(scaled(main, mode.type, (1 - weaveRate) * weaponUptime));
+  if (weaveOutput && weaveMode) streams.push(scaled(weaveOutput, weaveMode.type, weaveRate * weaponUptime));
+  if (abilityStream) streams.push(abilityStream);
+
+  // Hemorrhage ticks from the primary mode's Damage stat, whichever mode procs it.
+  const primaryOutput =
+    mode.type === 'Primary' ? main : weaveMode?.type === 'Primary' ? weaveOutput : undefined;
+  const firstPrimary = weapon.modes.find((m) => m.type === 'Primary');
+  const primaryModeDamage =
+    primaryOutput?.damageStat ??
+    (firstPrimary ? computeModeOutput(firstPrimary, mods, opts, abilityDamage).damageStat : 0);
+
+  const cardsByAspect = new Map<string, { slot: HitStream['slot']; chance: number }[]>();
+  for (const [id, rank] of Object.entries(build.blessings)) {
+    const b = blessingById.get(id);
+    if (!b || b.kind !== 'aspect' || !b.slot || !equippedAspects.has(b.aspect)) continue;
+    // The game's own {Chance} variable wins over the card text (they disagree for
+    // e.g. Tentacles: text 30%, game 40%); ability cards proc on every hit.
+    const statusChance = scaleBlessingEffects(b, rank).find((e) => e.op === 'applyStatus');
+    const pct = blessingRankValue(b, '{Chance}', rank);
+    const chance =
+      pct !== undefined ? pct / 100 : statusChance?.op === 'applyStatus' ? statusChance.chance : 1;
+    cardsByAspect.set(b.aspect, [...(cardsByAspect.get(b.aspect) ?? []), { slot: b.slot, chance }]);
+  }
+
+  let aspectDps = 0;
+  let vulnerability = 1;
+  const aspects: { name: string; dps: number }[] = [];
+  for (const [aspect, cards] of cardsByAspect) {
+    const payload = payloadByAspect.get(aspect);
+    if (!payload) {
+      unmodeled.push({
+        name: `${aspect} aspect`,
+        reason: `the ${aspect} effect itself isn't modelled yet -- only its cards' damage bonus is counted`,
+      });
+      continue;
+    }
+    const cardStreams = cards.flatMap((card) =>
+      streams
+        .filter((st) => st.slot === card.slot)
+        .map((st) => ({ ...st, procMultiplier: Math.min(1, card.chance * st.procMultiplier) })),
+    );
+    const r = payloadDamage(payload, 1, cardStreams, {
+      enemies: enemiesFor(opts.target),
+      primaryModeDamage,
+      targetMissingHealth: 1 - opts.targetHealthFraction,
+      payloadBonus: mods.multForScopeOnly('damage', payload.id),
+    });
+    for (const text of r.assumptions) mods.assume(payload.name, text);
+    vulnerability *= r.vulnerability;
+    if (r.dps > 0) {
+      aspectDps += r.dps;
+      aspects.push({ name: payload.name, dps: r.dps });
+    }
+  }
+  if (vulnerability !== 1) {
+    aspectDps *= vulnerability;
+    for (const a of aspects) a.dps *= vulnerability;
+  }
+  aspects.sort((a, b) => b.dps - a.dps);
 
   // A primary/secondary-scoped contribution is only real if that fire type is
   // actually being simulated (the main mode, or an active weave) -- otherwise
@@ -328,18 +439,21 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     perHit: main.perHit,
     perShot: main.perShot,
     perMagazine: main.perMagazine,
-    weaponDps,
-    dotDps,
-    abilityDps,
-    totalDps: weaponDps + dotDps + abilityDps,
+    weaponDps: weaponDps * vulnerability,
+    dotDps: dotDps * vulnerability,
+    abilityDps: abilityDps * vulnerability,
+    aspectDps,
+    aspects,
+    vulnerability,
+    totalDps: (weaponDps + dotDps + abilityDps) * vulnerability + aspectDps,
     mode: { name: mode.name, type: mode.type },
     weave: weaveOutput
       ? {
           modeName: weaveMode!.name,
           modeType: weaveMode!.type,
           rate: weaveRate,
-          weaponDps: weaveWeaponDps,
-          dotDps: weaveDotDps,
+          weaponDps: weaveWeaponDps * vulnerability,
+          dotDps: weaveDotDps * vulnerability,
         }
       : undefined,
     weaponUptime,

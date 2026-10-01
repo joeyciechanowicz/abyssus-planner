@@ -8,6 +8,7 @@ import abilitiesJson from '../../data/abilities.json';
 import soulWheelJson from '../../data/soul_wheel.json';
 import ancientForgeJson from '../../data/ancient_forge.json';
 import statusJson from '../../data/status_effects.json';
+import aspectsJson from '../../data/aspects.json';
 
 /** Shared shape for anything the codifier has annotated with effects. */
 const codified = {
@@ -84,6 +85,9 @@ export const modeSchema = z.object({
   clipSize: z.number().nullable(),
   reloadTime: z.number(),
   projectilesPerShot: z.number(),
+  // The mode's multiplier on aspect proc chances (BaseProcChance in its game asset):
+  // slow, heavy modes roll at x2-x4. 1 when the game asset leaves it at its default.
+  procChance: z.number().default(1),
   estimated: z.boolean(),
   comboCost: z.number().optional(),
   chargeSteps: z.number().optional(),
@@ -120,6 +124,59 @@ export const abilitySchema = z.object({
 });
 export type Ability = z.infer<typeof abilitySchema>;
 
+/** "base + percent% of the triggering hit, percentAboveCap% beyond softCap" -- the shared payload formula. */
+const scaledHitSchema = z.object({
+  base: z.number(),
+  percent: z.number(),
+  softCap: z.number(),
+  percentAboveCap: z.number(),
+});
+export type ScaledHit = z.infer<typeof scaledHitSchema>;
+
+const payloadCommon = { id: z.string(), aspect: z.string(), name: z.string(), evidence: z.string() };
+
+/**
+ * What an aspect card's proc actually does, from the game files
+ * (scripts/extract/aspect_payloads.py). Formulas live in src/engine/payloads.ts.
+ */
+export const aspectPayloadSchema = z.discriminatedUnion('kind', [
+  z.object({
+    ...payloadCommon,
+    kind: z.literal('dot'),
+    // Either a fixed tick from the primary mode's damage (Hemorrhage) ...
+    tickBase: z.number().optional(),
+    tickPercentOfPrimaryDamage: z.number().optional(),
+    scalesWithTargetMissingHealth: z.boolean().optional(),
+    // ... or a tick equal to a scaled triggering hit (Fire).
+    trigger: scaledHitSchema.optional(),
+    tickInterval: z.number(),
+    duration: z.number(),
+    maxStacks: z.number(),
+    damageTakenPercentPerStack: z.number().optional(),
+    damagePercentPerStack: z.number().optional(),
+  }),
+  z.object({
+    ...payloadCommon,
+    kind: z.literal('chain'),
+    trigger: scaledHitSchema,
+    chainCount: z.number(),
+    falloffPercent: z.number(),
+    range: z.number(),
+  }),
+  z.object({ ...payloadCommon, kind: z.literal('burst'), trigger: scaledHitSchema, radius: z.number() }),
+  z.object({
+    ...payloadCommon,
+    kind: z.literal('summon'),
+    attackBase: z.number(),
+    attackPercentOfTrigger: z.number(),
+    attackInterval: z.number(),
+    lifetime: z.number(),
+    maxActive: z.number(),
+  }),
+  z.object({ ...payloadCommon, kind: z.literal('vulnerability'), damageTakenPercent: z.number() }),
+]);
+export type AspectPayload = z.infer<typeof aspectPayloadSchema>;
+
 export const soulSkillSchema = z.object({ id: z.string(), ...codified });
 export type SoulSkill = z.infer<typeof soulSkillSchema>;
 
@@ -152,6 +209,8 @@ export const sharedAbilityUpgrades = parse(
   'shared ability upgrades',
 );
 export const statusEffects = statusJson;
+export const aspectPayloads = parse(z.array(aspectPayloadSchema), aspectsJson.payloads, 'aspect payloads');
+export const payloadByAspect = new Map(aspectPayloads.map((p) => [p.aspect, p]));
 
 export const blessingsByAspect = new Map<string, Blessing[]>();
 for (const b of blessings) {
@@ -177,6 +236,13 @@ export function maxBlessingRank(b: Blessing): number {
  * `descriptionSpan` (scripts/link_blessing_upgrades.py couldn't place them
  * unambiguously) are left as their rank-1 text.
  */
+/** A blessing's value for `variable` at `rank` (clamped), or undefined if it has no such variable. */
+export function blessingRankValue(b: Blessing, variable: string, rank: number): number | undefined {
+  const u = b.upgrades?.find((x) => x.variable === variable);
+  if (!u) return undefined;
+  return u.ranks[Math.min(Math.max(rank, 1), u.ranks.length) - 1];
+}
+
 export function renderBlessingDescription(b: Blessing, rank: number): string {
   const upgrades = b.upgrades ?? [];
   const spans = upgrades

@@ -217,6 +217,14 @@ and per-affected-enemy stacks count all five). Whatever a pick needed assuming i
 recorded via `Modifiers.assume()` and shown in the UI's "Assumed" panel, so the
 best-case number always says what it took for granted.
 
+**Aspect payloads are their own damage source.** An aspect card's proc (Hemorrhage,
+Chain Lightning, Windburst, Tentacles, Fire, Shadows) is modelled in
+`src/engine/payloads.ts` from `data/aspects.json`: proc chance x the fire mode's
+`procChance` x hits per second gives procs per second, which feeds a DoT (with
+uptime), a chain, an area burst or a summon. Enemy damage-taken effects (Shadows,
+Hemorrhage stacks) multiply every damage source. Aspects without a payload model
+yet are listed under "Not counted".
+
 **Stacking is additive-same-stat, multiplicative-cross-stat.** See
 `stacking.ts`'s module doc. This is the one modeling assumption most likely to
 need revisiting if a computed number disagrees with what you see in-game.

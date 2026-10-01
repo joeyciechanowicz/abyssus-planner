@@ -1,13 +1,17 @@
 # Reads raw bytes of UObjects from the running game (ReadProcessMemory, read-only,
 # no injection). Called by native_defaults.py, which supplies the targets.
-# Each target is name:objectIndexHex:classIndexHex:sizeHex; an object is only
-# written if its ClassPrivate pointer and InternalIndex match, so a stale
-# GObjects dump fails loudly instead of returning garbage.
+# Each target is name:classIndexHex:sizeHex. The CDO is reached through the
+# class's ClassDefaultObject pointer (UClass+0x110) -- native classes register
+# early, so their GObjects index is stable across sessions, unlike later
+# objects'. A CDO is only written if it carries RF_ClassDefaultObject and its
+# ClassPrivate points back at the class, so a stale dump fails loudly instead
+# of returning garbage.
 param(
   [string]$OutDir,
   [int64]$GObjectsOffset = 0x0A803890,
-  # object index -> expected class index, from Dumper-7's GObjects-Dump.txt
-  [string]$Targets
+  # name:classIndexHex:sizeHex, comma-separated (indices from Dumper-7's GObjects-Dump.txt)
+  [string]$Targets,
+  [int]$ClassDefaultObjectOffset = 0x110
 )
 Add-Type -TypeDefinition @"
 using System;
@@ -37,14 +41,17 @@ try {
     return [Mem]::Ptr($h, $chunk + 0x18 * ($idx % 0x10000))
   }
   foreach ($t in $Targets.Split(',')) {
-    $name, $objIdx, $clsIdx, $size = $t.Split(':')
-    $obj = Get-Obj ([Convert]::ToInt32($objIdx, 16))
+    $name, $clsIdx, $size = $t.Split(':')
     $cls = Get-Obj ([Convert]::ToInt32($clsIdx, 16))
-    $hdr = [Mem]::Read($h, $obj, 0x18)
-    $internalIdx = [BitConverter]::ToInt32($hdr, 0xC)
-    $classPtr = [BitConverter]::ToInt64($hdr, 0x10)
-    $ok = ($classPtr -eq $cls) -and ($internalIdx -eq [Convert]::ToInt32($objIdx, 16))
-    "{0}: obj=0x{1:X} idx=0x{2:X} classMatches={3}" -f $name, $obj, $internalIdx, $ok
-    if ($ok) { [IO.File]::WriteAllBytes((Join-Path $OutDir "$name.bin"), [Mem]::Read($h, $obj, [Convert]::ToInt32($size, 16))) }
+    $cdo = [Mem]::Ptr($h, $cls + $ClassDefaultObjectOffset)
+    $ok = $false
+    if ($cdo -ne 0) {
+      $hdr = [Mem]::Read($h, $cdo, 0x18)
+      $flags = [BitConverter]::ToInt32($hdr, 0x8)
+      $classPtr = [BitConverter]::ToInt64($hdr, 0x10)
+      $ok = (($flags -band 0x10) -ne 0) -and ($classPtr -eq $cls)   # RF_ClassDefaultObject
+    }
+    "{0}: class=0x{1:X} cdo=0x{2:X} verified={3}" -f $name, $cls, $cdo, $ok
+    if ($ok) { [IO.File]::WriteAllBytes((Join-Path $OutDir "$name.bin"), [Mem]::Read($h, $cdo, [Convert]::ToInt32($size, 16))) }
   }
 } finally { [Mem]::CloseHandle($h) | Out-Null }

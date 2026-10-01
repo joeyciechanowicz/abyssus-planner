@@ -5,11 +5,12 @@ The wiki never publishes fire rate (every mode in data/weapons.json is
 is usually right from the wiki's own tables, but a few modes clearly have a
 guessed number there as well. This pulls the *real* numbers straight from the
 game's own data instead: each fire mode has its own `RBaseWeaponSettings`
-game asset (a plain `UDataAsset`, not Blueprint graph logic -- unlike the
-status-effect DoT magnitudes, which turned out to be a dead end), named
-`DA_<Weapon>_<Mode>_ModStats`, holding `BaseWeaponDamage`,
-`BaseWeaponCriticalMultiplier` (the real weakspot multiplier), `BaseRateOfFire`,
-`BaseReloadTime`, `BaseClipSize`.
+game asset (a plain `UDataAsset`), named `DA_<Weapon>_<Mode>_ModStats`,
+holding `BaseWeaponDamage`, `BaseWeaponCriticalMultiplier` (the real weakspot
+multiplier), `BaseRateOfFire`, `BaseReloadTime`, `BaseClipSize` and
+`BaseProcChance` -- the mode's multiplier on aspect proc chances (slow, heavy
+modes roll at x2-x4; the native default when a mode doesn't set it is x1.0,
+read from the RBaseWeaponSettings CDO with native_defaults.py).
 
 Source data comes from scripts/extract/dump_mutators (the same CUE4Parse tool
 used for blessing upgrade values), with its `targetDirs` extended to include
@@ -131,8 +132,13 @@ def load_dumped(dump_dir):
             'rof': props.get('BaseRateOfFire', {}).get('BaseValue'),
             'reload': props.get('BaseReloadTime', {}).get('BaseValue'),
             'clip': props.get('BaseClipSize', {}).get('BaseValue'),
+            'proc': props.get('BaseProcChance', {}).get('BaseValue', NATIVE_DEFAULT_PROC_CHANCE),
         })
     return entries
+
+
+# RBaseWeaponSettings' constructor default, for modes that don't override it.
+NATIVE_DEFAULT_PROC_CHANCE = 1.0
 
 
 def find_component(components, kind):
@@ -158,6 +164,10 @@ def apply_entry(mode, entry):
         if clip != mode.get('clipSize'):
             changes.append(f"clip {mode.get('clipSize')}->{clip}")
             mode['clipSize'] = clip
+
+    if entry['proc'] != mode.get('procChance'):
+        changes.append(f"procChance {mode.get('procChance')}->{entry['proc']}")
+        mode['procChance'] = entry['proc']
 
     # A display string qualified by "(N Combo Points)" (Harpoon Gun's
     # combo-scaled secondaries) means the current number already assumes some

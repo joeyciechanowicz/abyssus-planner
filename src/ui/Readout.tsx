@@ -29,6 +29,7 @@ export function DpsSummary({ result }: { result: SimResult }) {
       cls: 'c-weave',
     },
     { label: 'Damage over time', value: result.dotDps, cls: 'c-dot' },
+    ...result.aspects.map((a) => ({ label: a.name, value: a.dps, cls: 'c-aspect' })),
     { label: 'Ability', value: result.abilityDps, cls: 'c-ability' },
   ].filter((p): p is { label: string; value: number; cls: string } => !!p && p.value > 0);
 
@@ -41,6 +42,9 @@ export function DpsSummary({ result }: { result: SimResult }) {
     ['Clip, reload', `${result.stats.clipSize ?? '—'}, ${result.stats.reloadTime.toFixed(1)}s${est}`],
     ['Damage multiplier', `×${result.stats.damageMultiplier.toFixed(2)}`],
     ['Weakspot multiplier', `×${result.stats.weakspotMultiplier.toFixed(2)}`],
+    ...(result.vulnerability !== 1
+      ? ([['Enemy damage taken', `×${result.vulnerability.toFixed(2)}`]] as [string, string][])
+      : []),
   ];
 
   return (

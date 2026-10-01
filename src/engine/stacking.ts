@@ -56,6 +56,12 @@ export class Modifiers {
     return total;
   }
 
+  /** A scope's own bucket, without the 'all' bucket -- for payloads, whose
+   * triggering hit already carried the player's general damage bonuses. */
+  multForScopeOnly(stat: Stat, scope: string): number {
+    return this.mults.get(stat)?.get(scope as Scope) ?? 0;
+  }
+
   flatFor(stat: Stat): number {
     return this.flats.get(stat) ?? 0;
   }

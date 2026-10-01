@@ -215,3 +215,18 @@ Where the numbers live:
   subclass's serialised CDO can still override a native value, so check it.
 
 Findings per aspect: `docs/plans/kismet-spike-findings.md`.
+
+### Aspect payloads -> data/aspects.json
+
+```
+1. dump_kismet "PrimaryAssets/(CharacterMutators|WeaponMutators|ProjectileMutators)" <out>
+   dump_kismet "Blueprints/(StatusEffects_Generic|Mutators/|Player/EquippableAbilities/)" <out>
+2. (game running, only after a game update)
+   python scripts/extract/native_defaults.py <Dumper-7 dir> scripts/extract/native_defaults.json      RBehaviorScriptLightning RBehaviorScriptOcean RBehaviorScriptWind RBehaviorScriptBrine      RBehaviorScriptFortune RBehaviorScriptSpirit RBehaviorScriptDefender RBehaviorScriptBlood      RBehaviorScriptFrost RStatusEffectAilmentGScript RGBurningAilment ROceanGodTentacle RBaseWeaponSettings
+3. python scripts/extract/aspect_payloads.py <out>
+```
+`native_defaults.json` is a committed snapshot, so step 3 runs without the game.
+The numbers land in `data/aspects.json`; the formulas that combine them are in
+`src/engine/payloads.ts`, each payload citing the Blueprint it was read from.
+`weapon_mod_stats.py` also writes each fire mode's `procChance` (its multiplier
+on aspect proc chances) from the same ModStats assets.

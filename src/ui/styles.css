@@ -25,6 +25,7 @@
   --c-weave: #2e9c88;
   --c-dot: #e0a458;
   --c-ability: #a18cf0;
+  --c-aspect: #ec7f97;
   --neg: #f0868f;
 
   --serif: 'Marcellus', 'Palatino Linotype', Palatino, Georgia, serif;
@@ -318,6 +319,7 @@ input[type='range'] { accent-color: var(--brass); width: 100%; margin: 0; }
 .c-weave { background: var(--c-weave); }
 .c-dot { background: var(--c-dot); }
 .c-ability { background: var(--c-ability); }
+.c-aspect { background: var(--c-aspect); }
 
 .stat-list { margin: 4px 0 0; padding-top: 12px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 3px; }
 .stat-list div { display: flex; justify-content: space-between; gap: 12px; }

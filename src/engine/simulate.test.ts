@@ -208,7 +208,11 @@ describe('weave mode', () => {
       { weakspotAccuracy: 0 },
     );
 
-    expect(r.weaponDps).toBeCloseTo(mainOnly.weaponDps * (1 - rate) + weaveOnly.weaponDps * rate, 5);
+    // Raw weapon damage blends linearly; Hemorrhage's damage-taken bonus (scaled by its
+    // uptime, which depends on how often the Primary mode fires) multiplies on top.
+    const raw = (x: typeof r) => x.weaponDps / x.vulnerability;
+    expect(raw(r)).toBeCloseTo(raw(mainOnly) * (1 - rate) + raw(weaveOnly) * rate, 5);
+    expect(r.vulnerability).toBeGreaterThan(1);
     expect(r.weave?.rate).toBeCloseTo(rate, 5);
 
     // The Primary-scoped blessing helps Automatic Fire's own DPS...

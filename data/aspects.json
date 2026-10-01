@@ -1,0 +1,86 @@
+{
+  "source": "game files: GodPassive/behaviour PAs, status-effect CDOs, native defaults (scripts/extract/aspect_payloads.py)",
+  "payloads": [
+    {
+      "id": "hemorrhage",
+      "aspect": "Blood",
+      "kind": "dot",
+      "name": "Hemorrhage",
+      "tickBase": 8.0,
+      "tickPercentOfPrimaryDamage": 2.0,
+      "scalesWithTargetMissingHealth": true,
+      "tickInterval": 0.25,
+      "duration": 4.0,
+      "maxStacks": 1,
+      "damageTakenPercentPerStack": 20,
+      "evidence": "BP_Bleed_StatusEffect: UpdateBaseDamage, K2_TickScript, SetDamageTakenMultiplier"
+    },
+    {
+      "id": "burn",
+      "aspect": "Flares",
+      "kind": "dot",
+      "name": "Fire",
+      "trigger": {
+        "base": 50,
+        "percent": 35,
+        "softCap": 500,
+        "percentAboveCap": 5
+      },
+      "tickInterval": 1.0,
+      "duration": 8.0,
+      "maxStacks": 1,
+      "damagePercentPerStack": 2.0,
+      "evidence": "BP_ApplyFire_Behavior_Mutator::GetDamageToDeal (PA_FireGodPassive[2..5]); BP_Burning_StatusEffect tick"
+    },
+    {
+      "id": "chainLightning",
+      "aspect": "Chain Lightning",
+      "kind": "chain",
+      "name": "Chain Lightning",
+      "trigger": {
+        "base": 100,
+        "percent": 60,
+        "softCap": 500,
+        "percentAboveCap": 20
+      },
+      "chainCount": 4,
+      "falloffPercent": 20.0,
+      "range": 2000.0,
+      "evidence": "BP_ChainLightning_Behavior_Mutator::GetDamageToDeal (PA_LightningGodPassive[2..5]); URBehaviorScriptLightning native defaults (live read)"
+    },
+    {
+      "id": "windburst",
+      "aspect": "Windburst",
+      "kind": "burst",
+      "name": "Windburst",
+      "trigger": {
+        "base": 100,
+        "percent": 80,
+        "softCap": 500,
+        "percentAboveCap": 30
+      },
+      "radius": 350.0,
+      "evidence": "BP_Windburst_Behavior_Mutator::FireWindburstLoop (PA_WindGodPassive[2..5]); URBehaviorScriptWind native defaults (live read)"
+    },
+    {
+      "id": "tentacle",
+      "aspect": "Tentacles",
+      "kind": "summon",
+      "name": "Tentacle",
+      "attackBase": 100.0,
+      "attackPercentOfTrigger": 25,
+      "attackInterval": 2.0,
+      "lifetime": 15.0,
+      "maxActive": 3,
+      "evidence": "BP_Ocean_GodPassive_CharacterMutatorScript (Damage += TriggerDamage x {DamagePercentage}); BP_OceanGod_Tentacle BaseAttackCooldown; ROceanGodTentacle/URBehaviorScriptOcean native defaults"
+    },
+    {
+      "id": "shadows",
+      "aspect": "Shadows",
+      "kind": "vulnerability",
+      "name": "Shadows",
+      "damageTakenPercent": 25,
+      "evidence": "BP_Breach_StatusEffect::UpdateAllDamageTakenIncreaseMultiplier (PA_Abyss_Behavior_Ability_Mutator[1])"
+    }
+  ]
+}
