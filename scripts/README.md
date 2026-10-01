@@ -129,3 +129,56 @@ hard-coded in Kismet graph logic instead, which this pipeline can't read.
 Bow's Exploding Arrow, Tesla Gun's Spark Orb and Magnetic Storm — all have
 wiki-documented multi-tier charge damage that doesn't correspond to a single
 `BaseWeaponDamage` figure anywhere) and stay on their wiki-estimated numbers.
+
+## Weapon portraits & ability icons (from the game files)
+
+The wiki has no art for the weapons themselves or for abilities. Both come out of
+the `.pak` with a sibling CUE4Parse tool, `dump_icons`. It decodes textures with the
+`CUE4Parse-Conversion` package (same version as `CUE4Parse`):
+
+```
+1. dotnet run --project scripts/extract/dump_icons -- \
+     "<path to>\Abyssus\RGame\Content\Paks" \
+     "C:\Dumper-7\<version>\Mappings\<version>.usmap" \
+     <output dir>                      [append "list" to also write paths.txt]
+   Dumps every uasset under PrimaryAssets/ to <out>/assets/**.json and decodes
+   every Texture2D under Art/UI/{Abilities,Weapon,Mutators,General,SkillTree} to
+   <out>/textures/**.png. Uses the same .usmap as the pipelines above (needed for
+   the data assets; the textures alone would decode without it).
+
+2. python scripts/extract/game_icons.py <output dir> [--sheet contact_sheet.png]
+   Writes public/weapon_portraits/<id>.png and public/abilities/<id>.png and the
+   matching "icon" field in data/weapons.json / data/abilities.json.
+
+3. python scripts/optimize_images.py
+```
+
+**Matching** goes through the data asset, never the texture filename. Every
+`RPrimaryDataAsset` has an `AssetName` FText (the in-game display name) and an
+`AssetIcon` texture; an entry matches the single asset whose normalised `AssetName`
+equals its `name`. Weapons are `RWeaponPrimaryAsset` (`PrimaryAssets/Weapons/PA_*`,
+icon `Art/UI/Weapon/T_UI_<Codename>_Icon_Partial_Rendered_0N`); abilities are
+`RCharacterMutatorPrimaryAsset`s tagged `MutatorType = Mutator.ActivatableAbility`
+(icon `Art/UI/Abilities/T_UI_Ability_<Codename>_Icon_Rendered_0N`). All 9 weapons
+and 6 abilities match exactly by name, codenames notwithstanding (`BoomerangGun` =
+Disc Thrower, `RocketLauncher` = Plasma Launcher, `DropShield` = Brine Field,
+`AtlanteanCube` = Ancient Core, `AncientSpear` = Smiting Spear).
+
+Gotchas:
+- Use `AssetIcon`, not `SmallIcon`. `SmallIcon` is a flat white silhouette on black
+  (an opaque mask the UI tints), not displayable art.
+- **Charms have no per-charm art in the game.** All 40 `Mutator.Charm` assets point
+  at one of three shared textures, `Art/UI/Mutators/Charm/T_UI_Icon_Charm_Default_01/02/03`
+  (Common/Rare/Legendary), so `game_icons.py` leaves the existing rarity badges in
+  place; it would only write `public/charms/<id>` for a charm with a texture of its own.
+  (Its output also flags charms whose game texture disagrees with `rarity` in the data.)
+- **Forge upgrades have no per-upgrade art either.** Every upgrade of one weapon or
+  ability uses the same `T_UI_Mutator_{Weapon,Ability}Upgrade_<Codename>_Icon`, so
+  the wiki's single shared Harpoon Gun icon is correct. The script prints this audit
+  but never touches forge data.
+- `game_icons.py` edits the JSON textually (inserting one `"icon"` line per entry)
+  rather than re-dumping it, because abilities.json/charms.json contain hand-compacted
+  effect objects that `json.dump` would reflow. It records the final `.webp` path and
+  deletes any stale `.webp` before writing the new `.png`, since `optimize_images.py`
+  otherwise keeps an existing `.webp` in preference to fresh art.
+- The dump output is not committed, same as `dump_mutators`.

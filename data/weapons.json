@@ -4,6 +4,7 @@
     {
       "id": "Engine_Rifle",
       "name": "Engine Rifle",
+      "icon": "weapon_portraits/Engine_Rifle.webp",
       "modes": [
         {
           "name": "Automatic Fire",
@@ -298,6 +299,7 @@
     {
       "id": "Shotgun",
       "name": "Shotgun",
+      "icon": "weapon_portraits/Shotgun.webp",
       "modes": [
         {
           "name": "Semi-automatic",
@@ -612,6 +614,7 @@
     {
       "id": "Tesla_Gun",
       "name": "Tesla Gun",
+      "icon": "weapon_portraits/Tesla_Gun.webp",
       "modes": [
         {
           "name": "Electrical Beam",
@@ -919,6 +922,7 @@
     {
       "id": "Brine_Revolver",
       "name": "Brine Revolver",
+      "icon": "weapon_portraits/Brine_Revolver.webp",
       "modes": [
         {
           "name": "Semi-automatic",
@@ -1226,6 +1230,7 @@
     {
       "id": "Disc_Thrower",
       "name": "Disc Thrower",
+      "icon": "weapon_portraits/Disc_Thrower.webp",
       "modes": [
         {
           "name": "Automatic",
@@ -1517,6 +1522,7 @@
     {
       "id": "Combat_Bow",
       "name": "Combat Bow",
+      "icon": "weapon_portraits/Combat_Bow.webp",
       "modes": [
         {
           "name": "Precision Shot",
@@ -1838,6 +1844,7 @@
     {
       "id": "Plasma_Launcher",
       "name": "Plasma Launcher",
+      "icon": "weapon_portraits/Plasma_Launcher.webp",
       "modes": [
         {
           "name": "Semi-automatic",
@@ -2149,6 +2156,7 @@
     {
       "id": "Fish_Deity",
       "name": "Fish Deity",
+      "icon": "weapon_portraits/Fish_Deity.webp",
       "modes": [
         {
           "name": "Rapid Goo",
@@ -2486,6 +2494,7 @@
     {
       "id": "Harpoon_Gun",
       "name": "Harpoon Gun",
+      "icon": "weapon_portraits/Harpoon_Gun.webp",
       "modes": [
         {
           "name": "Piercing Harpoons",

@@ -4,6 +4,7 @@
   "abilities": [
     {
       "name": "Frag Grenade",
+      "icon": "abilities/frag_grenade.webp",
       "damage": 200,
       "weakspotDamage": 400,
       "charges": 3,
@@ -161,6 +162,7 @@
     },
     {
       "name": "Anchor",
+      "icon": "abilities/anchor.webp",
       "damage": 600,
       "weakspotDamage": null,
       "charges": 2,
@@ -315,6 +317,7 @@
     },
     {
       "name": "Smiting Spear",
+      "icon": "abilities/smiting_spear.webp",
       "damage": 200,
       "weakspotDamage": null,
       "charges": 1,
@@ -439,6 +442,7 @@
     },
     {
       "name": "Ancient Core",
+      "icon": "abilities/ancient_core.webp",
       "damage": null,
       "weakspotDamage": 1000,
       "charges": 2,
@@ -577,6 +581,7 @@
     },
     {
       "name": "Brine Field",
+      "icon": "abilities/brine_field.webp",
       "damage": 200,
       "weakspotDamage": null,
       "charges": 1,
@@ -709,6 +714,7 @@
     },
     {
       "name": "Turret",
+      "icon": "abilities/turret.webp",
       "damage": 50,
       "weakspotDamage": null,
       "charges": 1,
