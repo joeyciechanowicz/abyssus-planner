@@ -127,6 +127,14 @@ export const abilitySchema = z.object({
   maxActive: z.number().optional(),
   damagePerTick: z.number().optional(),
   damagePerShot: z.number().optional(),
+  // From the ability's Blueprint (scripts/extract/ability_timing.py): seconds to recharge one
+  // charge (charges recharge one at a time) and the minimum seconds between two uses.
+  rechargeCooldown: z.number(),
+  inputCooldown: z.number(),
+  // Abilities that deal their damage over a lifetime (Turret, Brine Field) instead of on impact.
+  sustain: z
+    .object({ perHit: z.number(), hitsPerSecond: z.number(), duration: z.number(), area: z.boolean() })
+    .optional(),
   forgeUpgrades: z.array(z.object({ id: z.string(), ...codified })),
 });
 export type Ability = z.infer<typeof abilitySchema>;

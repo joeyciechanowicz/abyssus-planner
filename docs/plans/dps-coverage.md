@@ -170,6 +170,10 @@ payload's base damage, tick rate, duration and scaling formula?
   so crits come from blessings only; a crit sets the same flag as a weakspot hit. 89% counted
   (305 counted, 103 utility, 38 gaps).
 
+- 2026-10-02: real ability timing from each ability's Blueprint (recharge per charge, input
+  cooldown, encounter refill); Turret/Brine Field lifetime damage; Increased Efficiency and
+  Active Reload. 91% counted (313 counted, 103 utility, 30 gaps).
+
 ## Later phases (unchanged from the earlier proposal)
 - Phase 1b: merge forge-upgrade `MutatorDescriptionVariables` (unstated magnitudes).
 - Phase 2: aspect payload engine + per-payload scopes, statusEffectiveness/duration, crit → weakspot.

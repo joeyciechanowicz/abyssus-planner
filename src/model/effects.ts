@@ -53,6 +53,10 @@ export const STATS = [
   'overkillTransfer',
   /** Flat: chance an ability-slot blessing proc triggers a second time (Double Trouble). */
   'abilityProcRepeat',
+  /** Flat: seconds of ability recharge removed per kill (Increased Efficiency). */
+  'abilityCooldownPerKill',
+  /** Flat: > 0 means a cast that kills resets the cooldown (Active Reload). */
+  'abilityResetOnKill',
 ] as const;
 export type Stat = (typeof STATS)[number];
 

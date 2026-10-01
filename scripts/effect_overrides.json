@@ -912,9 +912,16 @@
     ]
   },
   "shared ability forge/Increased Efficiency": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "triggers on kills; kill rate is not modelled"
+    "source": "Ability timing: real recharge (BP StacksRechargeCooldown) and input cooldowns",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "abilityCooldownPerKill",
+        "scope": "all",
+        "value": 2,
+        "scalesWith": "{CooldownReduction} "
+      }
+    ]
   },
   "shared ability forge/Rich Get Richer": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
@@ -3690,9 +3697,15 @@
     ]
   },
   "ability forge/ancient_core/Active Reload": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "triggers on kills; kill rate is not modelled"
+    "source": "Ability timing: real recharge (BP StacksRechargeCooldown) and input cooldowns",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "abilityResetOnKill",
+        "scope": "all",
+        "value": 1
+      }
+    ]
   },
   "ability forge/brine_field/Quality Over Quantity": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",

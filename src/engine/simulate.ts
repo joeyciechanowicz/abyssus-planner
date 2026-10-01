@@ -377,25 +377,45 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       ),
     );
     const pulses = ability.pulses ? ability.pulses.count * ability.pulses.damage : 0;
-    const isArea = ability.tags.includes('aoe') || mods.flatFor('abilityArea') > 0;
+    const isArea = ability.tags.includes('aoe') || mods.flatFor('abilityArea') > 0 || !!ability.sustain?.area;
     const targetsHit = isArea ? enemiesFor(opts.target) : 1;
     if (isArea && targetsHit > 1) {
       mods.assume(ability.name, `its area catches all ${targetsHit} enemies`);
     }
     const abilityExplosions = ability.tags.includes('explosion') ? 1 + mods.flatFor('extraExplosions') : 1;
     if (abilityExplosions > 1) mods.assume(ability.name, `its explosions go off ${abilityExplosions} times`);
-    const perCast =
-      ((ability.damage ?? ability.weakspotDamage ?? 0) + pulses) * abilityMult * targetsHit * abilityExplosions;
-    // Charges refill at the end of an encounter; amortise over a nominal 30s fight.
-    // abilityCooldown mods shorten/lengthen the effective encounter window --
-    // negative values fit more casts into the same 30s.
-    const cooldownMult = Math.max(0.1, 1 + mods.multFor('abilityCooldown', 'ability'));
-    const encounterSeconds = 30 * cooldownMult;
-    abilityDps = (perCast * charges) / encounterSeconds;
+    // Damage of one cast: an impact (plus pulses), or a lifetime of shots/ticks.
+    const sustain = ability.sustain;
+    const castBase = sustain
+      ? sustain.perHit * sustain.hitsPerSecond * sustain.duration
+      : (ability.damage ?? ability.weakspotDamage ?? 0) + pulses;
+    const perCast = castBase * abilityMult * targetsHit * abilityExplosions;
 
-    // Each cast's impact and each pulse is a hit event that can proc the ability's aspect card.
-    const castsPerSecond = charges / encounterSeconds;
-    const events = 1 + (ability.pulses?.count ?? 0);
+    // Casts per second: charges recharge one at a time, so the sustained rate is one
+    // per recharge; clearing an encounter refills every charge (assumed every 30s);
+    // the input cooldown caps how fast you can recast.
+    const ENCOUNTER_SECONDS = 30;
+    const cooldown = ability.rechargeCooldown * Math.max(0.1, 1 + mods.multFor('abilityCooldown', 'ability'));
+    // Kills (from your weapon; Pack only) can speed recharge up or reset it outright.
+    const weaponKills =
+      opts.target === 'pack' ? (weaponDps + dotDps) / enemyHealth[tierFor(opts.target)] : 0;
+    const rechargeSpeed = 1 + mods.flatFor('abilityCooldownPerKill') * weaponKills;
+    let castsPerSecond = rechargeSpeed / cooldown + charges / ENCOUNTER_SECONDS;
+    const castKills = opts.target === 'pack' && perCast / targetsHit >= enemyHealth[tierFor(opts.target)];
+    if (mods.flatFor('abilityResetOnKill') > 0 && castKills) {
+      castsPerSecond = Infinity;
+      mods.assume(ability.name, 'every cast kills, so its cooldown resets each time');
+    }
+    castsPerSecond = Math.min(castsPerSecond, 1 / ability.inputCooldown);
+    mods.assume(
+      ability.name,
+      `a cast every ${(1 / castsPerSecond).toFixed(1)}s (one charge per ${cooldown.toFixed(1)}s recharge, ` +
+        `all ${charges} refilled each ${ENCOUNTER_SECONDS}s encounter)`,
+    );
+    abilityDps = perCast * castsPerSecond;
+
+    // Each cast's impact and each pulse or shot is a hit event that can proc the ability's aspect card.
+    const events = sustain ? sustain.hitsPerSecond * sustain.duration : 1 + (ability.pulses?.count ?? 0);
     const perEvent = perCast / targetsHit / events;
     abilityStream = {
       slot: 'ability',

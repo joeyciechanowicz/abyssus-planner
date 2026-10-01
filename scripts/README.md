@@ -237,5 +237,10 @@ dump_kismet ... dump "Blueprints/AI/.*/BP_[^/]+\.uasset$" <out>
 python scripts/extract/enemy_health.py <out>
 ```
 
+Ability timing (`rechargeCooldown`, `inputCooldown`, charges, and the Turret's and
+Brine Field's sustained damage) comes from each ability's Blueprint CDO:
+`python scripts/extract/ability_timing.py <out>` (run codify.py and
+link_blessing_upgrades.py after it, as after any extractor).
+
 `weapon_mod_stats.py` also writes each fire mode's `procChance` (its multiplier
 on aspect proc chances) from the same ModStats assets.

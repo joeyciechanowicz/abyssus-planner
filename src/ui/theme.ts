@@ -73,6 +73,8 @@ const STAT_LABELS: Record<string, string> = {
   abilityArea: 'Ability hits an area',
   overkillTransfer: 'Overkill carried over',
   abilityProcRepeat: 'Ability procs repeat',
+  abilityCooldownPerKill: 'Ability recharge per kill (s)',
+  abilityResetOnKill: 'Kills reset the ability',
   // Aspect payload mechanics (`payload` effects).
   chance: 'Proc chance',
   repeats: 'Extra triggers',

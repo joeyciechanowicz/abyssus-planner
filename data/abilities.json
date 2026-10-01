@@ -208,7 +208,9 @@
             }
           ]
         }
-      ]
+      ],
+      "rechargeCooldown": 5.0,
+      "inputCooldown": 0.4
     },
     {
       "name": "Anchor",
@@ -392,7 +394,9 @@
             }
           ]
         }
-      ]
+      ],
+      "rechargeCooldown": 4.0,
+      "inputCooldown": 0.7
     },
     {
       "name": "Smiting Spear",
@@ -628,7 +632,9 @@
           "effects": [],
           "unmodeled": "charging consumes stacks; the stack economy is not modelled"
         }
-      ]
+      ],
+      "rechargeCooldown": 8.0,
+      "inputCooldown": 0.4
     },
     {
       "name": "Ancient Core",
@@ -701,8 +707,14 @@
           "name": "Active Reload",
           "description": "Getting a kill with the Ancient Core resets its cooldown.",
           "icon": "forge/Active_Reload.webp",
-          "effects": [],
-          "unmodeled": "triggers on kills; kill rate is not modelled"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "abilityResetOnKill",
+              "scope": "all",
+              "value": 1
+            }
+          ]
         },
         {
           "id": "target_lock",
@@ -800,7 +812,9 @@
             }
           ]
         }
-      ]
+      ],
+      "rechargeCooldown": 5.0,
+      "inputCooldown": 2.0
     },
     {
       "name": "Brine Field",
@@ -968,7 +982,15 @@
           "effects": [],
           "unmodeled": "scales ability blessing procs with field radius; the radius is not modelled"
         }
-      ]
+      ],
+      "rechargeCooldown": 9.0,
+      "inputCooldown": 1.0,
+      "sustain": {
+        "perHit": 200.0,
+        "hitsPerSecond": 1.0,
+        "duration": 10.0,
+        "area": true
+      }
     },
     {
       "name": "Turret",
@@ -1150,7 +1172,15 @@
             }
           ]
         }
-      ]
+      ],
+      "rechargeCooldown": 25.0,
+      "inputCooldown": 0.4,
+      "sustain": {
+        "perHit": 50.0,
+        "hitsPerSecond": 2.0,
+        "duration": 18.75,
+        "area": false
+      }
     }
   ]
 }

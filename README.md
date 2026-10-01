@@ -225,6 +225,11 @@ uptime), a chain, an area burst or a summon. Enemy damage-taken effects (Shadows
 Hemorrhage stacks) multiply every damage source. Aspects without a payload model
 yet are listed under "Not counted".
 
+**Abilities recharge for real.** Each charge recharges one at a time over the
+ability's own `rechargeCooldown` (from its Blueprint), clearing an encounter
+refills all charges (assumed every 30s), and `inputCooldown` caps recasts. The
+Turret and Brine Field deal their damage over their whole lifetime.
+
 **Stacking is additive-same-stat, multiplicative-cross-stat.** See
 `stacking.ts`'s module doc. This is the one modeling assumption most likely to
 need revisiting if a computed number disagrees with what you see in-game.

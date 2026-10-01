@@ -27,8 +27,15 @@
         "name": "Increased Efficiency",
         "description": "Kills Lower the cooldown of your Ability.",
         "icon": "forge/Ability_Shared.webp",
-        "effects": [],
-        "unmodeled": "triggers on kills; kill rate is not modelled"
+        "effects": [
+          {
+            "op": "flat",
+            "stat": "abilityCooldownPerKill",
+            "scope": "all",
+            "value": 2,
+            "scalesWith": "{CooldownReduction} "
+          }
+        ]
       },
       {
         "name": "Rich Get Richer",

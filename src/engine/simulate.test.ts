@@ -163,8 +163,8 @@ describe('simulate', () => {
   it('adds ability damage when an ability is equipped', () => {
     const withAbility: Build = { ...base, abilityId: 'frag_grenade' };
     const r = simulate(withAbility);
-    // 200 damage x 3 charges over a 30s encounter = 20 dps
-    expect(r.abilityDps).toBeCloseTo(20, 5);
+    // 200 damage x (one charge per 5s recharge + 3 charges refilled each 30s encounter) = 60 dps
+    expect(r.abilityDps).toBeCloseTo(200 * (1 / 5 + 3 / 30), 5);
     expect(r.totalDps).toBeCloseTo(r.weaponDps + r.dotDps + r.abilityDps, 5);
   });
 
@@ -326,7 +326,8 @@ describe('ability-cooldown and ability-charge effects', () => {
     const bare: Build = { ...emptyBuild, abilityId: 'frag_grenade' };
     const withFreebie: Build = { ...bare, charmIds: ['freebie'] };
     const r = simulate(withFreebie);
-    expect(r.abilityDps).toBeCloseTo(simulate(bare).abilityDps * 2, 5);
+    // Halves the 5s recharge; the per-encounter refill is unchanged.
+    expect(r.abilityDps).toBeCloseTo(200 * (1 / 2.5 + 3 / 30), 5);
   });
 
   it('Compact Grenade halves effective charges alongside tripling damage', () => {
@@ -336,8 +337,8 @@ describe('ability-cooldown and ability-charge effects', () => {
       abilityUpgrades: ['Compact Grenade'],
     };
     const r = simulate(b);
-    // damage 200 x3 (mult +2.0) x2 charges (3 rounded-halved) / 30s
-    expect(r.abilityDps).toBeCloseTo((200 * 3 * 2) / 30, 5);
+    // damage 200 x3 (mult +2.0); 2 charges (3 rounded-halved) refilled per encounter
+    expect(r.abilityDps).toBeCloseTo(200 * 3 * (1 / 5 + 2 / 30), 5);
   });
 
   it("Activate Gun Mode raises weaponDps only when an ability is equipped", () => {
@@ -610,6 +611,27 @@ describe('charms', () => {
       { weakspotAccuracy: 0 },
     );
     expect(both.perShot).toBeCloseTo(plain.perShot * (1 + 0.5 * 1.1 * 2), 5);
+  });
+});
+
+describe('ability timing', () => {
+  it('Turret deals its whole lifetime of shots per cast', () => {
+    const r = simulate({ ...emptyBuild, abilityId: 'turret' });
+    // 50 x 2/s for 18.75s, one cast per 25s recharge + 1 charge per 30s encounter.
+    expect(r.abilityDps).toBeCloseTo(50 * 2 * 18.75 * (1 / 25 + 1 / 30), 5);
+  });
+
+  it('caps recasts at the input cooldown', () => {
+    const r = simulate({ ...emptyBuild, abilityId: 'frag_grenade', charmIds: ['freebie'], abilityUpgrades: ['Rich Get Richer'] });
+    expect(r.abilityDps).toBeLessThanOrEqual(200 / 0.4 + 1e-9);
+  });
+
+  it('Active Reload resets the Core whenever a cast kills a pack enemy', () => {
+    const core: Build = { ...emptyBuild, abilityId: 'ancient_core' };
+    const reload = { ...core, abilityUpgrades: ['Active Reload'] };
+    // 1000 damage kills a 500 HP enemy: recast every 2s input cooldown.
+    expect(simulate(reload, { target: 'pack' }).abilityDps).toBeCloseTo(1000 / 2, 5);
+    expect(simulate(reload, { target: 'boss' }).abilityDps).toBeCloseTo(simulate(core, { target: 'boss' }).abilityDps, 5);
   });
 });
 
