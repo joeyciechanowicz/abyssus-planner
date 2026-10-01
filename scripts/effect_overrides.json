@@ -1202,9 +1202,30 @@
     ]
   },
   "blessings/Blood_Sphere": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "Blood Orb damage depends on hitting the orb itself; not modelled yet"
+    "source": "Step 6: Blood Orbs (PA_BloodMinorBlessing, BP_BloodOrb)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "hemorrhage",
+        "field": "orbChance",
+        "value": 0.25,
+        "scalesWith": "{SpawnChance}"
+      },
+      {
+        "op": "payload",
+        "payload": "hemorrhage",
+        "field": "orbDuration",
+        "value": 6,
+        "scalesWith": "{OrbDuration}"
+      },
+      {
+        "op": "payload",
+        "payload": "hemorrhage",
+        "field": "orbDamage",
+        "value": 2.0,
+        "scalesWith": "{DamageIncreasePercentage}"
+      }
+    ]
   },
   "blessings/Fanning_Flames": {
     "source": "Phase 2c: Flares",
@@ -1725,9 +1746,22 @@
     ]
   },
   "blessings/Bloodsplosions": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "Blood Orb damage depends on hitting the orb itself; not modelled yet"
+    "source": "Step 6: Blood Orbs (PA_BloodMinorBlessing, BP_BloodOrb)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "you have Blood Sphere, and the orb explodes over every enemy (radius 1000)",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "hemorrhage",
+            "field": "orbArea",
+            "value": 1
+          }
+        ]
+      }
+    ]
   },
   "blessings/Enduring_Flames": {
     "source": "Phase 2c: Flares",

@@ -322,6 +322,26 @@ describe('Barrier vs enemy attacks', () => {
   });
 });
 
+describe('Blood Orbs', () => {
+  const b = (extra: Record<string, number>): Build => ({
+    ...emptyBuild,
+    aspects: { primary: 'Blood', secondary: null, ability: null },
+    blessings: { Blood_Primary: 1, ...extra },
+  });
+  it('Blood Sphere doubles weapon damage while an orb is up; Bloodsplosions spreads it over the pack', () => {
+    const plain = simulate(b({}), { weakspotAccuracy: 0 });
+    const sphere = simulate(b({ Blood_Sphere: 1 }), { weakspotAccuracy: 0 });
+    // 20% Hemorrhage procs x 25% orb chance at 5.6 hits/s, 6s orbs.
+    const procs = (30 / 5.35) * 0.2;
+    const orbUp = 1 - Math.exp(-procs * 0.25 * 6);
+    expect(sphere.weaponDps / plain.weaponDps).toBeCloseTo(1 + orbUp, 3);
+    const pack = simulate(b({ Blood_Sphere: 1, Bloodsplosions: 1 }), { weakspotAccuracy: 0, target: 'pack' });
+    const packPlain = simulate(b({}), { weakspotAccuracy: 0, target: 'pack' });
+    const packUp = 1 - Math.exp(-(procs / 5) * 0.25 * 6);
+    expect(pack.weaponDps / packPlain.weaponDps).toBeCloseTo(1 + (2 * 5 - 1) * packUp, 3);
+  });
+});
+
 describe('Blightful Freeze', () => {
   it("raises other aspects' status damage by 15% of the Frozen uptime", () => {
     const b = (extra: Record<string, number>): Build => ({

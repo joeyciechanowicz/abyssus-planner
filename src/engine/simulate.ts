@@ -674,6 +674,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   const aspects: { name: string; dps: number }[] = [];
   // Blightful Freeze: status damage to Frozen enemies goes up, so Freeze is worked out first.
   let statusDamageMult = 1;
+  let weaponMult = 1;
   const ordered = [...cardsByAspect].sort(([a], [b]) => Number(b === 'Frozen') - Number(a === 'Frozen'));
   for (const [aspect, cards] of ordered) {
     const payload = payloadByAspect.get(aspect);
@@ -706,6 +707,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     });
     for (const text of r.assumptions) mods.assume(payload.name, text);
     vulnerability *= r.vulnerability;
+    weaponMult *= r.weaponMult ?? 1;
     if (r.frozenShare !== undefined) {
       statusDamageMult = 1 + (mods.payloadMods.get('frost')?.statusDamageWhileActive ?? 0) * r.frozenShare;
     } else if (payload.kind === 'dot') {
@@ -750,20 +752,20 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     perHit: main.perHit,
     perShot: main.perShot,
     perMagazine: main.perMagazine,
-    weaponDps: weaponDps * vulnerability,
+    weaponDps: weaponDps * weaponMult * vulnerability,
     dotDps: (dotDps + statusDotDps) * vulnerability,
     abilityDps: abilityDps * vulnerability,
     aspectDps,
     aspects,
     vulnerability,
-    totalDps: (weaponDps + dotDps + statusDotDps + abilityDps) * vulnerability + aspectDps,
+    totalDps: (weaponDps * weaponMult + dotDps + statusDotDps + abilityDps) * vulnerability + aspectDps,
     mode: { name: mode.name, type: mode.type },
     weave: weaveOutput
       ? {
           modeName: weaveMode!.name,
           modeType: weaveMode!.type,
           rate: weaveRate,
-          weaponDps: weaveWeaponDps * vulnerability,
+          weaponDps: weaveWeaponDps * weaponMult * vulnerability,
           dotDps: weaveDotDps * vulnerability,
         }
       : undefined,

@@ -268,6 +268,12 @@ export const PAYLOAD_FIELDS = [
   'shredPerSecondWhileActive',
   'shredOnEndPercent',
   'buildupRetained',
+  /** Hemorrhage's Blood Orbs: chance per proc to spawn one; its lifetime; damage multiplier for
+   * hits redirected into it; > 0 = it explodes over an area instead (Bloodsplosions). */
+  'orbChance',
+  'orbDuration',
+  'orbDamage',
+  'orbArea',
   /** Freeze: +x damage from status effects (other aspects' DoTs) to Frozen enemies. */
   'statusDamageWhileActive',
   /** Gauges (Spirit, Brine, Barrier): +x relative gauge gain; Spirits: x relative orb cost change. */

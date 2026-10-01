@@ -65,6 +65,8 @@ export interface PayloadResult {
   procsPerSecond: number;
   /** Freeze: share of the time enemies are Frozen. */
   frozenShare?: number;
+  /** Multiplier on your weapon damage alone (Blood Orbs redirect weapon hits). */
+  weaponMult?: number;
   assumptions: string[];
 }
 
@@ -177,10 +179,19 @@ export function payloadDamage(
       const stackBonus = 1 + ((p.damagePercentPerStack ?? 0) / 100) * stacks;
       const dps = (n * (tick / p.tickInterval) * stackBonus * up + flareDps) * bonus * eff;
       const vulnerability = 1 + ((p.damageTakenPercentPerStack ?? 0) / 100) * p.maxStacks * up;
+      // Blood Orbs: while one is up you shoot it instead, for orbDamage x the hit to its enemy
+      // (or, with Bloodsplosions, an explosion over every enemy).
+      let weaponMult = 1;
+      if (m('orbChance') > 0) {
+        const orbUp = uptime(procsPerTarget * m('orbChance'), m('orbDuration'));
+        const gain = m('orbDamage') * (m('orbArea') > 0 ? n : 1) - 1;
+        weaponMult = 1 + gain * orbUp;
+        assumptions.push(`a Blood Orb up ${Math.round(orbUp * 100)}% of the time, and you shoot it`);
+      }
       assumptions.push(
         `${p.name} up ${Math.round(up * 100)}% of the time on ${n === 1 ? 'the target' : `each of ${n} enemies`}`,
       );
-      return { dps, vulnerability, procsPerSecond: procsTotal, assumptions };
+      return { dps, vulnerability, procsPerSecond: procsTotal, weaponMult, assumptions };
     }
     case 'chain': {
       // Crits: your Critical Chance plus Lightning bonuses, at x2 (the native crit

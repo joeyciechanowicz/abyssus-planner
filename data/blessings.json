@@ -970,7 +970,29 @@
       "kind": "blessing",
       "logbookIndex": 18,
       "icon": "blessings/Blood_Sphere.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "hemorrhage",
+          "field": "orbChance",
+          "value": 0.25,
+          "scalesWith": "{SpawnChance}"
+        },
+        {
+          "op": "payload",
+          "payload": "hemorrhage",
+          "field": "orbDuration",
+          "value": 6,
+          "scalesWith": "{OrbDuration}"
+        },
+        {
+          "op": "payload",
+          "payload": "hemorrhage",
+          "field": "orbDamage",
+          "value": 2.0,
+          "scalesWith": "{DamageIncreasePercentage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{SpawnChance}",
@@ -1008,8 +1030,7 @@
           ],
           "descriptionSpan": null
         }
-      ],
-      "unmodeled": "Blood Orb damage depends on hitting the orb itself; not modelled yet"
+      ]
     },
     {
       "id": "Bloodsplosions",
@@ -1019,8 +1040,21 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Bloodsplosions.webp",
-      "effects": [],
-      "unmodeled": "Blood Orb damage depends on hitting the orb itself; not modelled yet"
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "you have Blood Sphere, and the orb explodes over every enemy (radius 1000)",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "hemorrhage",
+              "field": "orbArea",
+              "value": 1
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "Barrier_Ability",

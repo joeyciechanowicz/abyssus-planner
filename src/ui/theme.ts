@@ -95,6 +95,10 @@ const STAT_LABELS: Record<string, string> = {
   radius: 'Radius',
   radiusDamageScaling: 'Damage per radius',
   statusDamageWhileActive: 'Status damage to Frozen enemies',
+  orbChance: 'Blood Orb chance',
+  orbDuration: 'Blood Orb lifetime (s)',
+  orbDamage: 'Damage through the Blood Orb',
+  orbArea: 'Blood Orb explodes over an area',
   // Aspect payload mechanics (`payload` effects).
   chance: 'Proc chance',
   repeats: 'Extra triggers',
@@ -152,7 +156,7 @@ export const FLAT_FIELDS = new Set([
   'repeats', 'falloffPercent', 'maxActive', 'lifetime', 'goldPercent', 'triggerPercent',
   'burstDamage', 'areaBurstDamage', 'dotPerSecond', 'shredPercent', 'shredPerSecondWhileActive',
   'shredOnEndPercent', 'gaugePerOrb', 'flareBurstDamage', 'flareAreaDamage', 'linkedFlares', 'fireStacks',
-  'poolObjects', 'killBurstDamage', 'killAreaDamage', 'killProcs', 'killGauge', 'lastBounceCrit',
+  'poolObjects', 'orbDuration', 'orbArea', 'killBurstDamage', 'killAreaDamage', 'killProcs', 'killGauge', 'lastBounceCrit',
   'critExtraBounces', 'critForks', 'orbDotPerSecond', 'extraThrows',
 ]);
 
