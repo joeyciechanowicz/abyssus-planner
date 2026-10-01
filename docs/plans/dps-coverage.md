@@ -183,6 +183,11 @@ payload's base damage, tick rate, duration and scaling formula?
   (5s lockout; Burst Cooling, Heat Expulsion); heat-scaled bonuses follow how hot the gun runs.
   Heat Expulsion was previously counted on every shot. 93% (317 counted, 104 utility, 25 gaps).
 
+- 2026-10-02: the last gaps (see remaining-gaps.md): spear concurrency, Turret extras, area size,
+  Blightful Freeze, Barrier vs attacks, Blood Orbs, missing Health, cross-mode weapon upgrades,
+  Shadow Conversion, Everlasting Winter; melee/ally picks marked out of scope. 99% counted; 2 gaps
+  (Sanctum, Erupting Gold) need values not in the game files.
+
 ## Later phases (unchanged from the earlier proposal)
 - Phase 1b: merge forge-upgrade `MutatorDescriptionVariables` (unstated magnitudes).
 - Phase 2: aspect payload engine + per-payload scopes, statusEffectiveness/duration, crit → weakspot.

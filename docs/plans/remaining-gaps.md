@@ -16,3 +16,16 @@ independent; their order follows how many picks each one closes.
 | 8 | Cross-mode weapon upgrades | Automatic Detonation, Wireless Transmitter, Shortbow | Disc: Primary weakspot hits fire the Secondary's detonation. Tesla: Secondary effect durations +20% per active one. Bow: auto-release at full charge -- check whether the mode's rate already assumes it. |
 | 9 | Shadow Conversion, Sanctum, Everlasting Winter, Erupting Gold | the rest | Shadow Conversion: one +100% hit per newly afflicted enemy (pack kills). Sanctum: field radius from its Blueprint. Everlasting Winter / Erupting Gold: one more search for the missing numbers; otherwise they stay honest gaps. |
 | 10 | Out of scope, said so | Thawing Strike, Execution, Ocean's Embrace | Melee isn't part of the simulated rotation and the planner is solo (no allies). Mark them as such rather than as gaps. |
+
+## Result (2026-10-02)
+
+All ten steps done, each verified (tests, validate, build) and committed separately.
+Coverage: 340 counted, 101 utility, 3 out of scope (melee, allies), **2 gaps** -- 99% of
+damage-relevant picks. The two left need values the game files don't contain:
+
+- **Sanctum** scales with the Brine Field's radius in metres; the files only give mesh scales.
+- **Erupting Gold**'s explosion damage is computed in native code.
+
+Assumptions made along the way (all listed in the planner's Assumed panel when they apply):
+Retaliating Barrier assumes enemies use up each Barrier; Explosive Valve and Wireless
+Transmitter have native formulas, modelled as proportional to size / one other active effect.
