@@ -259,8 +259,18 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Blood.webp",
-      "effects": [],
-      "unmodeled": "scales with your own missing Health; the ideal scenario keeps you at full Health",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "hemorrhage",
+          "valuePer": 0.01,
+          "per": "missingHealthPercent",
+          "max": null,
+          "note": "+5% per 5% missing",
+          "scalesWith": "{DamageIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",

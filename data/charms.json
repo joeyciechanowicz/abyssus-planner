@@ -107,8 +107,17 @@
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Speedster",
       "icon": "charms/Rare.webp",
-      "effects": [],
-      "unmodeled": "scales with your missing Health; the ideal scenario keeps you at full Health"
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "all",
+          "valuePer": 0.004,
+          "per": "missingHealthPercent",
+          "max": null,
+          "note": "+2% per 10 of 200 Health missing"
+        }
+      ]
     },
     {
       "id": "golden_ticket",

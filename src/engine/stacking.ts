@@ -147,6 +147,13 @@ export function applyEffects(
       case 'stacking': {
         // Assume `stackFullness` of the cap is up; uncapped effects are assumed to
         // sit at a conservative 5 stacks so they cannot dominate the result.
+        if (e.per === 'missingHealthPercent') {
+          // One stack per 1% of your Health missing (the "Your health" setting).
+          const stacks = Math.max(0, 1 - opts.healthFraction) * 100;
+          mods.addMult(e.stat, e.scope ?? 'all', e.valuePer * stacks, `${source} (${stacks.toFixed(0)}% Health missing)`);
+          if (stacks === 0) mods.assume(source, 'you are at full Health, so it adds nothing');
+          break;
+        }
         if (e.per === 'affectedEnemy') {
           // One stack per enemy you've affected: bounded by how many enemies the
           // target scenario has, not by a guessed cap.

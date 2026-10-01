@@ -589,6 +589,12 @@ describe('charms', () => {
     expect(boom.perShot).toBeCloseTo((360 + 180 * 4) * 2, 5);
   });
 
+  it('Power From Pain: +2% per 10 of 200 Health missing, nothing at full Health', () => {
+    const b: Build = { ...emptyBuild, charmIds: ['power_from_pain'] };
+    expect(simulate(b).stats.damageMultiplier).toBeCloseTo(1, 5);
+    expect(simulate(b, { healthFraction: 0.5 }).stats.damageMultiplier).toBeCloseTo(1 + 0.02 * 10, 5);
+  });
+
   it('Fan triples every direct hit', () => {
     const plain = simulate(emptyBuild, { weakspotAccuracy: 0 });
     expect(simulate({ ...emptyBuild, charmIds: ['fan'] }, { weakspotAccuracy: 0 }).perHit).toBeCloseTo(plain.perHit * 3, 5);

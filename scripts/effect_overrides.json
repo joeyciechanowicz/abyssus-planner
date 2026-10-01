@@ -1,8 +1,18 @@
 {
   "blessings/Feeble_Blood": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "scales with your own missing Health; the ideal scenario keeps you at full Health"
+    "source": "Step 7: your missing Health (player max Health 200, BP_RPlayerPawn HealthComponent)",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "damage",
+        "scope": "hemorrhage",
+        "valuePer": 0.01,
+        "per": "missingHealthPercent",
+        "max": null,
+        "note": "+5% per 5% missing",
+        "scalesWith": "{DamageIncrease}"
+      }
+    ]
   },
   "blessings/Baneful_Blood": {
     "source": "Phase 2b: aspect payload model",
@@ -3215,9 +3225,18 @@
     ]
   },
   "charms/power_from_pain": {
-    "source": "Phase 3: charms (BP_*_CharacterMutator / WeaponMutator)",
-    "effects": [],
-    "unmodeled": "scales with your missing Health; the ideal scenario keeps you at full Health"
+    "source": "Step 7: your missing Health (player max Health 200, BP_RPlayerPawn HealthComponent)",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "damage",
+        "scope": "all",
+        "valuePer": 0.004,
+        "per": "missingHealthPercent",
+        "max": null,
+        "note": "+2% per 10 of 200 Health missing"
+      }
+    ]
   },
   "charms/overkill": {
     "source": "Phase 3: kills and executes",
