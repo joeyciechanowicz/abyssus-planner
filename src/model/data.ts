@@ -134,6 +134,8 @@ export const abilitySchema = z.object({
   notes: z.string(),
   pulses: z.object({ count: z.number(), damage: z.number() }).optional(),
   maxActive: z.number().optional(),
+  // Smiting Spear: seconds each spear stays out (its pulses spread over it).
+  lifetime: z.number().optional(),
   damagePerTick: z.number().optional(),
   damagePerShot: z.number().optional(),
   // From the ability's Blueprint (scripts/extract/ability_timing.py): seconds to recharge one

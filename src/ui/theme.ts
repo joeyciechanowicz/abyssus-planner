@@ -84,6 +84,10 @@ const STAT_LABELS: Record<string, string> = {
   heatExpulsion: 'Overheat explosion (x weapon damage)',
   heatDamage: 'Damage at full Heat',
   heatFireRate: 'Fire rate at full Heat',
+  abilityProjectiles: 'Extra spears per throw',
+  chainPulse: 'Chain Pulse chance',
+  spearGrid: 'Spear Grid damage per tick',
+  enduringSpear: 'Kills keep spears alive',
   // Aspect payload mechanics (`payload` effects).
   chance: 'Proc chance',
   repeats: 'Extra triggers',

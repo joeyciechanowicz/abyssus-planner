@@ -552,6 +552,24 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     );
     abilityDps = perCast * castsPerSecond;
 
+    // Smiting Spear: several spears can be out at once (each lives `lifetime`, up to
+    // maxActive), which Chain Pulse and Spear Grid feed on.
+    if (ability.lifetime && ability.pulses) {
+      const throws = 1 + mods.flatFor('abilityProjectiles');
+      // Enduring Spear: a kill (pack) near a spear restarts its life.
+      const resets = mods.flatFor('enduringSpear') > 0 ? Math.min(5, weaponKills * ability.lifetime) : 0;
+      const lifetime = ability.lifetime * (1 + resets);
+      const maxOut = ability.maxActive ?? 1;
+      const spearsOut = Math.min(maxOut, castsPerSecond * throws * lifetime);
+      const chain = 1 + mods.flatFor('chainPulse') * Math.max(0, spearsOut - 1);
+      const pulseShare = pulses / castBase;
+      // Pulses scale with lifetime and Chain Pulse; the impact doesn't.
+      const spearCast = perCast * throws * ((1 - pulseShare) + pulseShare * (1 + resets) * chain);
+      const grid = (mods.flatFor('spearGrid') / 0.33) * enemiesFor(opts.target) * Math.min(1, Math.max(0, spearsOut - 1));
+      abilityDps = spearCast * castsPerSecond + grid;
+      mods.assume(ability.name, `${spearsOut.toFixed(1)} spears out at once` + (resets ? ', kept alive by kills' : ''));
+    }
+
     // Each cast's impact and each pulse or shot is a hit event that can proc the ability's aspect card.
     const events = sustain ? sustain.hitsPerSecond * sustain.duration : 1 + (ability.pulses?.count ?? 0);
     const perEvent = perCast / targetsHit / events;

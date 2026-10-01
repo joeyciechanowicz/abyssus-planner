@@ -6,7 +6,8 @@ URGAbilityCharacterMutatorScript) carries:
   MaxStacks               charges
   InputCooldown           minimum seconds between two uses
   StacksRestoredOnAllEnemiesDefeated  999 -> clearing an encounter refills every charge
-Abilities that deal damage over their lifetime instead of on impact get a
+The Smiting Spear gets its `lifetime` (BP_AncientSpear InitialLifeSpan), which
+sets how many spears are out at once. Abilities that deal damage over their lifetime instead of on impact get a
 `sustain` block: the Turret (BP_Turret: Damage x RateOfFire for
 TurretLifeDuration minus its SpawnDelay) and the Brine Field
 (BP_DropShield_AreaEffect_Script: DamagePerTick every DamageTickInterval for
@@ -69,6 +70,10 @@ def main():
     life = cdo(dump, 'BP_Turret_CharacterMutator')['TurretLifeDuration']
     turret['sustain'] = {'perHit': val(t['Damage']), 'hitsPerSecond': val(t['RateOfFire']), 'duration': life - t['SpawnDelay'],
                          'area': False}
+
+    # Smiting Spear: each spear lives InitialLifeSpan seconds, pulsing over it.
+    spear = next(a for a in doc['abilities'] if a['id'] == 'smiting_spear')
+    spear['lifetime'] = cdo(dump, 'BP_AncientSpear')['InitialLifeSpan']
 
     field = next(a for a in doc['abilities'] if a['id'] == 'brine_field')
     f = cdo(dump, 'BP_DropShield_AreaEffect_Script')

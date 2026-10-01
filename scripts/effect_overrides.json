@@ -3550,9 +3550,17 @@
     ]
   },
   "ability forge/smiting_spear/Chain Pulse": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "needs several spears out at once; spear count is not modelled"
+    "source": "Smiting Spear concurrency (BP_AncientSpear lifetime 9s, max 6; mutator BPs)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "chainPulse",
+        "scope": "all",
+        "value": 0.6,
+        "note": "BP ChainPulseChance 0.6",
+        "scalesWith": "{Chance}"
+      }
+    ]
   },
   "ability forge/smiting_spear/Charmed Spear": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
@@ -3633,32 +3641,53 @@
     ]
   },
   "ability forge/smiting_spear/Spear Grid": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "needs several spears out at once; spear count is not modelled"
-  },
-  "ability forge/smiting_spear/Split Spear": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "source": "Smiting Spear concurrency (BP_AncientSpear lifetime 9s, max 6; mutator BPs)",
     "effects": [
       {
         "op": "conditional",
         "when": "assumed",
+        "note": "enemies stand in the field between your spears",
         "then": [
           {
-            "op": "mult",
-            "stat": "abilityDamage",
-            "scope": "ability",
-            "value": 2.0
+            "op": "flat",
+            "stat": "spearGrid",
+            "scope": "all",
+            "value": 30,
+            "scalesWith": "{Damage}"
           }
-        ],
-        "note": "both extra spears hit"
+        ]
+      }
+    ]
+  },
+  "ability forge/smiting_spear/Split Spear": {
+    "source": "Smiting Spear concurrency (BP_AncientSpear lifetime 9s, max 6; mutator BPs)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "both extra spears hit",
+        "then": [
+          {
+            "op": "flat",
+            "stat": "abilityProjectiles",
+            "scope": "all",
+            "value": 2,
+            "scalesWith": "{NumSpears}"
+          }
+        ]
       }
     ]
   },
   "ability forge/smiting_spear/Enduring Spear": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "triggers on kills; kill rate is not modelled"
+    "source": "Smiting Spear concurrency (BP_AncientSpear lifetime 9s, max 6; mutator BPs)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "enduringSpear",
+        "scope": "all",
+        "value": 1
+      }
+    ]
   },
   "ability forge/smiting_spear/Environmental Spear": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
@@ -3679,9 +3708,10 @@
     ]
   },
   "ability forge/smiting_spear/Charged Spear": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "source": "Smiting Spear concurrency (BP_AncientSpear lifetime 9s, max 6; mutator BPs)",
     "effects": [],
-    "unmodeled": "charging consumes stacks; the stack economy is not modelled"
+    "unmodeled": "each stack consumed is a spear not thrown (+50% for -100%), so it never raises sustained damage",
+    "utility": true
   },
   "ability forge/ancient_core/Cone Blast": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",

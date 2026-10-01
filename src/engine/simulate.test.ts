@@ -700,6 +700,30 @@ describe('Harpoon Combo Points', () => {
   });
 });
 
+describe('Smiting Spear concurrency', () => {
+  const spear = (abilityUpgrades: string[] = []): Build => ({ ...emptyBuild, abilityId: 'smiting_spear', abilityUpgrades });
+  const casts = 1 / 8 + 1 / 30; // one per 8s recharge + 1 charge per 30s encounter
+  const out = casts * 9; // spears out at once (9s each)
+
+  it('counts the spears out at once', () => {
+    const r = simulate(spear());
+    expect(r.abilityDps).toBeCloseTo(600 * casts, 5); // 200 impact + 8 x 50 pulses
+    expect(r.assumptions.some((a) => a.text === `${out.toFixed(1)} spears out at once`)).toBe(true);
+  });
+
+  it('Chain Pulse makes every pulse 60% likely to pulse each other spear', () => {
+    const r = simulate(spear(['Chain Pulse']));
+    expect(r.abilityDps).toBeCloseTo(casts * (200 + 400 * (1 + 0.6 * (out - 1))), 5);
+  });
+
+  it('Split Spear throws three, and Spear Grid fills the space between them', () => {
+    const split = simulate(spear(['Split Spear']));
+    expect(split.abilityDps).toBeCloseTo(600 * 3 * casts, 5);
+    const grid = simulate(spear(['Split Spear', 'Spear Grid']));
+    expect(grid.abilityDps - split.abilityDps).toBeCloseTo(30 / 0.33, 5); // >= 2 spears out all the time
+  });
+});
+
 describe('forge upgrades', () => {
   const fx = (weaponId: string, modeName: string, weaponUpgrades: string[], extra: Partial<Build> = {}): Build => ({
     ...emptyBuild, weaponId, modeName, weaponUpgrades, ...extra,

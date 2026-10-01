@@ -454,8 +454,16 @@
           "name": "Chain Pulse",
           "description": "The pulse from one spear has a 60% chance to cause other spears to pulsate.",
           "icon": "forge/Shockwave.webp",
-          "effects": [],
-          "unmodeled": "needs several spears out at once; spear count is not modelled"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "chainPulse",
+              "scope": "all",
+              "value": 0.6,
+              "note": "BP ChainPulseChance 0.6",
+              "scalesWith": "{Chance}"
+            }
+          ]
         },
         {
           "id": "charmed_spear",
@@ -571,8 +579,22 @@
           "name": "Spear Grid",
           "description": "Spears that are stuck create a field between them that deals 30 damage to enemies that enter it.",
           "icon": "forge/Shockwave.webp",
-          "effects": [],
-          "unmodeled": "needs several spears out at once; spear count is not modelled"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "note": "enemies stand in the field between your spears",
+              "then": [
+                {
+                  "op": "flat",
+                  "stat": "spearGrid",
+                  "scope": "all",
+                  "value": 30,
+                  "scalesWith": "{Damage}"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "split_spear",
@@ -583,15 +605,16 @@
             {
               "op": "conditional",
               "when": "assumed",
+              "note": "both extra spears hit",
               "then": [
                 {
-                  "op": "mult",
-                  "stat": "abilityDamage",
-                  "scope": "ability",
-                  "value": 2.0
+                  "op": "flat",
+                  "stat": "abilityProjectiles",
+                  "scope": "all",
+                  "value": 2,
+                  "scalesWith": "{NumSpears}"
                 }
-              ],
-              "note": "both extra spears hit"
+              ]
             }
           ]
         },
@@ -600,8 +623,14 @@
           "name": "Enduring Spear",
           "description": "If an enemy dies from, or shortly after, being hit by a spear, the spear's duration resets.",
           "icon": "forge/Shockwave.webp",
-          "effects": [],
-          "unmodeled": "triggers on kills; kill rate is not modelled"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "enduringSpear",
+              "scope": "all",
+              "value": 1
+            }
+          ]
         },
         {
           "id": "environmental_spear",
@@ -630,11 +659,13 @@
           "description": "Spears can be charged before being thrown, consuming stacks to increase damage and duration, while decreasing damage intervals, by 50% per stack.",
           "icon": "forge/Shockwave.webp",
           "effects": [],
-          "unmodeled": "charging consumes stacks; the stack economy is not modelled"
+          "unmodeled": "each stack consumed is a spear not thrown (+50% for -100%), so it never raises sustained damage",
+          "utility": true
         }
       ],
       "rechargeCooldown": 8.0,
-      "inputCooldown": 0.4
+      "inputCooldown": 0.4,
+      "lifetime": 9.0
     },
     {
       "name": "Ancient Core",

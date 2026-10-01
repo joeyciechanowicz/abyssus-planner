@@ -71,6 +71,12 @@ export const STATS = [
   'heatExpulsion',
   'heatDamage',
   'heatFireRate',
+  /** Smiting Spear: extra spears per throw; chance a pulse sets off every other spear;
+   * damage per 0.33s tick to enemies in the field between stuck spears; > 0 = kills reset a spear. */
+  'abilityProjectiles',
+  'chainPulse',
+  'spearGrid',
+  'enduringSpear',
 ] as const;
 export type Stat = (typeof STATS)[number];
 
