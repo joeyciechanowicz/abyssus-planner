@@ -4466,8 +4466,16 @@
       "kind": "blessing",
       "logbookIndex": 18,
       "icon": "blessings/Erupting_Freeze.webp",
-      "effects": [],
-      "unmodeled": "triggers on kills; kill rate is not modelled"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "frost",
+          "field": "killAreaDamage",
+          "value": 250,
+          "note": "PA_FrostMinorBlessing {AoEDamage}",
+          "scalesWith": "{AoEDamage}"
+        }
+      ]
     },
     {
       "id": "Everlasting_Winter",
@@ -4478,7 +4486,7 @@
       "logbookIndex": 19,
       "icon": "blessings/Everlasting_Winter.webp",
       "effects": [],
-      "unmodeled": "pulse damage is native code and unknown"
+      "unmodeled": "pulses 50 area damage (PA_FrostMajorBlessing) but its pulse interval is native code and unknown"
     },
     {
       "id": "Ability_Chain_Lightning",
@@ -7326,8 +7334,15 @@
       "kind": "blessing",
       "logbookIndex": 18,
       "icon": "blessings/Oceanic_Supplies.webp",
-      "effects": [],
-      "unmodeled": "its chance to throw several objects is native code and unknown"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "extraThrows",
+          "value": 1.0,
+          "note": "30%/20%/10% to throw 2/3/4 objects"
+        }
+      ]
     },
     {
       "id": "Oceanic_Arsenal",
@@ -7843,8 +7858,16 @@
       "kind": "blessing",
       "logbookIndex": 10,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
-      "unmodeled": "stacking player damage buff whose cap and duration are native code",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "spirit",
+          "field": "possessionDamage",
+          "value": 0.05,
+          "note": "BP_SpiritPassive9: 10 stacks, 10s",
+          "scalesWith": "{DamageIncreasePercentagePerStack}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -7919,7 +7942,16 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "spirit",
+          "field": "orbDotPerSecond",
+          "value": 25,
+          "note": "5 per 0.2s tick per stack (BP_SpiritPassive8 TickScriptInterval 0.2)",
+          "scalesWith": "{DamagePerTick}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamagePerTick}",
@@ -7943,8 +7975,7 @@
             14
           ]
         }
-      ],
-      "unmodeled": "damage-over-time duration is native code and unknown"
+      ]
     },
     {
       "id": "Spiritual_Exchange",
@@ -9736,8 +9767,15 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Brine.webp",
-      "effects": [],
-      "unmodeled": "damage-taken window length is native code and unknown",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "brine",
+          "field": "damageTakenWhileActive",
+          "value": 0.2,
+          "scalesWith": "{ExtraDamage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{ExtraDamage}",

@@ -1414,9 +1414,17 @@
     ]
   },
   "blessings/Aggression_Possession": {
-    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
-    "effects": [],
-    "unmodeled": "damage-over-time duration is native code and unknown"
+    "source": "Native-gap pass: numbers from the PA / status-effect Blueprint defaults",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "spirit",
+        "field": "orbDotPerSecond",
+        "value": 25,
+        "note": "5 per 0.2s tick per stack (BP_SpiritPassive8 TickScriptInterval 0.2)",
+        "scalesWith": "{DamagePerTick}"
+      }
+    ]
   },
   "blessings/Splattering_Brine": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -1977,9 +1985,16 @@
     ]
   },
   "blessings/Oceanic_Supplies": {
-    "source": "Phase 2c: Tentacle throw pool",
-    "effects": [],
-    "unmodeled": "its chance to throw several objects is native code and unknown"
+    "source": "Native-gap pass: numbers from the PA / status-effect Blueprint defaults",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "extraThrows",
+        "value": 1.0,
+        "note": "30%/20%/10% to throw 2/3/4 objects"
+      }
+    ]
   },
   "blessings/Oceanic_Arsenal": {
     "source": "Phase 2c: Tentacle throw pool",
@@ -2347,14 +2362,22 @@
     ]
   },
   "blessings/Erupting_Freeze": {
-    "source": "Phase 2c: Freeze payload model",
-    "effects": [],
-    "unmodeled": "triggers on kills; kill rate is not modelled"
+    "source": "Native-gap pass: numbers from the PA / status-effect Blueprint defaults",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "frost",
+        "field": "killAreaDamage",
+        "value": 250,
+        "note": "PA_FrostMinorBlessing {AoEDamage}",
+        "scalesWith": "{AoEDamage}"
+      }
+    ]
   },
   "blessings/Everlasting_Winter": {
-    "source": "Phase 2c: Freeze payload model",
+    "source": "Native-gap pass: numbers from the PA / status-effect Blueprint defaults",
     "effects": [],
-    "unmodeled": "pulse damage is native code and unknown"
+    "unmodeled": "pulses 50 area damage (PA_FrostMajorBlessing) but its pulse interval is native code and unknown"
   },
   "blessings/Stacking_Barrier": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -2513,9 +2536,17 @@
     ]
   },
   "blessings/Friendly_Possession": {
-    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
-    "effects": [],
-    "unmodeled": "stacking player damage buff whose cap and duration are native code"
+    "source": "Native-gap pass: numbers from the PA / status-effect Blueprint defaults",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "spirit",
+        "field": "possessionDamage",
+        "value": 0.05,
+        "note": "BP_SpiritPassive9: 10 stacks, 10s",
+        "scalesWith": "{DamageIncreasePercentagePerStack}"
+      }
+    ]
   },
   "blessings/Heavy_Spirits": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -2627,9 +2658,16 @@
     "utility": true
   },
   "blessings/Mucous_Brine": {
-    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
-    "effects": [],
-    "unmodeled": "damage-taken window length is native code and unknown"
+    "source": "Native-gap pass: numbers from the PA / status-effect Blueprint defaults",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "brine",
+        "field": "damageTakenWhileActive",
+        "value": 0.2,
+        "scalesWith": "{ExtraDamage}"
+      }
+    ]
   },
   "blessings/Solid_Brine": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -3738,14 +3776,21 @@
     "unmodeled": "refills your magazine per Turret shot; Turret fire rate is not modelled"
   },
   "ability forge/turret/Buddy System": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "source": "Native-gap pass: numbers from the PA / status-effect Blueprint defaults",
     "effects": [],
-    "unmodeled": "its damage reduction is native code and unknown"
+    "unmodeled": "-25% Turret damage, +25% per Turret in range; Turret overlap is not modelled"
   },
   "ability forge/turret/Unstable Cores": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "spawn explosion damage is native code and unknown"
+    "source": "Native-gap pass: numbers from the PA / status-effect Blueprint defaults",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "abilityDamage",
+        "scope": "ability",
+        "value": 1.0,
+        "note": "a spawn explosion of 100% ability damage (BP_UnstablePowerCores)"
+      }
+    ]
   },
   "ability forge/turret/Guiding Bullet": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",

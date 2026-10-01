@@ -1028,15 +1028,22 @@
           "description": "Lowers the cooldown by 10 sec. and reduces the damage dealt by your Turret. Turrets deal increased damage for each Turret within range",
           "icon": "forge/Buddy_System.webp",
           "effects": [],
-          "unmodeled": "its damage reduction is native code and unknown"
+          "unmodeled": "-25% Turret damage, +25% per Turret in range; Turret overlap is not modelled"
         },
         {
           "id": "unstable_cores",
           "name": "Unstable Cores",
           "description": "Your Turret explodes and stuns enemies in a 10-meter radius when it spawns.",
           "icon": "forge/Unstable_Cores.webp",
-          "effects": [],
-          "unmodeled": "spawn explosion damage is native code and unknown"
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "abilityDamage",
+              "scope": "ability",
+              "value": 1.0,
+              "note": "a spawn explosion of 100% ability damage (BP_UnstablePowerCores)"
+            }
+          ]
         },
         {
           "id": "sentinel",

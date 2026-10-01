@@ -276,6 +276,12 @@ export const PAYLOAD_FIELDS = [
   'lastBounceCrit',
   'critExtraBounces',
   'critForks',
+  /** Spirits: damage per second per stack of a DoT each orb hit adds (5s, up to 100 stacks);
+   * your damage per Possession stack (20% per orb, 10s, up to 10). */
+  'orbDotPerSecond',
+  'possessionDamage',
+  /** Tentacles: expected extra objects thrown per attack. */
+  'extraThrows',
 ] as const;
 export type PayloadField = (typeof PAYLOAD_FIELDS)[number];
 const PAYLOAD_IDS = [

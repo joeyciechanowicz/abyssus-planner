@@ -230,7 +230,7 @@ export function payloadDamage(
       const poolMult =
         (1 + objectBonus / pool + m('throwAllChance') * objectBonus) * (1 + m('damagePerPoolObject') * pool);
       if (pool > 1) assumptions.push(`${pool} objects in the Tentacles' throw pool, picked at random`);
-      const attack = (p.attackBase + (p.attackPercentOfTrigger / 100) * trigger) * poolMult;
+      const attack = (p.attackBase + (p.attackPercentOfTrigger / 100) * trigger) * poolMult * (1 + m('extraThrows'));
       const speed = 1 + m('attackSpeed') + m('attackSpeedPerActive') * active;
       assumptions.push(`${active.toFixed(1)} of ${maxActive} ${p.name}s alive on average`);
       return {
@@ -252,9 +252,15 @@ export function payloadDamage(
       }
       const cycle = fillTime(p.maxGauge, gaugeRate, orbs * m('gaugePerOrb')) + orbs * p.orbInterval;
       assumptions.push(`${orbs} Spirits per full gauge, every ${cycle.toFixed(1)}s`);
+      const orbRate = orbs / cycle;
+      // Aggression Possession: each orb hit adds a 5s DoT stack on its target.
+      const stacksPerTarget = Math.min(100, (orbRate * 5) / n);
+      const orbDot = m('orbDotPerSecond') * stacksPerTarget * n;
+      // Friendly Possession: 20% of orbs grant you a 10s damage stack, up to 10.
+      const possession = 1 + m('possessionDamage') * Math.min(10, orbRate * 0.2 * 10);
       return {
-        dps: (orbs * scaledHit(p.orb, trigger) * bonus) / cycle,
-        vulnerability: 1,
+        dps: ((orbs * scaledHit(p.orb, trigger)) / cycle + orbDot) * bonus,
+        vulnerability: possession,
         procsPerSecond: orbs / cycle,
         assumptions,
       };
@@ -268,7 +274,9 @@ export function payloadDamage(
         `a Brine Ball thrown every ${(1 / balls).toFixed(1)}s, as soon as a vial fills (1:1 with damage dealt)`,
       );
       if (n > 1) assumptions.push(`each Brine Ball catches all ${n} enemies`);
-      return { dps: balls * explosion * n * repeats * bonus, vulnerability: 1, procsPerSecond: balls, assumptions };
+      // Mucous Brine: enemies hit take more damage for 5s (the native default duration).
+      const mucous = 1 + m('damageTakenWhileActive') * Math.min(1, balls * 5);
+      return { dps: balls * explosion * n * repeats * bonus, vulnerability: mucous, procsPerSecond: balls, assumptions };
     }
     case 'barrier': {
       const fillRate = damagePerTarget * n * (1 + m('gaugeGain'));
