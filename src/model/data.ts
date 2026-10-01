@@ -69,6 +69,9 @@ export const damageComponentSchema = z.object({
   max: z.number(),
   count: z.number(),
   chargeSteps: z.number().optional(),
+  // An impact that also explodes (Plasma Launcher orbs): the struck enemy takes the hit,
+  // everything nearby the explosion.
+  explodes: z.boolean().optional(),
 });
 export type DamageComponent = z.infer<typeof damageComponentSchema>;
 

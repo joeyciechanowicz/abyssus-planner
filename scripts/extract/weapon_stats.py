@@ -155,6 +155,16 @@ MANUAL = {
 }
 
 KIND_OF = {"dot": "dot", "explosion": "explosion", "pull": "pull", "aoe": "aoe"}
+
+# Modes whose single damage number is an exploding projectile: the struck enemy
+# takes it as a hit (weakspots included) and everything nearby takes the
+# explosion. The wiki gives one number, so the component is flagged rather than
+# split. Confirmed in-game 2026-10-02.
+EXPLODING_HIT = {
+    ("Plasma_Launcher", "Semi-automatic"),
+    ("Plasma_Launcher", "Flak Cannon"),
+    ("Plasma_Launcher", "Seekers"),
+}
 NUM = r"\d+(?:\.\d+)?"
 
 
@@ -241,6 +251,12 @@ def main():
                     unparsed.append(f"{wid} / {mode['name']}: {mode['damage']!r}")
                 if d and any("chargeSteps" in c for c in d):
                     mode["chargeSteps"] = max(c.get("chargeSteps", 1) for c in d)
+
+            if key in EXPLODING_HIT:
+                for comps in (mode["damageComponents"], mode["weakspotComponents"]):
+                    for c in comps or []:
+                        if c["kind"] == "impact":
+                            c["explodes"] = True
 
             rate, clip, reload_ = RATES[wid][mode["name"]]
             mode["fireRate"] = rate

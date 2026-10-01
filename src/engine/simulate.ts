@@ -159,7 +159,21 @@ function computeModeOutput(
   // weakspot bonus scales that rather than re-applying the x2.
   const normalHit = baseImpact * damageMult;
   const weakspotHit = baseWeakspot * damageMult * weakspotMult;
-  const blendedImpact = normalHit * (1 - weakspotRate) + weakspotHit * weakspotRate;
+  const plainImpact = normalHit * (1 - weakspotRate) + weakspotHit * weakspotRate;
+  // Exploding hits: the struck enemy's hit counts as an explosion (area bonuses, Mr. Boom),
+  // and every other enemy in the pack takes its normal damage.
+  const explodingShare =
+    baseImpact > 0
+      ? componentTotal(
+          (mode.damageComponents ?? []).filter((c) => c.explodes),
+          ['impact'],
+          opts.chargeLevel,
+        ) * projectiles / baseImpact
+      : 0;
+  const explodingNormal = normalHit * explodingShare * aoeMult;
+  const blendedImpact =
+    plainImpact * (1 - explodingShare) + plainImpact * explodingShare * aoeMult * explosions;
+  const splash = explodingNormal * explosions * (enemiesFor(opts.target) - 1);
 
   const procDamage = mods.procs.reduce((sum, p) => {
     const base =
@@ -178,7 +192,7 @@ function computeModeOutput(
   // Area components (explosions, pulls) catch every enemy in the target scenario;
   // a direct hit only ever lands on one.
   const areaDamage = baseExtra * aoeMult * enemiesFor(opts.target);
-  const perShot = (blendedImpact + areaDamage + procDamage) * opts.accuracy;
+  const perShot = (blendedImpact + splash + areaDamage + procDamage) * opts.accuracy;
 
   const fireRate = mode.fireRate * (1 + mods.multFor('fireRate', scope) + rampFireRate);
   const reloadTime = mode.reloadTime / (1 + mods.multFor('reloadSpeed', scope));
@@ -197,14 +211,16 @@ function computeModeOutput(
 
   const shotsPerSecond = cycleTime > 0 ? shotsPerCycle / cycleTime : 0;
   const count = (kinds: DamageComponent['kind'][]) =>
-    (mode.damageComponents ?? []).filter((c) => kinds.includes(c.kind)).reduce((n, c) => n + c.count, 0);
+    (mode.damageComponents ?? []).filter((c) => kinds.includes(c.kind) && !c.explodes).reduce((n, c) => n + c.count, 0);
+  const explodingPerShot = (mode.damageComponents ?? []).filter((c) => c.explodes).reduce((n, c) => n + c.count, 0) * projectiles;
+  // Exploding hits proc aspects as area events (every enemy is caught).
   const directPerShot = count(['impact']) * projectiles;
-  const areaPerShot = count(['explosion', 'pull', 'aoe']);
+  const areaPerShot = count(['explosion', 'pull', 'aoe']) + explodingPerShot;
   const stream = {
     directHitsPerSecond: shotsPerSecond * directPerShot * opts.accuracy,
     directHit: directPerShot > 0 ? blendedImpact / directPerShot : 0,
     areaEventsPerSecond: shotsPerSecond * areaPerShot * opts.accuracy,
-    areaHit: areaPerShot > 0 ? (baseExtra * aoeMult) / areaPerShot : 0,
+    areaHit: areaPerShot > 0 ? (baseExtra * aoeMult + explodingNormal) / areaPerShot : 0,
     procMultiplier: mode.procChance,
   };
 

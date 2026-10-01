@@ -362,8 +362,8 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 25.0,
-              "max": 25.0,
+              "min": 25,
+              "max": 25,
               "count": 8
             }
           ],
@@ -371,8 +371,8 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 50.0,
-              "max": 50.0,
+              "min": 50,
+              "max": 50,
               "count": 8
             }
           ],
@@ -1490,8 +1490,8 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 20.0,
-              "max": 20.0,
+              "min": 20,
+              "max": 20,
               "count": 1
             }
           ],
@@ -1499,8 +1499,8 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 40.0,
-              "max": 40.0,
+              "min": 40,
+              "max": 40,
               "count": 1
             }
           ],
@@ -1973,7 +1973,8 @@
               "kind": "impact",
               "min": 180,
               "max": 180,
-              "count": 1
+              "count": 1,
+              "explodes": true
             }
           ],
           "weakspotComponents": [
@@ -1982,7 +1983,8 @@
               "kind": "impact",
               "min": 360,
               "max": 360,
-              "count": 1
+              "count": 1,
+              "explodes": true
             }
           ],
           "damageParsed": "auto",
@@ -2008,7 +2010,8 @@
               "kind": "impact",
               "min": 110,
               "max": 110,
-              "count": 1
+              "count": 1,
+              "explodes": true
             }
           ],
           "weakspotComponents": [
@@ -2017,7 +2020,8 @@
               "kind": "impact",
               "min": 220,
               "max": 220,
-              "count": 1
+              "count": 1,
+              "explodes": true
             }
           ],
           "damageParsed": "auto",
@@ -2043,7 +2047,8 @@
               "kind": "impact",
               "min": 150,
               "max": 150,
-              "count": 5
+              "count": 5,
+              "explodes": true
             }
           ],
           "weakspotComponents": [
@@ -2052,7 +2057,8 @@
               "kind": "impact",
               "min": 300,
               "max": 300,
-              "count": 5
+              "count": 5,
+              "explodes": true
             }
           ],
           "damageParsed": "auto",
@@ -2467,8 +2473,8 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 510.0,
-              "max": 510.0,
+              "min": 510,
+              "max": 510,
               "count": 1
             }
           ],
@@ -2502,8 +2508,8 @@
             {
               "label": null,
               "kind": "impact",
-              "min": 720.0,
-              "max": 720.0,
+              "min": 720,
+              "max": 720,
               "count": 1
             }
           ],

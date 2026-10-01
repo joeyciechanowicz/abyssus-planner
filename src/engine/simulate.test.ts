@@ -579,6 +579,17 @@ describe('charms', () => {
     expect(simulate({ ...emptyBuild, charmIds: ['overkill'] }, { target: 'boss' }).aspectDps).toBe(0);
   });
 
+  it('Plasma orbs explode: weakspot hit on the target, normal damage on the rest of the pack', () => {
+    const plasma: Build = { ...emptyBuild, weaponId: 'Plasma_Launcher', modeName: 'Semi-automatic' };
+    const boss = simulate(plasma, { target: 'boss', weakspotAccuracy: 1 });
+    const pack = simulate(plasma, { target: 'pack', weakspotAccuracy: 1 });
+    expect(boss.perShot).toBeCloseTo(360, 5); // 180 x2 weakspot on the target
+    expect(pack.perShot).toBeCloseTo(360 + 180 * 4, 5);
+    // Mr. Boom repeats the whole explosion.
+    const boom = simulate({ ...plasma, charmIds: ['mr_boom'] }, { target: 'pack', weakspotAccuracy: 1 });
+    expect(boom.perShot).toBeCloseTo((360 + 180 * 4) * 2, 5);
+  });
+
   it('Fan triples every direct hit', () => {
     const plain = simulate(emptyBuild, { weakspotAccuracy: 0 });
     expect(simulate({ ...emptyBuild, charmIds: ['fan'] }, { weakspotAccuracy: 0 }).perHit).toBeCloseTo(plain.perHit * 3, 5);
