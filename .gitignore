@@ -152,3 +152,7 @@ __pycache__/
 # .NET build output from scripts/extract/dump_mutators
 scripts/extract/dump_mutators/bin/
 scripts/extract/dump_mutators/obj/
+
+# .NET build output from scripts/extract/dump_icons
+scripts/extract/dump_icons/bin/
+scripts/extract/dump_icons/obj/

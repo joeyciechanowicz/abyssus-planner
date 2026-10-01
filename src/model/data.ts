@@ -94,6 +94,8 @@ export type WeaponMode = z.infer<typeof modeSchema>;
 export const weaponSchema = z.object({
   id: z.string(),
   name: z.string(),
+  // Portrait art from the game files (scripts/extract/game_icons.py).
+  icon: z.string().nullable().optional(),
   modes: z.array(modeSchema),
   forgeUpgrades: z.array(z.object({ id: z.string().optional(), ...codified })),
 });
@@ -103,6 +105,8 @@ export const abilitySchema = z.object({
   id: z.string(),
   name: z.string(),
   source: z.string(),
+  // Ability art from the game files (scripts/extract/game_icons.py).
+  icon: z.string().nullable().optional(),
   damage: z.number().nullable(),
   weakspotDamage: z.number().nullable(),
   charges: z.number(),
