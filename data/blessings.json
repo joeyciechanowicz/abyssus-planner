@@ -8233,7 +8233,14 @@
       "logbookIndex": 10,
       "icon": "blessings/Windburst.webp",
       "effects": [
-        { "op": "mult", "stat": "aoeDamage", "scope": "all", "value": 0.4, "scalesWith": "{Damage}", "note": "area-size reduction not modeled (aoeSize isn't DPS-consumed)" }
+        {
+          "op": "mult",
+          "stat": "aoeDamage",
+          "scope": "all",
+          "value": 0.4,
+          "note": "area-size reduction not modeled (aoeSize isn't DPS-consumed)",
+          "scalesWith": "{Damage}"
+        }
       ],
       "upgrades": [
         {

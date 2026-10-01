@@ -1,0 +1,630 @@
+{
+  "blessings/Feeble_Blood": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+  },
+  "blessings/Baneful_Blood": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+  },
+  "blessings/Bloodletting": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "modifies the Hemorrhage status's damage (of: 'statusDamage' isn't consumed by the engine either), but Hemorrhage also has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+  },
+  "blessings/Bouncing_Blood": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "bounces Hemorrhage to another target, but Hemorrhage itself has no base damage magnitude to bounce"
+  },
+  "blessings/Spiked_Blood": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "converts a hit into a guaranteed Weakspot hit; weakspot rate is a player-set assumption in this simulator, not something a per-effect override can change"
+  },
+  "blessings/Blood_Reading": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+  },
+  "blessings/Scourging_Flames": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "per-status-effect-count scaling on the Fire DoT -- statusMod isn't consumed by the engine, and this is a per-count effect (needs stacking) with no status-effect-count 'per' concept either"
+  },
+  "blessings/Stunning_Flares": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "pure crowd control (Stun), no damage component"
+  },
+  "blessings/Distracting_Glare": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "pure crowd control (Stun), no damage component; chance also depends on a Gold economy value not tracked here"
+  },
+  "blessings/Precise_Gold": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "converts a hit into a guaranteed Weakspot hit; weakspot rate is a player-set assumption in this simulator, not something a per-effect override can change"
+  },
+  "blessings/Reaching_Gold": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "re-triggers Goldburst on a new target; no retrigger construct in the DSL"
+  },
+  "blessings/Erupting_Gold": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "explosion damage magnitude isn't published"
+  },
+  "blessings/Coin_Flip": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "a 50/50 double-or-halve swing isn't a fixed multiplier the DSL can express"
+  },
+  "blessings/Thunder_Strike": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "proc",
+        "amount": 50.0,
+        "of": "flat",
+        "chance": 0.2,
+        "scope": "all",
+        "note": "Thunderstrike"
+      }
+    ]
+  },
+  "blessings/Static_Concussion": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "pure crowd control (Stun), no damage component"
+  },
+  "blessings/Explosive_Static": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "explosion damage magnitude isn't published"
+  },
+  "blessings/Titan_Arc": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "modifies the Chain Lightning status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+  },
+  "blessings/Nights_Patience": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "increases status effect duration (statusDuration), which the engine doesn't consume -- no DPS impact regardless of magnitude"
+  },
+  "blessings/Focused_Tentacles": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+  },
+  "blessings/Rapid_Tentacles": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "fireRate",
+        "scope": "all",
+        "valuePer": 0.1,
+        "per": "tentacle",
+        "max": null
+      }
+    ]
+  },
+  "blessings/Maturing_Tentacles": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+  },
+  "blessings/Electrical_Orb": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "adds a new pool object with its own unpublished base damage, plus a bounce chance with no magnitude to bounce"
+  },
+  "blessings/Hoarding_Tentacles": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+  },
+  "blessings/Exploitative_Spirits": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "damage",
+        "scope": "all",
+        "valuePer": 0.2,
+        "per": "statusEffectOnEnemy",
+        "max": null
+      }
+    ]
+  },
+  "blessings/Bouncing_Spirits": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "bounces to an additional target, but Spirit summons have no base damage magnitude tracked in the data"
+  },
+  "blessings/Enveloping_Winds": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "modifies the Windburst status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+  },
+  "blessings/Updraft": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "hit",
+        "chance": 0.1,
+        "then": [
+          {
+            "op": "mult",
+            "stat": "fireRate",
+            "scope": "all",
+            "value": 0.2
+          }
+        ],
+        "note": "10% chance per hit to spawn an Updraft; modeled as always-up while active rather than tracking its own duration"
+      }
+    ]
+  },
+  "blessings/Culling_Winds": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "modifies the Windburst status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+  },
+  "blessings/Headwind": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "weakens damage from enemy projectiles hitting the player -- a mitigation effect, not a player-damage stat"
+  },
+  "blessings/Destructive_Winds": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "aoeDamage",
+        "scope": "all",
+        "value": 0.4,
+        "note": "area-size reduction not modeled (aoeSize isn't DPS-consumed)",
+        "scalesWith": "{Damage}"
+      }
+    ]
+  },
+  "charms/activate_gun_mode": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "abilityUse",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "mult",
+            "stat": "fireRate",
+            "scope": "all",
+            "value": 0.5
+          }
+        ],
+        "note": "modeled as always-up rather than a 5s window after each cast"
+      }
+    ]
+  },
+  "charms/hate_forged": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "hit",
+        "chance": 0.1,
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "all",
+            "value": 2.0,
+            "note": "triple damage on proc"
+          }
+        ]
+      }
+    ]
+  },
+  "charms/supersonic": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "movementSpeed isn't consumed by the engine, and there's no dashCooldown stat either -- no DPS impact regardless of magnitude"
+  },
+  "charms/ms_boom": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "explosion damage magnitude is not published anywhere"
+  },
+  "charms/freebie": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "abilityCooldown",
+        "scope": "ability",
+        "value": -0.5,
+        "note": "approximated as a flat 50% effective cooldown reduction (expected value), not a per-cast chance"
+      }
+    ]
+  },
+  "charms/lifeline": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "damageTaken isn't consumed by the engine -- no DPS impact regardless of magnitude"
+  },
+  "charms/overdrive": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "all",
+        "value": 0.3,
+        "note": "modeled as always-up rather than breaking after the first hit taken"
+      },
+      {
+        "op": "mult",
+        "stat": "fireRate",
+        "scope": "all",
+        "value": 0.3
+      }
+    ]
+  },
+  "charms/hex": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "statusEffectiveness isn't consumed by the engine -- no DPS impact regardless of magnitude"
+  },
+  "soul wheel/padded_suit": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "damageTaken isn't consumed by the engine -- no DPS impact regardless of magnitude"
+  },
+  "weapon forge/Tesla_Gun/Compact Transformer": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "fireRate",
+        "scope": "secondary",
+        "value": 1.0
+      }
+    ]
+  },
+  "weapon forge/Disc_Thrower/Spare Discs": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "clipSize",
+        "scope": "all",
+        "value": 3
+      }
+    ]
+  },
+  "weapon forge/Combat_Bow/Elastic String": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "all",
+        "value": 0.5,
+        "note": "ramping: this is the maximum; charge-time reduction not modeled"
+      }
+    ]
+  },
+  "weapon forge/Plasma_Launcher/Molotov Fuel": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "proc",
+        "amount": 0.5,
+        "of": "weaponDamage",
+        "chance": 1.0,
+        "scope": "dot"
+      }
+    ]
+  },
+  "weapon forge/Plasma_Launcher/Bouncy Core": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "damage",
+        "scope": "all",
+        "valuePer": 0.25,
+        "per": "bounce",
+        "max": 2
+      }
+    ]
+  },
+  "weapon forge/Fish_Deity/Discharging Reload": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "reload",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "proc",
+            "amount": 2000,
+            "of": "flat",
+            "scope": "all"
+          }
+        ]
+      }
+    ]
+  },
+  "weapon forge/Fish_Deity/Elastic Goo": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "damage",
+        "scope": "all",
+        "valuePer": 0.25,
+        "per": "bounce",
+        "max": null
+      }
+    ]
+  },
+  "weapon forge/Fish_Deity/Softening Acid": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "secondary",
+        "value": 0.5,
+        "note": "amplifier on affected enemies"
+      }
+    ]
+  },
+  "weapon forge/Fish_Deity/Repeating Jabs": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "weakspot",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "proc",
+            "amount": 1.0,
+            "of": "onHitDamage",
+            "scope": "all"
+          }
+        ]
+      }
+    ]
+  },
+  "weapon forge/Fish_Deity/Pursuing Horn": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "dash",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "secondary",
+            "value": 0.25
+          }
+        ],
+        "note": "kill-refreshes-Dash resource loop not modeled"
+      }
+    ]
+  },
+  "weapon forge/Harpoon_Gun/Splitting Harpoons": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "weakspot",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "proc",
+            "amount": 1.0,
+            "of": "onHitDamage",
+            "scope": "all"
+          }
+        ]
+      }
+    ]
+  },
+  "weapon forge/Harpoon_Gun/Blessed Harpoons": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "primary",
+        "value": 0.1
+      },
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "secondary",
+        "value": 0.1
+      }
+    ]
+  },
+  "weapon forge/Harpoon_Gun/Charmed Harpoons": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "per-rarity-tier bonuses can't be keyed off owned charm rarity in the current conditions vocabulary; triggerChance also isn't consumed by the engine"
+  },
+  "ability forge/frag_grenade/Explosive Culling": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "scales continuously with missing Health; magnitude unstated"
+  },
+  "ability forge/frag_grenade/Compact Grenade": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "ability",
+        "value": 2.0,
+        "note": "triple damage"
+      },
+      {
+        "op": "mult",
+        "stat": "abilityCharges",
+        "scope": "ability",
+        "value": -0.5,
+        "note": "halved stacks"
+      }
+    ]
+  },
+  "ability forge/frag_grenade/Sharp Shell": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "all",
+        "value": 0.25
+      },
+      {
+        "op": "trigger",
+        "on": "weakspot",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityCooldown",
+            "scope": "ability",
+            "value": -0.25
+          }
+        ],
+        "note": "scaled by assumed weakspot hit rate"
+      }
+    ]
+  },
+  "ability forge/anchor/Self-sustaining": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "abilityCooldown",
+        "scope": "ability",
+        "valuePer": -0.1,
+        "per": "enemyHitByAbility",
+        "max": null
+      }
+    ]
+  },
+  "ability forge/anchor/The Thrill": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "movementSpeed isn't consumed by the engine -- no DPS impact regardless of magnitude"
+  },
+  "ability forge/anchor/Geyser": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "proc",
+        "amount": 1.5,
+        "of": "onHitDamage",
+        "chance": 1.0,
+        "scope": "all"
+      }
+    ]
+  },
+  "ability forge/smiting_spear/Shockwave": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "proc",
+        "amount": 40,
+        "of": "flat",
+        "chance": 1.0,
+        "scope": "all",
+        "note": "guaranteed on-stick shockwave"
+      },
+      {
+        "op": "trigger",
+        "on": "hit",
+        "chance": 0.33,
+        "then": [
+          {
+            "op": "proc",
+            "amount": 40,
+            "of": "flat",
+            "chance": 1.0,
+            "scope": "all"
+          }
+        ],
+        "note": "approximates 'every 3 hits'"
+      }
+    ]
+  },
+  "ability forge/smiting_spear/Weakspot Spear": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "weakspot",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityDamage",
+            "scope": "ability",
+            "value": 0.25
+          }
+        ],
+        "note": "scaled by assumed weakspot hit rate; range bonus not modeled"
+      }
+    ]
+  },
+  "ability forge/ancient_core/Hunters Mark": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "weakspotDamage",
+        "scope": "all",
+        "value": 0.25,
+        "note": "modeled as always-active rather than tracking the 5s window"
+      }
+    ]
+  },
+  "ability forge/ancient_core/Explosive Blast": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [
+      {
+        "op": "proc",
+        "amount": 0.25,
+        "of": "onHitDamage",
+        "chance": 1.0,
+        "scope": "all"
+      }
+    ]
+  },
+  "shared ability forge/Increased Efficiency": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "structurally a trigger-on-kill cooldown reduction, but the wiki text gives no magnitude to model"
+  },
+  "shared ability forge/Rich Get Richer": {
+    "source": "hand-authored (audit c5d0d24)",
+    "effects": [],
+    "unmodeled": "scales with currently-held ability charges, a standing resource level the DSL's stacking op can't express (it only counts triggered events)"
+  }
+}

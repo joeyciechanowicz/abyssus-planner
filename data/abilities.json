@@ -289,7 +289,13 @@
           "description": "Causes a delayed explosion where the anchor hits, dealing 150% of the anchor's damage.",
           "icon": "forge/Geyser.webp",
           "effects": [
-            { "op": "proc", "amount": 1.5, "of": "onHitDamage", "chance": 1.0, "scope": "all" }
+            {
+              "op": "proc",
+              "amount": 1.5,
+              "of": "onHitDamage",
+              "chance": 1.0,
+              "scope": "all"
+            }
           ]
         },
         {
@@ -341,12 +347,27 @@
           "description": "Spears create shockwaves when sticking and for every 3 hits. Shockwaves deal 40 damage.",
           "icon": "forge/Shockwave.webp",
           "effects": [
-            { "op": "proc", "amount": 40, "of": "flat", "chance": 1.0, "scope": "all", "note": "guaranteed on-stick shockwave" },
+            {
+              "op": "proc",
+              "amount": 40,
+              "of": "flat",
+              "chance": 1.0,
+              "scope": "all",
+              "note": "guaranteed on-stick shockwave"
+            },
             {
               "op": "trigger",
               "on": "hit",
               "chance": 0.33,
-              "then": [{ "op": "proc", "amount": 40, "of": "flat", "chance": 1.0, "scope": "all" }],
+              "then": [
+                {
+                  "op": "proc",
+                  "amount": 40,
+                  "of": "flat",
+                  "chance": 1.0,
+                  "scope": "all"
+                }
+              ],
               "note": "approximates 'every 3 hits'"
             }
           ]
@@ -385,7 +406,14 @@
               "op": "trigger",
               "on": "weakspot",
               "chance": 1.0,
-              "then": [{ "op": "mult", "stat": "abilityDamage", "scope": "ability", "value": 0.25 }],
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "abilityDamage",
+                  "scope": "ability",
+                  "value": 0.25
+                }
+              ],
               "note": "scaled by assumed weakspot hit rate; range bonus not modeled"
             }
           ]
@@ -515,7 +543,13 @@
           "description": "Enemies hit by the Ancient Core are marked, increasing all Weakspot damage they receive by 25% for 5 sec.",
           "icon": "forge/Hunters_Mark.webp",
           "effects": [
-            { "op": "mult", "stat": "weakspotDamage", "scope": "all", "value": 0.25, "note": "modeled as always-active rather than tracking the 5s window" }
+            {
+              "op": "mult",
+              "stat": "weakspotDamage",
+              "scope": "all",
+              "value": 0.25,
+              "note": "modeled as always-active rather than tracking the 5s window"
+            }
           ]
         },
         {
@@ -574,7 +608,13 @@
           "description": "The blast from the Ancient Core explodes on hit, dealing damage to nearby enemies equivalent to 25% of the hit.",
           "icon": "forge/Explosive_Blast.webp",
           "effects": [
-            { "op": "proc", "amount": 0.25, "of": "onHitDamage", "chance": 1.0, "scope": "all" }
+            {
+              "op": "proc",
+              "amount": 0.25,
+              "of": "onHitDamage",
+              "chance": 1.0,
+              "scope": "all"
+            }
           ]
         }
       ]

@@ -14,6 +14,13 @@ Anything no rule matches is left with "effects": [] and an "unmodeled" note, and
 counted in the coverage report. That number is the honest measure of how much of the
 game the simulator actually knows about -- it is not supposed to reach 100%.
 
+Hand-authored translations live in scripts/effect_overrides.json, keyed
+"<group>/<entity key>" (see KEYS below), and replace the rule output wholesale for
+that entity. That's where anything the regexes get wrong, or that comes from the
+game's own Blueprint logic rather than the card text, belongs -- editing
+data/*.json directly is lost the next time this script runs. An override's
+"source" says where its numbers came from.
+
 Run:  python scripts/codify.py
 """
 import json
@@ -400,8 +407,29 @@ def codify(description):
     return effects
 
 
-def apply_to(entities, stats):
+OVERRIDES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "effect_overrides.json")
+
+
+def load_overrides():
+    with open(OVERRIDES_PATH, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def apply_to(entities, stats, overrides, key_of):
     for e in entities:
+        key = f"{stats['label']}/{key_of(e)}"
+        if key in overrides:
+            o = overrides[key]
+            stats["used"].add(key)
+            stats["total"] += 1
+            e["effects"] = o.get("effects", [])
+            if e["effects"]:
+                stats["codified"] += 1
+                e.pop("unmodeled", None)
+            else:
+                e["unmodeled"] = o["unmodeled"]
+                stats["uncodified"].append((stats["label"], e.get("name"), (e.get("description") or "")[:80]))
+            continue
         desc = e.get("description") or ""
         eff = codify(desc)
         e["effects"] = eff
@@ -416,26 +444,35 @@ def apply_to(entities, stats):
 
 def main():
     report = {}
+    overrides = load_overrides()
+    used = set()
 
     def run(label, path, collect):
+        """collect(doc) -> [(entity, key)]; key is unique within the group."""
         doc = json.load(open(os.path.join(DATA, path), encoding="utf-8"))
-        stats = {"total": 0, "codified": 0, "uncodified": [], "label": label}
-        apply_to(collect(doc), stats)
+        stats = {"total": 0, "codified": 0, "uncodified": [], "label": label, "used": used}
+        pairs = collect(doc)
+        keys = dict((id(e), k) for e, k in pairs)
+        apply_to([e for e, _ in pairs], stats, overrides, lambda e: keys[id(e)])
         write_json(os.path.join(DATA, path), doc)
         report[label] = stats
 
-    run("blessings", "blessings.json", lambda d: d["blessings"])
-    run("charms", "charms.json", lambda d: d["charms"])
+    run("blessings", "blessings.json", lambda d: [(b, b["id"]) for b in d["blessings"]])
+    run("charms", "charms.json", lambda d: [(c, c["id"]) for c in d["charms"]])
     run("soul wheel", "soul_wheel.json",
-        lambda d: [s for r in d["rows"] for s in r["skills"]])
+        lambda d: [(s, s["id"]) for r in d["rows"] for s in r["skills"]])
     run("weapon forge", "weapons.json",
-        lambda d: [u for w in d["weapons"] for u in w["forgeUpgrades"]])
+        lambda d: [(u, f"{w['id']}/{u['name']}") for w in d["weapons"] for u in w["forgeUpgrades"]])
     run("ability forge", "abilities.json",
-        lambda d: [u for a in d["abilities"] for u in a["forgeUpgrades"]])
+        lambda d: [(u, f"{a['id']}/{u['name']}") for a in d["abilities"] for u in a["forgeUpgrades"]])
     run("shared ability forge", "ancient_forge.json",
-        lambda d: d["abilityUpgrades"]["shared"])
+        lambda d: [(u, u["name"]) for u in d["abilityUpgrades"]["shared"]])
     run("status effects", "status_effects.json",
-        lambda d: d["enemyDebuffs"] + d["playerPositive"] + d["playerNegative"])
+        lambda d: [(s, s["id"]) for s in d["enemyDebuffs"] + d["playerPositive"] + d["playerNegative"]])
+
+    stale = sorted(set(overrides) - used)
+    if stale:
+        sys.exit("effect_overrides.json has keys matching no entity:\n  " + "\n  ".join(stale))
 
     print("\n=== codification coverage ===")
     grand_t = grand_c = 0

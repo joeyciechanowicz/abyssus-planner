@@ -82,9 +82,14 @@ public/                 Icons referenced by data/*.json `icon` fields (webp,
                          there are far fewer icon files than entries).
 
 scripts/
-  codify.py             Prose description -> effects[] DSL, ordered regex rules.
+  codify.py             Prose description -> effects[] DSL, ordered regex rules,
+                         then hand-authored entries from effect_overrides.json.
                          Run after any wiki re-extraction (extractors overwrite
                          effects: [] when they regenerate an entity).
+  effect_overrides.json  Hand-authored effects[]/unmodeled per entity, keyed
+                         "<group>/<id>" -- the ONLY place to fix or hand-write an
+                         entity's effects (data/*.json edits are lost on the next
+                         codify run). Each entry carries a "source".
   link_blessing_upgrades.py
                          Links effects[] leaves to the upgrades[] rank variable
                          that scales them, and locates each variable's rank-1
@@ -169,7 +174,7 @@ src/ui/
 
 **The effect DSL is a closed, generic interpreter, not per-entity code.** Every
 blessing, charm, forge upgrade and soul-skill description gets translated (by
-`codify.py`, or by hand for the ~50% the regex rules don't cover) into a small
+`codify.py`'s regex rules, or by hand in `scripts/effect_overrides.json`) into a small
 list of `effects[]` ops from `src/model/effects.ts`. `simulate.ts` and
 `stacking.ts` know nothing about "Blood" or "Hemorrhage" specifically -- they
 only walk the DSL. This is what makes the game data editable without touching

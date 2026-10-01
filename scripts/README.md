@@ -11,7 +11,8 @@ one overwrites what the previous wrote.
               python scripts/extract/abilities.py       # needs ability_cards.py first
               python scripts/extract/weapon_stats.py
 
-2. codify     python scripts/codify.py
+2. codify     python scripts/codify.py                 # rules + effect_overrides.json
+              python scripts/link_blessing_upgrades.py # re-link rank scaling
 
 3. optimise   python scripts/optimize_images.py
 
