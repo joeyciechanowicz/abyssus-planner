@@ -62,8 +62,9 @@ export interface SimResult {
   };
   /** Per-source contributions, biggest first. */
   breakdown: { source: string; stat: string; scope: string; value: number }[];
-  /** Picks whose text the DSL could not express; their effect is NOT in the number. */
-  unmodeled: { name: string; reason: string }[];
+  /** Picks whose text the DSL could not express; their effect is NOT in the number.
+   * `utility` ones have no damage effect at all, so nothing is missing. */
+  unmodeled: { name: string; reason: string; utility?: boolean }[];
   /** What the number assumes to count each pick (ideal-scenario conditions, stacks, chances). */
   assumptions: { source: string; text: string }[];
   /** True when any input used estimated rate-of-fire values (it almost always is). */
@@ -208,7 +209,7 @@ function computeModeOutput(
 export function simulate(build: Build, options: Partial<SimOptions> = {}): SimResult {
   const opts: SimOptions = { ...defaultOptions, ...options };
   const warnings: string[] = [];
-  const unmodeled: { name: string; reason: string }[] = [];
+  const unmodeled: SimResult['unmodeled'] = [];
   const mods = new Modifiers();
 
   const weapon = weaponById.get(build.weaponId);
@@ -217,8 +218,13 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   if (!mode) throw new Error(`unknown mode: ${build.modeName} on ${build.weaponId}`);
   const ability = build.abilityId ? abilityById.get(build.abilityId) : undefined;
 
-  const collect = (name: string, effects: Parameters<typeof applyEffects>[1], reason?: string) => {
-    if (effects.length === 0 && reason) unmodeled.push({ name, reason });
+  const collect = (
+    name: string,
+    effects: Parameters<typeof applyEffects>[1],
+    reason?: string,
+    utility?: boolean,
+  ) => {
+    if (effects.length === 0 && reason) unmodeled.push({ name, reason, utility });
     applyEffects(mods, effects, name, opts, { hasAbility: !!ability });
   };
 
@@ -236,24 +242,24 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       warnings.push(`${b.name} ignored: its aspect (${b.aspect}) is not equipped`);
       continue;
     }
-    collect(b.name, scaleBlessingEffects(b, rank), b.unmodeled);
+    collect(b.name, scaleBlessingEffects(b, rank), b.unmodeled, b.utility);
   }
 
   for (const id of build.charmIds) {
     const c = charmById.get(id);
-    if (c) collect(c.name, c.effects, c.unmodeled);
+    if (c) collect(c.name, c.effects, c.unmodeled, c.utility);
     else warnings.push(`unknown charm: ${id}`);
   }
 
   for (const id of build.soulSkillIds) {
     const s = soulSkillById.get(id);
-    if (s) collect(s.name, s.effects, s.unmodeled);
+    if (s) collect(s.name, s.effects, s.unmodeled, s.utility);
     else warnings.push(`unknown soul skill: ${id}`);
   }
 
   for (const name of build.weaponUpgrades) {
     const u = weapon.forgeUpgrades.find((x) => x.name === name);
-    if (u) collect(u.name, u.effects, u.unmodeled);
+    if (u) collect(u.name, u.effects, u.unmodeled, u.utility);
     else warnings.push(`${weapon.name} has no forge upgrade "${name}"`);
   }
   if (build.weaponUpgrades.length > 3) {
@@ -265,7 +271,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       const u =
         ability.forgeUpgrades.find((x) => x.name === name) ??
         sharedAbilityUpgrades.find((x) => x.name === name);
-      if (u) collect(u.name, u.effects, u.unmodeled);
+      if (u) collect(u.name, u.effects, u.unmodeled, u.utility);
       else warnings.push(`${ability.name} has no forge upgrade "${name}"`);
     }
     if (build.abilityUpgrades.length > 3) {
@@ -407,6 +413,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       targetMissingHealth: 1 - opts.targetHealthFraction,
       gold: opts.gold,
       payloadBonus: mods.multForScopeOnly('damage', payload.id),
+      mods: mods.payloadMods.get(payload.id),
     });
     for (const text of r.assumptions) mods.assume(payload.name, text);
     vulnerability *= r.vulnerability;

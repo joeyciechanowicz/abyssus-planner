@@ -423,6 +423,10 @@ def apply_to(entities, stats, overrides, key_of):
             stats["used"].add(key)
             stats["total"] += 1
             e["effects"] = o.get("effects", [])
+            if o.get("utility"):
+                e["utility"] = True
+            else:
+                e.pop("utility", None)
             if e["effects"]:
                 stats["codified"] += 1
                 e.pop("unmodeled", None)
@@ -430,6 +434,7 @@ def apply_to(entities, stats, overrides, key_of):
                 e["unmodeled"] = o["unmodeled"]
                 stats["uncodified"].append((stats["label"], e.get("name"), (e.get("description") or "")[:80]))
             continue
+        e.pop("utility", None)
         desc = e.get("description") or ""
         eff = codify(desc)
         e["effects"] = eff

@@ -1,4 +1,5 @@
 import type { AspectPayload, ScaledHit } from '../model/data';
+import type { PayloadField } from '../model/effects';
 
 /**
  * Aspect payload damage: what an aspect card's proc deals on top of the hit that
@@ -36,6 +37,8 @@ export interface PayloadContext {
   gold: number;
   /** Summed +% bonuses aimed at this payload alone (e.g. a "+20% Windburst damage" blessing). */
   payloadBonus: number;
+  /** Mechanic changes from `payload` effects (more repeats, more summons, ...). */
+  mods?: Partial<Record<PayloadField, number>>;
 }
 
 export interface PayloadResult {
@@ -67,11 +70,12 @@ export function payloadDamage(
   ctx: PayloadContext,
 ): PayloadResult {
   const n = Math.max(1, ctx.enemies);
+  const m = (f: PayloadField) => ctx.mods?.[f] ?? 0;
   let procsTotal = 0;
   let procsPerTarget = 0;
   let triggerWeighted = 0;
   for (const s of streams) {
-    const c = Math.min(1, chance * s.procMultiplier);
+    const c = Math.min(1, chance * s.procMultiplier * (1 + m('chance')));
     const direct = c * s.directHitsPerSecond;
     const area = c * s.areaEventsPerSecond;
     procsTotal += direct + area * n;
@@ -86,6 +90,13 @@ export function payloadDamage(
   const none: PayloadResult = { dps: 0, vulnerability: 1, procsPerSecond: 0, assumptions };
   if (procsTotal === 0) return none;
 
+  const repeats = 1 + m('repeats');
+  // Extra flat damage some blessings hang off each proc (an explosion, a Thunderstrike).
+  const extras = procsTotal * (m('burstDamage') + m('areaBurstDamage') * n) * bonus;
+  const withExtras = (r: PayloadResult): PayloadResult => ({ ...r, dps: r.dps + extras });
+  return withExtras(core());
+
+  function core(): PayloadResult {
   switch (p.kind) {
     case 'dot': {
       const up = uptime(procsPerTarget, p.duration);
@@ -105,10 +116,11 @@ export function payloadDamage(
     case 'chain': {
       const bounces = Math.min(p.chainCount, n - 1);
       let reach = 0;
-      for (let i = 0; i <= bounces; i++) reach += (1 - p.falloffPercent / 100) ** i;
+      const falloff = (p.falloffPercent + m('falloffPercent')) / 100;
+      for (let i = 0; i <= bounces; i++) reach += (1 - falloff) ** i;
       if (bounces > 0) assumptions.push(`each ${p.name} bounces to ${bounces} more enemies`);
       return {
-        dps: procsTotal * scaledHit(p.trigger, trigger) * reach * bonus,
+        dps: procsTotal * scaledHit(p.trigger, trigger) * reach * repeats * bonus,
         vulnerability: 1,
         procsPerSecond: procsTotal,
         assumptions,
@@ -117,18 +129,20 @@ export function payloadDamage(
     case 'burst': {
       if (n > 1) assumptions.push(`each ${p.name} catches all ${n} enemies`);
       return {
-        dps: procsTotal * scaledHit(p.trigger, trigger) * n * bonus,
+        dps: procsTotal * scaledHit(p.trigger, trigger) * n * repeats * bonus,
         vulnerability: 1,
         procsPerSecond: procsTotal,
         assumptions,
       };
     }
     case 'summon': {
-      const active = Math.min(p.maxActive, procsTotal * p.lifetime);
+      const maxActive = p.maxActive + m('maxActive');
+      const active = Math.min(maxActive, procsTotal * (p.lifetime + m('lifetime')));
       const attack = p.attackBase + (p.attackPercentOfTrigger / 100) * trigger;
-      assumptions.push(`${active.toFixed(1)} of ${p.maxActive} ${p.name}s alive on average`);
+      const speed = 1 + m('attackSpeed') + m('attackSpeedPerActive') * active;
+      assumptions.push(`${active.toFixed(1)} of ${maxActive} ${p.name}s alive on average`);
       return {
-        dps: (active * attack * bonus) / p.attackInterval,
+        dps: (active * attack * speed * bonus) / p.attackInterval,
         vulnerability: 1,
         procsPerSecond: procsTotal,
         assumptions,
@@ -136,8 +150,9 @@ export function payloadDamage(
     }
     case 'gold': {
       assumptions.push(`you carry ${Math.round(ctx.gold)} Gold`);
+      const perProc = ctx.gold * ((p.goldPercent + m('goldPercent')) / 100) + (m('triggerPercent') / 100) * trigger;
       return {
-        dps: procsTotal * ctx.gold * (p.goldPercent / 100) * bonus,
+        dps: procsTotal * perProc * repeats * bonus,
         vulnerability: 1,
         procsPerSecond: procsTotal,
         assumptions,
@@ -145,7 +160,14 @@ export function payloadDamage(
     }
     case 'vulnerability': {
       assumptions.push(`${p.name} kept on every enemy you hit`);
-      return { dps: 0, vulnerability: 1 + p.damageTakenPercent / 100, procsPerSecond: procsTotal, assumptions };
+      const effect = 1 + m('effectiveness') + m('effectivenessPerEnemy') * n;
+      return {
+        dps: m('dotPerSecond') * n * bonus,
+        vulnerability: 1 + (p.damageTakenPercent / 100) * effect,
+        procsPerSecond: procsTotal,
+        assumptions,
+      };
     }
+  }
   }
 }

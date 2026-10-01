@@ -20,7 +20,7 @@ import { STATUSES_SEEN, collectStatuses } from './statuses';
 // `effects` is optional in the inferred type because its schema carries .default([]).
 interface Group {
   label: string;
-  items: { name: string; effects?: unknown[]; unmodeled?: string }[];
+  items: { name: string; effects?: unknown[]; unmodeled?: string; utility?: boolean }[];
 }
 
 const effectsOf = (i: { effects?: unknown[] }) => i.effects ?? [];
@@ -37,18 +37,26 @@ const groups: Group[] = [
 console.log('all data files parsed against their schemas\n');
 console.log('=== codification coverage ===');
 
+// "counted" = has effects; "utility" = no damage effect at all, so nothing to count;
+// "gap" = affects damage but isn't modelled yet -- the number that should shrink.
 let total = 0;
 let codified = 0;
+let utilityTotal = 0;
+console.log(`  ${''.padEnd(22)} counted  utility  gap`);
 for (const g of groups) {
   const c = g.items.filter((i) => effectsOf(i).length > 0).length;
+  const u = g.items.filter((i) => effectsOf(i).length === 0 && i.utility).length;
   total += g.items.length;
   codified += c;
-  const pct = ((100 * c) / g.items.length).toFixed(0);
-  console.log(`  ${g.label.padEnd(22)} ${String(c).padStart(3)}/${String(g.items.length).padStart(3)}  (${pct}%)`);
+  utilityTotal += u;
+  console.log(
+    `  ${g.label.padEnd(22)} ${String(c).padStart(7)}  ${String(u).padStart(7)}  ${String(g.items.length - c - u).padStart(3)}  of ${g.items.length}`,
+  );
 }
+const gaps = total - codified - utilityTotal;
 console.log(
-  `  ${'TOTAL'.padEnd(22)} ${String(codified).padStart(3)}/${String(total).padStart(3)}  ` +
-    `(${((100 * codified) / total).toFixed(0)}%)`,
+  `  ${'TOTAL'.padEnd(22)} ${String(codified).padStart(7)}  ${String(utilityTotal).padStart(7)}  ${String(gaps).padStart(3)}  of ${total}` +
+    `  (${((100 * codified) / (total - utilityTotal)).toFixed(0)}% of damage-relevant picks counted)`,
 );
 
 // Entities with neither effects nor an explanation are a codifier bug, not an

@@ -1,118 +1,251 @@
 {
   "blessings/Feeble_Blood": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+    "unmodeled": "scales with your missing Health; the ideal scenario keeps you at full Health (Phase 3 resource scaling)"
   },
   "blessings/Baneful_Blood": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsEliteOrBoss",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "hemorrhage",
+            "value": 0.2,
+            "scalesWith": "{DamageIncrease}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Bloodletting": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "modifies the Hemorrhage status's damage (of: 'statusDamage' isn't consumed by the engine either), but Hemorrhage also has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "hemorrhage",
+        "value": 0.1,
+        "note": "10% of Hemorrhage damage again over 8s",
+        "scalesWith": "{DamgePercent}"
+      }
+    ]
   },
   "blessings/Bouncing_Blood": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "bounces Hemorrhage to another target, but Hemorrhage itself has no base damage magnitude to bounce"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsStandard",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "hemorrhage",
+            "field": "chance",
+            "value": 0.2,
+            "note": "a bounce is another application in a pack",
+            "scalesWith": "{Chance}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Spiked_Blood": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "converts a hit into a guaranteed Weakspot hit; weakspot rate is a player-set assumption in this simulator, not something a per-effect override can change"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "hemorrhage",
+        "value": 0.1,
+        "note": "10% of ticks are Weakspot hits at x2 (Blood CritDamageMultiplier 2.0)",
+        "scalesWith": "{Chance}"
+      }
+    ]
   },
   "blessings/Blood_Reading": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+    "unmodeled": "scales with the Health gap between you and the target (Phase 3 resource scaling)"
   },
   "blessings/Scourging_Flames": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "per-status-effect-count scaling on the Fire DoT -- statusMod isn't consumed by the engine, and this is a per-count effect (needs stacking) with no status-effect-count 'per' concept either"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "damage",
+        "scope": "burn",
+        "valuePer": 0.15,
+        "per": "statusEffectOnEnemy",
+        "max": null,
+        "scalesWith": "{DamageIncrease}"
+      }
+    ]
   },
   "blessings/Stunning_Flares": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "pure crowd control (Stun), no damage component"
+    "unmodeled": "crowd control only",
+    "utility": true
   },
   "blessings/Distracting_Glare": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "pure crowd control (Stun), no damage component; chance also depends on a Gold economy value not tracked here"
+    "unmodeled": "crowd control only",
+    "utility": true
   },
   "blessings/Precise_Gold": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "converts a hit into a guaranteed Weakspot hit; weakspot rate is a player-set assumption in this simulator, not something a per-effect override can change"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "goldburst",
+        "value": 0.05,
+        "note": "5% Weakspot hits, assumed x2"
+      }
+    ]
   },
   "blessings/Reaching_Gold": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "re-triggers Goldburst on a new target; no retrigger construct in the DSL"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "goldburst",
+        "field": "repeats",
+        "value": 0.2,
+        "scalesWith": "{Chance}"
+      }
+    ]
   },
   "blessings/Erupting_Gold": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "explosion damage magnitude isn't published"
+    "unmodeled": "explosion damage is native code and unknown"
   },
   "blessings/Coin_Flip": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "a 50/50 double-or-halve swing isn't a fixed multiplier the DSL can express"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "goldburst",
+        "value": 0.25,
+        "note": "50% x2, 50% x0.5: x1.25 on average"
+      }
+    ]
   },
   "blessings/Thunder_Strike": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "chainLightning",
+        "field": "burstDamage",
+        "value": 10,
+        "note": "20% chance x 50 damage"
+      }
+    ]
   },
   "blessings/Static_Concussion": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "pure crowd control (Stun), no damage component"
+    "unmodeled": "crowd control only",
+    "utility": true
   },
   "blessings/Explosive_Static": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "explosion damage magnitude isn't published"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "chainLightning",
+        "field": "areaBurstDamage",
+        "value": 15,
+        "note": "30% chance x 50 damage around the target"
+      }
+    ]
   },
   "blessings/Titan_Arc": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "modifies the Chain Lightning status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetHealthAbove",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "chainLightning",
+            "value": 0.5,
+            "scalesWith": "{PercentDamage}"
+          }
+        ],
+        "threshold": 0.9
+      }
+    ]
   },
   "blessings/Nights_Patience": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "increases status effect duration (statusDuration), which the engine doesn't consume -- no DPS impact regardless of magnitude"
+    "unmodeled": "status duration only; continuous fire keeps statuses up anyway",
+    "utility": true
   },
   "blessings/Focused_Tentacles": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsEliteOrBoss",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "tentacle",
+            "value": 0.25,
+            "scalesWith": "{DamageIncreasePercentage}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Rapid_Tentacles": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "attackSpeedPerActive",
+        "value": 0.1,
+        "scalesWith": "{AttackSpeedIncrease}"
+      }
+    ]
   },
   "blessings/Maturing_Tentacles": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "tentacle",
+        "value": 0.075,
+        "note": "+1%/s averaged over a 15s life",
+        "scalesWith": "{DamageIncrease}"
+      }
+    ]
   },
   "blessings/Electrical_Orb": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "adds a new pool object with its own unpublished base damage, plus a bounce chance with no magnitude to bounce"
+    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
   },
   "blessings/Hoarding_Tentacles": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
   },
   "blessings/Exploitative_Spirits": {
     "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
@@ -125,9 +258,18 @@
     "unmodeled": "bounces to an additional target, but Spirit summons have no base damage magnitude tracked in the data"
   },
   "blessings/Enveloping_Winds": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "modifies the Windburst status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "damage",
+        "scope": "windburst",
+        "valuePer": 0.1,
+        "per": "affectedEnemy",
+        "max": null,
+        "scalesWith": "{DamageIncreasePer}"
+      }
+    ]
   },
   "blessings/Updraft": {
     "source": "hand-authored (audit c5d0d24)",
@@ -149,14 +291,15 @@
     ]
   },
   "blessings/Culling_Winds": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "modifies the Windburst status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
+    "unmodeled": "scales with the target's missing Health (Phase 3 resource scaling)"
   },
   "blessings/Headwind": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "weakens damage from enemy projectiles hitting the player -- a mitigation effect, not a player-damage stat"
+    "unmodeled": "defensive only",
+    "utility": true
   },
   "blessings/Destructive_Winds": {
     "source": "hand-authored (audit c5d0d24)",
@@ -604,14 +747,23 @@
     "unmodeled": "scales with currently-held ability charges, a standing resource level the DSL's stacking op can't express (it only counts triggered events)"
   },
   "blessings/Empowering_Flames": {
-    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
-    "unmodeled": "modifies the Fire DoT payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
-    "effects": []
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "damage",
+        "scope": "burn",
+        "valuePer": 0.05,
+        "per": "secondOnTarget",
+        "max": null,
+        "scalesWith": "{DamageIncrease}"
+      }
+    ]
   },
   "blessings/Critical_Flares": {
-    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
-    "unmodeled": "modifies the Flare payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
-    "effects": []
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Flares, which are not modelled yet"
   },
   "blessings/Barraging_Spirits": {
     "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
@@ -629,14 +781,37 @@
     "effects": []
   },
   "blessings/Eye_of_the_Storm": {
-    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
-    "unmodeled": "modifies the Windburst payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
-    "effects": []
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "windburst",
+            "value": 0.25,
+            "scalesWith": "{DamagePercentage}"
+          }
+        ],
+        "note": "enemies sit at the centre of the Windburst"
+      }
+    ]
   },
   "blessings/Storm_Belt": {
-    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
-    "unmodeled": "modifies the Windburst payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
-    "effects": []
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "damage",
+        "scope": "windburst",
+        "valuePer": 0.1,
+        "per": "trigger",
+        "max": 5,
+        "scalesWith": "{DamageIncrease}"
+      }
+    ]
   },
   "blessings/Magnetic_Brine": {
     "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
@@ -654,9 +829,10 @@
     "effects": []
   },
   "blessings/Winds_Devastation": {
-    "source": "Phase 0 miscoding fix: area size, was all damage",
-    "unmodeled": "increases area size, not damage -- awaits aoeSize support (dps-coverage.md, Phase 3)",
-    "effects": []
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "area size only; the ideal pack is already inside every area",
+    "utility": true
   },
   "blessings/Mutagenic_Brine": {
     "source": "Phase 0 miscoding fix: area damage, was all damage",
@@ -693,49 +869,109 @@
     ]
   },
   "blessings/Branding_Blood": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "damage",
+        "scope": "hemorrhage",
+        "valuePer": 0.05,
+        "per": "hemorrhageHit",
+        "max": null,
+        "scalesWith": "{DamageIncrease}"
+      }
+    ]
   },
   "blessings/Steeped_in_Blood": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "stacking",
+            "stat": "damage",
+            "scope": "hemorrhage",
+            "valuePer": 0.05,
+            "per": "affectedEnemy",
+            "max": null,
+            "scalesWith": "{DamageIncreasePercentage}"
+          }
+        ],
+        "note": "you take no Health damage"
+      }
+    ]
   },
   "blessings/Contiguous_Blood": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "hemorrhage",
+            "value": 1.0,
+            "scalesWith": "{MaxDamageMultiplierPercentage}"
+          }
+        ],
+        "note": "you fight up close, for the full bonus"
+      }
+    ]
   },
   "blessings/Rupturing_Blood": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "hemorrhage",
+        "field": "areaBurstDamage",
+        "value": 40,
+        "scalesWith": "{Damage}"
+      }
+    ]
   },
   "blessings/Blood_Sphere": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "unmodeled": "Blood Orb damage depends on hitting the orb itself; not modelled yet"
   },
   "blessings/Fanning_Flames": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "acts on the Flare payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "unmodeled": "depends on Flares, which are not modelled yet"
   },
   "blessings/Explosive_Flares": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "acts on the Flare payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "unmodeled": "depends on Flares, which are not modelled yet"
   },
   "blessings/Exponential_Gold": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Goldburst payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "goldburst",
+        "field": "goldPercent",
+        "value": 20,
+        "scalesWith": "{GoldPercentage}"
+      }
+    ]
   },
   "blessings/Brutish_Gold": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Goldburst payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "goldburst",
+        "field": "triggerPercent",
+        "value": 10,
+        "scalesWith": "{DamagePercent}"
+      }
+    ]
   },
   "blessings/Blightful_Freeze": {
     "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
@@ -743,59 +979,113 @@
     "unmodeled": "acts on the status-effect payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
   },
   "blessings/Loaded_Bounce": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "chainLightning",
+        "field": "falloffPercent",
+        "value": -25,
+        "note": "+5% per bounce instead of -20%"
+      }
+    ]
   },
   "blessings/Bashing_Lightning": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
   },
   "blessings/Distant_Storm": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "chainLightning",
+            "value": 0.2,
+            "scalesWith": "{DamageDistanceIncrease}"
+          }
+        ],
+        "note": "bounces travel far enough for the full bonus"
+      }
+    ]
   },
   "blessings/Infected_Shadows": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "shadows",
+        "field": "dotPerSecond",
+        "value": 100,
+        "scalesWith": "{DamagePerTick}"
+      }
+    ]
   },
   "blessings/Rupturing_Shadows": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "unmodeled": "explodes when Shadows expire or the target dies; continuous fire keeps Shadows up and kill rate is not modelled"
   },
   "blessings/Shadow_Conversion": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "unmodeled": "fires once when an enemy first becomes afflicted; continuous fire keeps Shadows up, so it is a one-off"
   },
   "blessings/Nights_Minor_Blessing": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsStandard",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "all",
+            "value": 1.2,
+            "note": "30% of each hit to the 4 other afflicted enemies"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Nights_Major_Blessing": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsStandard",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "all",
+            "value": 6.0,
+            "note": "150% of each hit to the 4 other afflicted enemies"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Explosives": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
   },
   "blessings/Crystals": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
   },
   "blessings/Snails": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
   },
   "blessings/Exploding_Spirits": {
     "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
@@ -818,14 +1108,15 @@
     "unmodeled": "acts on the Barrier activation payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
   },
   "blessings/Fortunes_Riches": {
-    "source": "Phase 0 audit: gold found was coded as damage",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "increases Gold found, which only feeds Goldburst damage -- awaits the aspect payload model (Phase 2)"
+    "unmodeled": "increases Gold found: set \"Gold carried\" to match",
+    "utility": true
   },
   "blessings/Lightnings_Fury": {
-    "source": "Phase 0 audit: crit chance was coded as damage",
+    "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "Critical Chance for Chain Lightning -- awaits the aspect payload model (Phase 2)"
+    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
   },
   "blessings/Oceans_Embrace": {
     "source": "Phase 0 audit: ally-count bonus was counted solo",
@@ -1045,5 +1336,415 @@
         "threshold": 0.5
       }
     ]
+  },
+  "blessings/Red-blooded": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "raises max Health only",
+    "utility": true
+  },
+  "blessings/Bloody_Execution": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetHasStatus",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "all",
+            "value": 0.0526,
+            "note": "execute below 5% Health = 1/0.95 effective damage"
+          }
+        ],
+        "status": "Hemorrhage"
+      }
+    ]
+  },
+  "blessings/Bloodsplosions": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "Blood Orb damage depends on hitting the orb itself; not modelled yet"
+  },
+  "blessings/Enduring_Flames": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Flares, which are not modelled yet"
+  },
+  "blessings/Critical_Flames": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Flares, which are not modelled yet"
+  },
+  "blessings/Rapid_Flames": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Flares, which are not modelled yet"
+  },
+  "blessings/Linked_Flames": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Flares, which are not modelled yet"
+  },
+  "blessings/Stacking_Flames": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Flares, which are not modelled yet"
+  },
+  "blessings/Meteor": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Flares, which are not modelled yet"
+  },
+  "blessings/Spreading_Flames": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "spreads Fire on kill; the ideal pack already has every enemy burning",
+    "utility": true
+  },
+  "blessings/Charging_Bounce": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+  },
+  "blessings/Extended_Chain": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+  },
+  "blessings/Lightning_Rod": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+  },
+  "blessings/Slipping_Arcs": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+  },
+  "blessings/Static_Repetition": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+  },
+  "blessings/Charged_Bounty": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "item drops only",
+    "utility": true
+  },
+  "blessings/Hastening_Lightning": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "movement and cooldowns only (and needs crits)",
+    "utility": true
+  },
+  "blessings/Malignant_Arc": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "spreads the primary target's statuses along the chain; the ideal pack already has them everywhere",
+    "utility": true
+  },
+  "blessings/Whirling_Winds": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "crowd control only",
+    "utility": true
+  },
+  "blessings/Propelling_Wind": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "windburst",
+        "field": "burstDamage",
+        "value": 25,
+        "note": "25% chance x 100 damage gust; the +25 per Wind Blessing isn't counted"
+      }
+    ]
+  },
+  "blessings/Ramping_Winds": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "triggers on kills; kill rate is not modelled"
+  },
+  "blessings/Raging_Storm": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "scales Windburst damage with area size, which is not modelled yet (Phase 3)"
+  },
+  "blessings/Storm_Caller": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "radius only; the ideal pack is already all inside the Windburst",
+    "utility": true
+  },
+  "blessings/Squall": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "radius only; the ideal pack is already all inside the Windburst",
+    "utility": true
+  },
+  "blessings/Lifting_Wind": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "windburst",
+        "value": 0.1,
+        "note": "20% chance to take 50% of the Windburst again on landing"
+      }
+    ]
+  },
+  "blessings/Roaring_Winds": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "windburst",
+        "field": "repeats",
+        "value": 1
+      }
+    ]
+  },
+  "blessings/Raging_Winds": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "windburst",
+        "field": "repeats",
+        "value": 2
+      }
+    ]
+  },
+  "blessings/Acid": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+  },
+  "blessings/Vitamins": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+  },
+  "blessings/Oceanic_Supplies": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+  },
+  "blessings/Oceanic_Arsenal": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+  },
+  "blessings/Anchors": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "crowd control only",
+    "utility": true
+  },
+  "blessings/Team_Tentacles": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "maxActive",
+        "value": 2
+      },
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "lifetime",
+        "value": 1
+      }
+    ]
+  },
+  "blessings/Regenerating_Tentacles": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "lifetime",
+        "value": 6.43,
+        "note": "30% chance to renew: 15s x (1/0.7 - 1)"
+      },
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "tentacle",
+        "value": 0.09,
+        "note": "30% of Tentacle time is renewed at +30% damage"
+      }
+    ]
+  },
+  "blessings/Supercharged_Tentacles": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "tentacle",
+        "value": 0.06,
+        "note": "30% chance x +20%"
+      },
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "attackSpeed",
+        "value": 0.06,
+        "note": "30% chance x +20%"
+      }
+    ]
+  },
+  "blessings/Creeping_Shadows": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "shadows",
+            "field": "effectiveness",
+            "value": 0.2,
+            "scalesWith": "{IncreasedEffect}"
+          }
+        ],
+        "note": "enemies stay afflicted long enough for the full bonus"
+      }
+    ]
+  },
+  "blessings/Engulfing_Shadows": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetHasStatus",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "hemorrhage",
+            "value": 1.0
+          },
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "burn",
+            "value": 1.0
+          },
+          {
+            "op": "mult",
+            "stat": "dotDamage",
+            "scope": "dot",
+            "value": 1.0
+          }
+        ],
+        "status": "Shadows",
+        "note": "damage-over-time effects trigger twice"
+      }
+    ]
+  },
+  "blessings/Returning_Shadows": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "only acts when Shadows expire; continuous fire keeps them up",
+    "utility": true
+  },
+  "blessings/Exposing_Shadows": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "shadows",
+            "field": "effectiveness",
+            "value": 0.2,
+            "scalesWith": "{PercentIncrease}"
+          }
+        ],
+        "note": "the target is Weakened, Stunned, Slowed, Frozen or Rooted"
+      }
+    ]
+  },
+  "blessings/Weakening_Shadows": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "makes enemies deal less damage; defensive only",
+    "utility": true
+  },
+  "blessings/Exponential_Shadows": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "spreads Shadows on kill; the ideal pack already has every enemy afflicted",
+    "utility": true
+  },
+  "blessings/Enveloping_Shadows": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "shadows",
+        "field": "effectivenessPerEnemy",
+        "value": 0.05,
+        "scalesWith": "{effect}"
+      }
+    ]
+  },
+  "blessings/Retaliating_Shadows": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "depends on enemies attacking; defensive only",
+    "utility": true
+  },
+  "blessings/Pot_of_Gold": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "blessings/Untouched_Gold": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "blessings/Golden_Haste": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "movement only",
+    "utility": true
+  },
+  "blessings/Golden_Pocket": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "blessings/Dicey_Wager": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "blessings/Midas_Touch": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "blessings/Lethal_Gold": {
+    "source": "Phase 2b: aspect payload model",
+    "effects": [],
+    "unmodeled": "instant kills on standard enemies; execute effects come in Phase 3"
   }
 }

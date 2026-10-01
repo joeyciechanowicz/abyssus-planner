@@ -136,6 +136,13 @@ payload's base damage, tick rate, duration and scaling formula?
   Still to do: Frozen (buildup), Spirit/Brine/Barrier (gauges), Flares, and
   re-modelling the payload-scoped blessings that Phase 0 marked unmodeled (Phase 2b).
 
+- 2026-10-01: Phase 2b done for the modelled aspects: blessings now act on their payload via
+  payload scopes (`damage/windburst`...) and a closed `payload` op (repeats, maxActive,
+  falloffPercent, effectiveness, goldPercent, burst damage...). `assumed` condition for
+  ideal-case maxima. `utility: true` separates no-damage picks from real gaps (validate.ts
+  reports counted / utility / gap). Still waiting: Flares, the Tentacle object pool, Chain
+  Lightning crits (native base crit chance), kill-triggered and resource-scaled effects.
+
 ## Later phases (unchanged from the earlier proposal)
 - Phase 1b: merge forge-upgrade `MutatorDescriptionVariables` (unstated magnitudes).
 - Phase 2: aspect payload engine + per-payload scopes, statusEffectiveness/duration, crit → weakspot.

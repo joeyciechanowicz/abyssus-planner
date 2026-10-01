@@ -19,6 +19,9 @@ const codified = {
   // entity, so a missing one means the codifier did not run over this file.
   effects: z.array(effectSchema),
   unmodeled: z.string().optional(),
+  // No damage effect at all (economy, defence, mobility, crowd control): shown as
+  // utility rather than as a modelling gap. Set in scripts/effect_overrides.json.
+  utility: z.boolean().optional(),
 };
 
 /** One scaling variable on a blessing, e.g. "{DamageIncrease}" going 15/30/45/60%... by rank. */

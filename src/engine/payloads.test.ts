@@ -144,3 +144,52 @@ describe('aspect payloads in simulate()', () => {
     expect(simulate(secondaryCard).aspectDps).toBe(0);
   });
 });
+
+describe('blessings that modify a payload', () => {
+  const build = (aspect: string, card: string, extra: Record<string, number>): Build => ({
+    ...emptyBuild,
+    aspects: { primary: aspect, secondary: null, ability: null },
+    blessings: { [card]: 1, ...extra },
+  });
+  const aspect = (b: Build, opts = {}) => simulate(b, opts).aspectDps;
+
+  it('Roaring Winds fires each Windburst twice; Raging Winds three times', () => {
+    const base = aspect(build('Windburst', 'Windburst_Primary', {}));
+    expect(aspect(build('Windburst', 'Windburst_Primary', { Roaring_Winds: 1 }))).toBeCloseTo(base * 2, 5);
+    expect(aspect(build('Windburst', 'Windburst_Primary', { Raging_Winds: 1 }))).toBeCloseTo(base * 3, 5);
+  });
+
+  it('Storm Belt adds +10% Windburst damage per stack, up to 5', () => {
+    const base = aspect(build('Windburst', 'Windburst_Primary', {}));
+    expect(aspect(build('Windburst', 'Windburst_Primary', { Storm_Belt: 1 }))).toBeCloseTo(base * 1.5, 5);
+  });
+
+  it('Team Tentacles raises the cap from 3 to 5 alive', () => {
+    const r = simulate(build('Tentacles', 'Primary_Tentacles', { Team_Tentacles: 1 }));
+    expect(r.assumptions.some((a) => a.text.startsWith('5.0 of 5 Tentacles'))).toBe(true);
+  });
+
+  it('Loaded Bounce turns -20% per bounce into +5% in a pack', () => {
+    const plain = aspect(build('Chain Lightning', 'Primary_Chain_Lightning', {}), { target: 'pack' });
+    const loaded = aspect(build('Chain Lightning', 'Primary_Chain_Lightning', { Loaded_Bounce: 1 }), { target: 'pack' });
+    const reach = (f: number) => [0, 1, 2, 3, 4].reduce((s, i) => s + (1 - f) ** i, 0);
+    expect(loaded / plain).toBeCloseTo(reach(-0.05) / reach(0.2), 5);
+  });
+
+  it('Exponential Gold adds 20% of your Gold to each Goldburst', () => {
+    const base = aspect(build('Goldburst', 'Primary_Goldburst', {}));
+    expect(aspect(build('Goldburst', 'Primary_Goldburst', { Exponential_Gold: 1 }))).toBeCloseTo(base * 1.2, 5);
+  });
+
+  it('Creeping Shadows raises the Shadows bonus from +25% to +30%', () => {
+    const r = simulate(build('Shadows', 'Primary_Shadows', { Creeping_Shadows: 1 }));
+    expect(r.vulnerability).toBeCloseTo(1.3, 5);
+    expect(r.assumptions.some((a) => a.source === 'Creeping Shadows')).toBe(true);
+  });
+
+  it('marks no-damage blessings as utility, not as a gap', () => {
+    const r = simulate(build('Goldburst', 'Primary_Goldburst', { Golden_Pocket: 1, Erupting_Gold: 1 }));
+    expect(r.unmodeled.find((u) => u.name === 'Golden Pocket')?.utility).toBe(true);
+    expect(r.unmodeled.find((u) => u.name === 'Erupting Gold')?.utility).toBeFalsy();
+  });
+});

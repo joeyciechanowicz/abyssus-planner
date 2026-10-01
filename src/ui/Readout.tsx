@@ -3,7 +3,7 @@ import type { SimResult } from '../engine/simulate';
 import { TARGETS, type SimOptions } from '../model/build';
 import { soulSkills } from '../model/data';
 import { PLAYSTYLES, type Playstyle } from './playstyle';
-import { fmt, statLabel } from './theme';
+import { FLAT_FIELDS, fmt, statLabel } from './theme';
 
 const soulSkillNames = new Set(soulSkills.map((s) => s.name));
 const TOP = 8;
@@ -173,9 +173,8 @@ export function HowYouPlay({ opts, setOpts, weaveLabel, hasAbility, playstyle, o
 export function Contributors({ result }: { result: SimResult }) {
   const [all, setAll] = useState(false);
   // Percentage modifiers first, biggest first; flat bonuses (health, charges) after.
-  const rows = [...result.breakdown].sort(
-    (a, b) => Number(a.scope === 'flat') - Number(b.scope === 'flat') || b.value - a.value,
-  );
+  const isFlat = (b: { stat: string; scope: string }) => b.scope === 'flat' || FLAT_FIELDS.has(b.stat);
+  const rows = [...result.breakdown].sort((a, b) => Number(isFlat(a)) - Number(isFlat(b)) || b.value - a.value);
   if (rows.length === 0) return null;
   const shown = all ? rows : rows.slice(0, TOP);
 
@@ -187,8 +186,8 @@ export function Contributors({ result }: { result: SimResult }) {
           <li key={i}>
             <span className="name">{b.source}</span>
             <span className={`num ${b.value >= 0 ? 'pos' : 'neg'}`}>
-              {b.scope === 'flat'
-                ? `${b.value >= 0 ? '+' : ''}${b.value}`
+              {isFlat(b)
+                ? `${b.value >= 0 ? '+' : ''}${Math.round(b.value * 100) / 100}`
                 : `${b.value >= 0 ? '+' : ''}${Math.round(b.value * 1000) / 10}%`}
             </span>
             <span className="sub">{statLabel(b.stat, b.scope)}</span>
@@ -236,18 +235,19 @@ export function Assumptions({ result }: { result: SimResult }) {
 }
 
 export function NotCounted({ result }: { result: SimResult }) {
-  const picks = result.unmodeled.filter((u) => !soulSkillNames.has(u.name));
-  const soul = result.unmodeled.length - picks.length;
+  const gaps = result.unmodeled.filter((u) => !u.utility && !soulSkillNames.has(u.name));
+  const soul = result.unmodeled.filter((u) => !u.utility && soulSkillNames.has(u.name)).length;
+  const utility = result.unmodeled.filter((u) => u.utility);
   if (result.unmodeled.length === 0 && result.warnings.length === 0) return null;
 
   return (
     <section className="panel not-counted" aria-label="Not counted in DPS">
       <h2>Not counted in DPS</h2>
-      {picks.length > 0 && (
+      {gaps.length > 0 && (
         <>
           <p className="sub">These picks are in your build, but the simulator can't model their effect yet.</p>
           <ul className="chips">
-            {picks.map((u) => (
+            {gaps.map((u) => (
               <li key={u.name} className="cham" title={u.reason}>
                 {u.name}
               </li>
@@ -255,7 +255,12 @@ export function NotCounted({ result }: { result: SimResult }) {
           </ul>
         </>
       )}
-      {soul > 0 && <p className="sub small">{picks.length > 0 ? 'Plus' : 'Only'} {soul} Soul Wheel skills with no damage effect.</p>}
+      {soul > 0 && <p className="sub small">{gaps.length > 0 ? 'Plus' : 'Only'} {soul} Soul Wheel skills with no damage effect.</p>}
+      {utility.length > 0 && (
+        <p className="sub small" title={utility.map((u) => `${u.name}: ${u.reason}`).join('\n')}>
+          {utility.length} pick{utility.length === 1 ? '' : 's'} with no damage effect: {utility.map((u) => u.name).join(', ')}.
+        </p>
+      )}
       {result.warnings.length > 0 && (
         <ul className="warnings">
           {result.warnings.map((w, i) => (

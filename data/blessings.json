@@ -215,7 +215,17 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Blood.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "hemorrhage",
+          "valuePer": 0.05,
+          "per": "hemorrhageHit",
+          "max": null,
+          "scalesWith": "{DamageIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -239,8 +249,7 @@
             18
           ]
         }
-      ],
-      "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Feeble_Blood",
@@ -251,7 +260,7 @@
       "logbookIndex": 4,
       "icon": "blessings/Blood.webp",
       "effects": [],
-      "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale",
+      "unmodeled": "scales with your missing Health; the ideal scenario keeps you at full Health (Phase 3 resource scaling)",
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -378,8 +387,21 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Blood.webp",
-      "effects": [],
-      "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetIsEliteOrBoss",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "hemorrhage",
+              "value": 0.2,
+              "scalesWith": "{DamageIncrease}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -413,7 +435,22 @@
       "kind": "blessing",
       "logbookIndex": 7,
       "icon": "blessings/Blood.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "hemorrhage",
+              "value": 1.0,
+              "scalesWith": "{MaxDamageMultiplierPercentage}"
+            }
+          ],
+          "note": "you fight up close, for the full bonus"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{MaxDamageMultiplierPercentage}",
@@ -456,8 +493,7 @@
           ],
           "descriptionSpan": null
         }
-      ],
-      "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Bloodletting",
@@ -467,8 +503,16 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Blood.webp",
-      "effects": [],
-      "unmodeled": "modifies the Hemorrhage status's damage (of: 'statusDamage' isn't consumed by the engine either), but Hemorrhage also has no base tick-damage magnitude anywhere in the data -- nothing to scale",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "hemorrhage",
+          "value": 0.1,
+          "note": "10% of Hemorrhage damage again over 8s",
+          "scalesWith": "{DamgePercent}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamgePercent}",
@@ -525,7 +569,7 @@
       "logbookIndex": 9,
       "icon": "blessings/Blood.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "raises max Health only",
       "upgrades": [
         {
           "variable": "{MaxHealthIncrease}",
@@ -568,7 +612,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Bloody_Execution",
@@ -578,8 +623,22 @@
       "kind": "blessing",
       "logbookIndex": 10,
       "icon": "blessings/Blood.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetHasStatus",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.0526,
+              "note": "execute below 5% Health = 1/0.95 effective damage"
+            }
+          ],
+          "status": "Hemorrhage"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{ExecuteHPPercent}",
@@ -613,7 +672,24 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Blood.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "then": [
+            {
+              "op": "stacking",
+              "stat": "damage",
+              "scope": "hemorrhage",
+              "valuePer": 0.05,
+              "per": "affectedEnemy",
+              "max": null,
+              "scalesWith": "{DamageIncreasePercentage}"
+            }
+          ],
+          "note": "you take no Health damage"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncreasePercentage}",
@@ -637,8 +713,7 @@
             6
           ]
         }
-      ],
-      "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Bouncing_Blood",
@@ -648,8 +723,22 @@
       "kind": "blessing",
       "logbookIndex": 12,
       "icon": "blessings/Blood.webp",
-      "effects": [],
-      "unmodeled": "bounces Hemorrhage to another target, but Hemorrhage itself has no base damage magnitude to bounce",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetIsStandard",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "hemorrhage",
+              "field": "chance",
+              "value": 0.2,
+              "note": "a bounce is another application in a pack",
+              "scalesWith": "{Chance}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -724,7 +813,15 @@
       "kind": "blessing",
       "logbookIndex": 14,
       "icon": "blessings/Blood.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "hemorrhage",
+          "field": "areaBurstDamage",
+          "value": 40,
+          "scalesWith": "{Damage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Damage}",
@@ -748,8 +845,7 @@
             38
           ]
         }
-      ],
-      "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Spiked_Blood",
@@ -759,8 +855,16 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Blood.webp",
-      "effects": [],
-      "unmodeled": "converts a hit into a guaranteed Weakspot hit; weakspot rate is a player-set assumption in this simulator, not something a per-effect override can change",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "hemorrhage",
+          "value": 0.1,
+          "note": "10% of ticks are Weakspot hits at x2 (Blood CritDamageMultiplier 2.0)",
+          "scalesWith": "{Chance}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -795,7 +899,7 @@
       "logbookIndex": 16,
       "icon": "blessings/Blood.webp",
       "effects": [],
-      "unmodeled": "modifies the Hemorrhage status's damage, but Hemorrhage has no base tick-damage magnitude anywhere in the data -- nothing to scale",
+      "unmodeled": "scales with the Health gap between you and the target (Phase 3 resource scaling)",
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -904,7 +1008,7 @@
           "descriptionSpan": null
         }
       ],
-      "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "Blood Orb damage depends on hitting the orb itself; not modelled yet"
     },
     {
       "id": "Bloodsplosions",
@@ -915,7 +1019,7 @@
       "logbookIndex": 19,
       "icon": "blessings/Bloodsplosions.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "Blood Orb damage depends on hitting the orb itself; not modelled yet"
     },
     {
       "id": "Barrier_Ability",
@@ -1804,7 +1908,7 @@
       "logbookIndex": 3,
       "icon": "blessings/Flares.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "spreads Fire on kill; the ideal pack already has every enemy burning",
       "upgrades": [
         {
           "variable": "{targets}",
@@ -1847,7 +1951,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Enduring_Flames",
@@ -1858,7 +1963,7 @@
       "logbookIndex": 4,
       "icon": "blessings/Flares.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "depends on Flares, which are not modelled yet"
     },
     {
       "id": "Critical_Flames",
@@ -1869,7 +1974,7 @@
       "logbookIndex": 5,
       "icon": "blessings/Flares.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "depends on Flares, which are not modelled yet",
       "upgrades": [
         {
           "variable": "{chance}",
@@ -1953,7 +2058,7 @@
       "logbookIndex": 7,
       "icon": "blessings/Flares.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "depends on Flares, which are not modelled yet",
       "upgrades": [
         {
           "variable": "{TickReductionPercentage}",
@@ -1987,7 +2092,17 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Flares.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "burn",
+          "valuePer": 0.05,
+          "per": "secondOnTarget",
+          "max": null,
+          "scalesWith": "{DamageIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -2011,8 +2126,7 @@
             16
           ]
         }
-      ],
-      "unmodeled": "modifies the Fire DoT payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Fanning_Flames",
@@ -2047,7 +2161,7 @@
           ]
         }
       ],
-      "unmodeled": "acts on the Flare payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "depends on Flares, which are not modelled yet"
     },
     {
       "id": "Linked_Flames",
@@ -2058,7 +2172,7 @@
       "logbookIndex": 10,
       "icon": "blessings/Flares.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "depends on Flares, which are not modelled yet",
       "upgrades": [
         {
           "variable": "",
@@ -2224,7 +2338,7 @@
           ]
         }
       ],
-      "unmodeled": "acts on the Flare payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "depends on Flares, which are not modelled yet"
     },
     {
       "id": "Critical_Flares",
@@ -2259,7 +2373,7 @@
           ]
         }
       ],
-      "unmodeled": "modifies the Flare payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "depends on Flares, which are not modelled yet"
     },
     {
       "id": "Scourging_Flames",
@@ -2269,8 +2383,17 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Flares.webp",
-      "effects": [],
-      "unmodeled": "per-status-effect-count scaling on the Fire DoT -- statusMod isn't consumed by the engine, and this is a per-count effect (needs stacking) with no status-effect-count 'per' concept either",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "burn",
+          "valuePer": 0.15,
+          "per": "statusEffectOnEnemy",
+          "max": null,
+          "scalesWith": "{DamageIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -2305,7 +2428,7 @@
       "logbookIndex": 16,
       "icon": "blessings/Flares.webp",
       "effects": [],
-      "unmodeled": "pure crowd control (Stun), no damage component",
+      "unmodeled": "crowd control only",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -2329,7 +2452,8 @@
             17
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Fires_Wrath",
@@ -2376,7 +2500,7 @@
       "logbookIndex": 18,
       "icon": "blessings/Stacking_Flames.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "depends on Flares, which are not modelled yet"
     },
     {
       "id": "Meteor",
@@ -2387,7 +2511,7 @@
       "logbookIndex": 19,
       "icon": "blessings/Meteor.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "depends on Flares, which are not modelled yet",
       "upgrades": [
         {
           "variable": "{SpawnChance}",
@@ -2623,7 +2747,7 @@
       "logbookIndex": 3,
       "icon": "blessings/Goldburst.webp",
       "effects": [],
-      "unmodeled": "pure crowd control (Stun), no damage component; chance also depends on a Gold economy value not tracked here",
+      "unmodeled": "crowd control only",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -2647,7 +2771,8 @@
             16
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Pot_of_Gold",
@@ -2658,7 +2783,7 @@
       "logbookIndex": 4,
       "icon": "blessings/Goldburst.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "economy only",
       "upgrades": [
         {
           "variable": "{RequiredGold}",
@@ -2682,7 +2807,8 @@
             62
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Exponential_Gold",
@@ -2692,7 +2818,15 @@
       "kind": "blessing",
       "logbookIndex": 5,
       "icon": "blessings/Goldburst.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "goldburst",
+          "field": "goldPercent",
+          "value": 20,
+          "scalesWith": "{GoldPercentage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{GoldPercentage}",
@@ -2716,8 +2850,7 @@
             22
           ]
         }
-      ],
-      "unmodeled": "acts on the Goldburst payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Precise_Gold",
@@ -2727,8 +2860,16 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Goldburst.webp",
-      "effects": [],
-      "unmodeled": "converts a hit into a guaranteed Weakspot hit; weakspot rate is a player-set assumption in this simulator, not something a per-effect override can change",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "goldburst",
+          "value": 0.05,
+          "note": "5% Weakspot hits, assumed x2",
+          "scalesWith": "{Chance}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -2880,8 +3021,15 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Goldburst.webp",
-      "effects": [],
-      "unmodeled": "re-triggers Goldburst on a new target; no retrigger construct in the DSL",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "goldburst",
+          "field": "repeats",
+          "value": 0.2,
+          "scalesWith": "{Chance}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -2935,7 +3083,7 @@
       "logbookIndex": 9,
       "icon": "blessings/Goldburst.webp",
       "effects": [],
-      "unmodeled": "explosion damage magnitude isn't published",
+      "unmodeled": "explosion damage is native code and unknown",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -2970,7 +3118,7 @@
       "logbookIndex": 10,
       "icon": "blessings/Goldburst.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "economy only",
       "upgrades": [
         {
           "variable": "{Gold}",
@@ -2994,7 +3142,8 @@
             6
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Golden_Skin",
@@ -3060,7 +3209,7 @@
       "logbookIndex": 12,
       "icon": "blessings/Goldburst.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "movement only",
       "upgrades": [
         {
           "variable": "{EffectIncrease}",
@@ -3128,7 +3277,8 @@
             100
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Brutish_Gold",
@@ -3138,7 +3288,15 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Goldburst.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "goldburst",
+          "field": "triggerPercent",
+          "value": 10,
+          "scalesWith": "{DamagePercent}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamagePercent}",
@@ -3162,8 +3320,7 @@
             23
           ]
         }
-      ],
-      "unmodeled": "acts on the Goldburst payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Golden_Pocket",
@@ -3174,7 +3331,7 @@
       "logbookIndex": 14,
       "icon": "blessings/Goldburst.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "economy only",
       "upgrades": [
         {
           "variable": "{DecreaseAmount}",
@@ -3198,7 +3355,8 @@
             61
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Coin_Flip",
@@ -3208,8 +3366,15 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Goldburst.webp",
-      "effects": [],
-      "unmodeled": "a 50/50 double-or-halve swing isn't a fixed multiplier the DSL can express",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "goldburst",
+          "value": 0.25,
+          "note": "50% x2, 50% x0.5: x1.25 on average"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{IncreaseChance}",
@@ -3266,7 +3431,7 @@
       "logbookIndex": 16,
       "icon": "blessings/Goldburst.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "economy only",
       "upgrades": [
         {
           "variable": "{IncreaseChance}",
@@ -3312,7 +3477,8 @@
             79
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Fortunes_Riches",
@@ -3323,7 +3489,8 @@
       "logbookIndex": 17,
       "icon": "blessings/Goldburst.webp",
       "effects": [],
-      "unmodeled": "increases Gold found, which only feeds Goldburst damage -- awaits the aspect payload model (Phase 2)"
+      "unmodeled": "increases Gold found: set \"Gold carried\" to match",
+      "utility": true
     },
     {
       "id": "Midas_Touch",
@@ -3334,7 +3501,7 @@
       "logbookIndex": 18,
       "icon": "blessings/Midas_Touch.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "economy only",
       "upgrades": [
         {
           "variable": "{Duration}",
@@ -3359,7 +3526,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Lethal_Gold",
@@ -3370,7 +3538,7 @@
       "logbookIndex": 19,
       "icon": "blessings/Lethal_Gold.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "instant kills on standard enemies; execute effects come in Phase 3",
       "upgrades": [
         {
           "variable": "{TenthsChance}",
@@ -4353,7 +4521,7 @@
       "logbookIndex": 3,
       "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "spreads the primary target's statuses along the chain; the ideal pack already has them everywhere",
       "upgrades": [
         {
           "variable": "",
@@ -4374,7 +4542,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Thunder_Strike",
@@ -4384,7 +4553,15 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "chainLightning",
+          "field": "burstDamage",
+          "value": 10,
+          "note": "20% chance x 50 damage"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -4427,8 +4604,7 @@
           ],
           "descriptionSpan": null
         }
-      ],
-      "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Static_Concussion",
@@ -4439,7 +4615,7 @@
       "logbookIndex": 5,
       "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
-      "unmodeled": "pure crowd control (Stun), no damage component",
+      "unmodeled": "crowd control only",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -4463,7 +4639,8 @@
             24
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Explosive_Static",
@@ -4473,8 +4650,15 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
-      "unmodeled": "explosion damage magnitude isn't published",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "chainLightning",
+          "field": "areaBurstDamage",
+          "value": 15,
+          "note": "30% chance x 50 damage around the target"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -4528,7 +4712,7 @@
       "logbookIndex": 7,
       "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
     },
     {
       "id": "Titan_Arc",
@@ -4538,8 +4722,22 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
-      "unmodeled": "modifies the Chain Lightning status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetHealthAbove",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "chainLightning",
+              "value": 0.5,
+              "scalesWith": "{PercentDamage}"
+            }
+          ],
+          "threshold": 0.9
+        }
+      ],
       "upgrades": [
         {
           "variable": "{PercentDamage}",
@@ -4595,7 +4793,15 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "chainLightning",
+          "field": "falloffPercent",
+          "value": -25,
+          "note": "+5% per bounce instead of -20%"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncreasePercent}",
@@ -4619,8 +4825,7 @@
             23
           ]
         }
-      ],
-      "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Static_Zone",
@@ -4695,7 +4900,7 @@
       "logbookIndex": 11,
       "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "item drops only",
       "upgrades": [
         {
           "variable": "{DropChance}",
@@ -4719,7 +4924,8 @@
             48
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Bashing_Lightning",
@@ -4776,7 +4982,7 @@
           ]
         }
       ],
-      "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
     },
     {
       "id": "Extended_Chain",
@@ -4787,7 +4993,7 @@
       "logbookIndex": 13,
       "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -4822,7 +5028,7 @@
       "logbookIndex": 14,
       "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "movement and cooldowns only (and needs crits)",
       "upgrades": [
         {
           "variable": "{Duration}",
@@ -4868,7 +5074,8 @@
             125
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Distant_Storm",
@@ -4878,7 +5085,22 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "chainLightning",
+              "value": 0.2,
+              "scalesWith": "{DamageDistanceIncrease}"
+            }
+          ],
+          "note": "bounces travel far enough for the full bonus"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageDistanceIncrease}",
@@ -4902,8 +5124,7 @@
             72
           ]
         }
-      ],
-      "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Lightning_Rod",
@@ -4914,7 +5135,7 @@
       "logbookIndex": 16,
       "icon": "blessings/Chain_Lightning.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown",
       "upgrades": [
         {
           "variable": "{CritChanceIncrease}",
@@ -4971,7 +5192,7 @@
           "descriptionSpan": null
         }
       ],
-      "unmodeled": "Critical Chance for Chain Lightning -- awaits the aspect payload model (Phase 2)"
+      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
     },
     {
       "id": "Slipping_Arcs",
@@ -4982,7 +5203,7 @@
       "logbookIndex": 18,
       "icon": "blessings/Slipping_Arcs.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
     },
     {
       "id": "Static_Repetition",
@@ -4993,7 +5214,7 @@
       "logbookIndex": 19,
       "icon": "blessings/Static_Repetition.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
     },
     {
       "id": "Ability_Shadows",
@@ -5150,7 +5371,15 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Shadows.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "shadows",
+          "field": "dotPerSecond",
+          "value": 100,
+          "scalesWith": "{DamagePerTick}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamagePerTick}",
@@ -5193,8 +5422,7 @@
           ],
           "descriptionSpan": null
         }
-      ],
-      "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Creeping_Shadows",
@@ -5204,8 +5432,22 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Shadows.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "shadows",
+              "field": "effectiveness",
+              "value": 0.2,
+              "scalesWith": "{IncreasedEffect}"
+            }
+          ],
+          "note": "enemies stay afflicted long enough for the full bonus"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{IncreasedEffect}",
@@ -5239,8 +5481,34 @@
       "kind": "blessing",
       "logbookIndex": 5,
       "icon": "blessings/Shadows.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetHasStatus",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "hemorrhage",
+              "value": 1.0
+            },
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "burn",
+              "value": 1.0
+            },
+            {
+              "op": "mult",
+              "stat": "dotDamage",
+              "scope": "dot",
+              "value": 1.0
+            }
+          ],
+          "status": "Shadows",
+          "note": "damage-over-time effects trigger twice"
+        }
+      ],
       "upgrades": [
         {
           "variable": "",
@@ -5272,7 +5540,7 @@
       "logbookIndex": 6,
       "icon": "blessings/Shadows.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "only acts when Shadows expire; continuous fire keeps them up",
       "upgrades": [
         {
           "variable": "{EffectivenessIncreasePercentage}",
@@ -5318,7 +5586,8 @@
             17
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Exposing_Shadows",
@@ -5328,8 +5597,22 @@
       "kind": "blessing",
       "logbookIndex": 7,
       "icon": "blessings/Shadows.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "shadows",
+              "field": "effectiveness",
+              "value": 0.2,
+              "scalesWith": "{PercentIncrease}"
+            }
+          ],
+          "note": "the target is Weakened, Stunned, Slowed, Frozen or Rooted"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{PercentIncrease}",
@@ -5364,7 +5647,7 @@
       "logbookIndex": 8,
       "icon": "blessings/Shadows.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "makes enemies deal less damage; defensive only",
       "upgrades": [
         {
           "variable": "{PercentDamageReduction}",
@@ -5385,7 +5668,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Rupturing_Shadows",
@@ -5420,7 +5704,7 @@
           ]
         }
       ],
-      "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "explodes when Shadows expire or the target dies; continuous fire keeps Shadows up and kill rate is not modelled"
     },
     {
       "id": "Exponential_Shadows",
@@ -5431,7 +5715,7 @@
       "logbookIndex": 10,
       "icon": "blessings/Shadows.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "spreads Shadows on kill; the ideal pack already has every enemy afflicted",
       "upgrades": [
         {
           "variable": "{duration}",
@@ -5471,7 +5755,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Enveloping_Shadows",
@@ -5481,8 +5766,15 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Shadows.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "shadows",
+          "field": "effectivenessPerEnemy",
+          "value": 0.05,
+          "scalesWith": "{effect}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{effect}",
@@ -5541,7 +5833,7 @@
           ]
         }
       ],
-      "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "fires once when an enemy first becomes afflicted; continuous fire keeps Shadows up, so it is a one-off"
     },
     {
       "id": "Critical_Shadows",
@@ -5699,7 +5991,7 @@
       "logbookIndex": 16,
       "icon": "blessings/Shadows.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "depends on enemies attacking; defensive only",
       "upgrades": [
         {
           "variable": "{CooldownIncrease}",
@@ -5745,7 +6037,8 @@
             35
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Nights_Patience",
@@ -5756,7 +6049,8 @@
       "logbookIndex": 17,
       "icon": "blessings/Shadows.webp",
       "effects": [],
-      "unmodeled": "increases status effect duration (statusDuration), which the engine doesn't consume -- no DPS impact regardless of magnitude"
+      "unmodeled": "status duration only; continuous fire keeps statuses up anyway",
+      "utility": true
     },
     {
       "id": "Nights_Minor_Blessing",
@@ -5766,8 +6060,21 @@
       "kind": "blessing",
       "logbookIndex": 18,
       "icon": "blessings/Nights_Minor_Blessing.webp",
-      "effects": [],
-      "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetIsStandard",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 1.2,
+              "note": "30% of each hit to the 4 other afflicted enemies"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "Nights_Major_Blessing",
@@ -5777,8 +6084,21 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Nights_Minor_Blessing.webp",
-      "effects": [],
-      "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetIsStandard",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 6.0,
+              "note": "150% of each hit to the 4 other afflicted enemies"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "Ability_Tentacles",
@@ -5973,8 +6293,21 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
-      "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetIsEliteOrBoss",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "tentacle",
+              "value": 0.25,
+              "scalesWith": "{DamageIncreasePercentage}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncreasePercentage}",
@@ -6052,7 +6385,7 @@
           ]
         }
       ],
-      "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
     },
     {
       "id": "Acid",
@@ -6063,7 +6396,7 @@
       "logbookIndex": 5,
       "icon": "blessings/Tentacles.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet",
       "upgrades": [
         {
           "variable": "{DamagePerTick}",
@@ -6098,7 +6431,7 @@
       "logbookIndex": 6,
       "icon": "blessings/Tentacles.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet",
       "upgrades": [
         {
           "variable": "{FireRateIncreasePercentage}",
@@ -6154,7 +6487,15 @@
       "kind": "blessing",
       "logbookIndex": 7,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "attackSpeedPerActive",
+          "value": 0.1,
+          "scalesWith": "{AttackSpeedIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{AttackSpeedIncrease}",
@@ -6178,8 +6519,7 @@
             44
           ]
         }
-      ],
-      "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Anchors",
@@ -6190,7 +6530,7 @@
       "logbookIndex": 8,
       "icon": "blessings/Tentacles.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "crowd control only",
       "upgrades": [
         {
           "variable": "{StunDuration}",
@@ -6214,7 +6554,8 @@
             61
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Crystals",
@@ -6249,7 +6590,7 @@
           ]
         }
       ],
-      "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
     },
     {
       "id": "Team_Tentacles",
@@ -6259,8 +6600,20 @@
       "kind": "blessing",
       "logbookIndex": 10,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "maxActive",
+          "value": 2
+        },
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "lifetime",
+          "value": 1
+        }
+      ],
       "upgrades": [
         {
           "variable": "{ExtraTentacles}",
@@ -6363,7 +6716,7 @@
           ]
         }
       ],
-      "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
     },
     {
       "id": "Regenerating_Tentacles",
@@ -6373,8 +6726,22 @@
       "kind": "blessing",
       "logbookIndex": 12,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "lifetime",
+          "value": 6.43,
+          "note": "30% chance to renew: 15s x (1/0.7 - 1)"
+        },
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "tentacle",
+          "value": 0.09,
+          "note": "30% of Tentacle time is renewed at +30% damage"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -6430,8 +6797,16 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
-      "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "tentacle",
+          "value": 0.075,
+          "note": "+1%/s averaged over a 15s life",
+          "scalesWith": "{DamageIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -6466,7 +6841,7 @@
       "logbookIndex": 14,
       "icon": "blessings/Tentacles.webp",
       "effects": [],
-      "unmodeled": "adds a new pool object with its own unpublished base damage, plus a bounce chance with no magnitude to bounce",
+      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -6501,7 +6876,7 @@
       "logbookIndex": 15,
       "icon": "blessings/Tentacles.webp",
       "effects": [],
-      "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
+      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet",
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -6535,8 +6910,22 @@
       "kind": "blessing",
       "logbookIndex": 16,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "tentacle",
+          "value": 0.06,
+          "note": "30% chance x +20%"
+        },
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "attackSpeed",
+          "value": 0.06,
+          "note": "30% chance x +20%"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -6623,7 +7012,7 @@
       "logbookIndex": 18,
       "icon": "blessings/Oceanic_Supplies.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
     },
     {
       "id": "Oceanic_Arsenal",
@@ -6634,7 +7023,7 @@
       "logbookIndex": 19,
       "icon": "blessings/Oceanic_Arsenal.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
     },
     {
       "id": "Spirit_Ability",
@@ -7635,8 +8024,17 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Windburst.webp",
-      "effects": [],
-      "unmodeled": "modifies the Windburst status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "windburst",
+          "valuePer": 0.1,
+          "per": "affectedEnemy",
+          "max": null,
+          "scalesWith": "{DamageIncreasePer}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncreasePer}",
@@ -7744,7 +8142,7 @@
       "logbookIndex": 5,
       "icon": "blessings/Windburst.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "crowd control only",
       "upgrades": [
         {
           "variable": "{SpawnChance}",
@@ -7768,7 +8166,8 @@
             18
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Culling_Winds",
@@ -7779,7 +8178,7 @@
       "logbookIndex": 6,
       "icon": "blessings/Windburst.webp",
       "effects": [],
-      "unmodeled": "modifies the Windburst status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale",
+      "unmodeled": "scales with the target's missing Health (Phase 3 resource scaling)",
       "upgrades": [
         {
           "variable": "{DamageIncreasePercentage}",
@@ -7826,8 +8225,15 @@
       "kind": "blessing",
       "logbookIndex": 7,
       "icon": "blessings/Windburst.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "windburst",
+          "field": "burstDamage",
+          "value": 25,
+          "note": "25% chance x 100 damage gust; the +25 per Wind Blessing isn't counted"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Damage}",
@@ -7884,7 +8290,7 @@
       "logbookIndex": 8,
       "icon": "blessings/Windburst.webp",
       "effects": [],
-      "unmodeled": "weakens damage from enemy projectiles hitting the player -- a mitigation effect, not a player-damage stat",
+      "unmodeled": "defensive only",
       "upgrades": [
         {
           "variable": "{Duration}",
@@ -7952,7 +8358,8 @@
             80
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Eye_of_the_Storm",
@@ -7962,7 +8369,22 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Windburst.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "windburst",
+              "value": 0.25,
+              "scalesWith": "{DamagePercentage}"
+            }
+          ],
+          "note": "enemies sit at the centre of the Windburst"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamagePercentage}",
@@ -7986,8 +8408,7 @@
             24
           ]
         }
-      ],
-      "unmodeled": "modifies the Windburst payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Destructive_Winds",
@@ -8063,7 +8484,7 @@
       "logbookIndex": 11,
       "icon": "blessings/Ramping_Winds.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "triggers on kills; kill rate is not modelled",
       "upgrades": [
         {
           "variable": "{Duration}",
@@ -8098,7 +8519,7 @@
       "logbookIndex": 12,
       "icon": "blessings/Windburst.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "scales Windburst damage with area size, which is not modelled yet (Phase 3)",
       "upgrades": [
         {
           "variable": "{PercentScaling}",
@@ -8132,7 +8553,17 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Windburst.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "damage",
+          "scope": "windburst",
+          "valuePer": 0.1,
+          "per": "trigger",
+          "max": 5,
+          "scalesWith": "{DamageIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -8156,8 +8587,7 @@
             19
           ]
         }
-      ],
-      "unmodeled": "modifies the Windburst payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Storm_Caller",
@@ -8168,7 +8598,7 @@
       "logbookIndex": 14,
       "icon": "blessings/Windburst.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "radius only; the ideal pack is already all inside the Windburst",
       "upgrades": [
         {
           "variable": "{RadiusIncrease}",
@@ -8192,7 +8622,8 @@
             49
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Lifting_Wind",
@@ -8202,8 +8633,15 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Windburst.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "windburst",
+          "value": 0.1,
+          "note": "20% chance to take 50% of the Windburst again on landing"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -8260,7 +8698,7 @@
       "logbookIndex": 16,
       "icon": "blessings/Windburst.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "radius only; the ideal pack is already all inside the Windburst",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -8306,7 +8744,8 @@
             52
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Winds_Devastation",
@@ -8342,7 +8781,8 @@
           "descriptionSpan": null
         }
       ],
-      "unmodeled": "increases area size, not damage -- awaits aoeSize support (dps-coverage.md, Phase 3)"
+      "unmodeled": "area size only; the ideal pack is already inside every area",
+      "utility": true
     },
     {
       "id": "Roaring_Winds",
@@ -8352,8 +8792,14 @@
       "kind": "blessing",
       "logbookIndex": 18,
       "icon": "blessings/Roaring_Winds.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "windburst",
+          "field": "repeats",
+          "value": 1
+        }
+      ]
     },
     {
       "id": "Raging_Winds",
@@ -8363,8 +8809,14 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Raging_Winds.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "windburst",
+          "field": "repeats",
+          "value": 2
+        }
+      ]
     },
     {
       "id": "Brine_Primary",

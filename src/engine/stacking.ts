@@ -1,4 +1,4 @@
-import type { Effect, Scope, Stat } from '../model/effects';
+import type { Effect, PayloadField, Scope, Stat } from '../model/effects';
 import { enemiesFor, type SimOptions } from '../model/build';
 
 /**
@@ -23,6 +23,8 @@ export class Modifiers {
   readonly statusApplications = new Map<string, number>();
   /** Per-source contribution log, for the breakdown the UI shows. */
   readonly log: { source: string; stat: string; scope: string; value: number }[] = [];
+  /** payload id -> field -> summed value, from `payload` effects. */
+  readonly payloadMods = new Map<string, Partial<Record<PayloadField, number>>>();
   /** What had to be assumed to count each pick (deduplicated), for the UI. */
   readonly assumptions: { source: string; text: string }[] = [];
 
@@ -37,6 +39,13 @@ export class Modifiers {
     byScope.set(scope, (byScope.get(scope) ?? 0) + value);
     this.mults.set(stat, byScope);
     this.log.push({ source, stat, scope, value });
+  }
+
+  addPayload(payload: string, field: PayloadField, value: number, source: string) {
+    const byField = this.payloadMods.get(payload) ?? {};
+    byField[field] = (byField[field] ?? 0) + value;
+    this.payloadMods.set(payload, byField);
+    this.log.push({ source, stat: field, scope: payload, value });
   }
 
   addFlat(stat: Stat, value: number, source: string) {
@@ -102,6 +111,10 @@ export function applyEffects(
         });
         break;
 
+      case 'payload':
+        mods.addPayload(e.payload, e.field, e.value, source);
+        break;
+
       case 'statusMod':
         // Not logged to mods.log: statusMods is never read for the DPS number
         // (no consumer exists yet), so logging it would misleadingly show up
@@ -141,7 +154,7 @@ export function applyEffects(
 
       case 'conditional':
         if (conditionHolds(e.when, e.threshold, opts)) {
-          const why = assumedCondition(e.when, e.status);
+          const why = e.when === 'assumed' ? (e.note ?? null) : assumedCondition(e.when, e.status);
           if (why) mods.assume(source, why);
           applyEffects(mods, e.then, `${source} (${e.when})`, opts, ctx);
         }
@@ -163,7 +176,7 @@ export function applyEffects(
           mods.assume(source, `averaged over its ${Math.round(effectiveChance * 100)}% chance per ${e.on}`);
         }
         const scaled = e.then.map((inner) => {
-          if (inner.op === 'mult') return { ...inner, value: inner.value * effectiveChance };
+          if (inner.op === 'mult' || inner.op === 'payload') return { ...inner, value: inner.value * effectiveChance };
           // A nested `proc`'s own `chance` is independent of the trigger firing at
           // all -- compose them by multiplying, same expected-value math as `mult`.
           if (inner.op === 'proc') return { ...inner, chance: (inner.chance ?? 1) * effectiveChance };
@@ -200,6 +213,7 @@ function conditionHolds(
   const t = threshold ?? 0;
   switch (when) {
     case 'always':
+    case 'assumed':
       return true;
     case 'targetIsEliteOrBoss':
       return opts.target === 'boss';

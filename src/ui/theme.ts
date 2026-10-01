@@ -63,7 +63,28 @@ const STAT_LABELS: Record<string, string> = {
   statusDuration: 'Status duration',
   triggerChance: 'Trigger chance',
   movementSpeed: 'Movement speed',
+  // Aspect payload mechanics (`payload` effects).
+  chance: 'Proc chance',
+  repeats: 'Extra triggers',
+  falloffPercent: 'Bounce falloff (points)',
+  maxActive: 'Max alive',
+  lifetime: 'Lifetime (s)',
+  attackSpeed: 'Attack speed',
+  attackSpeedPerActive: 'Attack speed per one alive',
+  effectiveness: 'Effect',
+  effectivenessPerEnemy: 'Effect per afflicted enemy',
+  goldPercent: 'Gold dealt as damage (points)',
+  triggerPercent: 'Share of the hit (points)',
+  burstDamage: 'Extra damage per proc',
+  areaBurstDamage: 'Extra area damage per proc',
+  dotPerSecond: 'Damage per second',
 };
+
+/** Payload fields counted in their own units rather than as a +% bonus. */
+export const FLAT_FIELDS = new Set([
+  'repeats', 'falloffPercent', 'maxActive', 'lifetime', 'goldPercent', 'triggerPercent',
+  'burstDamage', 'areaBurstDamage', 'dotPerSecond',
+]);
 
 const SCOPE_LABELS: Record<string, string> = {
   primary: 'primary fire',
@@ -71,6 +92,13 @@ const SCOPE_LABELS: Record<string, string> = {
   ability: 'ability',
   melee: 'melee',
   dot: 'damage over time',
+  hemorrhage: 'Hemorrhage',
+  burn: 'Fire',
+  chainLightning: 'Chain Lightning',
+  windburst: 'Windburst',
+  tentacle: 'Tentacles',
+  goldburst: 'Goldburst',
+  shadows: 'Shadows',
 };
 
 /** "Damage, primary fire" -- a breakdown row's stat in plain words. */

@@ -37,7 +37,23 @@ export const STATS = [
 export type Stat = (typeof STATS)[number];
 
 /** Which damage source a modifier applies to. */
-export const SCOPES = ['all', 'primary', 'secondary', 'ability', 'melee', 'dot'] as const;
+export const SCOPES = [
+  'all',
+  'primary',
+  'secondary',
+  'ability',
+  'melee',
+  'dot',
+  // Aspect payloads (data/aspects.json ids): a `damage` bonus in one of these
+  // boosts that payload alone, not weapon damage.
+  'hemorrhage',
+  'burn',
+  'chainLightning',
+  'windburst',
+  'tentacle',
+  'goldburst',
+  'shadows',
+] as const;
 export type Scope = (typeof SCOPES)[number];
 
 /** Events an effect can hang off. */
@@ -63,6 +79,8 @@ export const CONDITIONS = [
   'targetHasStatus',
   'selfHasStatus',
   'inAoe',
+  /** An ideal-scenario assumption the card's text depends on; `note` says what is assumed. */
+  'assumed',
   /** Holds only against the Boss target (Elite & Boss bonuses). */
   'targetIsEliteOrBoss',
   /** Holds only against the Pack target ("standard enemies" effects). */
@@ -155,6 +173,44 @@ const procSchema = z.object({
   note: z.string().optional(),
 });
 
+/** Payload mechanics a `payload` effect can change (see src/engine/payloads.ts). */
+export const PAYLOAD_FIELDS = [
+  /** +x relative proc chance (0.2 = 20% more procs). */
+  'chance',
+  /** Extra times each proc fires (Roaring Winds: +1). Fractional = a chance to. */
+  'repeats',
+  /** +x to the chain falloff percentage (Loaded Bounce: -25 turns -20%/bounce into +5%). */
+  'falloffPercent',
+  /** Summons: +n alive at once, +s lifetime, +x attack speed, +x attack speed per summon alive. */
+  'maxActive',
+  'lifetime',
+  'attackSpeed',
+  'attackSpeedPerActive',
+  /** Vulnerability payloads: +x relative effect, and +x per affected enemy. */
+  'effectiveness',
+  'effectivenessPerEnemy',
+  /** Goldburst: +x percentage points of Gold; +x% of the triggering hit. */
+  'goldPercent',
+  'triggerPercent',
+  /** Expected flat damage per proc: to the struck enemy, or to every enemy. */
+  'burstDamage',
+  'areaBurstDamage',
+  /** Flat damage per second on every afflicted enemy. */
+  'dotPerSecond',
+] as const;
+export type PayloadField = (typeof PAYLOAD_FIELDS)[number];
+const PAYLOAD_IDS = ['hemorrhage', 'burn', 'chainLightning', 'windburst', 'tentacle', 'goldburst', 'shadows'] as const;
+
+/** Changes how an aspect payload behaves: `{op:'payload', payload:'windburst', field:'repeats', value:1}`. */
+const payloadSchema = z.object({
+  op: z.literal('payload'),
+  payload: z.enum(PAYLOAD_IDS),
+  field: z.enum(PAYLOAD_FIELDS),
+  value: z.number(),
+  scalesWith,
+  note: z.string().optional(),
+});
+
 export type Effect =
   | z.infer<typeof multSchema>
   | z.infer<typeof procSchema>
@@ -162,6 +218,7 @@ export type Effect =
   | z.infer<typeof applyStatusSchema>
   | z.infer<typeof statusModSchema>
   | z.infer<typeof stackingSchema>
+  | z.infer<typeof payloadSchema>
   | { op: 'conditional'; when: Condition; threshold?: number; status?: string; then: Effect[]; note?: string }
   | { op: 'trigger'; on: Trigger; chance: number; scalesWith?: string; then: Effect[]; note?: string };
 
@@ -173,6 +230,7 @@ export const effectSchema: z.ZodType<Effect> = z.lazy(() =>
     applyStatusSchema,
     statusModSchema,
     stackingSchema,
+    payloadSchema,
     z.object({
       op: z.literal('conditional'),
       when: z.enum(CONDITIONS),
@@ -204,5 +262,7 @@ export const codifiedSchema = z.object({
   icon: z.string().nullable().optional(),
   effects: z.array(effectSchema),
   unmodeled: z.string().optional(),
+  /** True when the pick has no damage effect at all (economy, defence, mobility, crowd control). */
+  utility: z.boolean().optional(),
 });
 export type Codified = z.infer<typeof codifiedSchema>;
