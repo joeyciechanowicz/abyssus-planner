@@ -119,11 +119,10 @@ Unlike blessings (a plain `PrimaryDataAsset`), fire modes are backed by
 own `x2` fallback is only used when a mode has no weakspot data at all),
 `BaseRateOfFire`, `BaseReloadTime`, `BaseClipSize`, each a small struct with a
 plain `BaseValue` float/int — the same shape as the Mutator `RankValues`
-array, and just as easy to read via CUE4Parse. This is *not* true of every
-game system: status-effect DoT magnitudes (Hemorrhage, Goldburst, etc.) were
-checked the same way and turned out to be a dead end — their Blueprint
-classes have zero exposed properties, so those numbers are almost certainly
-hard-coded in Kismet graph logic instead, which this pipeline can't read.
+array, and just as easy to read via CUE4Parse. Status-effect and aspect
+payload numbers (Hemorrhage, Fire, Windburst, …) were once thought
+unreachable this way. They aren't: see "Blueprint logic & aspect payloads"
+below.
 
 3 of the 54 tracked fire modes have no confident match in the dump (Combat
 Bow's Exploding Arrow, Tesla Gun's Spark Orb and Magnetic Storm — all have
@@ -182,3 +181,36 @@ Gotchas:
   deletes any stale `.webp` before writing the new `.png`, since `optimize_images.py`
   otherwise keeps an existing `.webp` in preference to fresh art.
 - The dump output is not committed, same as `dump_mutators`.
+
+## Blueprint logic & aspect payloads (from the game files)
+
+Aspect payloads (Hemorrhage ticks, Fire, Chain Lightning, Windburst, …) and most
+blessing/charm/forge mechanics are implemented in Blueprints. `dump_kismet` is
+`dump_mutators` with CUE4Parse's `ReadScriptData` switched on, so every
+function's compiled bytecode is dumped alongside the class defaults:
+
+```
+dotnet run --project scripts/extract/dump_kismet -- <Paks> <usmap> list "<regex>"
+dotnet run --project scripts/extract/dump_kismet -- <Paks> <usmap> dump "<regex>" <out>
+python scripts/extract/kismet_pretty.py <out>/Blueprints/.../BP_X.uasset.json
+```
+
+`kismet_pretty.py` prints the class defaults, then each function as one line
+of pseudo-code per statement, prefixed with its byte offset so jumps can be followed.
+
+Where the numbers live:
+- **Status-effect class defaults**, e.g. `BP_Bleed_StatusEffect`: `BaseDamage`,
+  `TickScriptInterval`, `EffectDuration`.
+- **Hidden per-aspect tuning** in `PA_<Aspect>GodPassive_CharacterMutator`'s
+  `MutatorDescriptionVariables`. Index 0 is the blessing's visible number; the
+  rest (`BaseDamage`, `DamagePercentage`, `DamageSoftCap`, …) are read by array
+  index from Blueprints such as `BP_ApplyFire_Behavior_Mutator::GetDamageToDeal`.
+- **Native C++ constructor defaults** (e.g. Chain Lightning's
+  `ChainCount`/`Range` on `URBehaviorScriptLightning`) aren't in the pak. With
+  the game running, read them from memory (read-only, no injection):
+  `python scripts/extract/native_defaults.py <Dumper-7 dir> out.json <Class>...`.
+  It needs a Dumper-7 dump of the same game build (for the GObjects offset and
+  object indices) and verifies every object before decoding it. A Blueprint
+  subclass's serialised CDO can still override a native value, so check it.
+
+Findings per aspect: `docs/plans/kismet-spike-findings.md`.

@@ -156,3 +156,7 @@ scripts/extract/dump_mutators/obj/
 # .NET build output from scripts/extract/dump_icons
 scripts/extract/dump_icons/bin/
 scripts/extract/dump_icons/obj/
+
+# .NET build output from scripts/extract/dump_kismet
+scripts/extract/dump_kismet/bin/
+scripts/extract/dump_kismet/obj/
