@@ -2,6 +2,8 @@ import { z } from 'zod';
 
 /** A loadout. Ids reference entries in data/*.json via the maps in ./data. */
 export const buildSchema = z.object({
+  /** Player-chosen label, carried in the share link. Empty means unnamed. */
+  name: z.string().max(80).default(''),
   weaponId: z.string(),
   modeName: z.string(),
   /** A second mode (of the other fire type) to occasionally fire, e.g. to apply
@@ -65,6 +67,7 @@ export const defaultOptions: SimOptions = {
 };
 
 export const emptyBuild: Build = {
+  name: '',
   weaponId: 'Engine_Rifle',
   modeName: 'Automatic Fire',
   weaveModeName: null,
