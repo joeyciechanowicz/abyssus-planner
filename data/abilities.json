@@ -1011,7 +1011,7 @@
           "description": "Blessings on your Brine Field trigger 3% more frequently for every meter of the radius.",
           "icon": "forge/Quality_Over_Quantity.webp",
           "effects": [],
-          "unmodeled": "scales ability blessing procs with field radius; the radius is not modelled"
+          "unmodeled": "needs the Brine Field's radius in metres, which the game files only give as mesh scales"
         }
       ],
       "rechargeCooldown": 9.0,

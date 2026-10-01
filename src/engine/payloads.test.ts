@@ -147,6 +147,14 @@ describe('payloadDamage', () => {
     expect(both / plain).toBeCloseTo(1 + 1.5 / 3);
   });
 
+  it('Everlasting Winter: each Frozen enemy pulses 100/s to every enemy', () => {
+    const p = payload('Frozen');
+    const plain = payloadDamage(p, 1, [stream()], ctx({ enemies: 5, targetTier: 'standard', targetMaxHealth: 500 }));
+    const winter = payloadDamage(p, 1, [stream()], ctx({ enemies: 5, targetTier: 'standard', targetMaxHealth: 500, mods: { pulsePerSecondWhileActive: 100 } }));
+    const frozenShare = 5 / 7.5; // 2.5s to build + 5s Frozen
+    expect(winter.dps - plain.dps).toBeCloseTo(100 * 5 * frozenShare * 5);
+  });
+
   it('Shadows deals no damage itself but makes enemies take 25% more', () => {
     const r = payloadDamage(payload('Shadows'), 1, [stream()], ctx());
     expect(r.dps).toBe(0);
@@ -371,6 +379,21 @@ describe('on-kill effects', () => {
     const plain = simulate({ ...shadows, blessings: { Primary_Shadows: 1 } }, { target: 'pack' });
     const kills = plain.totalDps / plain.vulnerability / 500; // weapon damage before Shadows' bonus
     expect(pack.aspectDps).toBeCloseTo(kills * 400 * 5 * pack.vulnerability, 3);
+  });
+});
+
+describe('Shadow Conversion', () => {
+  it('adds one full extra hit per newly afflicted enemy -- each kill in a pack, never against a lone Boss', () => {
+    const b: Build = {
+      ...emptyBuild,
+      aspects: { primary: 'Shadows', secondary: null, ability: null },
+      blessings: { Primary_Shadows: 1, Shadow_Conversion: 1 },
+    };
+    expect(simulate(b, { target: 'boss' }).aspectDps).toBe(0);
+    const pack = simulate(b, { target: 'pack', weakspotAccuracy: 0 });
+    const kills = pack.weaponDps / pack.vulnerability / 500;
+    // Average hit: 32 x 1.15 (the card).
+    expect(pack.aspectDps / pack.vulnerability).toBeCloseTo(kills * 32 * 1.15, 3);
   });
 });
 

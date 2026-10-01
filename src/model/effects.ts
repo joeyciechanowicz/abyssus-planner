@@ -313,6 +313,10 @@ export const PAYLOAD_FIELDS = [
   'killAreaDamage',
   'killProcs',
   'killGauge',
+  /** Per kill (Pack only): an extra hit of x% of the average triggering hit on the fresh enemy. */
+  'killTriggerPercent',
+  /** Freeze: area damage per second each Frozen enemy pulses to every enemy nearby. */
+  'pulsePerSecondWhileActive',
   /** Chain Lightning crits: +chance (added to your Critical Chance), +crit damage multiplier,
    * last bounce always crits, expected extra bounces per crit (re-hitting allowed), forks per crit. */
   'critChance',

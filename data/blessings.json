@@ -3253,7 +3253,7 @@
       "logbookIndex": 9,
       "icon": "blessings/Goldburst.webp",
       "effects": [],
-      "unmodeled": "explosion damage is native code and unknown",
+      "unmodeled": "its explosion damage is computed in native code; no value in the game files",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -4565,8 +4565,15 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Everlasting_Winter.webp",
-      "effects": [],
-      "unmodeled": "pulses 50 area damage (PA_FrostMajorBlessing) but its pulse interval is native code and unknown"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "frost",
+          "field": "pulsePerSecondWhileActive",
+          "value": 100,
+          "note": "50 every 0.5s"
+        }
+      ]
     },
     {
       "id": "Ability_Chain_Lightning",
@@ -6135,7 +6142,15 @@
       "kind": "blessing",
       "logbookIndex": 12,
       "icon": "blessings/Shadows.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "shadows",
+          "field": "killTriggerPercent",
+          "value": 100,
+          "scalesWith": "{Damage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Damage}",
@@ -6159,8 +6174,7 @@
             30
           ]
         }
-      ],
-      "unmodeled": "fires once when an enemy first becomes afflicted; continuous fire keeps Shadows up, so it is a one-off"
+      ]
     },
     {
       "id": "Critical_Shadows",

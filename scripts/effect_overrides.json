@@ -150,7 +150,7 @@
   "blessings/Erupting_Gold": {
     "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "explosion damage is native code and unknown"
+    "unmodeled": "its explosion damage is computed in native code; no value in the game files"
   },
   "blessings/Coin_Flip": {
     "source": "Phase 2b: aspect payload model",
@@ -1374,9 +1374,16 @@
     ]
   },
   "blessings/Shadow_Conversion": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "fires once when an enemy first becomes afflicted; continuous fire keeps Shadows up, so it is a one-off"
+    "source": "Step 9: one +100% hit per newly afflicted enemy (pack kills)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "shadows",
+        "field": "killTriggerPercent",
+        "value": 100,
+        "scalesWith": "{Damage}"
+      }
+    ]
   },
   "blessings/Nights_Minor_Blessing": {
     "source": "Phase 2b: aspect payload model",
@@ -2474,9 +2481,16 @@
     ]
   },
   "blessings/Everlasting_Winter": {
-    "source": "Native-gap pass: numbers from the PA / status-effect Blueprint defaults",
-    "effects": [],
-    "unmodeled": "pulses 50 area damage (PA_FrostMajorBlessing) but its pulse interval is native code and unknown"
+    "source": "Step 9: BP_Blizzard_AreaEffect_Script, 50 (PA_FrostMajorBlessing AoEDamage) every 0.5s",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "frost",
+        "field": "pulsePerSecondWhileActive",
+        "value": 100,
+        "note": "50 every 0.5s"
+      }
+    ]
   },
   "blessings/Stacking_Barrier": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -4017,7 +4031,7 @@
   "ability forge/brine_field/Sanctum": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
     "effects": [],
-    "unmodeled": "scales ability blessing procs with field radius; the radius is not modelled"
+    "unmodeled": "needs the Brine Field's radius in metres, which the game files only give as mesh scales"
   },
   "ability forge/turret/Drones": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",

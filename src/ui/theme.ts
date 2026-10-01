@@ -144,6 +144,8 @@ const STAT_LABELS: Record<string, string> = {
   killAreaDamage: 'Area damage per kill',
   killProcs: 'Extra procs per kill',
   killGauge: 'Gauge per kill',
+  killTriggerPercent: 'Extra hit per kill (% of a hit)',
+  pulsePerSecondWhileActive: 'Frozen pulse damage per second',
   lastBounceCrit: 'Last bounce always crits',
   critExtraBounces: 'Extra bounces per crit',
   critForks: 'Forks per crit',
@@ -157,7 +159,7 @@ export const FLAT_FIELDS = new Set([
   'repeats', 'falloffPercent', 'maxActive', 'lifetime', 'goldPercent', 'triggerPercent',
   'burstDamage', 'areaBurstDamage', 'dotPerSecond', 'shredPercent', 'shredPerSecondWhileActive',
   'shredOnEndPercent', 'gaugePerOrb', 'flareBurstDamage', 'flareAreaDamage', 'linkedFlares', 'fireStacks',
-  'poolObjects', 'orbDuration', 'orbArea', 'killBurstDamage', 'killAreaDamage', 'killProcs', 'killGauge', 'lastBounceCrit',
+  'poolObjects', 'killTriggerPercent', 'pulsePerSecondWhileActive', 'orbDuration', 'orbArea', 'killBurstDamage', 'killAreaDamage', 'killProcs', 'killGauge', 'lastBounceCrit',
   'critExtraBounces', 'critForks', 'orbDotPerSecond', 'extraThrows',
 ]);
 

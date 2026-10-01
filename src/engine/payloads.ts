@@ -137,9 +137,9 @@ export function payloadDamage(
   const result = core();
   const extras =
     (result.procsPerSecond * (m('burstDamage') + m('areaBurstDamage') * n) +
-      kills * (m('killBurstDamage') + m('killAreaDamage') * n)) *
+      kills * (m('killBurstDamage') + m('killAreaDamage') * n + (m('killTriggerPercent') / 100) * trigger)) *
     bonus;
-  if (kills > 0 && (m('killBurstDamage') || m('killAreaDamage') || m('killProcs') || m('killGauge'))) {
+  if (kills > 0 && (m('killBurstDamage') || m('killAreaDamage') || m('killProcs') || m('killGauge') || m('killTriggerPercent'))) {
     result.assumptions.push(`${kills.toFixed(2)} kills per second from a pack of ${Math.round(ctx.targetMaxHealth)} HP enemies`);
   }
   return { ...result, dps: result.dps + extras };
@@ -348,8 +348,10 @@ export function payloadDamage(
         `${Math.round(hp).toLocaleString()} HP ${tier === 'boss' ? 'boss' : 'enemies'}: Frozen every ` +
           `${cycle.toFixed(1)}s, shredded at half Health on average`,
       );
+      // Everlasting Winter: each Frozen enemy pulses area damage to every enemy nearby.
+      const pulse = m('pulsePerSecondWhileActive') * n * frozenShare * n;
       return {
-        dps: (n * shred * bonus) / cycle,
+        dps: ((n * shred) / cycle + pulse) * bonus,
         vulnerability: 1 + m('damageTakenWhileActive') * frozenShare,
         procsPerSecond: n / cycle,
         frozenShare,
