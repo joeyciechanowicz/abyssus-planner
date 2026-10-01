@@ -2471,9 +2471,23 @@
     "utility": true
   },
   "blessings/Retaliating_Barrier": {
-    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
-    "effects": [],
-    "unmodeled": "reflects damage enemies deal to you; enemy attacks are not modelled"
+    "source": "Step 5: Barrier vs enemy attacks (PA_DefenderGodPassive BarrierToGain 50; PA_DefenderPassive7/13)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "enemies use up your Barrier each time it is up",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "barrier",
+            "field": "burstDamage",
+            "value": 5000,
+            "note": "50 Barrier absorbed x 100 (10000% increase)"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Lasting_Defense": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -2530,9 +2544,24 @@
     ]
   },
   "blessings/Dazing_Barrier": {
-    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
-    "effects": [],
-    "unmodeled": "needs enemies to hit your Barrier; enemy attacks are not modelled"
+    "source": "Step 5: Barrier vs enemy attacks (PA_DefenderGodPassive BarrierToGain 50; PA_DefenderPassive7/13)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "enemies keep hitting your Barrier while it is up",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "barrier",
+            "field": "damageWhileActive",
+            "value": 0.15,
+            "note": "attackers take +15% damage for 2s",
+            "scalesWith": "{DamageIncrease}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Radiating_Barrier": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",

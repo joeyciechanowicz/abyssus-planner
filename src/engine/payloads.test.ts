@@ -307,6 +307,21 @@ describe('area size', () => {
   });
 });
 
+describe('Barrier vs enemy attacks', () => {
+  const b = (extra: Record<string, number>): Build => ({
+    ...emptyBuild,
+    aspects: { primary: 'Barrier', secondary: null, ability: null },
+    blessings: { Barrier_Primary: 1, ...extra },
+  });
+  it('Retaliating Barrier reflects 5,000 per activation; Dazing Barrier adds 15% over its uptime', () => {
+    const up = Number(/Barrier up (\d+)%/.exec(simulate(b({})).assumptions.find((a) => a.source === 'Barrier')!.text)![1]) / 100;
+    expect(simulate(b({ Dazing_Barrier: 1 })).vulnerability).toBeCloseTo(1 + 0.15 * up, 1);
+    // One 5,000 reflect per Barrier cycle; the cycle is 10s up / uptime.
+    const reflect = simulate(b({ Retaliating_Barrier: 1 })).aspectDps;
+    expect(reflect / ((5000 * up) / 10)).toBeCloseTo(1, 1);
+  });
+});
+
 describe('Blightful Freeze', () => {
   it("raises other aspects' status damage by 15% of the Frozen uptime", () => {
     const b = (extra: Record<string, number>): Build => ({

@@ -1376,8 +1376,22 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Barrier.webp",
-      "effects": [],
-      "unmodeled": "reflects damage enemies deal to you; enemy attacks are not modelled",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "enemies use up your Barrier each time it is up",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "barrier",
+              "field": "burstDamage",
+              "value": 5000,
+              "note": "50 Barrier absorbed x 100 (10000% increase)"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{ReflectedDamageIncreasePercentage}",
@@ -1612,7 +1626,23 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Barrier.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "enemies keep hitting your Barrier while it is up",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "barrier",
+              "field": "damageWhileActive",
+              "value": 0.15,
+              "note": "attackers take +15% damage for 2s",
+              "scalesWith": "{DamageIncrease}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Duration}",
@@ -1658,8 +1688,7 @@
             37
           ]
         }
-      ],
-      "unmodeled": "needs enemies to hit your Barrier; enemy attacks are not modelled"
+      ]
     },
     {
       "id": "Vigorous_Defense",
