@@ -728,6 +728,19 @@ describe('Turret extras', () => {
   });
 });
 
+describe('out-of-scope picks', () => {
+  it('lists melee/ally picks apart from gaps', () => {
+    const r = simulate({
+      ...emptyBuild,
+      aspects: { primary: 'Frozen', secondary: null, ability: null },
+      blessings: { Frozen_Primary: 1, Thawing_Strike: 1 },
+    });
+    const u = r.unmodeled.find((x) => x.name === 'Thawing Strike')!;
+    expect(u.outOfScope).toBe(true);
+    expect(u.utility).toBeFalsy();
+  });
+});
+
 describe('Automatic Detonation', () => {
   it('fires the Secondary on every Primary weakspot hit', () => {
     const disc = (weaponUpgrades: string[]): Build => ({ ...emptyBuild, weaponId: 'Disc_Thrower', modeName: 'Automatic', weaponUpgrades });

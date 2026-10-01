@@ -1080,9 +1080,10 @@
     ]
   },
   "blessings/Thawing_Strike": {
-    "source": "Phase 0 miscoding fix: melee-only, was all damage",
-    "unmodeled": "melee damage is not part of the simulated DPS",
-    "effects": []
+    "source": "Step 10: out of scope",
+    "effects": [],
+    "unmodeled": "melee only; melee is not part of the simulated rotation",
+    "outOfScope": true
   },
   "blessings/Frozen_Shards": {
     "source": "Phase 3: on-kill effects (kills/s = DPS / enemy Health, Pack only)",
@@ -1539,9 +1540,10 @@
     ]
   },
   "blessings/Oceans_Embrace": {
-    "source": "Phase 0 audit: ally-count bonus was counted solo",
+    "source": "Step 10: out of scope",
     "effects": [],
-    "unmodeled": "scales with nearby allies; a solo build has none"
+    "unmodeled": "scales with nearby allies; the planner simulates a solo player",
+    "outOfScope": true
   },
   "blessings/Blood_Offering": {
     "source": "Phase 0 audit: now states the condition it assumes",
@@ -3130,9 +3132,10 @@
     "utility": true
   },
   "soul wheel/execution": {
-    "source": "Phase 5: no damage effect",
+    "source": "Step 10: out of scope",
     "effects": [],
-    "unmodeled": "melee executes; melee damage is not part of the simulated DPS"
+    "unmodeled": "melee executes; melee is not part of the simulated rotation",
+    "outOfScope": true
   },
   "blessings/Giants_Blood": {
     "source": "Phase 5: no damage effect",

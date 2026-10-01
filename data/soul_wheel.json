@@ -412,7 +412,8 @@
           "description": "Melee hits can execute enemies below 20% Health.",
           "icon": "soulwheel/Execution.webp",
           "effects": [],
-          "unmodeled": "melee executes; melee damage is not part of the simulated DPS"
+          "unmodeled": "melee executes; melee is not part of the simulated rotation",
+          "outOfScope": true
         },
         {
           "id": "misty_dash",

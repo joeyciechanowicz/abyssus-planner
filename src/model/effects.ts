@@ -399,5 +399,7 @@ export const codifiedSchema = z.object({
   unmodeled: z.string().optional(),
   /** True when the pick has no damage effect at all (economy, defence, mobility, crowd control). */
   utility: z.boolean().optional(),
+  /** True when the pick deals damage only outside the simulated rotation (melee, allies). */
+  outOfScope: z.boolean().optional(),
 });
 export type Codified = z.infer<typeof codifiedSchema>;

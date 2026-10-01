@@ -4328,7 +4328,8 @@
           ]
         }
       ],
-      "unmodeled": "melee damage is not part of the simulated DPS"
+      "unmodeled": "melee only; melee is not part of the simulated rotation",
+      "outOfScope": true
     },
     {
       "id": "Packed_Snow",
@@ -7418,7 +7419,8 @@
       "logbookIndex": 17,
       "icon": "blessings/Tentacles.webp",
       "effects": [],
-      "unmodeled": "scales with nearby allies; a solo build has none"
+      "unmodeled": "scales with nearby allies; the planner simulates a solo player",
+      "outOfScope": true
     },
     {
       "id": "Oceanic_Supplies",

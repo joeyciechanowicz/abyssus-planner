@@ -65,7 +65,7 @@ export interface SimResult {
   breakdown: { source: string; stat: string; scope: string; value: number }[];
   /** Picks whose text the DSL could not express; their effect is NOT in the number.
    * `utility` ones have no damage effect at all, so nothing is missing. */
-  unmodeled: { name: string; reason: string; utility?: boolean }[];
+  unmodeled: { name: string; reason: string; utility?: boolean; outOfScope?: boolean }[];
   /** What the number assumes to count each pick (ideal-scenario conditions, stacks, chances). */
   assumptions: { source: string; text: string }[];
   /** True when any input used estimated rate-of-fire values (it almost always is). */
@@ -342,8 +342,9 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     reason?: string,
     utility?: boolean,
     sameAspectBlessings?: number,
+    outOfScope?: boolean,
   ) => {
-    if (effects.length === 0 && reason) unmodeled.push({ name, reason, utility });
+    if (effects.length === 0 && reason) unmodeled.push({ name, reason, utility, outOfScope });
     applyEffects(mods, effects, name, opts, { hasAbility: !!ability, sameAspectBlessings, charmRarities });
   };
 
@@ -362,7 +363,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       continue;
     }
     const sameAspect = Object.keys(build.blessings).filter((x) => blessingById.get(x)?.aspect === b.aspect).length;
-    collect(b.name, scaleBlessingEffects(b, rank), b.unmodeled, b.utility, sameAspect);
+    collect(b.name, scaleBlessingEffects(b, rank), b.unmodeled, b.utility, sameAspect, b.outOfScope);
   }
 
   for (const id of build.charmIds) {
@@ -373,7 +374,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
 
   for (const id of build.soulSkillIds) {
     const s = soulSkillById.get(id);
-    if (s) collect(s.name, s.effects, s.unmodeled, s.utility);
+    if (s) collect(s.name, s.effects, s.unmodeled, s.utility, undefined, s.outOfScope);
     else warnings.push(`unknown soul skill: ${id}`);
   }
 

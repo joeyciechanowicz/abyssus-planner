@@ -20,7 +20,7 @@ import { STATUSES_SEEN, collectStatuses } from './statuses';
 // `effects` is optional in the inferred type because its schema carries .default([]).
 interface Group {
   label: string;
-  items: { name: string; effects?: unknown[]; unmodeled?: string; utility?: boolean }[];
+  items: { name: string; effects?: unknown[]; unmodeled?: string; utility?: boolean; outOfScope?: boolean }[];
 }
 
 const effectsOf = (i: { effects?: unknown[] }) => i.effects ?? [];
@@ -42,10 +42,10 @@ console.log('=== codification coverage ===');
 let total = 0;
 let codified = 0;
 let utilityTotal = 0;
-console.log(`  ${''.padEnd(22)} counted  utility  gap`);
+console.log(`  ${''.padEnd(22)} counted  utility  gap   (utility includes out-of-scope melee/ally picks)`);
 for (const g of groups) {
   const c = g.items.filter((i) => effectsOf(i).length > 0).length;
-  const u = g.items.filter((i) => effectsOf(i).length === 0 && i.utility).length;
+  const u = g.items.filter((i) => effectsOf(i).length === 0 && (i.utility || i.outOfScope)).length;
   total += g.items.length;
   codified += c;
   utilityTotal += u;

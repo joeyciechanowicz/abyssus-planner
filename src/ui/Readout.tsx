@@ -235,8 +235,9 @@ export function Assumptions({ result }: { result: SimResult }) {
 }
 
 export function NotCounted({ result }: { result: SimResult }) {
-  const gaps = result.unmodeled.filter((u) => !u.utility && !soulSkillNames.has(u.name));
-  const soul = result.unmodeled.filter((u) => !u.utility && soulSkillNames.has(u.name)).length;
+  const gaps = result.unmodeled.filter((u) => !u.utility && !u.outOfScope && !soulSkillNames.has(u.name));
+  const soul = result.unmodeled.filter((u) => !u.utility && !u.outOfScope && soulSkillNames.has(u.name)).length;
+  const outside = result.unmodeled.filter((u) => u.outOfScope);
   const utility = result.unmodeled.filter((u) => u.utility);
   if (result.unmodeled.length === 0 && result.warnings.length === 0) return null;
 
@@ -256,6 +257,11 @@ export function NotCounted({ result }: { result: SimResult }) {
         </>
       )}
       {soul > 0 && <p className="sub small">{gaps.length > 0 ? 'Plus' : 'Only'} {soul} Soul Wheel skills with no damage effect.</p>}
+      {outside.length > 0 && (
+        <p className="sub small" title={outside.map((u) => `${u.name}: ${u.reason}`).join('\n')}>
+          Outside the simulated rotation: {outside.map((u) => u.name).join(', ')}.
+        </p>
+      )}
       {utility.length > 0 && (
         <p className="sub small" title={utility.map((u) => `${u.name}: ${u.reason}`).join('\n')}>
           {utility.length} pick{utility.length === 1 ? '' : 's'} with no damage effect: {utility.map((u) => u.name).join(', ')}.

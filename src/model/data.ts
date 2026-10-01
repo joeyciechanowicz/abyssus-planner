@@ -23,6 +23,8 @@ const codified = {
   // No damage effect at all (economy, defence, mobility, crowd control): shown as
   // utility rather than as a modelling gap. Set in scripts/effect_overrides.json.
   utility: z.boolean().optional(),
+  // Affects damage, but only outside the simulated rotation (melee, allies).
+  outOfScope: z.boolean().optional(),
 };
 
 /** One scaling variable on a blessing, e.g. "{DamageIncrease}" going 15/30/45/60%... by rank. */
