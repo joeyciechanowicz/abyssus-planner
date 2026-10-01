@@ -159,6 +159,12 @@ payload's base damage, tick rate, duration and scaling formula?
   steps, area abilities, charm-rarity conditions). 83% of damage-relevant picks counted
   (286 counted, 102 utility, 58 gaps).
 
+- 2026-10-02: kill-rate model (Pack only: kills/s = DPS / enemy Health) for on-kill effects,
+  Overkill, executes; Double Trouble. 87% counted (297 counted, 103 utility, 46 gaps). The
+  remaining gaps need native-only values (Chain Lightning base crit chance, a few explosion/pulse
+  magnitudes) or mechanics outside the model (Engine Rifle heat, Harpoon Combo Points, melee,
+  enemy attacks, spear counts, charge timing).
+
 ## Later phases (unchanged from the earlier proposal)
 - Phase 1b: merge forge-upgrade `MutatorDescriptionVariables` (unstated magnitudes).
 - Phase 2: aspect payload engine + per-payload scopes, statusEffectiveness/duration, crit → weakspot.

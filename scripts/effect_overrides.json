@@ -2137,9 +2137,22 @@
     "utility": true
   },
   "blessings/Lethal_Gold": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "instant kills on standard enemies; execute effects come in Phase 3"
+    "source": "Phase 3: kills and executes",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsStandard",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "goldburst",
+            "field": "burstDamage",
+            "value": 12.5,
+            "note": "5% chance to kill outright, saving half of a 500 HP enemy"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Heavy_Freeze": {
     "source": "Phase 2c: Freeze payload model",
@@ -2604,9 +2617,16 @@
     ]
   },
   "blessings/Lethal_Brine": {
-    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
-    "effects": [],
-    "unmodeled": "executes; execute effects come in Phase 3"
+    "source": "Phase 3: kills and executes",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "brine",
+        "field": "areaBurstDamage",
+        "value": 0.8,
+        "note": "5% chance x a quarter of enemies below 25% x 12.5% of 500 HP saved"
+      }
+    ]
   },
   "blessings/Brine_Mitosis": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -2967,9 +2987,16 @@
     "unmodeled": "scales with your missing Health; the ideal scenario keeps you at full Health"
   },
   "charms/overkill": {
-    "source": "Phase 3: charms (BP_*_CharacterMutator / WeaponMutator)",
-    "effects": [],
-    "unmodeled": "depends on overkill damage per kill; kill rate is not modelled"
+    "source": "Phase 3: kills and executes",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "overkillTransfer",
+        "scope": "all",
+        "value": 2,
+        "note": "moved to the next enemy, +100% (PA_Overkill {DamageIncreasePercentage})"
+      }
+    ]
   },
   "weapon forge/Engine_Rifle/Prolonged Revving": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
@@ -3670,8 +3697,15 @@
     ]
   },
   "shared ability forge/Double Trouble": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "doubles ability-slot blessing procs; not wired into the payload model yet"
+    "source": "Phase 3: kills and executes",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "abilityProcRepeat",
+        "scope": "all",
+        "value": 0.3,
+        "scalesWith": "{ProcChance}"
+      }
+    ]
   }
 }

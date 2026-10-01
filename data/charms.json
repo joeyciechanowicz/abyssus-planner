@@ -440,8 +440,15 @@
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Exterminate",
       "icon": "charms/Legendary.webp",
-      "effects": [],
-      "unmodeled": "depends on overkill damage per kill; kill rate is not modelled"
+      "effects": [
+        {
+          "op": "flat",
+          "stat": "overkillTransfer",
+          "scope": "all",
+          "value": 2,
+          "note": "moved to the next enemy, +100% (PA_Overkill {DamageIncreasePercentage})"
+        }
+      ]
     },
     {
       "id": "giant_slayer",

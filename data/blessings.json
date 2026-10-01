@@ -3628,8 +3628,21 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Lethal_Gold.webp",
-      "effects": [],
-      "unmodeled": "instant kills on standard enemies; execute effects come in Phase 3",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetIsStandard",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "goldburst",
+              "field": "burstDamage",
+              "value": 12.5,
+              "note": "5% chance to kill outright, saving half of a 500 HP enemy"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{TenthsChance}",
@@ -9919,8 +9932,15 @@
       "kind": "blessing",
       "logbookIndex": 16,
       "icon": "blessings/Brine.webp",
-      "effects": [],
-      "unmodeled": "executes; execute effects come in Phase 3",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "brine",
+          "field": "areaBurstDamage",
+          "value": 0.8,
+          "note": "5% chance x a quarter of enemies below 25% x 12.5% of 500 HP saved"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",

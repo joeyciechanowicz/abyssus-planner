@@ -49,6 +49,10 @@ export const STATS = [
   'extraChargeSteps',
   /** Flat: > 0 turns the ability into an area attack. */
   'abilityArea',
+  /** Flat: overkill damage carried to the next enemy, as a multiple (Overkill: 2 = moved and doubled). */
+  'overkillTransfer',
+  /** Flat: chance an ability-slot blessing proc triggers a second time (Double Trouble). */
+  'abilityProcRepeat',
 ] as const;
 export type Stat = (typeof STATS)[number];
 

@@ -67,8 +67,15 @@
         "name": "Double Trouble",
         "description": "Blessings on your Ability have 30% chance to trigger twice.",
         "icon": "forge/Ability_Shared.webp",
-        "effects": [],
-        "unmodeled": "doubles ability-slot blessing procs; not wired into the payload model yet"
+        "effects": [
+          {
+            "op": "flat",
+            "stat": "abilityProcRepeat",
+            "scope": "all",
+            "value": 0.3,
+            "scalesWith": "{ProcChance}"
+          }
+        ]
       }
     ]
   }

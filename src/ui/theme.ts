@@ -65,6 +65,14 @@ const STAT_LABELS: Record<string, string> = {
   movementSpeed: 'Movement speed',
   extraProjectiles: 'Extra projectiles',
   extraExplosions: 'Extra explosions',
+  damageRampPerSecond: 'Damage per second held',
+  fireRateRampPerSecond: 'Fire rate per second held',
+  ammoRefund: 'Ammo refunded',
+  weakspotChance: 'Weakspot hit chance',
+  extraChargeSteps: 'Extra charge steps',
+  abilityArea: 'Ability hits an area',
+  overkillTransfer: 'Overkill carried over',
+  abilityProcRepeat: 'Ability procs repeat',
   // Aspect payload mechanics (`payload` effects).
   chance: 'Proc chance',
   repeats: 'Extra triggers',
@@ -80,12 +88,43 @@ const STAT_LABELS: Record<string, string> = {
   burstDamage: 'Extra damage per proc',
   areaBurstDamage: 'Extra area damage per proc',
   dotPerSecond: 'Damage per second',
+  buildup: 'Frost buildup',
+  damageTakenWhileActive: 'Damage taken while Frozen',
+  duration: 'Duration',
+  shredPercent: 'Shred (points of current Health)',
+  shredPerSecondWhileActive: 'Shred per second while Frozen (points)',
+  shredOnEndPercent: 'Shred when Freeze ends (points)',
+  buildupRetained: 'Buildup kept after a Freeze',
+  gaugeGain: 'Gauge gain',
+  orbCost: 'Spirit cost',
+  damageWhileActive: 'Damage while Barrier is up',
+  cooldown: 'Cooldown',
+  gaugePerOrb: 'Gauge refunded per activation',
+  fullGaugeChance: 'Chance per hit to fill the gauge',
+  flareChance: 'Flare chance',
+  flareDamage: 'Flare damage',
+  flareBurstDamage: 'Extra damage per Flare',
+  flareAreaDamage: 'Extra area damage per Flare',
+  linkedFlares: 'Flares spread to every burning enemy',
+  fireStacks: 'Fire stacks',
+  poolObjects: 'Objects in the throw pool',
+  poolDamage: 'Object damage',
+  poolAreaDamage: 'Object area damage',
+  poolBounce: 'Object bounce chance',
+  damagePerPoolObject: 'Damage per pool object',
+  throwAllChance: 'Chance to throw every object',
+  killBurstDamage: 'Damage per kill',
+  killAreaDamage: 'Area damage per kill',
+  killProcs: 'Extra procs per kill',
+  killGauge: 'Gauge per kill',
 };
 
 /** Payload fields counted in their own units rather than as a +% bonus. */
 export const FLAT_FIELDS = new Set([
   'repeats', 'falloffPercent', 'maxActive', 'lifetime', 'goldPercent', 'triggerPercent',
-  'burstDamage', 'areaBurstDamage', 'dotPerSecond',
+  'burstDamage', 'areaBurstDamage', 'dotPerSecond', 'shredPercent', 'shredPerSecondWhileActive',
+  'shredOnEndPercent', 'gaugePerOrb', 'flareBurstDamage', 'flareAreaDamage', 'linkedFlares', 'fireStacks',
+  'poolObjects', 'killBurstDamage', 'killAreaDamage', 'killProcs', 'killGauge',
 ]);
 
 const SCOPE_LABELS: Record<string, string> = {
@@ -101,6 +140,10 @@ const SCOPE_LABELS: Record<string, string> = {
   tentacle: 'Tentacles',
   goldburst: 'Goldburst',
   shadows: 'Shadows',
+  frost: 'Freeze',
+  spirit: 'Spirits',
+  brine: 'Brine Ball',
+  barrier: 'Barrier',
 };
 
 /** "Damage, primary fire" -- a breakdown row's stat in plain words. */

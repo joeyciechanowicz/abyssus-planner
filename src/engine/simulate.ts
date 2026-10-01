@@ -397,7 +397,11 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   });
   streams.push(scaled(main, mode.type, (1 - weaveRate) * weaponUptime));
   if (weaveOutput && weaveMode) streams.push(scaled(weaveOutput, weaveMode.type, weaveRate * weaponUptime));
-  if (abilityStream) streams.push(abilityStream);
+  if (abilityStream) {
+    // Double Trouble: ability-slot blessing procs sometimes trigger twice.
+    abilityStream.procMultiplier *= 1 + mods.flatFor('abilityProcRepeat');
+    streams.push(abilityStream);
+  }
 
   // Hemorrhage ticks from the primary mode's Damage stat, whichever mode procs it.
   const primaryOutput =
@@ -463,6 +467,13 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       aspectDps += r.dps;
       aspects.push({ name: payload.name, dps: r.dps });
     }
+  }
+  // Overkill: each kill wastes about half a hit, which is carried (and multiplied) onward.
+  const overkill = killsPerSecond * (main.perHit / 2) * mods.flatFor('overkillTransfer');
+  if (overkill > 0) {
+    aspectDps += overkill;
+    aspects.push({ name: 'Overkill', dps: overkill });
+    mods.assume('Overkill', 'each kill overshoots by half a hit on average');
   }
   if (vulnerability !== 1) {
     aspectDps *= vulnerability;

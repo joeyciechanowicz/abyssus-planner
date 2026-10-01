@@ -572,6 +572,13 @@ describe('ideal defaults and target scenario', () => {
 describe('charms', () => {
   const bow: Build = { ...emptyBuild, weaponId: 'Combat_Bow', modeName: 'Exploding Arrow' };
 
+  it('Overkill carries half a hit per kill, doubled, in a pack only', () => {
+    const r = simulate({ ...emptyBuild, charmIds: ['overkill'] }, { target: 'pack' });
+    const kills = r.weaponDps / 500;
+    expect(r.aspects.find((a) => a.name === 'Overkill')?.dps).toBeCloseTo(kills * (r.perHit / 2) * 2, 5);
+    expect(simulate({ ...emptyBuild, charmIds: ['overkill'] }, { target: 'boss' }).aspectDps).toBe(0);
+  });
+
   it('Fan triples every direct hit', () => {
     const plain = simulate(emptyBuild, { weakspotAccuracy: 0 });
     expect(simulate({ ...emptyBuild, charmIds: ['fan'] }, { weakspotAccuracy: 0 }).perHit).toBeCloseTo(plain.perHit * 3, 5);
