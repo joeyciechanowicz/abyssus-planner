@@ -3383,45 +3383,58 @@
     "utility": true
   },
   "weapon forge/Harpoon_Gun/Increased Combo": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "source": "Harpoon Combo Points (BP_HarpoonGun_Script, C_*_DamageMultiPerComboPoint_Curve)",
     "effects": [
       {
-        "op": "mult",
-        "stat": "damage",
-        "scope": "secondary",
-        "value": 0.25,
-        "note": "5 Combo Points instead of 4, damage assumed linear"
+        "op": "flat",
+        "stat": "comboPoints",
+        "scope": "all",
+        "value": 1,
+        "scalesWith": "{ComboPoints}"
       }
     ]
   },
   "weapon forge/Harpoon_Gun/Plentiful Combo": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "ammo refills per Combo Point; the Combo Point economy is not modelled"
-  },
-  "weapon forge/Harpoon_Gun/Precise Combo": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "source": "Harpoon Combo Points (BP_HarpoonGun_Script, C_*_DamageMultiPerComboPoint_Curve)",
     "effects": [
       {
-        "op": "conditional",
-        "when": "assumed",
-        "then": [
-          {
-            "op": "mult",
-            "stat": "damage",
-            "scope": "secondary",
-            "value": 0.25,
-            "note": "acts as max + 1 Combo Points"
-          }
-        ],
-        "note": "you spend Combo Points on the marked amount"
+        "op": "flat",
+        "stat": "comboAmmoRefund",
+        "scope": "all",
+        "value": 1,
+        "scalesWith": "{AmmoRefilled}"
+      }
+    ]
+  },
+  "weapon forge/Harpoon_Gun/Precise Combo": {
+    "source": "Harpoon Combo Points (BP_HarpoonGun_Script, C_*_DamageMultiPerComboPoint_Curve)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "preciseCombo",
+        "scope": "all",
+        "value": 1
       }
     ]
   },
   "weapon forge/Harpoon_Gun/Charged Harpoons": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "charge-and-burst timing is not modelled"
+    "source": "Harpoon Combo Points (BP_HarpoonGun_Script, C_*_DamageMultiPerComboPoint_Curve)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "you charge every Primary volley: 6 harpoons per 1s charge",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "fireRate",
+            "scope": "primary",
+            "value": 4.0,
+            "note": "1.2/s -> 6/s"
+          }
+        ]
+      }
+    ]
   },
   "ability forge/frag_grenade/Implosive Force": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",

@@ -174,6 +174,10 @@ payload's base damage, tick rate, duration and scaling formula?
   cooldown, encounter refill); Turret/Brine Field lifetime damage; Increased Efficiency and
   Active Reload. 91% counted (313 counted, 103 utility, 30 gaps).
 
+- 2026-10-02: Harpoon Combo Points: Primary hits bank points (max 4), Secondaries spend them and
+  scale by their game curves; points per Secondary follow the Primary/Secondary mix. Increased,
+  Precise, Plentiful Combo and Charged Harpoons counted. 92% (317 counted, 103 utility, 26 gaps).
+
 ## Later phases (unchanged from the earlier proposal)
 - Phase 1b: merge forge-upgrade `MutatorDescriptionVariables` (unstated magnitudes).
 - Phase 2: aspect payload engine + per-payload scopes, statusEffectiveness/duration, crit → weakspot.

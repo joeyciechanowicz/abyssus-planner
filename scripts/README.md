@@ -242,5 +242,10 @@ Brine Field's sustained damage) comes from each ability's Blueprint CDO:
 `python scripts/extract/ability_timing.py <out>` (run codify.py and
 link_blessing_upgrades.py after it, as after any extractor).
 
+Harpoon Gun Combo Points (`maxComboPoints` and each Secondary's `comboCurve`,
+from `BP_HarpoonGun_Script` and the `C_*_DamageMultiPerComboPoint_Curve`
+assets): `python scripts/extract/harpoon_combo.py <out>` after dumping
+`Blueprints/Weapons/HarpoonGun/`.
+
 `weapon_mod_stats.py` also writes each fire mode's `procChance` (its multiplier
 on aspect proc chances) from the same ModStats assets.

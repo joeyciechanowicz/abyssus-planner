@@ -2846,7 +2846,18 @@
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
           "estimated": true,
-          "procChance": 2.5
+          "procChance": 2.5,
+          "comboCurve": {
+            "single": [
+              0.5,
+              1.0,
+              2.0,
+              3.5,
+              6.0,
+              9.0,
+              13.0
+            ]
+          }
         },
         {
           "name": "Binding Harpoons",
@@ -2897,7 +2908,27 @@
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
           "estimated": false,
-          "procChance": 3.0
+          "procChance": 3.0,
+          "comboCurve": {
+            "single": [
+              1.0,
+              3.0,
+              4.5,
+              6.5,
+              10.0,
+              13.0,
+              16.0
+            ],
+            "multi": [
+              1.0,
+              1.5,
+              2.25,
+              3.25,
+              5.0,
+              6.5,
+              8.5
+            ]
+          }
         },
         {
           "name": "Brine-Powered Harpoons",
@@ -2947,7 +2978,18 @@
           "reloadTime": 2.0,
           "projectilesPerShot": 1,
           "estimated": true,
-          "procChance": 2.5
+          "procChance": 2.5,
+          "comboCurve": {
+            "single": [
+              1.0,
+              2.0,
+              4.0,
+              7.0,
+              12.0,
+              18.0,
+              25.0
+            ]
+          }
         }
       ],
       "forgeUpgrades": [
@@ -2957,11 +2999,11 @@
           "icon": "forge/Increased_Combo.webp",
           "effects": [
             {
-              "op": "mult",
-              "stat": "damage",
-              "scope": "secondary",
-              "value": 0.25,
-              "note": "5 Combo Points instead of 4, damage assumed linear"
+              "op": "flat",
+              "stat": "comboPoints",
+              "scope": "all",
+              "value": 1,
+              "scalesWith": "{ComboPoints}"
             }
           ]
         },
@@ -2969,8 +3011,15 @@
           "name": "Plentiful Combo",
           "description": "For each consumed Combo Point, refill 1 ammo.",
           "icon": "forge/Increased_Combo.webp",
-          "effects": [],
-          "unmodeled": "ammo refills per Combo Point; the Combo Point economy is not modelled"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "comboAmmoRefund",
+              "scope": "all",
+              "value": 1,
+              "scalesWith": "{AmmoRefilled}"
+            }
+          ]
         },
         {
           "name": "Precise Combo",
@@ -2978,18 +3027,10 @@
           "icon": "forge/Increased_Combo.webp",
           "effects": [
             {
-              "op": "conditional",
-              "when": "assumed",
-              "then": [
-                {
-                  "op": "mult",
-                  "stat": "damage",
-                  "scope": "secondary",
-                  "value": 0.25,
-                  "note": "acts as max + 1 Combo Points"
-                }
-              ],
-              "note": "you spend Combo Points on the marked amount"
+              "op": "flat",
+              "stat": "preciseCombo",
+              "scope": "all",
+              "value": 1
             }
           ]
         },
@@ -2997,8 +3038,22 @@
           "name": "Charged Harpoons",
           "description": "Primary and Secondary can be charged, causing up to 6 harpoons to be fired in quick succession.",
           "icon": "forge/Increased_Combo.webp",
-          "effects": [],
-          "unmodeled": "charge-and-burst timing is not modelled"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "note": "you charge every Primary volley: 6 harpoons per 1s charge",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "fireRate",
+                  "scope": "primary",
+                  "value": 4.0,
+                  "note": "1.2/s -> 6/s"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "Rapid Harpoons",
@@ -3122,7 +3177,8 @@
             }
           ]
         }
-      ]
+      ],
+      "maxComboPoints": 4
     }
   ],
   "rateNote": "fireRate (shots/sec), clipSize and reloadTime are NOT published by the wiki -- they are estimates, flagged per mode with \"estimated\": true. Damage values are from the wiki."

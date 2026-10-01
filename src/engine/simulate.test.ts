@@ -635,6 +635,33 @@ describe('ability timing', () => {
   });
 });
 
+describe('Harpoon Combo Points', () => {
+  // Piercing: 6 shots per 5s + 2s reload = 0.857/s. Barbed / Brine-Powered: 6 per 12s + 2s = 0.429/s.
+  const harpoon = (modeName: string, weave: string | null, weaponUpgrades: string[] = []): Build => ({
+    ...emptyBuild, weaponId: 'Harpoon_Gun', modeName, weaveModeName: weave, weaponUpgrades,
+  });
+  const at4 = (modeName: string) => simulate(harpoon(modeName, null), { weakspotAccuracy: 0 });
+
+  it('spends no points without Primary hits: Barbed falls to its 0-point value', () => {
+    const r = simulate(harpoon('Barbed Harpoons', null), { weakspotAccuracy: 0 });
+    // Listed damage assumes 4 points (curve 6.0); 0 points is curve 0.5.
+    expect(r.assumptions.some((a) => a.text.startsWith('0.0 of 4 Combo Points'))).toBe(true);
+    expect(r.perShot).toBeCloseTo(50 * (0.5 / 6), 5);
+  });
+
+  it('banks 4 points per Secondary when Primaries fire two thirds of the time', () => {
+    const r = simulate(harpoon('Barbed Harpoons', 'Piercing Harpoons'), { weakspotAccuracy: 0, weaveRate: 2 / 3 });
+    expect(r.assumptions.some((a) => a.text.startsWith('4.0 of 4'))).toBe(true);
+    expect(r.perShot).toBeCloseTo(50, 5); // the listed 4-point damage
+  });
+
+  it('Increased Combo spends 5 points: Brine-Powered x18/12', () => {
+    const plain = simulate(harpoon('Brine-Powered Harpoons', 'Piercing Harpoons'), { weakspotAccuracy: 0, weaveRate: 0.9 });
+    const inc = simulate(harpoon('Brine-Powered Harpoons', 'Piercing Harpoons', ['Increased Combo']), { weakspotAccuracy: 0, weaveRate: 0.9 });
+    expect(inc.perShot / plain.perShot).toBeCloseTo(18 / 12, 5);
+  });
+});
+
 describe('forge upgrades', () => {
   const fx = (weaponId: string, modeName: string, weaponUpgrades: string[], extra: Partial<Build> = {}): Build => ({
     ...emptyBuild, weaponId, modeName, weaponUpgrades, ...extra,

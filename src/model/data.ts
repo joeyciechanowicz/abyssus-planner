@@ -99,6 +99,9 @@ export const modeSchema = z.object({
   comboCost: z.number().optional(),
   chargeSteps: z.number().optional(),
   variantNote: z.string().optional(),
+  // Harpoon Gun Secondaries: damage multiplier by Combo Points spent (index = points),
+  // single target and, where it differs, per target when several are hit.
+  comboCurve: z.object({ single: z.array(z.number()), multi: z.array(z.number()).optional() }).optional(),
 });
 export type WeaponMode = z.infer<typeof modeSchema>;
 
@@ -108,6 +111,8 @@ export const weaponSchema = z.object({
   // Portrait art from the game files (scripts/extract/game_icons.py).
   icon: z.string().nullable().optional(),
   modes: z.array(modeSchema),
+  // Harpoon Gun: Combo Points banked by Primary hits, spent by Secondaries.
+  maxComboPoints: z.number().optional(),
   forgeUpgrades: z.array(z.object({ id: z.string().optional(), ...codified })),
 });
 export type Weapon = z.infer<typeof weaponSchema>;

@@ -75,6 +75,9 @@ const STAT_LABELS: Record<string, string> = {
   abilityProcRepeat: 'Ability procs repeat',
   abilityCooldownPerKill: 'Ability recharge per kill (s)',
   abilityResetOnKill: 'Kills reset the ability',
+  comboPoints: 'Max Combo Points',
+  preciseCombo: 'Precise Combo',
+  comboAmmoRefund: 'Ammo per Combo Point spent',
   // Aspect payload mechanics (`payload` effects).
   chance: 'Proc chance',
   repeats: 'Extra triggers',

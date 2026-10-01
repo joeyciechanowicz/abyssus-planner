@@ -92,6 +92,8 @@ function componentTotal(
 const ASPECT_SLOTS = ['primary', 'secondary', 'ability'] as const;
 
 interface ModeOutput {
+  /** Shots fired per second, reloads included. */
+  shotsPerSecond: number;
   /** Direct (single-target) and area hit events this mode lands, for aspect procs. */
   stream: Omit<HitStream, 'slot'>;
   /** Base damage of one projectile after damage bonuses -- the game's current Damage stat. */
@@ -119,8 +121,11 @@ function computeModeOutput(
   mods: Modifiers,
   opts: SimOptions,
   abilityDamage: number,
+  /** Combo Point scaling on this mode's damage, and ammo refunded per shot from outside it. */
+  extra: { comboFactor?: number; extraRefund?: number } = {},
 ): ModeOutput {
   let mode = modeIn;
+  const combo = extra.comboFactor ?? 1;
   const scope = mode.type.toLowerCase() as 'primary' | 'secondary';
 
   // Fan-style extra projectiles copy every direct hit; Mr. Boom-style extra
@@ -161,8 +166,9 @@ function computeModeOutput(
 
   // Weakspot damage is already the doubled figure in the wiki's own table, so the
   // weakspot bonus scales that rather than re-applying the x2.
-  const normalHit = baseImpact * damageMult;
-  const weakspotHit = baseWeakspot * damageMult * weakspotMult;
+  // Combo Points scale the shot's damage, not the displayed damage multiplier.
+  const normalHit = baseImpact * damageMult * combo;
+  const weakspotHit = baseWeakspot * damageMult * weakspotMult * combo;
   const plainImpact = normalHit * (1 - weakspotRate) + weakspotHit * weakspotRate;
   // Exploding hits: the struck enemy's hit counts as an explosion (area bonuses, Mr. Boom),
   // and every other enemy in the pack takes its normal damage.
@@ -195,7 +201,7 @@ function computeModeOutput(
 
   // Area components (explosions, pulls) catch every enemy in the target scenario;
   // a direct hit only ever lands on one.
-  const areaDamage = baseExtra * aoeMult * enemiesFor(opts.target);
+  const areaDamage = baseExtra * combo * aoeMult * enemiesFor(opts.target);
   const perShot = (blendedImpact + splash + areaDamage + procDamage) * opts.accuracy;
 
   const fireRate = mode.fireRate * (1 + mods.multFor('fireRate', scope) + rampFireRate);
@@ -207,7 +213,7 @@ function computeModeOutput(
           mods.flatFor('clipSize')));
 
   // Ammo refunds (Critical Cylinder) stretch the clip: each shot costs (1 - refund).
-  const refund = Math.min(0.95, mods.flatFor('ammoRefund'));
+  const refund = Math.min(0.95, mods.flatFor('ammoRefund') + (extra.extraRefund ?? 0));
   const shotsPerCycle = clipSize === null ? fireRate : clipSize / (1 - refund); // no clip => one second of fire
   const cycleTime = shotsPerCycle / fireRate + (clipSize === null ? 0 : reloadTime);
   const perMagazine = perShot * shotsPerCycle;
@@ -232,9 +238,10 @@ function computeModeOutput(
   const dotPerApplication = componentTotal(mode.damageComponents, ['dot'], opts.chargeLevel);
   // A DoT is refreshed by fire, so treat it as landing once per shot but not
   // stacking beyond a single application at a time.
-  const dotDps = dotPerApplication > 0 ? dotPerApplication * dotMult * Math.min(fireRate, 1) : 0;
+  const dotDps = dotPerApplication > 0 ? dotPerApplication * combo * dotMult * Math.min(fireRate, 1) : 0;
 
   return {
+    shotsPerSecond,
     stream,
     damageStat: directPerShot > 0 ? (baseImpact / directPerShot) * damageMult : 0,
     perHit: blendedImpact,
@@ -334,7 +341,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
 
   // --- Modes: main + optional weave ----------------------------------------
   const abilityDamage = ability?.damage ?? 0;
-  const main = computeModeOutput(mode, mods, opts, abilityDamage);
+  let main = computeModeOutput(mode, mods, opts, abilityDamage);
   const areaTargets = enemiesFor(opts.target);
   if (areaTargets > 1 && mode.damageComponents?.some((c) => ['explosion', 'pull', 'aoe'].includes(c.kind))) {
     mods.assume(mode.name, `its area damage catches all ${areaTargets} enemies`);
@@ -358,6 +365,47 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
 
   const weaveRate = weaveOutput ? Math.min(Math.max(opts.weaveRate, 0), 1) : 0;
   const weaponUptime = ability ? Math.min(Math.max(opts.weaponUptime, 0), 1) : 1;
+
+  // Harpoon Gun Combo Points: Primary hits bank one each (up to the max), a Secondary
+  // spends them all and scales by its curve. The listed Secondary damage assumes 4.
+  const comboMode = [mode, weaveMode].find((m) => m?.type === 'Secondary' && m.comboCurve);
+  if (comboMode?.comboCurve && weapon.maxComboPoints !== undefined) {
+    const mainShare = (1 - weaveRate) * weaponUptime;
+    const weaveShare = weaveRate * weaponUptime;
+    const [primaryOut, primaryShare] = mode.type === 'Primary' ? [main, mainShare] : [weaveOutput, weaveShare];
+    const [secondaryOut, secondaryShare] = mode.type === 'Secondary' ? [main, mainShare] : [weaveOutput, weaveShare];
+    const maxPoints = weapon.maxComboPoints + mods.flatFor('comboPoints');
+    const primaryHits = (primaryOut?.stream.directHitsPerSecond ?? 0) * primaryShare;
+    const secondaryShots = (secondaryOut?.shotsPerSecond ?? 0) * secondaryShare;
+    const points = secondaryShots > 0 ? Math.min(maxPoints, primaryHits / secondaryShots) : 0;
+    const curve =
+      (enemiesFor(opts.target) > 1 ? comboMode.comboCurve.multi : undefined) ?? comboMode.comboCurve.single;
+    const at = (cp: number) => {
+      const i = Math.min(Math.max(cp, 0), curve.length - 1);
+      const lo = Math.floor(i);
+      const hi = Math.min(lo + 1, curve.length - 1);
+      return curve[lo] + (curve[hi] - curve[lo]) * (i - lo);
+    };
+    // Precise Combo: spending the marked amount (on average half the max) acts as max + 1.
+    const precise = mods.flatFor('preciseCombo') > 0 && points >= (maxPoints + 1) / 2;
+    const value = precise ? at(maxPoints + 1) : at(points);
+    const factor = value / comboMode.comboCurve.single[4];
+    mods.assume(
+      comboMode.name,
+      `${points.toFixed(1)} of ${maxPoints} Combo Points per shot` + (precise ? ', spent on the marked amount' : ''),
+    );
+    // Plentiful Combo: each point spent refills one Primary round.
+    const refund =
+      primaryOut && primaryHits > 0
+        ? Math.min(0.95, (mods.flatFor('comboAmmoRefund') * points * secondaryShots) / (primaryOut.shotsPerSecond * primaryShare))
+        : 0;
+    const redo = (m: WeaponMode) =>
+      m === comboMode
+        ? computeModeOutput(m, mods, opts, abilityDamage, { comboFactor: factor })
+        : computeModeOutput(m, mods, opts, abilityDamage, { extraRefund: refund });
+    main = redo(mode);
+    if (weaveMode && weaveOutput) weaveOutput = redo(weaveMode);
+  }
   const weaveWeaponDps = (weaveOutput?.weaponDps ?? 0) * weaveRate * weaponUptime;
   const weaveDotDps = (weaveOutput?.dotDps ?? 0) * weaveRate * weaponUptime;
   const weaponDps = main.weaponDps * (1 - weaveRate) * weaponUptime + weaveWeaponDps;

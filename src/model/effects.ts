@@ -57,6 +57,11 @@ export const STATS = [
   'abilityCooldownPerKill',
   /** Flat: > 0 means a cast that kills resets the cooldown (Active Reload). */
   'abilityResetOnKill',
+  /** Harpoon Gun: +max Combo Points; > 0 = Precise Combo (spending the marked amount acts as max + 1);
+   * ammo refilled per Combo Point spent. */
+  'comboPoints',
+  'preciseCombo',
+  'comboAmmoRefund',
 ] as const;
 export type Stat = (typeof STATS)[number];
 
