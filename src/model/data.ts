@@ -102,6 +102,8 @@ export const modeSchema = z.object({
   // Harpoon Gun Secondaries: damage multiplier by Combo Points spent (index = points),
   // single target and, where it differs, per target when several are hit.
   comboCurve: z.object({ single: z.array(z.number()), multi: z.array(z.number()).optional() }).optional(),
+  // Engine Rifle Secondaries spend heat instead of ammo (scripts/extract/engine_rifle_heat.py).
+  heatPerShot: z.number().optional(),
 });
 export type WeaponMode = z.infer<typeof modeSchema>;
 
@@ -113,6 +115,8 @@ export const weaponSchema = z.object({
   modes: z.array(modeSchema),
   // Harpoon Gun: Combo Points banked by Primary hits, spent by Secondaries.
   maxComboPoints: z.number().optional(),
+  // Engine Rifle: heat cap, cooling per second while no heat mode is held, overheat lockout.
+  heat: z.object({ max: z.number(), coolPerSecond: z.number(), overheatDuration: z.number() }).optional(),
   forgeUpgrades: z.array(z.object({ id: z.string().optional(), ...codified })),
 });
 export type Weapon = z.infer<typeof weaponSchema>;

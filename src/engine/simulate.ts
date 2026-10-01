@@ -94,6 +94,10 @@ const ASPECT_SLOTS = ['primary', 'secondary', 'ability'] as const;
 interface ModeOutput {
   /** Shots fired per second, reloads included. */
   shotsPerSecond: number;
+  /** Heat modes: share of time the trigger is held at the chosen heat strategy (1 otherwise),
+   * and how hot the gun runs on average (0..1). */
+  heatDuty: number;
+  heatFraction: number;
   /** Direct (single-target) and area hit events this mode lands, for aspect procs. */
   stream: Omit<HitStream, 'slot'>;
   /** Base damage of one projectile after damage bonuses -- the game's current Damage stat. */
@@ -122,7 +126,13 @@ function computeModeOutput(
   opts: SimOptions,
   abilityDamage: number,
   /** Combo Point scaling on this mode's damage, and ammo refunded per shot from outside it. */
-  extra: { comboFactor?: number; extraRefund?: number } = {},
+  extra: {
+    comboFactor?: number;
+    extraRefund?: number;
+    /** The weapon's heat system, and how hot it runs (for heat-scaled bonuses on any mode). */
+    heat?: { max: number; coolPerSecond: number; overheatDuration: number };
+    heatFraction?: number;
+  } = {},
 ): ModeOutput {
   let mode = modeIn;
   const combo = extra.comboFactor ?? 1;
@@ -204,7 +214,11 @@ function computeModeOutput(
   const areaDamage = baseExtra * combo * aoeMult * enemiesFor(opts.target);
   const perShot = (blendedImpact + splash + areaDamage + procDamage) * opts.accuracy;
 
-  const fireRate = mode.fireRate * (1 + mods.multFor('fireRate', scope) + rampFireRate);
+  const baseFireRate = mode.fireRate * (1 + mods.multFor('fireRate', scope) + rampFireRate);
+  // Heat-scaled bonuses (Insulated Barrel, Heat Converter) for a non-heat mode use the
+  // heat the build's heat mode runs at.
+  let heatFraction = extra.heatFraction ?? 0;
+  let fireRate = baseFireRate * (1 + mods.flatFor('heatFireRate') * heatFraction);
   const reloadTime = mode.reloadTime / (1 + mods.multFor('reloadSpeed', scope));
   const clipSize =
     mode.clipSize === null
@@ -214,9 +228,56 @@ function computeModeOutput(
 
   // Ammo refunds (Critical Cylinder) stretch the clip: each shot costs (1 - refund).
   const refund = Math.min(0.95, mods.flatFor('ammoRefund') + (extra.extraRefund ?? 0));
-  const shotsPerCycle = clipSize === null ? fireRate : clipSize / (1 - refund); // no clip => one second of fire
-  const cycleTime = shotsPerCycle / fireRate + (clipSize === null ? 0 : reloadTime);
-  const perMagazine = perShot * shotsPerCycle;
+  let shotsPerCycle = clipSize === null ? fireRate : clipSize / (1 - refund); // no clip => one second of fire
+  let cycleTime = shotsPerCycle / fireRate + (clipSize === null ? 0 : reloadTime);
+  let shotDamage = perShot * (1 + mods.flatFor('heatDamage') * heatFraction);
+  let heatDuty = 1;
+  let cycleExtra = 0; // damage per cycle outside the shots (Heat Expulsion)
+
+  if (mode.heatPerShot !== undefined && extra.heat) {
+    // Heat modes spend heat, not ammo. Two ways to run them; the ideal picks the better:
+    //  - feather: hold until just under max, release to cool -- the gun stays hot;
+    //  - overheat: dump to max, sit out the lockout (Burst Cooling then gives free fire,
+    //    Heat Expulsion explodes once per overheat).
+    const hits = (mode.damageComponents ?? []).filter((c) => c.kind === 'impact').reduce((n, c) => n + c.count, 0);
+    const heat = Math.max(0, mode.heatPerShot - mods.flatFor('heatReductionPerHit') * hits * projectiles * opts.accuracy);
+    const max = extra.heat.max * (1 + mods.multFor('maxHeat', 'all'));
+    const cool = extra.heat.coolPerSecond;
+    const strategy = (fraction: number) => {
+      const fr = baseFireRate * (1 + mods.flatFor('heatFireRate') * fraction);
+      const dmg = perShot * (1 + mods.flatFor('heatDamage') * fraction);
+      return { fr, dmg };
+    };
+    const f = strategy(1);
+    const featherDuty = heat > 0 ? cool / (f.fr * heat + cool) : 1;
+    const feather = { dps: f.fr * featherDuty * f.dmg, shots: f.fr * featherDuty, duty: featherDuty, fraction: 1, extra: 0, time: 1 };
+    let best = feather;
+    if (heat > 0) {
+      const o = strategy(0.5);
+      const burst = mods.flatFor('burstCooling');
+      const shots = max / heat + o.fr * burst;
+      const time = max / (heat * o.fr) + extra.heat.overheatDuration + burst;
+      const expulsion = mods.flatFor('heatExpulsion') * normalHit * aoeMult * enemiesFor(opts.target);
+      const overheat = {
+        dps: (shots * o.dmg + expulsion) / time,
+        shots: shots / time,
+        duty: (time - extra.heat.overheatDuration) / time,
+        fraction: 0.5,
+        extra: expulsion,
+        time,
+      };
+      if (overheat.dps > feather.dps) best = overheat;
+    }
+    heatDuty = best.duty;
+    heatFraction = best.fraction;
+    fireRate = best.shots / best.duty;
+    shotDamage = best === feather ? f.dmg : strategy(0.5).dmg;
+    shotsPerCycle = best.shots * best.time;
+    cycleTime = best.time;
+    cycleExtra = best.extra;
+  }
+
+  const perMagazine = shotDamage * shotsPerCycle + cycleExtra;
   const weaponDps = cycleTime > 0 ? perMagazine / cycleTime : 0;
 
   const shotsPerSecond = cycleTime > 0 ? shotsPerCycle / cycleTime : 0;
@@ -242,15 +303,17 @@ function computeModeOutput(
 
   return {
     shotsPerSecond,
+    heatDuty,
+    heatFraction,
     stream,
     damageStat: directPerShot > 0 ? (baseImpact / directPerShot) * damageMult : 0,
     perHit: blendedImpact,
-    perShot,
+    perShot: shotDamage,
     perMagazine,
     weaponDps,
     dotDps,
     fireRate,
-    clipSize,
+    clipSize: mode.heatPerShot !== undefined && extra.heat ? null : clipSize,
     reloadTime,
     damageMultiplier: damageMult,
     weakspotMultiplier: weakspotMult,
@@ -341,7 +404,8 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
 
   // --- Modes: main + optional weave ----------------------------------------
   const abilityDamage = ability?.damage ?? 0;
-  let main = computeModeOutput(mode, mods, opts, abilityDamage);
+  const heatSys = weapon.heat ? { heat: weapon.heat } : {};
+  let main = computeModeOutput(mode, mods, opts, abilityDamage, heatSys);
   const areaTargets = enemiesFor(opts.target);
   if (areaTargets > 1 && mode.damageComponents?.some((c) => ['explosion', 'pull', 'aoe'].includes(c.kind))) {
     mods.assume(mode.name, `its area damage catches all ${areaTargets} enemies`);
@@ -359,7 +423,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       );
       weaveMode = undefined;
     } else {
-      weaveOutput = computeModeOutput(weaveMode, mods, opts, abilityDamage);
+      weaveOutput = computeModeOutput(weaveMode, mods, opts, abilityDamage, heatSys);
     }
   }
 
@@ -401,15 +465,41 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
         : 0;
     const redo = (m: WeaponMode) =>
       m === comboMode
-        ? computeModeOutput(m, mods, opts, abilityDamage, { comboFactor: factor })
-        : computeModeOutput(m, mods, opts, abilityDamage, { extraRefund: refund });
+        ? computeModeOutput(m, mods, opts, abilityDamage, { ...heatSys, comboFactor: factor })
+        : computeModeOutput(m, mods, opts, abilityDamage, { ...heatSys, extraRefund: refund });
     main = redo(mode);
     if (weaveMode && weaveOutput) weaveOutput = redo(weaveMode);
   }
-  const weaveWeaponDps = (weaveOutput?.weaponDps ?? 0) * weaveRate * weaponUptime;
-  const weaveDotDps = (weaveOutput?.dotDps ?? 0) * weaveRate * weaponUptime;
-  const weaponDps = main.weaponDps * (1 - weaveRate) * weaponUptime + weaveWeaponDps;
-  const dotDps = main.dotDps * (1 - weaveRate) * weaponUptime + weaveDotDps;
+  // Engine Rifle heat: the heat mode sets how hot the gun runs, which other modes'
+  // heat-scaled bonuses (Insulated Barrel, Heat Converter) see too.
+  if (weapon.heat) {
+    const heatShare = mode.heatPerShot !== undefined ? 1 - weaveRate : weaveMode?.heatPerShot !== undefined ? weaveRate : 0;
+    const heatOut = mode.heatPerShot !== undefined ? main : weaveMode?.heatPerShot !== undefined ? weaveOutput : undefined;
+    const fraction = heatOut && heatShare * weaponUptime > 0 ? heatOut.heatFraction : 0;
+    if (heatOut) {
+      mods.assume(
+        heatOut === main ? mode.name : weaveMode!.name,
+        heatOut.heatFraction === 1
+          ? 'you feather the trigger to stay just under max Heat'
+          : 'you overheat on purpose each cycle',
+      );
+    }
+    if (mode.heatPerShot === undefined) main = computeModeOutput(mode, mods, opts, abilityDamage, { ...heatSys, heatFraction: fraction });
+    if (weaveMode && weaveOutput && weaveMode.heatPerShot === undefined) {
+      weaveOutput = computeModeOutput(weaveMode, mods, opts, abilityDamage, { ...heatSys, heatFraction: fraction });
+    }
+  }
+
+  // A heat mode only holds the trigger heatDuty of the time when used alone; given a
+  // smaller share (weaving), it fires flat out for that share while the other mode lets it cool.
+  const effShare = (o: ModeOutput, share: number) =>
+    o.heatDuty < 1 ? Math.min(share, o.heatDuty) / o.heatDuty : share;
+  const mainShare = effShare(main, (1 - weaveRate) * weaponUptime);
+  const weaveShare = weaveOutput ? effShare(weaveOutput, weaveRate * weaponUptime) : 0;
+  const weaveWeaponDps = (weaveOutput?.weaponDps ?? 0) * weaveShare;
+  const weaveDotDps = (weaveOutput?.dotDps ?? 0) * weaveShare;
+  const weaponDps = main.weaponDps * mainShare + weaveWeaponDps;
+  const dotDps = main.dotDps * mainShare + weaveDotDps;
 
   // --- Ability ------------------------------------------------------------
   let abilityDps = 0;
@@ -483,8 +573,8 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     directHitsPerSecond: m.stream.directHitsPerSecond * share,
     areaEventsPerSecond: m.stream.areaEventsPerSecond * share,
   });
-  streams.push(scaled(main, mode.type, (1 - weaveRate) * weaponUptime));
-  if (weaveOutput && weaveMode) streams.push(scaled(weaveOutput, weaveMode.type, weaveRate * weaponUptime));
+  streams.push(scaled(main, mode.type, mainShare));
+  if (weaveOutput && weaveMode) streams.push(scaled(weaveOutput, weaveMode.type, weaveShare));
   if (abilityStream) {
     // Double Trouble: ability-slot blessing procs sometimes trigger twice.
     abilityStream.procMultiplier *= 1 + mods.flatFor('abilityProcRepeat');
@@ -497,7 +587,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   const firstPrimary = weapon.modes.find((m) => m.type === 'Primary');
   const primaryModeDamage =
     primaryOutput?.damageStat ??
-    (firstPrimary ? computeModeOutput(firstPrimary, mods, opts, abilityDamage).damageStat : 0);
+    (firstPrimary ? computeModeOutput(firstPrimary, mods, opts, abilityDamage, heatSys).damageStat : 0);
 
   const cardsByAspect = new Map<string, { slot: HitStream['slot']; chance: number }[]>();
   for (const [id, rank] of Object.entries(build.blessings)) {

@@ -247,5 +247,10 @@ from `BP_HarpoonGun_Script` and the `C_*_DamageMultiPerComboPoint_Curve`
 assets): `python scripts/extract/harpoon_combo.py <out>` after dumping
 `Blueprints/Weapons/HarpoonGun/`.
 
+Engine Rifle heat (`heat` on the weapon, `heatPerShot` on its Secondaries, from
+`BP_EngineRifle_Script` and the Concentrated Shot mod script):
+`python scripts/extract/engine_rifle_heat.py <out>` after dumping
+`Blueprints/Weapons/EngineRifle/`.
+
 `weapon_mod_stats.py` also writes each fire mode's `procChance` (its multiplier
 on aspect proc chances) from the same ModStats assets.

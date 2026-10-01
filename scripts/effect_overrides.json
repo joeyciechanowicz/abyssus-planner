@@ -3121,9 +3121,16 @@
     ]
   },
   "weapon forge/Engine_Rifle/Prolonged Revving": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
+    "source": "Engine Rifle heat (BP_EngineRifle_Script + each mutator PA/BP)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "heatReductionPerHit",
+        "scope": "all",
+        "value": 3,
+        "scalesWith": "{HeatReduction}"
+      }
+    ]
   },
   "weapon forge/Engine_Rifle/Greased Barrel": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
@@ -3138,14 +3145,22 @@
     ]
   },
   "weapon forge/Engine_Rifle/Binary Cooling": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "source": "Engine Rifle heat (BP_EngineRifle_Script + each mutator PA/BP)",
     "effects": [],
-    "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
+    "unmodeled": "the overheat lockout is 5s either way",
+    "utility": true
   },
   "weapon forge/Engine_Rifle/Burst Cooling": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
+    "source": "Engine Rifle heat (BP_EngineRifle_Script + each mutator PA/BP)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "burstCooling",
+        "scope": "all",
+        "value": 5,
+        "scalesWith": "{Duration}"
+      }
+    ]
   },
   "weapon forge/Shotgun/Heavy Shell": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
@@ -3853,6 +3868,64 @@
         "scope": "all",
         "value": 0.3,
         "scalesWith": "{ProcChance}"
+      }
+    ]
+  },
+  "weapon forge/Engine_Rifle/Insulated Barrel": {
+    "source": "Engine Rifle heat (BP_EngineRifle_Script + each mutator PA/BP)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "heatFireRate",
+        "scope": "all",
+        "value": 1.0,
+        "note": "up to +100% at full Heat",
+        "scalesWith": "{MaxFireRateIncreasePercentage}"
+      }
+    ]
+  },
+  "weapon forge/Engine_Rifle/Heat Converter": {
+    "source": "Engine Rifle heat (BP_EngineRifle_Script + each mutator PA/BP)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "heatDamage",
+        "scope": "all",
+        "value": 1.0,
+        "note": "up to +100% at full Heat",
+        "scalesWith": "{MaxDamageIncreasePercentage}"
+      }
+    ]
+  },
+  "weapon forge/Engine_Rifle/Large Capacity": {
+    "source": "Engine Rifle heat (BP_EngineRifle_Script + each mutator PA/BP)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "clipSize",
+        "scope": "all",
+        "value": 1.0,
+        "scalesWith": "{ClipSizeIncreasePercentage}"
+      },
+      {
+        "op": "mult",
+        "stat": "maxHeat",
+        "scope": "all",
+        "value": 0.2,
+        "note": "PA_EngineRifle_LargeCapacity {MaxHeatIncreasePercentage}"
+      }
+    ]
+  },
+  "weapon forge/Engine_Rifle/Heat Expulsion": {
+    "source": "Engine Rifle heat (BP_EngineRifle_Script + each mutator PA/BP)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "heatExpulsion",
+        "scope": "all",
+        "value": 10,
+        "note": "1000% weapon damage in 15m on each overheat",
+        "scalesWith": "{WeaponPercentage}"
       }
     ]
   }

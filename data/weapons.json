@@ -144,7 +144,8 @@
           "reloadTime": 1.6,
           "projectilesPerShot": 1,
           "estimated": false,
-          "procChance": 1.0
+          "procChance": 1.0,
+          "heatPerShot": 4.0
         },
         {
           "name": "Split Shot",
@@ -179,7 +180,8 @@
           "reloadTime": 2.5,
           "projectilesPerShot": 3,
           "estimated": false,
-          "procChance": 1.0
+          "procChance": 1.0,
+          "heatPerShot": 4.0
         },
         {
           "name": "Concentrated Shot",
@@ -214,7 +216,8 @@
           "reloadTime": 1.6,
           "projectilesPerShot": 1,
           "estimated": false,
-          "procChance": 1.5
+          "procChance": 1.5,
+          "heatPerShot": 12.0
         }
       ],
       "forgeUpgrades": [
@@ -222,8 +225,15 @@
           "name": "Prolonged Revving",
           "description": "Shooting enemies reduces Heat.",
           "icon": "forge/Prolonged_Revving.webp",
-          "effects": [],
-          "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "heatReductionPerHit",
+              "scope": "all",
+              "value": 3,
+              "scalesWith": "{HeatReduction}"
+            }
+          ]
         },
         {
           "name": "Greased Barrel",
@@ -245,10 +255,12 @@
           "icon": "forge/Prolonged_Revving.webp",
           "effects": [
             {
-              "op": "mult",
-              "stat": "fireRate",
+              "op": "flat",
+              "stat": "heatFireRate",
               "scope": "all",
-              "value": 1.0
+              "value": 1.0,
+              "note": "up to +100% at full Heat",
+              "scalesWith": "{MaxFireRateIncreasePercentage}"
             }
           ]
         },
@@ -258,11 +270,12 @@
           "icon": "forge/Heat_Converter.webp",
           "effects": [
             {
-              "op": "mult",
-              "stat": "damage",
+              "op": "flat",
+              "stat": "heatDamage",
               "scope": "all",
               "value": 1.0,
-              "note": "ramping: this is the maximum"
+              "note": "up to +100% at full Heat",
+              "scalesWith": "{MaxDamageIncreasePercentage}"
             }
           ]
         },
@@ -271,14 +284,22 @@
           "description": "Heat no longer decreases over time after Overheating, but is cleared after 5 sec.",
           "icon": "forge/Prolonged_Revving.webp",
           "effects": [],
-          "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
+          "unmodeled": "the overheat lockout is 5s either way",
+          "utility": true
         },
         {
           "name": "Burst Cooling",
           "description": "Stops Heat from increasing for 5 sec. after Overheated is cleared.",
           "icon": "forge/Heat_Converter.webp",
-          "effects": [],
-          "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "burstCooling",
+              "scope": "all",
+              "value": 5,
+              "scalesWith": "{Duration}"
+            }
+          ]
         },
         {
           "name": "Large Capacity",
@@ -289,7 +310,15 @@
               "op": "mult",
               "stat": "clipSize",
               "scope": "all",
-              "value": 1.0
+              "value": 1.0,
+              "scalesWith": "{ClipSizeIncreasePercentage}"
+            },
+            {
+              "op": "mult",
+              "stat": "maxHeat",
+              "scope": "all",
+              "value": 0.2,
+              "note": "PA_EngineRifle_LargeCapacity {MaxHeatIncreasePercentage}"
             }
           ]
         },
@@ -299,15 +328,21 @@
           "icon": "forge/Prolonged_Revving.webp",
           "effects": [
             {
-              "op": "proc",
-              "amount": 10.0,
-              "of": "weaponDamage",
-              "chance": 1.0,
-              "scope": "all"
+              "op": "flat",
+              "stat": "heatExpulsion",
+              "scope": "all",
+              "value": 10,
+              "note": "1000% weapon damage in 15m on each overheat",
+              "scalesWith": "{WeaponPercentage}"
             }
           ]
         }
-      ]
+      ],
+      "heat": {
+        "max": 100.0,
+        "coolPerSecond": 40.0,
+        "overheatDuration": 5.0
+      }
     },
     {
       "id": "Shotgun",

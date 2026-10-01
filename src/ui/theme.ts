@@ -78,6 +78,12 @@ const STAT_LABELS: Record<string, string> = {
   comboPoints: 'Max Combo Points',
   preciseCombo: 'Precise Combo',
   comboAmmoRefund: 'Ammo per Combo Point spent',
+  heatReductionPerHit: 'Heat removed per hit',
+  maxHeat: 'Max Heat',
+  burstCooling: 'Free fire after an overheat (s)',
+  heatExpulsion: 'Overheat explosion (x weapon damage)',
+  heatDamage: 'Damage at full Heat',
+  heatFireRate: 'Fire rate at full Heat',
   // Aspect payload mechanics (`payload` effects).
   chance: 'Proc chance',
   repeats: 'Extra triggers',

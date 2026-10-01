@@ -62,6 +62,15 @@ export const STATS = [
   'comboPoints',
   'preciseCombo',
   'comboAmmoRefund',
+  /** Engine Rifle heat: heat removed per enemy hit; +relative max heat; seconds of free fire
+   * after an overheat; weapon-damage multiple exploding on overheat; up to +x damage / fire rate
+   * at full heat (scaled by how hot you run). */
+  'heatReductionPerHit',
+  'maxHeat',
+  'burstCooling',
+  'heatExpulsion',
+  'heatDamage',
+  'heatFireRate',
 ] as const;
 export type Stat = (typeof STATS)[number];
 

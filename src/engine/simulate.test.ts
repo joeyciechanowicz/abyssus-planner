@@ -192,35 +192,33 @@ describe('weave mode', () => {
   });
 
   it('blends main and weave mode weaponDps by the weave rate', () => {
+    // Brine Revolver: no heat or Combo Points, so the blend is a plain time share.
     const withBlessing: Build = {
-      ...base,
-      modeName: 'Engine Rev', // Secondary
-      weaveModeName: 'Automatic Fire', // Primary
+      ...emptyBuild,
+      weaponId: 'Brine_Revolver',
+      modeName: 'Steady Scope', // Secondary
+      weaveModeName: 'Semi-automatic', // Primary
       aspects: { primary: 'Blood', secondary: null, ability: null },
       blessings: { Blood_Primary: 1 },
     };
     const rate = 0.3;
     const r = simulate(withBlessing, { weakspotAccuracy: 0, weaveRate: rate });
-
     const mainOnly = simulate({ ...withBlessing, weaveModeName: null }, { weakspotAccuracy: 0 });
     const weaveOnly = simulate(
-      { ...withBlessing, modeName: 'Automatic Fire', weaveModeName: null },
+      { ...withBlessing, modeName: 'Semi-automatic', weaveModeName: null },
       { weakspotAccuracy: 0 },
     );
-
     // Raw weapon damage blends linearly; Hemorrhage's damage-taken bonus (scaled by its
     // uptime, which depends on how often the Primary mode fires) multiplies on top.
     const raw = (x: typeof r) => x.weaponDps / x.vulnerability;
     expect(raw(r)).toBeCloseTo(raw(mainOnly) * (1 - rate) + raw(weaveOnly) * rate, 5);
     expect(r.vulnerability).toBeGreaterThan(1);
     expect(r.weave?.rate).toBeCloseTo(rate, 5);
-
-    // The Primary-scoped blessing helps Automatic Fire's own DPS...
-    const bareAutoFire = simulate({ ...base, modeName: 'Automatic Fire' }, { weakspotAccuracy: 0 });
-    expect(weaveOnly.weaponDps).toBeGreaterThan(bareAutoFire.weaponDps);
-    // ...but not Engine Rev's, since the blessing is Primary-scoped.
-    const bareEngineRev = simulate({ ...base, modeName: 'Engine Rev' }, { weakspotAccuracy: 0 });
-    expect(mainOnly.weaponDps).toBeCloseTo(bareEngineRev.weaponDps, 5);
+    // The Primary-scoped blessing helps the Primary's own DPS but not the Secondary's.
+    const bare = (modeName: string) =>
+      simulate({ ...emptyBuild, weaponId: 'Brine_Revolver', modeName }, { weakspotAccuracy: 0 });
+    expect(weaveOnly.weaponDps).toBeGreaterThan(bare('Semi-automatic').weaponDps);
+    expect(mainOnly.weaponDps).toBeCloseTo(bare('Steady Scope').weaponDps, 5);
   });
 
   it("doesn't blend per-hit/per-shot/stats -- those stay main-mode only", () => {
@@ -632,6 +630,47 @@ describe('ability timing', () => {
     // 1000 damage kills a 500 HP enemy: recast every 2s input cooldown.
     expect(simulate(reload, { target: 'pack' }).abilityDps).toBeCloseTo(1000 / 2, 5);
     expect(simulate(reload, { target: 'boss' }).abilityDps).toBeCloseTo(simulate(core, { target: 'boss' }).abilityDps, 5);
+  });
+});
+
+describe('Engine Rifle heat', () => {
+  const rifle = (modeName: string, weave: string | null = null, weaponUpgrades: string[] = []): Build => ({
+    ...emptyBuild, weaponId: 'Engine_Rifle', modeName, weaveModeName: weave, weaponUpgrades,
+  });
+
+  it('feathers a heat mode: Engine Rev holds the trigger half the time (10/s x 4 heat vs 40 cooling)', () => {
+    const r = simulate(rifle('Engine Rev'), { weakspotAccuracy: 0 });
+    expect(r.weaponDps).toBeCloseTo(35 * 10 * 0.5, 5);
+    expect(r.stats.clipSize).toBeNull();
+  });
+
+  it('lets a woven Primary fill the cooling time', () => {
+    // Engine Rev 50% of the time (its full feather duty) + Automatic Fire the rest.
+    const r = simulate(rifle('Engine Rev', 'Automatic Fire'), { weakspotAccuracy: 0, weaveRate: 0.5 });
+    const auto = simulate(rifle('Automatic Fire'), { weakspotAccuracy: 0 });
+    expect(r.weaponDps).toBeCloseTo(35 * 10 * 0.5 + auto.weaponDps * 0.5, 5);
+  });
+
+  it('Prolonged Revving removes 3 Heat per hit: Engine Rev now heats 1 per shot', () => {
+    const r = simulate(rifle('Engine Rev', null, ['Prolonged Revving']), { weakspotAccuracy: 0 });
+    expect(r.weaponDps).toBeCloseTo(35 * 10 * (40 / (10 * 1 + 40)), 5);
+  });
+
+  it('Heat Converter runs at full Heat while feathering, for every mode in use', () => {
+    const plain = simulate(rifle('Engine Rev'), { weakspotAccuracy: 0 });
+    const hot = simulate(rifle('Engine Rev', null, ['Heat Converter']), { weakspotAccuracy: 0 });
+    expect(hot.weaponDps / plain.weaponDps).toBeCloseTo(2, 5);
+    // A Primary used alone builds no Heat, so it gets nothing.
+    expect(simulate(rifle('Automatic Fire', null, ['Heat Converter'])).weaponDps).toBeCloseTo(
+      simulate(rifle('Automatic Fire')).weaponDps, 5);
+  });
+
+  it('Heat Expulsion makes deliberate overheating worth it, once per overheat', () => {
+    const r = simulate(rifle('Concentrated Shot', null, ['Heat Expulsion']), { weakspotAccuracy: 0 });
+    expect(r.assumptions.some((a) => a.text === 'you overheat on purpose each cycle')).toBe(true);
+    // 100 heat / 12 per shot = 8.33 shots in 0.83s, then 5s locked: one 1000% explosion per 5.83s.
+    const time = 100 / (12 * 10) + 5;
+    expect(r.weaponDps).toBeCloseTo(((100 / 12) * 100 + 10 * 100) / time, 3);
   });
 });
 

@@ -178,6 +178,11 @@ payload's base damage, tick rate, duration and scaling formula?
   scale by their game curves; points per Secondary follow the Primary/Secondary mix. Increased,
   Precise, Plentiful Combo and Charged Harpoons counted. 92% (315 counted, 103 utility, 28 gaps).
 
+- 2026-10-02: Engine Rifle heat: Secondaries spend heat (4/shot, Concentrated 12) not ammo; the
+  ideal picks feathering (stay under max, cool 40/s while released) or deliberate overheating
+  (5s lockout; Burst Cooling, Heat Expulsion); heat-scaled bonuses follow how hot the gun runs.
+  Heat Expulsion was previously counted on every shot. 93% (317 counted, 104 utility, 25 gaps).
+
 ## Later phases (unchanged from the earlier proposal)
 - Phase 1b: merge forge-upgrade `MutatorDescriptionVariables` (unstated magnitudes).
 - Phase 2: aspect payload engine + per-payload scopes, statusEffectiveness/duration, crit → weakspot.
