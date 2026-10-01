@@ -121,6 +121,21 @@ describe('payloadDamage', () => {
     expect(r.vulnerability).toBeCloseTo(1 + 0.35 * (10 / 18));
   });
 
+  it('Fire: Flares roll 40% per direct hit on a burning enemy, 50 damage, 0.5s lockout', () => {
+    const p = payload('Flares');
+    const noFlare = { ...p, flare: undefined } as typeof p;
+    const burnOnly = payloadDamage(noFlare, 1, [stream()], ctx()).dps;
+    const r = payloadDamage(p, 1, [stream()], ctx());
+    const up = 1 - Math.exp(-5 * 8);
+    const attempts = 5 * 0.4 * up; // 5 direct hits/s
+    expect(r.dps - burnOnly).toBeCloseTo((attempts / (1 + attempts * 0.5)) * 50);
+    // Linked Flames: in a pack every burning enemy Flares with it.
+    const pack = payloadDamage(p, 1, [stream()], ctx({ enemies: 5 }));
+    const linked = payloadDamage(p, 1, [stream()], ctx({ enemies: 5, mods: { linkedFlares: 1 } }));
+    const burnPack = payloadDamage(noFlare, 1, [stream()], ctx({ enemies: 5 })).dps;
+    expect(linked.dps - burnPack).toBeCloseTo((pack.dps - burnPack) * 5);
+  });
+
   it('Shadows deals no damage itself but makes enemies take 25% more', () => {
     const r = payloadDamage(payload('Shadows'), 1, [stream()], ctx());
     expect(r.dps).toBe(0);

@@ -417,6 +417,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       targetMaxHealth: enemyHealth[tierFor(opts.target)],
       payloadBonus: mods.multForScopeOnly('damage', payload.id),
       mods: mods.payloadMods.get(payload.id),
+      allStreams: streams,
     });
     for (const text of r.assumptions) mods.assume(payload.name, text);
     vulnerability *= r.vulnerability;

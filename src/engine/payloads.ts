@@ -42,6 +42,9 @@ export interface PayloadContext {
   payloadBonus: number;
   /** Mechanic changes from `payload` effects (more repeats, more summons, ...). */
   mods?: Partial<Record<PayloadField, number>>;
+  /** Every hit stream in the build, whatever its slot (Flares trigger off any direct hit).
+   * `procMultiplier` here is the fire mode's own, without any card chance. */
+  allStreams?: HitStream[];
 }
 
 export interface PayloadResult {
@@ -117,13 +120,36 @@ export function payloadDamage(
   switch (p.kind) {
     case 'dot': {
       const up = uptime(procsPerTarget, p.duration);
+      // Flares: direct hits (any source) on a burning enemy roll the Flare chance,
+      // and each Flare locks the next out for a moment.
+      let flareDps = 0;
+      let flaresPerTarget = 0;
+      if (p.flare) {
+        const all = ctx.allStreams ?? streams;
+        const rolls = all.reduce(
+          (sum, s) => sum + (s.directHitsPerSecond / n + s.areaEventsPerSecond) *
+            Math.min(1, (p.flare!.chancePercent / 100) * s.procMultiplier * (1 + m('flareChance'))),
+          0,
+        );
+        const attempts = rolls * up;
+        flaresPerTarget = attempts / (1 + attempts * p.flare.lockout);
+        const linked = m('linkedFlares') > 0 ? n : 1;
+        const perFlare =
+          p.flare.damage * (1 + m('flareDamage')) * linked + m('flareBurstDamage') + m('flareAreaDamage') * n;
+        flareDps = n * flaresPerTarget * perFlare;
+        if (flaresPerTarget > 0) {
+          assumptions.push(`${(flaresPerTarget).toFixed(2)} Flares per second on each burning enemy`);
+        }
+      }
+      // Stacking Flames: every application and every Flare inside the duration is a stack.
+      const stacks = m('fireStacks') > 0 ? Math.max(1, (procsPerTarget + flaresPerTarget) * p.duration) : p.maxStacks;
       const tick =
         p.trigger !== undefined
           ? scaledHit(p.trigger, trigger)
           : ((p.tickBase ?? 0) + ((p.tickPercentOfPrimaryDamage ?? 0) / 100) * ctx.primaryModeDamage) *
             (p.scalesWithTargetMissingHealth ? 1 + ctx.targetMissingHealth : 1);
-      const stackBonus = 1 + ((p.damagePercentPerStack ?? 0) / 100) * p.maxStacks;
-      const dps = n * (tick / p.tickInterval) * stackBonus * up * bonus;
+      const stackBonus = 1 + ((p.damagePercentPerStack ?? 0) / 100) * stacks;
+      const dps = (n * (tick / p.tickInterval) * stackBonus * up + flareDps) * bonus;
       const vulnerability = 1 + ((p.damageTakenPercentPerStack ?? 0) / 100) * p.maxStacks * up;
       assumptions.push(
         `${p.name} up ${Math.round(up * 100)}% of the time on ${n === 1 ? 'the target' : `each of ${n} enemies`}`,

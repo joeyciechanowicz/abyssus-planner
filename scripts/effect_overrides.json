@@ -789,9 +789,23 @@
     ]
   },
   "blessings/Critical_Flares": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Flares, which are not modelled yet"
+    "source": "Phase 2c: Flares",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "weakspot",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "payload",
+            "payload": "burn",
+            "field": "flareDamage",
+            "value": 0.2,
+            "scalesWith": "{DamageIncrease}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Barraging_Spirits": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -1004,14 +1018,35 @@
     "unmodeled": "Blood Orb damage depends on hitting the orb itself; not modelled yet"
   },
   "blessings/Fanning_Flames": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Flares, which are not modelled yet"
+    "source": "Phase 2c: Flares",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "the enemy has Flared 5 times",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "burn",
+            "field": "flareDamage",
+            "value": 0.5,
+            "note": "+10% per Flare, 5 Flares"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Explosive_Flares": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Flares, which are not modelled yet"
+    "source": "Phase 2c: Flares",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "burn",
+        "field": "flareAreaDamage",
+        "value": 15,
+        "note": "30% chance x 50 damage"
+      }
+    ]
   },
   "blessings/Exponential_Gold": {
     "source": "Phase 2b: aspect payload model",
@@ -1434,34 +1469,83 @@
     "unmodeled": "Blood Orb damage depends on hitting the orb itself; not modelled yet"
   },
   "blessings/Enduring_Flames": {
-    "source": "Phase 2b: aspect payload model",
+    "source": "Phase 2c: Flares",
     "effects": [],
-    "unmodeled": "depends on Flares, which are not modelled yet"
+    "unmodeled": "adds 0.2s of Fire per Flare; continuous fire keeps Fire up already",
+    "utility": true
   },
   "blessings/Critical_Flames": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Flares, which are not modelled yet"
+    "source": "Phase 2c: Flares",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "weakspot",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "payload",
+            "payload": "burn",
+            "field": "flareChance",
+            "value": 0.2,
+            "scalesWith": "{chance}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Rapid_Flames": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Flares, which are not modelled yet"
+    "source": "Phase 2c: Flares",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "the enemy has Flared 5 times",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "burn",
+            "value": 0.333,
+            "note": "5 x 5% faster ticks = x1/0.75",
+            "scalesWith": "{TickReductionPercentage}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Linked_Flames": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Flares, which are not modelled yet"
+    "source": "Phase 2c: Flares",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "burn",
+        "field": "linkedFlares",
+        "value": 1
+      }
+    ]
   },
   "blessings/Stacking_Flames": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Flares, which are not modelled yet"
+    "source": "Phase 2c: Flares",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "burn",
+        "field": "fireStacks",
+        "value": 1
+      }
+    ]
   },
   "blessings/Meteor": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Flares, which are not modelled yet"
+    "source": "Phase 2c: Flares",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "burn",
+        "field": "flareBurstDamage",
+        "value": 100,
+        "note": "25% chance x 400 Meteor damage; its splash Fire is not counted"
+      }
+    ]
   },
   "blessings/Spreading_Flames": {
     "source": "Phase 2b: aspect payload model",

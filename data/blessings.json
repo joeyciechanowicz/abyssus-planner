@@ -1981,7 +1981,8 @@
       "logbookIndex": 4,
       "icon": "blessings/Flares.webp",
       "effects": [],
-      "unmodeled": "depends on Flares, which are not modelled yet"
+      "unmodeled": "adds 0.2s of Fire per Flare; continuous fire keeps Fire up already",
+      "utility": true
     },
     {
       "id": "Critical_Flames",
@@ -1991,8 +1992,22 @@
       "kind": "blessing",
       "logbookIndex": 5,
       "icon": "blessings/Flares.webp",
-      "effects": [],
-      "unmodeled": "depends on Flares, which are not modelled yet",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "weakspot",
+          "chance": 1.0,
+          "then": [
+            {
+              "op": "payload",
+              "payload": "burn",
+              "field": "flareChance",
+              "value": 0.2,
+              "scalesWith": "{chance}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{chance}",
@@ -2075,8 +2090,23 @@
       "kind": "blessing",
       "logbookIndex": 7,
       "icon": "blessings/Flares.webp",
-      "effects": [],
-      "unmodeled": "depends on Flares, which are not modelled yet",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "the enemy has Flared 5 times",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "burn",
+              "value": 0.333,
+              "note": "5 x 5% faster ticks = x1/0.75",
+              "scalesWith": "{TickReductionPercentage}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{TickReductionPercentage}",
@@ -2154,7 +2184,22 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Flares.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "the enemy has Flared 5 times",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "burn",
+              "field": "flareDamage",
+              "value": 0.5,
+              "note": "+10% per Flare, 5 Flares"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncreasePercentage}",
@@ -2178,8 +2223,7 @@
             15
           ]
         }
-      ],
-      "unmodeled": "depends on Flares, which are not modelled yet"
+      ]
     },
     {
       "id": "Linked_Flames",
@@ -2189,8 +2233,14 @@
       "kind": "blessing",
       "logbookIndex": 10,
       "icon": "blessings/Flares.webp",
-      "effects": [],
-      "unmodeled": "depends on Flares, which are not modelled yet",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "burn",
+          "field": "linkedFlares",
+          "value": 1
+        }
+      ],
       "upgrades": [
         {
           "variable": "",
@@ -2309,7 +2359,15 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Flares.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "burn",
+          "field": "flareAreaDamage",
+          "value": 15,
+          "note": "30% chance x 50 damage"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -2355,8 +2413,7 @@
             47
           ]
         }
-      ],
-      "unmodeled": "depends on Flares, which are not modelled yet"
+      ]
     },
     {
       "id": "Critical_Flares",
@@ -2366,7 +2423,22 @@
       "kind": "blessing",
       "logbookIndex": 14,
       "icon": "blessings/Flares.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "weakspot",
+          "chance": 1.0,
+          "then": [
+            {
+              "op": "payload",
+              "payload": "burn",
+              "field": "flareDamage",
+              "value": 0.2,
+              "scalesWith": "{DamageIncrease}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -2390,8 +2462,7 @@
             39
           ]
         }
-      ],
-      "unmodeled": "depends on Flares, which are not modelled yet"
+      ]
     },
     {
       "id": "Scourging_Flames",
@@ -2517,8 +2588,14 @@
       "kind": "blessing",
       "logbookIndex": 18,
       "icon": "blessings/Stacking_Flames.webp",
-      "effects": [],
-      "unmodeled": "depends on Flares, which are not modelled yet"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "burn",
+          "field": "fireStacks",
+          "value": 1
+        }
+      ]
     },
     {
       "id": "Meteor",
@@ -2528,8 +2605,15 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Meteor.webp",
-      "effects": [],
-      "unmodeled": "depends on Flares, which are not modelled yet",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "burn",
+          "field": "flareBurstDamage",
+          "value": 100,
+          "note": "25% chance x 400 Meteor damage; its splash Fire is not counted"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{SpawnChance}",

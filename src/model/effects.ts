@@ -220,6 +220,14 @@ export const PAYLOAD_FIELDS = [
   /** Gauges: flat gauge refunded per orb / Brine Ball; chance per hit to fill the gauge outright. */
   'gaugePerOrb',
   'fullGaugeChance',
+  /** Fire's Flares: +x relative chance and damage; expected flat damage per Flare to the
+   * target / to every enemy; 1 = a Flare sets off every burning enemy; 1 = Fire stacks. */
+  'flareChance',
+  'flareDamage',
+  'flareBurstDamage',
+  'flareAreaDamage',
+  'linkedFlares',
+  'fireStacks',
 ] as const;
 export type PayloadField = (typeof PAYLOAD_FIELDS)[number];
 const PAYLOAD_IDS = [

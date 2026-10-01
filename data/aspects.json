@@ -30,7 +30,12 @@
       "duration": 8.0,
       "maxStacks": 1,
       "damagePercentPerStack": 2.0,
-      "evidence": "BP_ApplyFire_Behavior_Mutator::GetDamageToDeal (PA_FireGodPassive[2..5]); BP_Burning_StatusEffect tick"
+      "flare": {
+        "chancePercent": 40.0,
+        "damage": 50.0,
+        "lockout": 0.5
+      },
+      "evidence": "BP_ApplyFire_Behavior_Mutator::GetDamageToDeal (PA_FireGodPassive[2..5]); BP_Burning_StatusEffect tick; BP_Flare_StatusEffect (OnNonDOTDamageTaken, TriggerFlareDamage, Delay 0.5)"
     },
     {
       "id": "chainLightning",

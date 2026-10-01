@@ -78,6 +78,7 @@ def main():
 
     bleed = cdo(dump, 'BP_Bleed_StatusEffect')
     burning = cdo(dump, 'BP_Burning_StatusEffect')
+    flare = cdo(dump, 'BP_Flare_StatusEffect')
     fire_gp = pa_vars(dump, 'PA_FireGodPassive_CharacterMutator')
     lightning_gp = pa_vars(dump, 'PA_LightningGodPassive_CharacterMutator')
     lightning = native['RBehaviorScriptLightning']
@@ -123,8 +124,17 @@ def main():
             'duration': mutable(burning['EffectDuration']),
             'maxStacks': 1,  # Fire only stacks with the Stacking Flames capstone
             'damagePercentPerStack': burning['DamageIncreasePerStack'],
+            # Flares: any non-DoT hit on a burning enemy rolls FlareChance (through
+            # the weapon's proc roll), deals the Flare's own EffectDamage, then the
+            # Flare is blocked for 0.5s (a literal Delay in its graph).
+            'flare': {
+                'chancePercent': flare['FlareChance'],
+                'damage': mutable(flare['EffectDamage']),
+                'lockout': 0.5,
+            },
             'evidence': 'BP_ApplyFire_Behavior_Mutator::GetDamageToDeal (PA_FireGodPassive[2..5]); '
-                        'BP_Burning_StatusEffect tick',
+                        'BP_Burning_StatusEffect tick; BP_Flare_StatusEffect (OnNonDOTDamageTaken, '
+                        'TriggerFlareDamage, Delay 0.5)',
         },
         {
             'id': 'chainLightning',

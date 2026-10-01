@@ -158,6 +158,8 @@ export const aspectPayloadSchema = z.discriminatedUnion('kind', [
     maxStacks: z.number(),
     damageTakenPercentPerStack: z.number().optional(),
     damagePercentPerStack: z.number().optional(),
+    // Fire only: Flares on burning enemies.
+    flare: z.object({ chancePercent: z.number(), damage: z.number(), lockout: z.number() }).optional(),
   }),
   z.object({
     ...payloadCommon,
