@@ -8,7 +8,7 @@ import { Arsenal } from './Arsenal';
 import { ForgePanel } from './ForgePanel';
 import { BlessingBoard } from './BlessingBoard';
 import { SoulWheel } from './SoulWheel';
-import { Contributors, DpsSummary, HowYouPlay, NotCounted } from './Readout';
+import { Assumptions, Contributors, DpsSummary, HowYouPlay, NotCounted } from './Readout';
 import { PLAYSTYLES, applyPlaystyle, detectPlaystyle, type Playstyle } from './playstyle';
 import { fmt } from './theme';
 
@@ -188,6 +188,7 @@ export function App() {
           playstyleHint={playstyleHint}
         />
         <Contributors result={result} />
+        <Assumptions result={result} />
         <NotCounted result={result} />
         <p className="sub small disclaimer">
           Estimates for comparing builds, not exact in-game numbers. Picks marked "not counted" add nothing to the total.

@@ -31,8 +31,25 @@ export const buildSchema = z.object({
 });
 export type Build = z.infer<typeof buildSchema>;
 
-/** Assumptions the player controls; none of these are knowable from the wiki. */
+/** What you're shooting at. Decides Elite/Boss-only bonuses and how many enemies area damage hits. */
+export type Target = 'boss' | 'pack';
+export const TARGETS: { id: Target; label: string; enemies: number }[] = [
+  { id: 'boss', label: 'Boss', enemies: 1 },
+  { id: 'pack', label: 'Pack of 5', enemies: 5 },
+];
+export const enemiesFor = (t: Target) => TARGETS.find((x) => x.id === t)!.enemies;
+
+/**
+ * Assumptions the player controls; none of these are knowable from the wiki.
+ *
+ * The defaults are the IDEAL scenario: every shot lands, stacking effects sit at
+ * their cap, and positional/status conditions hold. The number is a best-case
+ * comparison between builds, not a prediction of an average fight -- the sliders
+ * are there to dial it back.
+ */
 export interface SimOptions {
+  /** Boss: one Elite/Boss target. Pack: 5 standard enemies, all caught by area damage. */
+  target: Target;
   /** Fraction of shots that land on a weakspot. */
   weakspotAccuracy: number;
   /** Fraction of shots that hit at all. */
@@ -56,11 +73,12 @@ export interface SimOptions {
 }
 
 export const defaultOptions: SimOptions = {
+  target: 'boss',
   weakspotAccuracy: 0.5,
-  accuracy: 0.95,
+  accuracy: 1.0,
   healthFraction: 1.0,
   targetHealthFraction: 1.0,
-  stackFullness: 0.5,
+  stackFullness: 1.0,
   chargeLevel: 1.0,
   weaveRate: 0.2,
   weaponUptime: 1.0,

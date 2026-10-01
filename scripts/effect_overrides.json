@@ -65,17 +65,9 @@
     "unmodeled": "a 50/50 double-or-halve swing isn't a fixed multiplier the DSL can express"
   },
   "blessings/Thunder_Strike": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [
-      {
-        "op": "proc",
-        "amount": 50.0,
-        "of": "flat",
-        "chance": 0.2,
-        "scope": "all",
-        "note": "Thunderstrike"
-      }
-    ]
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
   },
   "blessings/Static_Concussion": {
     "source": "hand-authored (audit c5d0d24)",
@@ -103,17 +95,9 @@
     "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
   },
   "blessings/Rapid_Tentacles": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [
-      {
-        "op": "stacking",
-        "stat": "fireRate",
-        "scope": "all",
-        "valuePer": 0.1,
-        "per": "tentacle",
-        "max": null
-      }
-    ]
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
   },
   "blessings/Maturing_Tentacles": {
     "source": "hand-authored (audit c5d0d24)",
@@ -131,17 +115,9 @@
     "unmodeled": "modifies the Tentacle status's damage, but it has no base tick-damage magnitude anywhere in the data -- nothing to scale"
   },
   "blessings/Exploitative_Spirits": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [
-      {
-        "op": "stacking",
-        "stat": "damage",
-        "scope": "all",
-        "valuePer": 0.2,
-        "per": "statusEffectOnEnemy",
-        "max": null
-      }
-    ]
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
   },
   "blessings/Bouncing_Spirits": {
     "source": "hand-authored (audit c5d0d24)",
@@ -626,5 +602,448 @@
     "source": "hand-authored (audit c5d0d24)",
     "effects": [],
     "unmodeled": "scales with currently-held ability charges, a standing resource level the DSL's stacking op can't express (it only counts triggered events)"
+  },
+  "blessings/Empowering_Flames": {
+    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
+    "unmodeled": "modifies the Fire DoT payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
+    "effects": []
+  },
+  "blessings/Critical_Flares": {
+    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
+    "unmodeled": "modifies the Flare payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
+    "effects": []
+  },
+  "blessings/Barraging_Spirits": {
+    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
+    "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
+    "effects": []
+  },
+  "blessings/Spiritual_Exchange": {
+    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
+    "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
+    "effects": []
+  },
+  "blessings/Growing_Spirits": {
+    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
+    "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
+    "effects": []
+  },
+  "blessings/Eye_of_the_Storm": {
+    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
+    "unmodeled": "modifies the Windburst payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
+    "effects": []
+  },
+  "blessings/Storm_Belt": {
+    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
+    "unmodeled": "modifies the Windburst payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
+    "effects": []
+  },
+  "blessings/Magnetic_Brine": {
+    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
+    "unmodeled": "modifies the Brine Ball payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
+    "effects": []
+  },
+  "blessings/Thawing_Strike": {
+    "source": "Phase 0 miscoding fix: melee-only, was all damage",
+    "unmodeled": "melee damage is not part of the simulated DPS",
+    "effects": []
+  },
+  "blessings/Frozen_Shards": {
+    "source": "Phase 0 miscoding fix: was % of hit damage",
+    "unmodeled": "deals a % of the enemy's current Health on kill -- awaits percent-health damage (dps-coverage.md, Phase 3)",
+    "effects": []
+  },
+  "blessings/Winds_Devastation": {
+    "source": "Phase 0 miscoding fix: area size, was all damage",
+    "unmodeled": "increases area size, not damage -- awaits aoeSize support (dps-coverage.md, Phase 3)",
+    "effects": []
+  },
+  "blessings/Mutagenic_Brine": {
+    "source": "Phase 0 miscoding fix: area damage, was all damage",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "aoeDamage",
+        "scope": "all",
+        "valuePer": 0.03,
+        "per": "blessing",
+        "max": null,
+        "note": "per Brine Blessing: area damage"
+      }
+    ]
+  },
+  "blessings/Frosts_Knowledge": {
+    "source": "Phase 0 miscoding fix: Elite/Boss-only, was unconditional",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsEliteOrBoss",
+        "then": [
+          {
+            "op": "stacking",
+            "stat": "damage",
+            "scope": "all",
+            "valuePer": 0.05,
+            "per": "blessing",
+            "max": null,
+            "note": "per Frost Blessing: damage dealt to Elites and Bosses"
+          }
+        ]
+      }
+    ]
+  },
+  "blessings/Branding_Blood": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Steeped_in_Blood": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Contiguous_Blood": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Rupturing_Blood": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Blood_Sphere": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Fanning_Flames": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Flare payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Explosive_Flares": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Flare payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Exponential_Gold": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Goldburst payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Brutish_Gold": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Goldburst payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Blightful_Freeze": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the status-effect payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Loaded_Bounce": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Bashing_Lightning": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Distant_Storm": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Infected_Shadows": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Rupturing_Shadows": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Shadow_Conversion": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Nights_Minor_Blessing": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Nights_Major_Blessing": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Explosives": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Crystals": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Snails": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Exploding_Spirits": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Aggression_Possession": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Splattering_Brine": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Brine Ball payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Explosive_Barrier": {
+    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "effects": [],
+    "unmodeled": "acts on the Barrier activation payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+  },
+  "blessings/Fortunes_Riches": {
+    "source": "Phase 0 audit: gold found was coded as damage",
+    "effects": [],
+    "unmodeled": "increases Gold found, which only feeds Goldburst damage -- awaits the aspect payload model (Phase 2)"
+  },
+  "blessings/Lightnings_Fury": {
+    "source": "Phase 0 audit: crit chance was coded as damage",
+    "effects": [],
+    "unmodeled": "Critical Chance for Chain Lightning -- awaits the aspect payload model (Phase 2)"
+  },
+  "blessings/Oceans_Embrace": {
+    "source": "Phase 0 audit: ally-count bonus was counted solo",
+    "effects": [],
+    "unmodeled": "scales with nearby allies; a solo build has none"
+  },
+  "blessings/Blood_Offering": {
+    "source": "Phase 0 audit: now states the condition it assumes",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "selfHasStatus",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "all",
+            "value": 0.2,
+            "scalesWith": "{Damage}"
+          }
+        ],
+        "status": "a Blood Zone"
+      }
+    ]
+  },
+  "blessings/Empowering_Barrier": {
+    "source": "Phase 0 audit: now states the condition it assumes",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "selfHasStatus",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "all",
+            "value": 0.35,
+            "scalesWith": "{DamageIncreasePercentage}"
+          }
+        ],
+        "status": "Barrier up"
+      }
+    ]
+  },
+  "blessings/Energizing_Barrier": {
+    "source": "Phase 0 audit: now states the condition it assumes",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "selfHasStatus",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "fireRate",
+            "scope": "all",
+            "value": 0.25,
+            "scalesWith": "{FireRateIncreasePercentage}"
+          }
+        ],
+        "status": "Barrier up"
+      }
+    ]
+  },
+  "blessings/Brittle_Freeze": {
+    "source": "Phase 0 audit: now states the condition it assumes",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetHasStatus",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "all",
+            "value": 0.2,
+            "scalesWith": "{DamageIncrease}"
+          }
+        ],
+        "status": "Frozen"
+      }
+    ]
+  },
+  "blessings/Critical_Shadows": {
+    "source": "Phase 0 audit: now states the condition it assumes",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetHasStatus",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "weakspotDamage",
+            "scope": "all",
+            "value": 0.2,
+            "scalesWith": "{WeakspotIncrease}"
+          }
+        ],
+        "status": "Shadows"
+      }
+    ]
+  },
+  "blessings/Volatile_Shadows": {
+    "source": "Phase 0 audit: area damage only, was all damage",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetHasStatus",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "aoeDamage",
+            "scope": "all",
+            "value": 0.3,
+            "scalesWith": "{AoEDamageIncrease}"
+          }
+        ],
+        "status": "Shadows"
+      }
+    ]
+  },
+  "blessings/Colossal_Shadow": {
+    "source": "Phase 0 audit: single Shadow-afflicted target only",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsEliteOrBoss",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "all",
+            "value": 0.2,
+            "scalesWith": "{DamageIncrease}"
+          }
+        ],
+        "note": "only one Shadow-afflicted target: true against a lone Boss"
+      }
+    ]
+  },
+  "blessings/Spiritual_Fulfillment": {
+    "source": "Phase 0 audit: now states the condition it assumes",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "selfHasStatus",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "fireRate",
+            "scope": "all",
+            "value": 0.15,
+            "scalesWith": "{FireRateIncrease}"
+          },
+          {
+            "op": "mult",
+            "stat": "abilityCooldown",
+            "scope": "ability",
+            "value": -0.1
+          }
+        ],
+        "status": "a full Spirit Gauge"
+      }
+    ]
+  },
+  "blessings/Goldrush": {
+    "source": "Phase 0 audit: stacks 10 times, was a single stack",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "fireRate",
+        "scope": "all",
+        "valuePer": 0.05,
+        "per": "goldPickup",
+        "max": 10
+      },
+      {
+        "op": "stacking",
+        "stat": "reloadSpeed",
+        "scope": "all",
+        "valuePer": 0.02,
+        "per": "goldPickup",
+        "max": 10
+      }
+    ]
+  },
+  "blessings/Raging_Flames": {
+    "source": "Phase 0 audit: one stack per burning enemy in the target scenario",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "fireRate",
+        "scope": "all",
+        "valuePer": 0.1,
+        "per": "affectedEnemy",
+        "max": null,
+        "scalesWith": "{FireRateIncreasePercentage}"
+      }
+    ]
+  },
+  "blessings/Spirits_Grace": {
+    "source": "Phase 0 audit: only below 50% target Health",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetHealthBelow",
+        "then": [
+          {
+            "op": "stacking",
+            "stat": "damage",
+            "scope": "all",
+            "valuePer": 0.05,
+            "per": "blessing",
+            "max": null,
+            "note": "per Spirit Blessing"
+          }
+        ],
+        "threshold": 0.5
+      }
+    ]
   }
 }

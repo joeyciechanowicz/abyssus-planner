@@ -210,6 +210,13 @@ Re-run `link_blessing_upgrades.py` any time `blessings.json`'s `effects` or
 `upgrades` change (a `codify.py` rule edit, a re-dump from the game). It's
 idempotent and non-destructive to unrelated fields.
 
+**The defaults are the ideal scenario.** `defaultOptions` assumes every shot
+lands, stacking effects are at their cap, and status/position conditions hold;
+`SimOptions.target` picks Boss (one Elite/Boss target) or Pack of 5 (area damage
+and per-affected-enemy stacks count all five). Whatever a pick needed assuming is
+recorded via `Modifiers.assume()` and shown in the UI's "Assumed" panel, so the
+best-case number always says what it took for granted.
+
 **Stacking is additive-same-stat, multiplicative-cross-stat.** See
 `stacking.ts`'s module doc. This is the one modeling assumption most likely to
 need revisiting if a computed number disagrees with what you see in-game.

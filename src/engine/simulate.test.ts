@@ -398,17 +398,17 @@ describe('audit fixes: correctness bugs', () => {
     expect(simulate(secondary).stats.damageMultiplier).toBeCloseTo(1.1, 5);
   });
 
-  it('Rapid Tentacles scales with the assumed tentacle stack count, not a flat bonus', () => {
+  it('Raging Flames stacks once per burning enemy in the target scenario', () => {
     const b: Build = {
       ...emptyBuild,
       weaponId: 'Engine_Rifle',
       modeName: 'Automatic Fire',
-      aspects: { primary: 'Tentacles', secondary: null, ability: null },
-      blessings: { Rapid_Tentacles: 1 },
+      aspects: { primary: 'Flares', secondary: null, ability: null },
+      blessings: { Raging_Flames: 1 },
     };
-    // Uncapped stacking: 5 stacks x 0.5 default stackFullness x 10% = +25%, not +10%.
-    // (Automatic Fire's real base fire rate is 8/s, not the old wiki estimate of 10/s.)
-    expect(simulate(b).stats.fireRate).toBeCloseTo(8 * 1.25, 5);
+    // Automatic Fire's base fire rate is 8/s; +10% per affected enemy.
+    expect(simulate(b, { target: 'boss' }).stats.fireRate).toBeCloseTo(8 * 1.1, 5);
+    expect(simulate(b, { target: 'pack' }).stats.fireRate).toBeCloseTo(8 * 1.5, 5);
   });
 
   it("Headwind no longer subtracts from the player's own damage", () => {
@@ -500,5 +500,85 @@ describe('data integrity', () => {
     for (const slot of ['primary', 'secondary', 'ability'] as const) {
       expect(aspectCards.filter((b) => b.slot === slot)).toHaveLength(11);
     }
+  });
+});
+
+describe('ideal defaults and target scenario', () => {
+  const bow: Build = { ...emptyBuild, weaponId: 'Combat_Bow', modeName: 'Exploding Arrow' };
+
+  it('assumes every shot lands and stacks are full by default', () => {
+    expect(defaultOptions.accuracy).toBe(1);
+    expect(defaultOptions.stackFullness).toBe(1);
+    expect(defaultOptions.target).toBe('boss');
+  });
+
+  it('lets area damage hit all 5 enemies of a pack, but a direct hit only one', () => {
+    const boss = simulate(bow, { target: 'boss', weakspotAccuracy: 0 });
+    const pack = simulate(bow, { target: 'pack', weakspotAccuracy: 0 });
+    // Exploding Arrow at full charge: 119 impact + 306 explosion.
+    expect(boss.perShot).toBeCloseTo(119 + 306, 5);
+    expect(pack.perShot).toBeCloseTo(119 + 306 * 5, 5);
+    expect(pack.assumptions.some((a) => a.source === 'Exploding Arrow')).toBe(true);
+    expect(boss.assumptions.some((a) => a.source === 'Exploding Arrow')).toBe(false);
+  });
+
+  it('multiplies an area ability by the pack size, not a single-target one', () => {
+    const grenade: Build = { ...emptyBuild, abilityId: 'frag_grenade' };
+    const core: Build = { ...emptyBuild, abilityId: 'ancient_core' };
+    expect(simulate(grenade, { target: 'pack' }).abilityDps).toBeCloseTo(
+      simulate(grenade, { target: 'boss' }).abilityDps * 5,
+      5,
+    );
+    expect(simulate(core, { target: 'pack' }).abilityDps).toBeCloseTo(simulate(core, { target: 'boss' }).abilityDps, 5);
+  });
+
+  it('gates Elite/Boss and standard-enemy conditions on the target', () => {
+    const eff: Effect[] = [
+      { op: 'conditional', when: 'targetIsEliteOrBoss', then: [{ op: 'mult', stat: 'damage', scope: 'all', value: 0.2 }] },
+      { op: 'conditional', when: 'targetIsStandard', then: [{ op: 'mult', stat: 'damage', scope: 'all', value: 0.1 }] },
+    ];
+    const boss = new Modifiers();
+    applyEffects(boss, eff, 'test', { ...opts, target: 'boss' });
+    const pack = new Modifiers();
+    applyEffects(pack, eff, 'test', { ...opts, target: 'pack' });
+    expect(boss.multFor('damage', 'all')).toBeCloseTo(0.2);
+    expect(pack.multFor('damage', 'all')).toBeCloseTo(0.1);
+  });
+
+  it('records what stacking, status conditions and chances assume', () => {
+    const m = new Modifiers();
+    applyEffects(
+      m,
+      [
+        { op: 'stacking', stat: 'damage', scope: 'all', valuePer: 0.1, per: 'hit', max: 5 },
+        { op: 'conditional', when: 'targetHasStatus', status: 'fire', then: [{ op: 'mult', stat: 'damage', scope: 'all', value: 0.1 }] },
+        { op: 'trigger', on: 'hit', chance: 0.3, then: [{ op: 'mult', stat: 'fireRate', scope: 'all', value: 0.2 }] },
+      ],
+      'Pick',
+      opts,
+    );
+    expect(m.assumptions.map((a) => a.text)).toEqual([
+      '5 of 5 stacks',
+      'the target always has fire',
+      'averaged over its 30% chance per hit',
+    ]);
+  });
+});
+
+describe('aspect-payload blessings stay off weapon damage', () => {
+  // These boost an aspect's own payload (Fire DoT, Spirits, Windburst, Brine Ball)
+  // or a non-simulated source (melee); they once leaked into weapon damage/all.
+  const payloadOnly = [
+    'Empowering_Flames', 'Critical_Flares', 'Barraging_Spirits', 'Spiritual_Exchange',
+    'Growing_Spirits', 'Eye_of_the_Storm', 'Storm_Belt', 'Magnetic_Brine', 'Thawing_Strike',
+    'Winds_Devastation', 'Frozen_Shards', 'Rapid_Tentacles', 'Rupturing_Shadows', 'Shadow_Conversion',
+    'Explosive_Barrier', 'Exploding_Spirits', 'Lightnings_Fury', 'Fortunes_Riches',
+  ];
+  it.each(payloadOnly)('%s does not change weapon damage', (id) => {
+    const aspect = blessings.find((b) => b.id === id)!.aspect;
+    const b: Build = { ...emptyBuild, aspects: { primary: aspect, secondary: null, ability: null }, blessings: { [id]: 1 } };
+    const bare: Build = { ...b, blessings: {} };
+    expect(simulate(b).stats.damageMultiplier).toBeCloseTo(simulate(bare).stats.damageMultiplier, 5);
+    expect(simulate(b).weaponDps).toBeCloseTo(simulate(bare).weaponDps, 5);
   });
 });

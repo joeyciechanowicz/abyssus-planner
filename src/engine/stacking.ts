@@ -1,5 +1,5 @@
 import type { Effect, Scope, Stat } from '../model/effects';
-import type { SimOptions } from '../model/build';
+import { enemiesFor, type SimOptions } from '../model/build';
 
 /**
  * Accumulated modifiers for one build.
@@ -23,6 +23,14 @@ export class Modifiers {
   readonly statusApplications = new Map<string, number>();
   /** Per-source contribution log, for the breakdown the UI shows. */
   readonly log: { source: string; stat: string; scope: string; value: number }[] = [];
+  /** What had to be assumed to count each pick (deduplicated), for the UI. */
+  readonly assumptions: { source: string; text: string }[] = [];
+
+  assume(source: string, text: string) {
+    if (!this.assumptions.some((a) => a.source === source && a.text === text)) {
+      this.assumptions.push({ source, text });
+    }
+  }
 
   addMult(stat: Stat, scope: Scope, value: number, source: string) {
     const byScope = this.mults.get(stat) ?? new Map<Scope, number>();
@@ -104,14 +112,31 @@ export function applyEffects(
       case 'stacking': {
         // Assume `stackFullness` of the cap is up; uncapped effects are assumed to
         // sit at a conservative 5 stacks so they cannot dominate the result.
+        if (e.per === 'affectedEnemy') {
+          // One stack per enemy you've affected: bounded by how many enemies the
+          // target scenario has, not by a guessed cap.
+          const enemies = enemiesFor(opts.target);
+          const stacks = Math.min(e.max ?? enemies, enemies) * opts.stackFullness;
+          mods.addMult(e.stat, e.scope ?? 'all', e.valuePer * stacks, `${source} (${stacks.toFixed(1)} stacks)`);
+          mods.assume(source, `every enemy (${fmtStacks(stacks)}) is affected`);
+          break;
+        }
         const cap = e.max ?? 5;
         const stacks = cap * opts.stackFullness;
         mods.addMult(e.stat, e.scope ?? 'all', e.valuePer * stacks, `${source} (${stacks.toFixed(1)} stacks)`);
+        mods.assume(
+          source,
+          e.max === null
+            ? `${fmtStacks(stacks)} stacks (the card states no cap; 5 is the assumed maximum)`
+            : `${fmtStacks(stacks)} of ${e.max} stacks`,
+        );
         break;
       }
 
       case 'conditional':
         if (conditionHolds(e.when, e.threshold, opts)) {
+          const why = assumedCondition(e.when, e.status);
+          if (why) mods.assume(source, why);
           applyEffects(mods, e.then, `${source} (${e.when})`, opts, ctx);
         }
         break;
@@ -128,6 +153,9 @@ export function applyEffects(
         // often the *effect* procs given a weakspot hit, not how often a
         // weakspot hit happens at all.
         const effectiveChance = e.on === 'weakspot' ? e.chance * opts.weakspotAccuracy : e.chance;
+        if (effectiveChance < 1) {
+          mods.assume(source, `averaged over its ${Math.round(effectiveChance * 100)}% chance per ${e.on}`);
+        }
         const scaled = e.then.map((inner) => {
           if (inner.op === 'mult') return { ...inner, value: inner.value * effectiveChance };
           // A nested `proc`'s own `chance` is independent of the trigger firing at
@@ -142,6 +170,22 @@ export function applyEffects(
   }
 }
 
+const fmtStacks = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+
+/** The assumption a holding condition rests on, if it isn't simply a player setting. */
+function assumedCondition(when: string, status: string | undefined): string | null {
+  switch (when) {
+    case 'targetHasStatus':
+      return `the target always has ${status ?? 'the status'}`;
+    case 'selfHasStatus':
+      return `you always have ${status ?? 'the buff'}`;
+    case 'inAoe':
+      return 'you or the target stay inside the area';
+    default:
+      return null;
+  }
+}
+
 function conditionHolds(
   when: string,
   threshold: number | undefined,
@@ -151,6 +195,10 @@ function conditionHolds(
   switch (when) {
     case 'always':
       return true;
+    case 'targetIsEliteOrBoss':
+      return opts.target === 'boss';
+    case 'targetIsStandard':
+      return opts.target === 'pack';
     case 'healthAbove':
       return opts.healthFraction > t;
     case 'healthBelow':

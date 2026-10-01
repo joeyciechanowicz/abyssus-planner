@@ -8,7 +8,7 @@ import {
   type DamageComponent,
   type WeaponMode,
 } from '../model/data';
-import { defaultOptions, type Build, type SimOptions } from '../model/build';
+import { defaultOptions, enemiesFor, type Build, type SimOptions } from '../model/build';
 import { Modifiers, applyEffects } from './stacking';
 import { scaleBlessingEffects } from './blessingScaling';
 
@@ -55,6 +55,8 @@ export interface SimResult {
   breakdown: { source: string; stat: string; scope: string; value: number }[];
   /** Picks whose text the DSL could not express; their effect is NOT in the number. */
   unmodeled: { name: string; reason: string }[];
+  /** What the number assumes to count each pick (ideal-scenario conditions, stacks, chances). */
+  assumptions: { source: string; text: string }[];
   /** True when any input used estimated rate-of-fire values (it almost always is). */
   usesEstimates: boolean;
   warnings: string[];
@@ -137,7 +139,10 @@ function computeModeOutput(
     return sum + base * p.chance;
   }, 0);
 
-  const perShot = (blendedImpact + baseExtra * aoeMult + procDamage) * opts.accuracy;
+  // Area components (explosions, pulls) catch every enemy in the target scenario;
+  // a direct hit only ever lands on one.
+  const areaDamage = baseExtra * aoeMult * enemiesFor(opts.target);
+  const perShot = (blendedImpact + areaDamage + procDamage) * opts.accuracy;
 
   const fireRate = mode.fireRate * (1 + mods.multFor('fireRate', scope));
   const reloadTime = mode.reloadTime / (1 + mods.multFor('reloadSpeed', scope));
@@ -249,6 +254,10 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   // --- Modes: main + optional weave ----------------------------------------
   const abilityDamage = ability?.damage ?? 0;
   const main = computeModeOutput(mode, mods, opts, abilityDamage);
+  const areaTargets = enemiesFor(opts.target);
+  if (areaTargets > 1 && mode.damageComponents?.some((c) => ['explosion', 'pull', 'aoe'].includes(c.kind))) {
+    mods.assume(mode.name, `its area damage catches all ${areaTargets} enemies`);
+  }
 
   let weaveMode: WeaponMode | undefined;
   let weaveOutput: ModeOutput | undefined;
@@ -286,7 +295,12 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       ),
     );
     const pulses = ability.pulses ? ability.pulses.count * ability.pulses.damage : 0;
-    const perCast = ((ability.damage ?? ability.weakspotDamage ?? 0) + pulses) * abilityMult;
+    const isArea = ability.tags.includes('aoe');
+    const targetsHit = isArea ? enemiesFor(opts.target) : 1;
+    if (isArea && targetsHit > 1) {
+      mods.assume(ability.name, `its area catches all ${targetsHit} enemies`);
+    }
+    const perCast = ((ability.damage ?? ability.weakspotDamage ?? 0) + pulses) * abilityMult * targetsHit;
     // Charges refill at the end of an encounter; amortise over a nominal 30s fight.
     // abilityCooldown mods shorten/lengthen the effective encounter window --
     // negative values fit more casts into the same 30s.
@@ -338,6 +352,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     },
     breakdown,
     unmodeled,
+    assumptions: mods.assumptions,
     usesEstimates: mode.estimated || (weaveMode?.estimated ?? false),
     warnings,
   };

@@ -63,6 +63,10 @@ export const CONDITIONS = [
   'targetHasStatus',
   'selfHasStatus',
   'inAoe',
+  /** Holds only against the Boss target (Elite & Boss bonuses). */
+  'targetIsEliteOrBoss',
+  /** Holds only against the Pack target ("standard enemies" effects). */
+  'targetIsStandard',
   'always',
 ] as const;
 export type Condition = (typeof CONDITIONS)[number];

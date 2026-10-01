@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { SimResult } from '../engine/simulate';
-import type { SimOptions } from '../model/build';
+import { TARGETS, type SimOptions } from '../model/build';
 import { soulSkills } from '../model/data';
 import { PLAYSTYLES, type Playstyle } from './playstyle';
 import { fmt, statLabel } from './theme';
@@ -90,14 +90,31 @@ interface PlayProps {
   playstyleHint?: string;
 }
 
+type NumericOption = { [K in keyof SimOptions]: SimOptions[K] extends number ? K : never }[keyof SimOptions];
+
 export function HowYouPlay({ opts, setOpts, weaveLabel, hasAbility, playstyle, onPlaystyle, playstyleHint }: PlayProps) {
-  const sliders: (readonly [keyof SimOptions, string])[] = [...SLIDERS];
+  const sliders: (readonly [NumericOption, string])[] = [...SLIDERS];
   if (weaveLabel) sliders.push(['weaveRate', `${weaveLabel} share`]);
   if (hasAbility) sliders.push(['weaponUptime', 'Time spent shooting']);
 
   return (
     <section className="panel play" aria-label="How you play">
       <h2>How you play</h2>
+      <div className="segmented two" role="group" aria-label="Target">
+        {TARGETS.map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            aria-pressed={opts.target === t.id}
+            onClick={() => setOpts({ ...opts, target: t.id })}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <p className="sub small">
+        Best case by default: every shot lands and every stack is built. Lower the sliders for a rougher fight.
+      </p>
       {hasAbility && (
         <label className="field">
           <span>Playstyle</span>
@@ -163,6 +180,37 @@ export function Contributors({ result }: { result: SimResult }) {
         <button type="button" className="link-btn" onClick={() => setAll((v) => !v)}>
           {all ? 'Show fewer' : `Show all ${rows.length}`}
         </button>
+      )}
+    </section>
+  );
+}
+
+/** What the number takes for granted to count each pick. */
+export function Assumptions({ result }: { result: SimResult }) {
+  const [open, setOpen] = useState(false);
+  if (result.assumptions.length === 0) return null;
+  const bySource = new Map<string, string[]>();
+  for (const a of result.assumptions) {
+    // Sources carry suffixes like " (on hit)" or " (targetHasStatus)" from nesting.
+    const src = a.source.replace(/ \(.*$/, '');
+    bySource.set(src, [...(bySource.get(src) ?? []), a.text]);
+  }
+
+  return (
+    <section className="panel assumptions" aria-label="Assumed in the DPS number">
+      <h2>Assumed</h2>
+      <button type="button" className="link-btn" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
+        {open ? 'Hide' : `Show what ${bySource.size} pick${bySource.size === 1 ? '' : 's'} assume`}
+      </button>
+      {open && (
+        <ul>
+          {[...bySource].map(([src, texts]) => (
+            <li key={src}>
+              <span className="name">{src}</span>
+              <span className="sub">{texts.join('; ')}</span>
+            </li>
+          ))}
+        </ul>
       )}
     </section>
   );

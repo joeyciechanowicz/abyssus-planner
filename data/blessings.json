@@ -215,18 +215,7 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "dotDamage",
-          "scope": "dot",
-          "valuePer": 0.05,
-          "per": "hit",
-          "max": null,
-          "note": "Hemorrhage",
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -250,7 +239,8 @@
             18
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Feeble_Blood",
@@ -319,11 +309,18 @@
       "icon": "blessings/Blood.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.2,
-          "scalesWith": "{Damage}"
+          "op": "conditional",
+          "when": "selfHasStatus",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.2,
+              "scalesWith": "{Damage}"
+            }
+          ],
+          "status": "a Blood Zone"
         }
       ],
       "upgrades": [
@@ -416,16 +413,7 @@
       "kind": "blessing",
       "logbookIndex": 7,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 1.0,
-          "note": "ramping: this is the maximum",
-          "scalesWith": "{MaxDamageMultiplierPercentage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{MaxDamageMultiplierPercentage}",
@@ -468,7 +456,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Bloodletting",
@@ -624,18 +613,7 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "dotDamage",
-          "scope": "dot",
-          "valuePer": 0.05,
-          "per": "stack",
-          "max": null,
-          "note": "Hemorrhage",
-          "scalesWith": "{DamageIncreasePercentage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncreasePercentage}",
@@ -659,7 +637,8 @@
             6
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Bouncing_Blood",
@@ -745,17 +724,7 @@
       "kind": "blessing",
       "logbookIndex": 14,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 40.0,
-          "of": "flat",
-          "chance": 1.0,
-          "scope": "all",
-          "note": "explosion",
-          "scalesWith": "{Damage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{Damage}",
@@ -779,7 +748,8 @@
             38
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Spiked_Blood",
@@ -895,17 +865,7 @@
       "kind": "blessing",
       "logbookIndex": 18,
       "icon": "blessings/Blood_Sphere.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 2.0,
-          "of": "onHitDamage",
-          "chance": 1.0,
-          "scope": "all",
-          "note": "scales from that",
-          "scalesWith": "{DamageIncreasePercentage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{SpawnChance}",
@@ -943,7 +903,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "unmodeled": "acts on the Hemorrhage payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Bloodsplosions",
@@ -1179,11 +1140,18 @@
       "icon": "blessings/Barrier.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.35,
-          "scalesWith": "{DamageIncreasePercentage}"
+          "op": "conditional",
+          "when": "selfHasStatus",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.35,
+              "scalesWith": "{DamageIncreasePercentage}"
+            }
+          ],
+          "status": "Barrier up"
         }
       ],
       "upgrades": [
@@ -1256,11 +1224,18 @@
       "icon": "blessings/Barrier.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "fireRate",
-          "scope": "all",
-          "value": 0.25,
-          "scalesWith": "{FireRateIncreasePercentage}"
+          "op": "conditional",
+          "when": "selfHasStatus",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.25,
+              "scalesWith": "{FireRateIncreasePercentage}"
+            }
+          ],
+          "status": "Barrier up"
         }
       ],
       "upgrades": [
@@ -1479,17 +1454,7 @@
       "kind": "blessing",
       "logbookIndex": 14,
       "icon": "blessings/Barrier.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 500.0,
-          "of": "flat",
-          "chance": 1.0,
-          "scope": "all",
-          "note": "explosion",
-          "scalesWith": "{Damage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{Damage}",
@@ -1513,7 +1478,8 @@
             47
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Barrier activation payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Dazing_Barrier",
@@ -2021,15 +1987,7 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Flares.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.05,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -2053,7 +2011,8 @@
             16
           ]
         }
-      ]
+      ],
+      "unmodeled": "modifies the Fire DoT payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Fanning_Flames",
@@ -2063,18 +2022,7 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Flares.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "dotDamage",
-          "scope": "dot",
-          "valuePer": 0.1,
-          "per": "application",
-          "max": null,
-          "note": "Flare",
-          "scalesWith": "{DamageIncreasePercentage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncreasePercentage}",
@@ -2098,7 +2046,8 @@
             15
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Flare payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Linked_Flames",
@@ -2228,18 +2177,7 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Flares.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 50.0,
-          "of": "flat",
-          "chance": 0.3,
-          "scope": "all",
-          "note": "explosion",
-          "scalesWith": "{Damage}",
-          "chanceScalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -2285,7 +2223,8 @@
             47
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Flare payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Critical_Flares",
@@ -2295,15 +2234,7 @@
       "kind": "blessing",
       "logbookIndex": 14,
       "icon": "blessings/Flares.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.2,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -2327,7 +2258,8 @@
             39
           ]
         }
-      ]
+      ],
+      "unmodeled": "modifies the Flare payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Scourging_Flames",
@@ -2760,17 +2692,7 @@
       "kind": "blessing",
       "logbookIndex": 5,
       "icon": "blessings/Goldburst.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 0.2,
-          "of": "onHitDamage",
-          "chance": 1.0,
-          "scope": "all",
-          "note": "scales from Gold",
-          "scalesWith": "{GoldPercentage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{GoldPercentage}",
@@ -2794,7 +2716,8 @@
             22
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Goldburst payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Precise_Gold",
@@ -2841,10 +2764,21 @@
       "icon": "blessings/Goldburst.webp",
       "effects": [
         {
-          "op": "mult",
+          "op": "stacking",
           "stat": "fireRate",
           "scope": "all",
-          "value": 0.05
+          "valuePer": 0.05,
+          "per": "goldPickup",
+          "max": 10
+        },
+        {
+          "op": "stacking",
+          "stat": "reloadSpeed",
+          "scope": "all",
+          "valuePer": 0.02,
+          "per": "goldPickup",
+          "max": 10,
+          "scalesWith": "{ReloadSpeedIncreasePercentage}"
         }
       ],
       "upgrades": [
@@ -3204,16 +3138,7 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Goldburst.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 0.1,
-          "of": "onHitDamage",
-          "chance": 1.0,
-          "scope": "all",
-          "scalesWith": "{DamagePercent}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamagePercent}",
@@ -3237,7 +3162,8 @@
             23
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Goldburst payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Golden_Pocket",
@@ -3396,17 +3322,8 @@
       "kind": "blessing",
       "logbookIndex": 17,
       "icon": "blessings/Goldburst.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "damage",
-          "scope": "all",
-          "valuePer": 0.05,
-          "per": "blessing",
-          "max": null,
-          "note": "per Fortune Blessing: Gold found"
-        }
-      ]
+      "effects": [],
+      "unmodeled": "increases Gold found, which only feeds Goldburst damage -- awaits the aspect payload model (Phase 2)"
     },
     {
       "id": "Midas_Touch",
@@ -3774,12 +3691,18 @@
       "icon": "blessings/Frozen.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.2,
-          "note": "amplifier on affected enemies",
-          "scalesWith": "{DamageIncrease}"
+          "op": "conditional",
+          "when": "targetHasStatus",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.2,
+              "scalesWith": "{DamageIncrease}"
+            }
+          ],
+          "status": "Frozen"
         }
       ],
       "upgrades": [
@@ -3850,17 +3773,7 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Frozen.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 0.02,
-          "of": "onHitDamage",
-          "chance": 1.0,
-          "scope": "all",
-          "note": "scales from their current Health as",
-          "scalesWith": "{HitPercentDamageNormalEnemies}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{MinNumShards}",
@@ -3903,7 +3816,8 @@
             86
           ]
         }
-      ]
+      ],
+      "unmodeled": "deals a % of the enemy's current Health on kill -- awaits percent-health damage (dps-coverage.md, Phase 3)"
     },
     {
       "id": "Gliding_Glacier",
@@ -4002,15 +3916,7 @@
       "kind": "blessing",
       "logbookIndex": 12,
       "icon": "blessings/Frozen.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 1.0,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -4034,7 +3940,8 @@
             40
           ]
         }
-      ]
+      ],
+      "unmodeled": "melee damage is not part of the simulated DPS"
     },
     {
       "id": "Packed_Snow",
@@ -4157,16 +4064,7 @@
       "kind": "blessing",
       "logbookIndex": 16,
       "icon": "blessings/Frozen.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.15,
-          "note": "amplifier on affected enemies",
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -4190,7 +4088,8 @@
             22
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the status-effect payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Frosts_Knowledge",
@@ -4202,13 +4101,19 @@
       "icon": "blessings/Frozen.webp",
       "effects": [
         {
-          "op": "stacking",
-          "stat": "damage",
-          "scope": "all",
-          "valuePer": 0.05,
-          "per": "blessing",
-          "max": null,
-          "note": "per Frost Blessing: damage dealt to Elites and Bosses"
+          "op": "conditional",
+          "when": "targetIsEliteOrBoss",
+          "then": [
+            {
+              "op": "stacking",
+              "stat": "damage",
+              "scope": "all",
+              "valuePer": 0.05,
+              "per": "blessing",
+              "max": null,
+              "note": "per Frost Blessing: damage dealt to Elites and Bosses"
+            }
+          ]
         }
       ],
       "upgrades": [
@@ -4479,18 +4384,7 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 50.0,
-          "of": "flat",
-          "chance": 0.2,
-          "scope": "all",
-          "note": "Thunderstrike",
-          "scalesWith": "{Damage}",
-          "chanceScalesWith": "{Chance}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -4533,7 +4427,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Static_Concussion",
@@ -4700,15 +4595,7 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.05,
-          "scalesWith": "{DamageIncreasePercent}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncreasePercent}",
@@ -4732,7 +4619,8 @@
             23
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Static_Zone",
@@ -4841,14 +4729,7 @@
       "kind": "blessing",
       "logbookIndex": 12,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.3
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{CritDamageIncrease}",
@@ -4894,7 +4775,8 @@
             48
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Extended_Chain",
@@ -4996,16 +4878,7 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.2,
-          "note": "ramping: this is the maximum",
-          "scalesWith": "{DamageDistanceIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageDistanceIncrease}",
@@ -5029,7 +4902,8 @@
             72
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Chain Lightning payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Lightning_Rod",
@@ -5074,17 +4948,7 @@
       "kind": "blessing",
       "logbookIndex": 17,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "damage",
-          "scope": "all",
-          "valuePer": 0.03,
-          "per": "blessing",
-          "max": null,
-          "note": "per Lightning Blessing: Critical Chance"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{ArtifactIncreasePercent}",
@@ -5106,7 +4970,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "unmodeled": "Critical Chance for Chain Lightning -- awaits the aspect payload model (Phase 2)"
     },
     {
       "id": "Slipping_Arcs",
@@ -5285,17 +5150,7 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Shadows.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 100.0,
-          "of": "flat",
-          "chance": 1.0,
-          "scope": "dot",
-          "note": "per second",
-          "scalesWith": "{DamagePerTick}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamagePerTick}",
@@ -5338,7 +5193,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Creeping_Shadows",
@@ -5539,17 +5395,7 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Shadows.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 400.0,
-          "of": "flat",
-          "chance": 1.0,
-          "scope": "all",
-          "note": "explosion",
-          "scalesWith": "{Damage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{Damage}",
@@ -5573,7 +5419,8 @@
             23
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Exponential_Shadows",
@@ -5669,16 +5516,7 @@
       "kind": "blessing",
       "logbookIndex": 12,
       "icon": "blessings/Shadows.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 1.0,
-          "of": "onHitDamage",
-          "chance": 1.0,
-          "scope": "all",
-          "scalesWith": "{Damage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{Damage}",
@@ -5702,7 +5540,8 @@
             30
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Critical_Shadows",
@@ -5714,11 +5553,18 @@
       "icon": "blessings/Shadows.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "weakspotDamage",
-          "scope": "all",
-          "value": 0.2,
-          "scalesWith": "{WeakspotIncrease}"
+          "op": "conditional",
+          "when": "targetHasStatus",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "weakspotDamage",
+              "scope": "all",
+              "value": 0.2,
+              "scalesWith": "{WeakspotIncrease}"
+            }
+          ],
+          "status": "Shadows"
         }
       ],
       "upgrades": [
@@ -5756,11 +5602,18 @@
       "icon": "blessings/Shadows.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.2,
-          "scalesWith": "{DamageIncrease}"
+          "op": "conditional",
+          "when": "targetIsEliteOrBoss",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "all",
+              "value": 0.2,
+              "scalesWith": "{DamageIncrease}"
+            }
+          ],
+          "note": "only one Shadow-afflicted target: true against a lone Boss"
         }
       ],
       "upgrades": [
@@ -5798,11 +5651,18 @@
       "icon": "blessings/Shadows.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.3,
-          "scalesWith": "{AoEDamageIncrease}"
+          "op": "conditional",
+          "when": "targetHasStatus",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "aoeDamage",
+              "scope": "all",
+              "value": 0.3,
+              "scalesWith": "{AoEDamageIncrease}"
+            }
+          ],
+          "status": "Shadows"
         }
       ],
       "upgrades": [
@@ -5906,15 +5766,8 @@
       "kind": "blessing",
       "logbookIndex": 18,
       "icon": "blessings/Nights_Minor_Blessing.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 0.3,
-          "of": "onHitDamage",
-          "chance": 1.0,
-          "scope": "all"
-        }
-      ]
+      "effects": [],
+      "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Nights_Major_Blessing",
@@ -5924,15 +5777,8 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Nights_Minor_Blessing.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 1.5,
-          "of": "onHitDamage",
-          "chance": 1.0,
-          "scope": "all"
-        }
-      ]
+      "effects": [],
+      "unmodeled": "acts on the Shadows payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Ability_Tentacles",
@@ -6162,15 +6008,7 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Tentacles.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "aoeDamage",
-          "scope": "all",
-          "value": 0.5,
-          "scalesWith": "{AoEDamage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{AoERange}",
@@ -6213,7 +6051,8 @@
             50
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Acid",
@@ -6315,17 +6154,7 @@
       "kind": "blessing",
       "logbookIndex": 7,
       "icon": "blessings/Tentacles.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "fireRate",
-          "scope": "all",
-          "valuePer": 0.1,
-          "per": "tentacle",
-          "max": null,
-          "scalesWith": "{AttackSpeedIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{AttackSpeedIncrease}",
@@ -6349,7 +6178,8 @@
             44
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Anchors",
@@ -6394,15 +6224,7 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Tentacles.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 1.5,
-          "scalesWith": "{HighImpactDamageMultiPercentage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{HighImpactDamageMultiPercentage}",
@@ -6426,7 +6248,8 @@
             52
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Team_Tentacles",
@@ -6493,16 +6316,7 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Tentacles.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.15,
-          "note": "amplifier on affected enemies",
-          "scalesWith": "{DamageTakenIncreasePercentage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageTakenIncreasePercentage}",
@@ -6548,7 +6362,8 @@
             62
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Tentacle payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Regenerating_Tentacles",
@@ -6796,17 +6611,8 @@
       "kind": "blessing",
       "logbookIndex": 17,
       "icon": "blessings/Tentacles.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "damage",
-          "scope": "all",
-          "valuePer": 0.03,
-          "per": "blessing",
-          "max": null,
-          "note": "per Ocean Blessing: this bonus"
-        }
-      ]
+      "effects": [],
+      "unmodeled": "scales with nearby allies; a solo build has none"
     },
     {
       "id": "Oceanic_Supplies",
@@ -6967,21 +6773,7 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Spirit.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 1.0,
-          "note": "ramping: this is the maximum"
-        },
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.01
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -7027,7 +6819,8 @@
             77
           ]
         }
-      ]
+      ],
+      "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Exploitative_Spirits",
@@ -7037,17 +6830,7 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Spirit.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "damage",
-          "scope": "all",
-          "valuePer": 0.2,
-          "per": "statusEffectOnEnemy",
-          "max": null,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -7071,7 +6854,8 @@
             15
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Exploding_Spirits",
@@ -7081,17 +6865,7 @@
       "kind": "blessing",
       "logbookIndex": 5,
       "icon": "blessings/Spirit.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 80.0,
-          "of": "flat",
-          "chance": 1.0,
-          "scope": "all",
-          "note": "explosion",
-          "scalesWith": "{ExplosionDamage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{ExplosionDamage}",
@@ -7115,7 +6889,8 @@
             37
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Generative_Spirits",
@@ -7363,17 +7138,7 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Spirit.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 5.0,
-          "of": "flat",
-          "chance": 1.0,
-          "scope": "dot",
-          "note": "per stack",
-          "scalesWith": "{DamagePerTick}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamagePerTick}",
@@ -7397,7 +7162,8 @@
             14
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Spiritual_Exchange",
@@ -7407,15 +7173,7 @@
       "kind": "blessing",
       "logbookIndex": 12,
       "icon": "blessings/Spirit.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": -0.15,
-          "scalesWith": "{DamageDecrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{CostDecrease}",
@@ -7461,7 +7219,8 @@
             63
           ]
         }
-      ]
+      ],
+      "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Growing_Spirits",
@@ -7471,15 +7230,7 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Spirit.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.2,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -7503,7 +7254,8 @@
             15
           ]
         }
-      ]
+      ],
+      "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Heavy_Spirits",
@@ -7585,11 +7337,25 @@
       "icon": "blessings/Spirit.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "fireRate",
-          "scope": "all",
-          "value": 0.15,
-          "scalesWith": "{FireRateIncrease}"
+          "op": "conditional",
+          "when": "selfHasStatus",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "fireRate",
+              "scope": "all",
+              "value": 0.15,
+              "scalesWith": "{FireRateIncrease}"
+            },
+            {
+              "op": "mult",
+              "stat": "abilityCooldown",
+              "scope": "ability",
+              "value": -0.1,
+              "scalesWith": "{AbilityCooldownDecrease}"
+            }
+          ],
+          "status": "a full Spirit Gauge"
         }
       ],
       "upgrades": [
@@ -7649,13 +7415,20 @@
       "icon": "blessings/Spirit.webp",
       "effects": [
         {
-          "op": "stacking",
-          "stat": "damage",
-          "scope": "all",
-          "valuePer": 0.05,
-          "per": "blessing",
-          "max": null,
-          "note": "per Spirit Blessing: this bonus"
+          "op": "conditional",
+          "when": "targetHealthBelow",
+          "then": [
+            {
+              "op": "stacking",
+              "stat": "damage",
+              "scope": "all",
+              "valuePer": 0.05,
+              "per": "blessing",
+              "max": null,
+              "note": "per Spirit Blessing"
+            }
+          ],
+          "threshold": 0.5
         }
       ]
     },
@@ -8189,16 +7962,7 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Windburst.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.25,
-          "note": "ramping: this is the maximum",
-          "scalesWith": "{DamagePercentage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamagePercentage}",
@@ -8222,7 +7986,8 @@
             24
           ]
         }
-      ]
+      ],
+      "unmodeled": "modifies the Windburst payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Destructive_Winds",
@@ -8367,17 +8132,7 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Windburst.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "damage",
-          "scope": "all",
-          "valuePer": 0.1,
-          "per": "trigger",
-          "max": 5.0,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -8401,7 +8156,8 @@
             19
           ]
         }
-      ]
+      ],
+      "unmodeled": "modifies the Windburst payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Storm_Caller",
@@ -8560,18 +8316,7 @@
       "kind": "blessing",
       "logbookIndex": 17,
       "icon": "blessings/Windburst.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "damage",
-          "scope": "all",
-          "valuePer": 0.05,
-          "per": "blessing",
-          "max": null,
-          "note": "per Wind Blessing: the size of all areas of effect",
-          "scalesWith": "{ArtifactIncreasePercent}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{ArtifactIncreasePercent}",
@@ -8596,7 +8341,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "unmodeled": "increases area size, not damage -- awaits aoeSize support (dps-coverage.md, Phase 3)"
     },
     {
       "id": "Roaring_Winds",
@@ -8757,17 +8503,7 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Brine.webp",
-      "effects": [
-        {
-          "op": "proc",
-          "amount": 0.2,
-          "of": "onHitDamage",
-          "chance": 1.0,
-          "scope": "all",
-          "note": "scales from Brine Ball",
-          "scalesWith": "{DamagePercent}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -8813,7 +8549,8 @@
             85
           ]
         }
-      ]
+      ],
+      "unmodeled": "acts on the Brine Ball payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Detonating_Brine",
@@ -9155,15 +8892,7 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Brine.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.1,
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -9187,7 +8916,8 @@
             24
           ]
         }
-      ]
+      ],
+      "unmodeled": "modifies the Brine Ball payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
     },
     {
       "id": "Vial_Repeater",
@@ -9326,12 +9056,12 @@
       "effects": [
         {
           "op": "stacking",
-          "stat": "damage",
+          "stat": "aoeDamage",
           "scope": "all",
           "valuePer": 0.03,
           "per": "blessing",
           "max": null,
-          "note": "per Brine Blessing: the damage of all areas of effect"
+          "note": "per Brine Blessing: area damage"
         }
       ],
       "upgrades": [
