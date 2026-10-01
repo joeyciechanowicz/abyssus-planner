@@ -113,7 +113,7 @@
         "softCap": 500,
         "percentAboveCap": 5
       },
-      "evidence": "BP_Spirit_Behavior_Mutator (TrySpawnSpiritOrb loop, GetSpiritOrbDamage: PA_SpiritGodPassive[1..4,7,8]); gauge fill native"
+      "evidence": "BP_Spirit_Behavior_Mutator (TrySpawnSpiritOrb loop, GetSpiritOrbDamage: PA_SpiritGodPassive[1..4,7,8]); gauge fills 1:1 with damage (confirmed in-game)"
     },
     {
       "id": "brine",
@@ -123,7 +123,7 @@
       "vialCapacity": 500.0,
       "explosionBase": 400.0,
       "explosionPercentOfTrigger": 10.0,
-      "evidence": "BP_Brine_Behavior_Mutator::BPGetExplosionDamage, BPHandleAbilityUsed; URBehaviorScriptBrine native ExplosionTriggerDamagePercent; vial fill native"
+      "evidence": "BP_Brine_Behavior_Mutator::BPGetExplosionDamage, BPHandleAbilityUsed; URBehaviorScriptBrine native ExplosionTriggerDamagePercent; vials fill 1:1 with damage (confirmed in-game)"
     },
     {
       "id": "barrier",
@@ -133,7 +133,7 @@
       "maxGauge": 2000,
       "duration": 10,
       "cooldown": 4,
-      "evidence": "PA_DefenderGodPassive[1..4] (MaxGauge, BarrierToGain, BarrierDuration, BarrierCooldownDuration); gauge fill native"
+      "evidence": "PA_DefenderGodPassive[1..4] (MaxGauge, BarrierToGain, BarrierDuration, BarrierCooldownDuration); gauge fills 1:1 with damage (confirmed in-game)"
     },
     {
       "id": "goldburst",

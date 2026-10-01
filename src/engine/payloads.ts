@@ -176,7 +176,7 @@ export function payloadDamage(
         left -= cost * (1 + (p.orbCostIncrementPercent / 100) * orbs);
       }
       const cycle = fillTime(p.maxGauge, gaugeRate, orbs * m('gaugePerOrb')) + orbs * p.orbInterval;
-      assumptions.push(`${orbs} Spirits per full gauge, every ${cycle.toFixed(1)}s (gauge fills 1:1 with damage dealt)`);
+      assumptions.push(`${orbs} Spirits per full gauge, every ${cycle.toFixed(1)}s`);
       return {
         dps: (orbs * scaledHit(p.orb, trigger) * bonus) / cycle,
         vulnerability: 1,
@@ -201,7 +201,7 @@ export function payloadDamage(
       const duration = p.duration * (1 + m('duration'));
       const cycle = fillTime(p.maxGauge, fillRate, 0) + duration + p.cooldown * (1 + m('cooldown'));
       const up = duration / cycle;
-      assumptions.push(`Barrier up ${Math.round(up * 100)}% of the time (gauge fills 1:1 with damage dealt)`);
+      assumptions.push(`Barrier up ${Math.round(up * 100)}% of the time`);
       return {
         dps: m('dotPerSecond') * n * up * bonus,
         vulnerability: 1 + m('damageWhileActive') * up,

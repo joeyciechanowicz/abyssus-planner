@@ -149,8 +149,8 @@ payload's base damage, tick rate, duration and scaling formula?
   use it.
 
 - 2026-10-01: Spirit, Brine and Barrier modelled as gauges, with their blessings (Radiating
-  Barrier: 800 per 0.5s while up, from PA_DefenderMajorBlessing). ASSUMPTION to confirm
-  in-game: each gauge fills 1:1 with damage dealt (the fill code is native). All 11 aspects
+  Barrier: 800 per 0.5s while up, from PA_DefenderMajorBlessing). Each gauge fills 1:1
+  with damage dealt (fill code is native; confirmed in-game). All 11 aspects
   now have a payload model. Flares and the Tentacle object pool are the remaining aspect gaps.
 
 ## Later phases (unchanged from the earlier proposal)

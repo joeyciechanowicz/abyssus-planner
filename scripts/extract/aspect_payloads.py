@@ -194,8 +194,8 @@ def main():
                         'PA_FrostGodPassive[2..11]; Frozen duration = native ailment default',
         },
         # The three gauge aspects. Each hit fills the gauge natively from its
-        # damage (NativeRunBehavior / FillVials(HealthDamage)); the 1:1 rate is
-        # an assumption -- the code that applies it is compiled C++.
+        # damage (NativeRunBehavior / FillVials(HealthDamage)), 1:1 -- the code is
+        # compiled C++; the rate was confirmed in-game 2026-10-01.
         {
             'id': 'spirit',
             'aspect': 'Spirit',
@@ -214,7 +214,7 @@ def main():
                 'percentAboveCap': spirit_gp['{DamagePercentagePostSoftCap}'],
             },
             'evidence': 'BP_Spirit_Behavior_Mutator (TrySpawnSpiritOrb loop, GetSpiritOrbDamage: '
-                        'PA_SpiritGodPassive[1..4,7,8]); gauge fill native',
+                        'PA_SpiritGodPassive[1..4,7,8]); gauge fills 1:1 with damage (confirmed in-game)',
         },
         {
             'id': 'brine',
@@ -227,7 +227,7 @@ def main():
             'explosionBase': mutable(brine_bp['BounceExplosionBaseDamage']),
             'explosionPercentOfTrigger': brine['ExplosionTriggerDamagePercent'] * 100,
             'evidence': 'BP_Brine_Behavior_Mutator::BPGetExplosionDamage, BPHandleAbilityUsed; '
-                        'URBehaviorScriptBrine native ExplosionTriggerDamagePercent; vial fill native',
+                        'URBehaviorScriptBrine native ExplosionTriggerDamagePercent; vials fill 1:1 with damage (confirmed in-game)',
         },
         {
             'id': 'barrier',
@@ -240,7 +240,7 @@ def main():
             'duration': defender_gp['{BarrierDuration}'],
             'cooldown': defender_gp['{BarrierCooldownDuration}'],
             'evidence': 'PA_DefenderGodPassive[1..4] (MaxGauge, BarrierToGain, BarrierDuration, '
-                        'BarrierCooldownDuration); gauge fill native',
+                        'BarrierCooldownDuration); gauge fills 1:1 with damage (confirmed in-game)',
         },
         {
             'id': 'goldburst',
