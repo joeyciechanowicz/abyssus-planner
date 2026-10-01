@@ -82,6 +82,8 @@ export const STATS = [
   'abilityCooldownSeconds',
   'damagePerOtherActive',
   'ammoPerAbilityHit',
+  /** Flat: damage scales with explosion size by this share of the aoeSize bonus (Explosive Valve: 1). */
+  'damagePerAoeSize',
 ] as const;
 export type Stat = (typeof STATS)[number];
 
@@ -272,6 +274,9 @@ export const PAYLOAD_FIELDS = [
   /** Barrier: +x to all your damage while it's up (scaled by uptime); +x relative cooldown. */
   'damageWhileActive',
   'cooldown',
+  /** Windburst: +relative radius; damage scales with this share of the total size increase (Raging Storm). */
+  'radius',
+  'radiusDamageScaling',
   /** Gauges: flat gauge refunded per orb / Brine Ball; chance per hit to fill the gauge outright. */
   'gaugePerOrb',
   'fullGaugeChance',

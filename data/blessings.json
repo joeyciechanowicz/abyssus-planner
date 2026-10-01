@@ -8918,8 +8918,14 @@
           "stat": "aoeDamage",
           "scope": "all",
           "value": 0.4,
-          "note": "area-size reduction not modeled (aoeSize isn't DPS-consumed)",
           "scalesWith": "{Damage}"
+        },
+        {
+          "op": "payload",
+          "payload": "windburst",
+          "field": "radius",
+          "value": -0.4,
+          "scalesWith": "{Range}"
         }
       ],
       "upgrades": [
@@ -9019,8 +9025,15 @@
       "kind": "blessing",
       "logbookIndex": 12,
       "icon": "blessings/Windburst.webp",
-      "effects": [],
-      "unmodeled": "scales Windburst damage with area size, which is not modelled yet (Phase 3)",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "windburst",
+          "field": "radiusDamageScaling",
+          "value": 1.0,
+          "scalesWith": "{PercentScaling}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{PercentScaling}",
@@ -9098,8 +9111,22 @@
       "kind": "blessing",
       "logbookIndex": 14,
       "icon": "blessings/Windburst.webp",
-      "effects": [],
-      "unmodeled": "radius only; the ideal pack is already all inside the Windburst",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "weakspot",
+          "chance": 1.0,
+          "then": [
+            {
+              "op": "payload",
+              "payload": "windburst",
+              "field": "radius",
+              "value": 0.3,
+              "scalesWith": "{RadiusIncrease}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{RadiusIncrease}",
@@ -9123,8 +9150,7 @@
             49
           ]
         }
-      ],
-      "utility": true
+      ]
     },
     {
       "id": "Lifting_Wind",
@@ -9198,8 +9224,15 @@
       "kind": "blessing",
       "logbookIndex": 16,
       "icon": "blessings/Windburst.webp",
-      "effects": [],
-      "unmodeled": "radius only; the ideal pack is already all inside the Windburst",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "windburst",
+          "field": "radius",
+          "value": 0.06,
+          "note": "20% chance of +30% radius"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -9245,8 +9278,7 @@
             52
           ]
         }
-      ],
-      "utility": true
+      ]
     },
     {
       "id": "Winds_Devastation",
@@ -9256,7 +9288,18 @@
       "kind": "blessing",
       "logbookIndex": 17,
       "icon": "blessings/Windburst.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "aoeSize",
+          "scope": "all",
+          "valuePer": 0.05,
+          "per": "blessing",
+          "max": null,
+          "note": "per Wind Blessing: area size",
+          "scalesWith": "{ArtifactIncreasePercent}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{ArtifactIncreasePercent}",
@@ -9281,9 +9324,7 @@
           ],
           "descriptionSpan": null
         }
-      ],
-      "unmodeled": "area size only; the ideal pack is already inside every area",
-      "utility": true
+      ]
     },
     {
       "id": "Roaring_Winds",

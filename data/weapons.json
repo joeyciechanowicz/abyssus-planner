@@ -2243,9 +2243,22 @@
           "name": "Seismic Fuel",
           "description": "Hitting 3 enemies increases the explosion radius for 5 sec.",
           "icon": "forge/Seismic_Fuel.webp",
-          "effects": [],
-          "unmodeled": "explosion radius only; the ideal pack is already inside",
-          "utility": true
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "targetIsStandard",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "aoeSize",
+                  "scope": "all",
+                  "value": 1.0,
+                  "note": "after hitting 3 enemies",
+                  "scalesWith": "{ExplosionSizeIncrease}"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "Molotov Fuel",
@@ -2279,16 +2292,36 @@
           "name": "Explosive Valve",
           "description": "Damage now scales with the projectile's explosion radius.",
           "icon": "forge/Explosive_Valve.webp",
-          "effects": [],
-          "unmodeled": "scales damage with explosion radius, which is not modelled"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "damagePerAoeSize",
+              "scope": "all",
+              "value": 1.0,
+              "note": "scaling is native; assumed proportional to size, like Raging Storm"
+            }
+          ]
         },
         {
           "name": "Accelerating Core",
           "description": "Explosions increase in size the further the projectile travels. Up to 100%.",
           "icon": "forge/Accelerating_Core.webp",
-          "effects": [],
-          "unmodeled": "explosion size only; the ideal pack is already inside",
-          "utility": true
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "note": "orbs travel far enough for the full size",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "aoeSize",
+                  "scope": "all",
+                  "value": 1.0,
+                  "scalesWith": "{MaxSizeIncreasePercentage}"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "Bouncy Core",

@@ -91,6 +91,9 @@ const STAT_LABELS: Record<string, string> = {
   abilityCooldownSeconds: 'Ability recharge (s)',
   damagePerOtherActive: 'Damage per other copy out',
   ammoPerAbilityHit: 'Rounds returned per ability hit',
+  damagePerAoeSize: 'Damage per area size',
+  radius: 'Radius',
+  radiusDamageScaling: 'Damage per radius',
   // Aspect payload mechanics (`payload` effects).
   chance: 'Proc chance',
   repeats: 'Extra triggers',

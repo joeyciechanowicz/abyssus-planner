@@ -380,15 +380,21 @@
     "utility": true
   },
   "blessings/Destructive_Winds": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Step 3: area size (BP_WindPassive10 GetWindBlessingDamageMultiplier; AoERangeMultiplier sources)",
     "effects": [
       {
         "op": "mult",
         "stat": "aoeDamage",
         "scope": "all",
         "value": 0.4,
-        "note": "area-size reduction not modeled (aoeSize isn't DPS-consumed)",
         "scalesWith": "{Damage}"
+      },
+      {
+        "op": "payload",
+        "payload": "windburst",
+        "field": "radius",
+        "value": -0.4,
+        "scalesWith": "{Range}"
       }
     ]
   },
@@ -1081,10 +1087,19 @@
     ]
   },
   "blessings/Winds_Devastation": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "area size only; the ideal pack is already inside every area",
-    "utility": true
+    "source": "Step 3: area size (BP_WindPassive10 GetWindBlessingDamageMultiplier; AoERangeMultiplier sources)",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "aoeSize",
+        "scope": "all",
+        "valuePer": 0.05,
+        "per": "blessing",
+        "max": null,
+        "note": "per Wind Blessing: area size",
+        "scalesWith": "{AoERangeIncrease}"
+      }
+    ]
   },
   "blessings/Mutagenic_Brine": {
     "source": "Phase 0 miscoding fix: area damage, was all damage",
@@ -1912,21 +1927,47 @@
     ]
   },
   "blessings/Raging_Storm": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "scales Windburst damage with area size, which is not modelled yet (Phase 3)"
+    "source": "Step 3: area size (BP_WindPassive10 GetWindBlessingDamageMultiplier; AoERangeMultiplier sources)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "windburst",
+        "field": "radiusDamageScaling",
+        "value": 1.0,
+        "scalesWith": "{PercentScaling}"
+      }
+    ]
   },
   "blessings/Storm_Caller": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "radius only; the ideal pack is already all inside the Windburst",
-    "utility": true
+    "source": "Step 3: area size (BP_WindPassive10 GetWindBlessingDamageMultiplier; AoERangeMultiplier sources)",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "weakspot",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "payload",
+            "payload": "windburst",
+            "field": "radius",
+            "value": 0.3,
+            "scalesWith": "{RadiusIncrease}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Squall": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "radius only; the ideal pack is already all inside the Windburst",
-    "utility": true
+    "source": "Step 3: area size (BP_WindPassive10 GetWindBlessingDamageMultiplier; AoERangeMultiplier sources)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "windburst",
+        "field": "radius",
+        "value": 0.06,
+        "note": "20% chance of +30% radius"
+      }
+    ]
   },
   "blessings/Lifting_Wind": {
     "source": "Phase 2b: aspect payload model",
@@ -3300,10 +3341,23 @@
     "unmodeled": "auto-releases at full charge; the charge timing is not modelled"
   },
   "weapon forge/Plasma_Launcher/Seismic Fuel": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "explosion radius only; the ideal pack is already inside",
-    "utility": true
+    "source": "Step 3: area size (BP_WindPassive10 GetWindBlessingDamageMultiplier; AoERangeMultiplier sources)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsStandard",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "aoeSize",
+            "scope": "all",
+            "value": 1.0,
+            "note": "after hitting 3 enemies",
+            "scalesWith": "{ExplosionSizeIncrease}"
+          }
+        ]
+      }
+    ]
   },
   "weapon forge/Plasma_Launcher/Revolving Valve": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
@@ -3318,15 +3372,35 @@
     ]
   },
   "weapon forge/Plasma_Launcher/Explosive Valve": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "scales damage with explosion radius, which is not modelled"
+    "source": "Step 3: area size (BP_WindPassive10 GetWindBlessingDamageMultiplier; AoERangeMultiplier sources)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "damagePerAoeSize",
+        "scope": "all",
+        "value": 1.0,
+        "note": "scaling is native; assumed proportional to size, like Raging Storm"
+      }
+    ]
   },
   "weapon forge/Plasma_Launcher/Accelerating Core": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "explosion size only; the ideal pack is already inside",
-    "utility": true
+    "source": "Step 3: area size (BP_WindPassive10 GetWindBlessingDamageMultiplier; AoERangeMultiplier sources)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "orbs travel far enough for the full size",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "aoeSize",
+            "scope": "all",
+            "value": 1.0,
+            "scalesWith": "{MaxSizeIncreasePercentage}"
+          }
+        ]
+      }
+    ]
   },
   "weapon forge/Plasma_Launcher/Spreading Heat": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",

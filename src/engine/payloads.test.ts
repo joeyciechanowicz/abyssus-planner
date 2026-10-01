@@ -281,6 +281,32 @@ describe('Chain Lightning crits', () => {
   });
 });
 
+describe('area size', () => {
+  const wind = (extra: Record<string, number>): Build => ({
+    ...emptyBuild,
+    aspects: { primary: 'Windburst', secondary: null, ability: null },
+    blessings: { Windburst_Primary: 1, ...extra },
+  });
+  const burst = (b: Build) => simulate(b).aspects.find((a) => a.name === 'Windburst')!.dps;
+
+  it("Raging Storm scales Windburst with Wind's Devastation's +5% size per Wind blessing", () => {
+    const base = burst(wind({ Winds_Devastation: 1 }));
+    // Card + Devastation + Raging Storm = 3 Wind blessings = +15% size.
+    expect(burst(wind({ Winds_Devastation: 1, Raging_Storm: 1 })) / base).toBeCloseTo(1.15, 5);
+  });
+
+  it("counts Roaring Winds' larger second burst", () => {
+    const base = burst(wind({ Roaring_Winds: 1 }));
+    expect(burst(wind({ Roaring_Winds: 1, Raging_Storm: 1 })) / base).toBeCloseTo(1 + 0.4 / 2, 5);
+  });
+
+  it('Explosive Valve scales Plasma damage with explosion size', () => {
+    const plasma = (weaponUpgrades: string[]): Build => ({ ...emptyBuild, weaponId: 'Plasma_Launcher', modeName: 'Semi-automatic', weaponUpgrades });
+    const sized = simulate(plasma(['Accelerating Core']), { weakspotAccuracy: 0 }).perShot;
+    expect(simulate(plasma(['Accelerating Core', 'Explosive Valve']), { weakspotAccuracy: 0 }).perShot / sized).toBeCloseTo(2, 5);
+  });
+});
+
 describe('on-kill effects', () => {
   const shadows: Build = {
     ...emptyBuild,

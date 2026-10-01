@@ -40,6 +40,8 @@ export interface PayloadContext {
   gold: number;
   /** Summed +% bonuses aimed at this payload alone (e.g. a "+20% Windburst damage" blessing). */
   payloadBonus: number;
+  /** Your area-size bonus (+x relative), for size-scaled payload damage. */
+  aoeSize?: number;
   /** Your Critical Chance (0..1; base 0 -- only blessings add to it). */
   critChance?: number;
   /** Status Effect effectiveness (1 = base): scales DoT/Flare damage, Shadows' bonus and
@@ -214,8 +216,18 @@ export function payloadDamage(
     }
     case 'burst': {
       if (n > 1) assumptions.push(`each ${p.name} catches all ${n} enemies`);
+      // Raging Storm: damage x (1 + scaling x total size increase). Repeat bursts are
+      // larger (x1.4, x1.8 radius for the 2nd and 3rd), which counts too.
+      let sizeMult = 1;
+      if (m('radiusDamageScaling') > 0) {
+        const extraBursts = Math.round(m('repeats'));
+        let burstSize = 0;
+        for (let i = 0; i <= extraBursts; i++) burstSize += Math.min(i, 2) * 0.4;
+        const size = m('radius') + (ctx.aoeSize ?? 0) + burstSize / (extraBursts + 1);
+        sizeMult = 1 + m('radiusDamageScaling') * size;
+      }
       return {
-        dps: procsTotal * scaledHit(p.trigger, trigger) * n * repeats * bonus,
+        dps: procsTotal * scaledHit(p.trigger, trigger) * n * repeats * sizeMult * bonus,
         vulnerability: 1,
         procsPerSecond: procsTotal,
         assumptions,

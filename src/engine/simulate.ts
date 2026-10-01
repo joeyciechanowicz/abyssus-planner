@@ -135,7 +135,10 @@ function computeModeOutput(
   } = {},
 ): ModeOutput {
   let mode = modeIn;
-  const combo = extra.comboFactor ?? 1;
+  // Combo Points (Harpoon) and size-scaled damage (Explosive Valve) scale the shot's damage.
+  const combo =
+    (extra.comboFactor ?? 1) *
+    (1 + mods.flatFor('damagePerAoeSize') * mods.multFor('aoeSize', modeIn.type.toLowerCase() as 'primary' | 'secondary'));
   const scope = mode.type.toLowerCase() as 'primary' | 'secondary';
 
   // Fan-style extra projectiles copy every direct hit; Mr. Boom-style extra
@@ -696,6 +699,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       allStreams: streams,
       killsPerSecond,
       critChance: Math.min(1, mods.multFor('critChance', 'all')),
+      aoeSize: mods.multFor('aoeSize', 'all'),
     });
     for (const text of r.assumptions) mods.assume(payload.name, text);
     vulnerability *= r.vulnerability;
