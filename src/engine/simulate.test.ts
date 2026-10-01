@@ -671,6 +671,14 @@ describe('Engine Rifle heat', () => {
       simulate(rifle('Automatic Fire')).weaponDps, 5);
   });
 
+  it('a gun that never heats gets nothing from Heat Converter', () => {
+    // Fan triples hits, so Prolonged Revving refunds 9 Heat per 4-Heat shot: always cold.
+    const cold = (up: string[]): Build => ({ ...rifle('Engine Rev', null, ['Prolonged Revving', ...up]), charmIds: ['fan'] });
+    const r = simulate(cold(['Heat Converter']), { weakspotAccuracy: 0 });
+    expect(r.weaponDps).toBeCloseTo(simulate(cold([]), { weakspotAccuracy: 0 }).weaponDps, 5);
+    expect(r.assumptions.some((a) => a.text.includes('runs cold'))).toBe(true);
+  });
+
   it('Heat Expulsion makes deliberate overheating worth it, once per overheat', () => {
     const r = simulate(rifle('Concentrated Shot', null, ['Heat Expulsion']), { weakspotAccuracy: 0 });
     expect(r.assumptions.some((a) => a.text === 'you overheat on purpose each cycle')).toBe(true);

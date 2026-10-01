@@ -251,9 +251,12 @@ function computeModeOutput(
       const dmg = perShot * (1 + mods.flatFor('heatDamage') * fraction);
       return { fr, dmg };
     };
-    const f = strategy(1);
+    // Feathering keeps the gun just under max Heat -- unless it never heats at all
+    // (Prolonged Revving refunding more Heat than a shot costs), when it runs cold.
+    const featherHeat = heat > 0 ? 1 : 0;
+    const f = strategy(featherHeat);
     const featherDuty = heat > 0 ? cool / (f.fr * heat + cool) : 1;
-    const feather = { dps: f.fr * featherDuty * f.dmg, shots: f.fr * featherDuty, duty: featherDuty, fraction: 1, extra: 0, time: 1 };
+    const feather = { dps: f.fr * featherDuty * f.dmg, shots: f.fr * featherDuty, duty: featherDuty, fraction: featherHeat, extra: 0, time: 1 };
     let best = feather;
     if (heat > 0) {
       const o = strategy(0.5);
@@ -485,7 +488,9 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
         heatOut === main ? mode.name : weaveMode!.name,
         heatOut.heatFraction === 1
           ? 'you feather the trigger to stay just under max Heat'
-          : 'you overheat on purpose each cycle',
+          : heatOut.heatFraction === 0
+            ? 'it sheds Heat faster than it builds, so it fires non-stop but runs cold'
+            : 'you overheat on purpose each cycle',
       );
     }
     if (mode.heatPerShot === undefined) main = computeModeOutput(mode, mods, opts, abilityDamage, { ...heatSys, heatFraction: fraction });
