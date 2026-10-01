@@ -260,7 +260,7 @@
       "logbookIndex": 4,
       "icon": "blessings/Blood.webp",
       "effects": [],
-      "unmodeled": "scales with your missing Health; the ideal scenario keeps you at full Health (Phase 3 resource scaling)",
+      "unmodeled": "scales with your own missing Health; the ideal scenario keeps you at full Health",
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -893,8 +893,23 @@
       "kind": "blessing",
       "logbookIndex": 16,
       "icon": "blessings/Blood.webp",
-      "effects": [],
-      "unmodeled": "scales with the Health gap between you and the target (Phase 3 resource scaling)",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "enemies are at half Health on average over a fight",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "hemorrhage",
+              "value": 0.1,
+              "note": "+1% per 5% Health gap; you at full, enemy at half",
+              "scalesWith": "{DamageIncrease}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -1350,7 +1365,8 @@
       "logbookIndex": 8,
       "icon": "blessings/Barrier.webp",
       "effects": [],
-      "unmodeled": "triggers on kills; kill rate is not modelled"
+      "unmodeled": "restores Barrier on kills; defensive only",
+      "utility": true
     },
     {
       "id": "Retaliating_Barrier",
@@ -4030,7 +4046,15 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Frozen.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "frost",
+          "field": "killBurstDamage",
+          "value": 5,
+          "note": "2% of a half-Health 500 HP enemy, once per kill"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{MinNumShards}",
@@ -4073,8 +4097,7 @@
             86
           ]
         }
-      ],
-      "unmodeled": "triggers on kills; kill rate is not modelled"
+      ]
     },
     {
       "id": "Gliding_Glacier",
@@ -5797,7 +5820,16 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Shadows.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "shadows",
+          "field": "killAreaDamage",
+          "value": 400,
+          "note": "explodes when its target dies",
+          "scalesWith": "{Damage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Damage}",
@@ -5821,8 +5853,7 @@
             23
           ]
         }
-      ],
-      "unmodeled": "explodes when Shadows expire or the target dies; continuous fire keeps Shadows up and kill rate is not modelled"
+      ]
     },
     {
       "id": "Exponential_Shadows",
@@ -7608,8 +7639,16 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
-      "unmodeled": "triggers on kills; kill rate is not modelled",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "spirit",
+          "field": "killGauge",
+          "value": 100,
+          "note": "every kill was hit by a Spirit within 2s",
+          "scalesWith": "{SpiritChargeToGain}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{SecondsToDie}",
@@ -7981,8 +8020,23 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
-      "unmodeled": "scales with the target's missing Health (Phase 3 resource scaling)",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "enemies are at half Health on average over a fight",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "spirit",
+              "field": "gaugeGain",
+              "value": 0.1,
+              "note": "+2% charge per 10% missing, 50% missing",
+              "scalesWith": "{ChargeIncrease}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{ChargeIncrease}",
@@ -8481,8 +8535,23 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Windburst.webp",
-      "effects": [],
-      "unmodeled": "scales with the target's missing Health (Phase 3 resource scaling)",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "enemies are at half Health on average over a fight",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "windburst",
+              "value": 0.2,
+              "note": "+4% per 10% missing, 50% missing",
+              "scalesWith": "{DamageIncreasePercentage}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncreasePercentage}",
@@ -8787,8 +8856,15 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Ramping_Winds.webp",
-      "effects": [],
-      "unmodeled": "triggers on kills; kill rate is not modelled",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "windburst",
+          "field": "killProcs",
+          "value": 1,
+          "note": "every kill was hit by a Windburst within 1s"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Duration}",

@@ -252,6 +252,22 @@ describe('blessings that modify a payload', () => {
   });
 });
 
+describe('on-kill effects', () => {
+  const shadows: Build = {
+    ...emptyBuild,
+    aspects: { primary: 'Shadows', secondary: null, ability: null },
+    blessings: { Primary_Shadows: 1, Rupturing_Shadows: 1 },
+  };
+
+  it('only fire in a pack, at DPS / enemy Health kills per second', () => {
+    expect(simulate(shadows, { target: 'boss' }).aspectDps).toBe(0);
+    const pack = simulate(shadows, { target: 'pack' });
+    const plain = simulate({ ...shadows, blessings: { Primary_Shadows: 1 } }, { target: 'pack' });
+    const kills = plain.totalDps / plain.vulnerability / 500; // weapon damage before Shadows' bonus
+    expect(pack.aspectDps).toBeCloseTo(kills * 400 * 5 * pack.vulnerability, 3);
+  });
+});
+
 describe('status effectiveness and per-blessing stacks', () => {
   const fire = (extra: Record<string, number>, charmIds: string[] = []): Build => ({
     ...emptyBuild,

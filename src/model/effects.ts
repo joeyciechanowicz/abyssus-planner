@@ -259,6 +259,12 @@ export const PAYLOAD_FIELDS = [
   'poolBounce',
   'damagePerPoolObject',
   'throwAllChance',
+  /** Per kill (Pack only -- a Boss fight has no kills): flat damage to one enemy / to every
+   * enemy, extra procs of the payload, gauge charge. */
+  'killBurstDamage',
+  'killAreaDamage',
+  'killProcs',
+  'killGauge',
 ] as const;
 export type PayloadField = (typeof PAYLOAD_FIELDS)[number];
 const PAYLOAD_IDS = [

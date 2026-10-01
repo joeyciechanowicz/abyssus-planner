@@ -45,6 +45,8 @@ export interface PayloadContext {
   statusEffectiveness?: number;
   /** Mechanic changes from `payload` effects (more repeats, more summons, ...). */
   mods?: Partial<Record<PayloadField, number>>;
+  /** Enemies killed per second (0 against a Boss), for on-kill effects. */
+  killsPerSecond?: number;
   /** Every hit stream in the build, whatever its slot (Flares trigger off any direct hit).
    * `procMultiplier` here is the fire mode's own, without any card chance. */
   allStreams?: HitStream[];
@@ -99,6 +101,14 @@ export function payloadDamage(
     damagePerTarget += c * ((s.directHitsPerSecond * s.directHit) / n + s.areaEventsPerSecond * s.areaHit);
     hitsTotal += c * (s.directHitsPerSecond + s.areaEventsPerSecond * n);
   }
+  const kills = ctx.killsPerSecond ?? 0;
+  if (kills > 0 && m('killProcs') > 0) {
+    // On-kill procs land on a fresh enemy with the average hit as their trigger.
+    const avgHit = procsTotal > 0 ? triggerWeighted / procsTotal : 0;
+    procsTotal += kills * m('killProcs');
+    procsPerTarget += (kills * m('killProcs')) / n;
+    triggerWeighted += kills * m('killProcs') * avgHit;
+  }
   const trigger = procsTotal > 0 ? triggerWeighted / procsTotal : 0;
   const bonus = 1 + ctx.payloadBonus;
   const assumptions: string[] = [];
@@ -117,7 +127,13 @@ export function payloadDamage(
   // Extra flat damage some blessings hang off each proc (an explosion, a Thunderstrike);
   // a gauge payload's "proc" is its activation.
   const result = core();
-  const extras = result.procsPerSecond * (m('burstDamage') + m('areaBurstDamage') * n) * bonus;
+  const extras =
+    (result.procsPerSecond * (m('burstDamage') + m('areaBurstDamage') * n) +
+      kills * (m('killBurstDamage') + m('killAreaDamage') * n)) *
+    bonus;
+  if (kills > 0 && (m('killBurstDamage') || m('killAreaDamage') || m('killProcs') || m('killGauge'))) {
+    result.assumptions.push(`${kills.toFixed(2)} kills per second from a pack of ${Math.round(ctx.targetMaxHealth)} HP enemies`);
+  }
   return { ...result, dps: result.dps + extras };
 
   function core(): PayloadResult {
@@ -202,7 +218,7 @@ export function payloadDamage(
       };
     }
     case 'spirit': {
-      const gaugeRate = damagePerTarget * n * (1 + m('gaugeGain'));
+      const gaugeRate = damagePerTarget * n * (1 + m('gaugeGain')) + kills * m('killGauge');
       if (gaugeRate <= 0) return none;
       // Orbs one full gauge pays for, each costing more than the last. The game spawns
       // while any gauge is left and subtracts afterwards, so the last orb may overdraw.

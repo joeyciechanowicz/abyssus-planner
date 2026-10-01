@@ -2,7 +2,7 @@
   "blessings/Feeble_Blood": {
     "source": "Phase 2b: aspect payload model",
     "effects": [],
-    "unmodeled": "scales with your missing Health; the ideal scenario keeps you at full Health (Phase 3 resource scaling)"
+    "unmodeled": "scales with your own missing Health; the ideal scenario keeps you at full Health"
   },
   "blessings/Baneful_Blood": {
     "source": "Phase 2b: aspect payload model",
@@ -68,9 +68,24 @@
     ]
   },
   "blessings/Blood_Reading": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "scales with the Health gap between you and the target (Phase 3 resource scaling)"
+    "source": "Phase 3: scales with target missing Health (half on average over a fight)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "enemies are at half Health on average over a fight",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "hemorrhage",
+            "value": 0.1,
+            "note": "+1% per 5% Health gap; you at full, enemy at half",
+            "scalesWith": "{DamageIncrease}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Scourging_Flames": {
     "source": "Phase 2b: aspect payload model",
@@ -339,9 +354,24 @@
     ]
   },
   "blessings/Culling_Winds": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "scales with the target's missing Health (Phase 3 resource scaling)"
+    "source": "Phase 3: scales with target missing Health (half on average over a fight)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "enemies are at half Health on average over a fight",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "windburst",
+            "value": 0.2,
+            "note": "+4% per 10% missing, 50% missing",
+            "scalesWith": "{DamageIncreasePercentage}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Headwind": {
     "source": "Phase 2b: aspect payload model",
@@ -1032,9 +1062,16 @@
     "effects": []
   },
   "blessings/Frozen_Shards": {
-    "source": "Phase 2c: Freeze payload model",
-    "effects": [],
-    "unmodeled": "triggers on kills; kill rate is not modelled"
+    "source": "Phase 3: on-kill effects (kills/s = DPS / enemy Health, Pack only)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "frost",
+        "field": "killBurstDamage",
+        "value": 5,
+        "note": "2% of a half-Health 500 HP enemy, once per kill"
+      }
+    ]
   },
   "blessings/Winds_Devastation": {
     "source": "Phase 2b: aspect payload model",
@@ -1256,9 +1293,17 @@
     ]
   },
   "blessings/Rupturing_Shadows": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "explodes when Shadows expire or the target dies; continuous fire keeps Shadows up and kill rate is not modelled"
+    "source": "Phase 3: on-kill effects (kills/s = DPS / enemy Health, Pack only)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "shadows",
+        "field": "killAreaDamage",
+        "value": 400,
+        "note": "explodes when its target dies",
+        "scalesWith": "{Damage}"
+      }
+    ]
   },
   "blessings/Shadow_Conversion": {
     "source": "Phase 2b: aspect payload model",
@@ -1777,9 +1822,16 @@
     ]
   },
   "blessings/Ramping_Winds": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "triggers on kills; kill rate is not modelled"
+    "source": "Phase 3: on-kill effects (kills/s = DPS / enemy Health, Pack only)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "windburst",
+        "field": "killProcs",
+        "value": 1,
+        "note": "every kill was hit by a Windburst within 1s"
+      }
+    ]
   },
   "blessings/Raging_Storm": {
     "source": "Phase 2b: aspect payload model",
@@ -2259,9 +2311,10 @@
     ]
   },
   "blessings/Recharging_Barrier": {
-    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "source": "Phase 3: on-kill effects (kills/s = DPS / enemy Health, Pack only)",
     "effects": [],
-    "unmodeled": "triggers on kills; kill rate is not modelled"
+    "unmodeled": "restores Barrier on kills; defensive only",
+    "utility": true
   },
   "blessings/Retaliating_Barrier": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -2371,9 +2424,17 @@
     ]
   },
   "blessings/Consuming_Spirits": {
-    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
-    "effects": [],
-    "unmodeled": "triggers on kills; kill rate is not modelled"
+    "source": "Phase 3: on-kill effects (kills/s = DPS / enemy Health, Pack only)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "spirit",
+        "field": "killGauge",
+        "value": 100,
+        "note": "every kill was hit by a Spirit within 2s",
+        "scalesWith": "{SpiritChargeToGain}"
+      }
+    ]
   },
   "blessings/Friendly_Possession": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -2393,9 +2454,24 @@
     ]
   },
   "blessings/Suffering_Soul": {
-    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
-    "effects": [],
-    "unmodeled": "scales with the target's missing Health (Phase 3 resource scaling)"
+    "source": "Phase 3: scales with target missing Health (half on average over a fight)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "enemies are at half Health on average over a fight",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "spirit",
+            "field": "gaugeGain",
+            "value": 0.1,
+            "note": "+2% charge per 10% missing, 50% missing",
+            "scalesWith": "{ChargeIncrease}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Plentiful_Spirits": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",

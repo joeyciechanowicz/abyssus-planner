@@ -420,6 +420,13 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     cardsByAspect.set(b.aspect, [...(cardsByAspect.get(b.aspect) ?? []), { slot: b.slot, chance }]);
   }
 
+  // Kills feed on-kill effects. Only a pack dies (a Boss fight has no kills); enemies
+  // are replaced as they fall, so kills/s = damage per second / one enemy's Health.
+  const killsPerSecond =
+    opts.target === 'pack'
+      ? (weaponDps + dotDps + abilityDps) / enemyHealth[tierFor(opts.target)]
+      : 0;
+
   let aspectDps = 0;
   let vulnerability = 1;
   const aspects: { name: string; dps: number }[] = [];
@@ -448,6 +455,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       statusEffectiveness: 1 + mods.multFor('statusEffectiveness', 'all'),
       mods: mods.payloadMods.get(payload.id),
       allStreams: streams,
+      killsPerSecond,
     });
     for (const text of r.assumptions) mods.assume(payload.name, text);
     vulnerability *= r.vulnerability;
