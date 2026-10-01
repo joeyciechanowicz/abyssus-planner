@@ -40,6 +40,9 @@ export interface PayloadContext {
   gold: number;
   /** Summed +% bonuses aimed at this payload alone (e.g. a "+20% Windburst damage" blessing). */
   payloadBonus: number;
+  /** Status Effect effectiveness (1 = base): scales DoT/Flare damage, Shadows' bonus and
+   * Frost buildup -- the game applies StatusEffectEffectiveness as a coefficient on them. */
+  statusEffectiveness?: number;
   /** Mechanic changes from `payload` effects (more repeats, more summons, ...). */
   mods?: Partial<Record<PayloadField, number>>;
   /** Every hit stream in the build, whatever its slot (Flares trigger off any direct hit).
@@ -103,6 +106,7 @@ export function payloadDamage(
   if (procsTotal === 0) return none;
 
   const repeats = 1 + m('repeats');
+  const eff = ctx.statusEffectiveness ?? 1;
   /** Seconds to fill a gauge of `size`, given refunds and a per-hit chance to fill it outright. */
   const fillTime = (size: number, rate: number, refund: number) => {
     const needed = Math.max(0, size - refund);
@@ -149,7 +153,7 @@ export function payloadDamage(
           : ((p.tickBase ?? 0) + ((p.tickPercentOfPrimaryDamage ?? 0) / 100) * ctx.primaryModeDamage) *
             (p.scalesWithTargetMissingHealth ? 1 + ctx.targetMissingHealth : 1);
       const stackBonus = 1 + ((p.damagePercentPerStack ?? 0) / 100) * stacks;
-      const dps = (n * (tick / p.tickInterval) * stackBonus * up + flareDps) * bonus;
+      const dps = (n * (tick / p.tickInterval) * stackBonus * up + flareDps) * bonus * eff;
       const vulnerability = 1 + ((p.damageTakenPercentPerStack ?? 0) / 100) * p.maxStacks * up;
       assumptions.push(
         `${p.name} up ${Math.round(up * 100)}% of the time on ${n === 1 ? 'the target' : `each of ${n} enemies`}`,
@@ -256,7 +260,7 @@ export function payloadDamage(
       const hp = ctx.targetMaxHealth;
       const threshold =
         Math.min((p.thresholdPercent[tier] / 100) * hp, p.thresholdCap[tier]) * (1 - m('buildupRetained'));
-      const buildRate = damagePerTarget * (1 + m('buildup'));
+      const buildRate = damagePerTarget * (1 + m('buildup')) * eff;
       if (buildRate <= 0) return none;
       const frozenFor = p.freezeDuration * (1 + m('duration'));
       // Buildup is blocked while Frozen, so each cycle is build-up time + Freeze.
@@ -284,7 +288,7 @@ export function payloadDamage(
       const effect = 1 + m('effectiveness') + m('effectivenessPerEnemy') * n;
       return {
         dps: m('dotPerSecond') * n * bonus,
-        vulnerability: 1 + (p.damageTakenPercent / 100) * effect,
+        vulnerability: 1 + (p.damageTakenPercent / 100) * effect * eff,
         procsPerSecond: procsTotal,
         assumptions,
       };

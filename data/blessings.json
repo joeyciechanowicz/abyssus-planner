@@ -772,14 +772,7 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "flat",
-          "stat": "maxHealth",
-          "scope": "all",
-          "value": 1.0
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{HealthIncrease}",
@@ -803,7 +796,9 @@
             26
           ]
         }
-      ]
+      ],
+      "utility": true,
+      "unmodeled": "max Health only"
     },
     {
       "id": "Rupturing_Blood",
@@ -933,18 +928,7 @@
       "kind": "blessing",
       "logbookIndex": 17,
       "icon": "blessings/Blood.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "maxHealth",
-          "scope": "all",
-          "valuePer": 0.05,
-          "per": "blessing",
-          "max": null,
-          "note": "per Blood Blessing: max Health",
-          "scalesWith": "{MaxHPIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{MaxHPIncrease}",
@@ -959,7 +943,9 @@
             51
           ]
         }
-      ]
+      ],
+      "utility": true,
+      "unmodeled": "max Health only"
     },
     {
       "id": "Blood_Sphere",
@@ -1703,16 +1689,9 @@
       "kind": "blessing",
       "logbookIndex": 17,
       "icon": "blessings/Barrier.webp",
-      "effects": [
-        {
-          "op": "stacking",
-          "stat": "damageTaken",
-          "scope": "all",
-          "valuePer": -0.05,
-          "per": "blessing",
-          "max": null
-        }
-      ]
+      "effects": [],
+      "utility": true,
+      "unmodeled": "defensive only"
     },
     {
       "id": "Enduring_Barrier",
@@ -3255,15 +3234,7 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Goldburst.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damageTaken",
-          "scope": "all",
-          "value": -0.02,
-          "scalesWith": "{DamageReduction}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{Gold}",
@@ -3300,7 +3271,9 @@
             6
           ]
         }
-      ]
+      ],
+      "utility": true,
+      "unmodeled": "defensive only"
     },
     {
       "id": "Golden_Haste",
@@ -4987,15 +4960,7 @@
       "kind": "blessing",
       "logbookIndex": 10,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "critDamage",
-          "scope": "all",
-          "value": 0.25,
-          "scalesWith": "{CritDamageIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{chance}",
@@ -5041,7 +5006,8 @@
             108
           ]
         }
-      ]
+      ],
+      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
     },
     {
       "id": "Charged_Bounty",

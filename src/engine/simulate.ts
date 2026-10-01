@@ -224,9 +224,10 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     effects: Parameters<typeof applyEffects>[1],
     reason?: string,
     utility?: boolean,
+    sameAspectBlessings?: number,
   ) => {
     if (effects.length === 0 && reason) unmodeled.push({ name, reason, utility });
-    applyEffects(mods, effects, name, opts, { hasAbility: !!ability });
+    applyEffects(mods, effects, name, opts, { hasAbility: !!ability, sameAspectBlessings });
   };
 
   // --- Blessings, restricted to aspects actually equipped -------------------
@@ -243,7 +244,8 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       warnings.push(`${b.name} ignored: its aspect (${b.aspect}) is not equipped`);
       continue;
     }
-    collect(b.name, scaleBlessingEffects(b, rank), b.unmodeled, b.utility);
+    const sameAspect = Object.keys(build.blessings).filter((x) => blessingById.get(x)?.aspect === b.aspect).length;
+    collect(b.name, scaleBlessingEffects(b, rank), b.unmodeled, b.utility, sameAspect);
   }
 
   for (const id of build.charmIds) {
@@ -416,6 +418,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       targetTier: tierFor(opts.target),
       targetMaxHealth: enemyHealth[tierFor(opts.target)],
       payloadBonus: mods.multForScopeOnly('damage', payload.id),
+      statusEffectiveness: 1 + mods.multFor('statusEffectiveness', 'all'),
       mods: mods.payloadMods.get(payload.id),
       allStreams: streams,
     });

@@ -448,9 +448,15 @@
     ]
   },
   "charms/hex": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "statusEffectiveness isn't consumed by the engine -- no DPS impact regardless of magnitude"
+    "source": "Phase 5: status effectiveness",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "statusEffectiveness",
+        "scope": "all",
+        "value": 0.25
+      }
+    ]
   },
   "soul wheel/padded_suit": {
     "source": "Phase 5: no damage effect",
@@ -2687,5 +2693,66 @@
     "source": "Phase 5: no damage effect",
     "effects": [],
     "unmodeled": "melee executes; melee damage is not part of the simulated DPS"
+  },
+  "blessings/Giants_Blood": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "max Health only",
+    "utility": true
+  },
+  "blessings/Vigorous_Blood": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "max Health only",
+    "utility": true
+  },
+  "blessings/Defenders_Touch": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "defensive only",
+    "utility": true
+  },
+  "blessings/Golden_Skin": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "defensive only",
+    "utility": true
+  },
+  "charms/durable": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "max Health only",
+    "utility": true
+  },
+  "soul wheel/abyssal_stamina": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "max Health only",
+    "utility": true
+  },
+  "soul wheel/abyssal_stamina_ii": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "max Health only",
+    "utility": true
+  },
+  "blessings/Static_Zone": {
+    "source": "Phase 2b",
+    "effects": [],
+    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+  },
+  "blessings/Miasmic_Flames": {
+    "source": "Phase 5: status effectiveness",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "statusEffectiveness",
+        "scope": "all",
+        "valuePer": 0.05,
+        "per": "affectedEnemy",
+        "max": null,
+        "scalesWith": "{EffectIncrease}"
+      }
+    ]
   }
 }

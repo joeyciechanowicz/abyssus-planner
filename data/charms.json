@@ -241,14 +241,9 @@
       "unlockedByDefault": true,
       "unlockCondition": null,
       "icon": "charms/Common.webp",
-      "effects": [
-        {
-          "op": "flat",
-          "stat": "maxHealth",
-          "scope": "all",
-          "value": 2.0
-        }
-      ]
+      "effects": [],
+      "utility": true,
+      "unmodeled": "max Health only"
     },
     {
       "id": "consistent_killer",
@@ -543,8 +538,14 @@
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Torment",
       "icon": "charms/Rare.webp",
-      "effects": [],
-      "unmodeled": "statusEffectiveness isn't consumed by the engine -- no DPS impact regardless of magnitude"
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "statusEffectiveness",
+          "scope": "all",
+          "value": 0.25
+        }
+      ]
     },
     {
       "id": "backline",

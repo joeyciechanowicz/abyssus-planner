@@ -19,14 +19,14 @@ describe('scaleBlessingEffects', () => {
   });
 
   it('preserves sign for a negated ("deals less damage") linked effect', () => {
-    // Golden Skin: "Take 2% less damage per 100 Gold" -> damageTaken -0.02, scaling with {DamageReduction}.
-    const b = blessingById.get('Golden_Skin')!;
-    const ranks = b.upgrades!.find((u) => u.variable === '{DamageReduction}')!.ranks;
+    // Spiritual Exchange: "Spirits ... deal 15% less damage" -> damage/spirit -0.15, scaling with {DamageDecrease}.
+    const b = blessingById.get('Spiritual_Exchange')!;
+    const ranks = b.upgrades!.find((u) => u.variable === '{DamageDecrease}')!.ranks;
     const top = ranks.length;
-    const rank1 = scaleBlessingEffects(b, 1)[0] as { value: number };
-    const rankTop = scaleBlessingEffects(b, top)[0] as { value: number };
-    expect(rank1.value).toBeCloseTo(-ranks[0] / 100, 5);
-    expect(rankTop.value).toBeCloseTo(-ranks[top - 1] / 100, 5); // stays negative, follows the rank table
+    const mult = (rank: number) =>
+      scaleBlessingEffects(b, rank).find((e) => e.op === 'mult') as { value: number };
+    expect(mult(1).value).toBeCloseTo(-ranks[0] / 100, 5);
+    expect(mult(top).value).toBeCloseTo(-ranks[top - 1] / 100, 5); // stays negative, follows the rank table
   });
 
   it('clamps a rank above the blessing max to its highest rank', () => {

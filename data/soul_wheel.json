@@ -95,14 +95,9 @@
           "name": "Abyssal Stamina",
           "description": "Increases max Health by 100.",
           "icon": "soulwheel/Abyssal_Stamina_I.webp",
-          "effects": [
-            {
-              "op": "flat",
-              "stat": "maxHealth",
-              "scope": "all",
-              "value": 100.0
-            }
-          ]
+          "effects": [],
+          "utility": true,
+          "unmodeled": "max Health only"
         },
         {
           "id": "ability_abundance",
@@ -179,14 +174,9 @@
           "name": "Abyssal Stamina II",
           "description": "Increases max Health by 100.",
           "icon": "soulwheel/Abyssal_Stamina_II.webp",
-          "effects": [
-            {
-              "op": "flat",
-              "stat": "maxHealth",
-              "scope": "all",
-              "value": 100.0
-            }
-          ]
+          "effects": [],
+          "utility": true,
+          "unmodeled": "max Health only"
         },
         {
           "id": "keen_vision",

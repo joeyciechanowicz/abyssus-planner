@@ -251,3 +251,25 @@ describe('blessings that modify a payload', () => {
     expect(r.unmodeled.find((u) => u.name === 'Erupting Gold')?.utility).toBeFalsy();
   });
 });
+
+describe('status effectiveness and per-blessing stacks', () => {
+  const fire = (extra: Record<string, number>, charmIds: string[] = []): Build => ({
+    ...emptyBuild,
+    aspects: { primary: 'Flares', secondary: null, ability: null },
+    blessings: { Primary_Flares: 1, ...extra },
+    charmIds,
+  });
+
+  it('Hex (+25% status effectiveness) raises Fire damage by 25%', () => {
+    const base = simulate(fire({})).aspectDps;
+    expect(simulate(fire({}, ['hex'])).aspectDps).toBeCloseTo(base * 1.25, 5);
+  });
+
+  it("Fire's Wrath counts the Fire blessings you actually hold", () => {
+    const base = simulate(fire({})).aspectDps;
+    // Card + Fire's Wrath = 2 Fire blessings x 10% effectiveness.
+    expect(simulate(fire({ Fires_Wrath: 1 })).aspectDps).toBeCloseTo(base * 1.2, 5);
+    // Adding a third Fire blessing that does nothing else raises it to 30%.
+    expect(simulate(fire({ Fires_Wrath: 1, Stunning_Flares: 1 })).aspectDps).toBeCloseTo(base * 1.3, 5);
+  });
+});

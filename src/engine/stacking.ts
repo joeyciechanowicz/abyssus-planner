@@ -89,7 +89,11 @@ export function applyEffects(
   effects: Effect[],
   source: string,
   opts: SimOptions,
-  ctx: { hasAbility: boolean } = { hasAbility: true },
+  ctx: {
+    hasAbility: boolean;
+    /** Blessings of the source's own aspect in the build, for `per: 'blessing'` stacks. */
+    sameAspectBlessings?: number;
+  } = { hasAbility: true },
 ): void {
   for (const e of effects) {
     switch (e.op) {
@@ -138,6 +142,12 @@ export function applyEffects(
           const stacks = Math.min(e.max ?? enemies, enemies) * opts.stackFullness;
           mods.addMult(e.stat, e.scope ?? 'all', e.valuePer * stacks, `${source} (${stacks.toFixed(1)} stacks)`);
           mods.assume(source, `every enemy (${fmtStacks(stacks)}) is affected`);
+          break;
+        }
+        if (e.per === 'blessing' && ctx.sameAspectBlessings !== undefined) {
+          // "Every X Blessing increases ...": one stack per blessing of that aspect you hold.
+          const stacks = Math.min(e.max ?? Infinity, ctx.sameAspectBlessings);
+          mods.addMult(e.stat, e.scope ?? 'all', e.valuePer * stacks, `${source} (${stacks} blessings)`);
           break;
         }
         const cap = e.max ?? 5;
