@@ -143,6 +143,11 @@ payload's base damage, tick rate, duration and scaling formula?
   reports counted / utility / gap). Still waiting: Flares, the Tentacle object pool, Chain
   Lightning crits (native base crit chance), kill-triggered and resource-scaled effects.
 
+- 2026-10-01: Frozen modelled (buildup = damage, freeze at min(threshold% HP, cap), shred
+  % of current Health, 5s Freeze blocks buildup) with its blessings. Enemy Health extracted
+  (`data/enemies.json`: typical standard 500, elite 15,000, boss 25,000); Boss/Pack targets
+  use it.
+
 ## Later phases (unchanged from the earlier proposal)
 - Phase 1b: merge forge-upgrade `MutatorDescriptionVariables` (unstated magnitudes).
 - Phase 2: aspect payload engine + per-payload scopes, statusEffectiveness/duration, crit → weakspot.

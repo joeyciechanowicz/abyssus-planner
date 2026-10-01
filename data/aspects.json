@@ -75,6 +75,30 @@
       "evidence": "BP_Ocean_GodPassive_CharacterMutatorScript (Damage += TriggerDamage x {DamagePercentage}); BP_OceanGod_Tentacle BaseAttackCooldown; ROceanGodTentacle/URBehaviorScriptOcean native defaults"
     },
     {
+      "id": "frost",
+      "aspect": "Frozen",
+      "kind": "freeze",
+      "name": "Freeze",
+      "thresholdPercent": {
+        "standard": 50,
+        "elite": 20,
+        "boss": 10
+      },
+      "thresholdCap": {
+        "standard": 2000,
+        "elite": 5000,
+        "boss": 10000
+      },
+      "shredPercentOfCurrent": {
+        "standard": 10,
+        "elite": 5,
+        "boss": 3
+      },
+      "minShredPercentOfMax": 1,
+      "freezeDuration": 5.0,
+      "evidence": "BP_Chill_StatusEffect_Rework (SetMaxStackCount from GetFrostbuildupPercentage/GetMaxFrostBuildup; shred = FMax(min% x MaxHealth, shred% x CurrentHealth)); PA_FrostGodPassive[2..11]; Frozen duration = native ailment default"
+    },
+    {
       "id": "goldburst",
       "aspect": "Goldburst",
       "kind": "gold",

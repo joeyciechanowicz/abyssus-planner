@@ -9,6 +9,7 @@ import soulWheelJson from '../../data/soul_wheel.json';
 import ancientForgeJson from '../../data/ancient_forge.json';
 import statusJson from '../../data/status_effects.json';
 import aspectsJson from '../../data/aspects.json';
+import enemiesJson from '../../data/enemies.json';
 
 /** Shared shape for anything the codifier has annotated with effects. */
 const codified = {
@@ -177,6 +178,15 @@ export const aspectPayloadSchema = z.discriminatedUnion('kind', [
     maxActive: z.number(),
   }),
   z.object({ ...payloadCommon, kind: z.literal('vulnerability'), damageTakenPercent: z.number() }),
+  z.object({
+    ...payloadCommon,
+    kind: z.literal('freeze'),
+    thresholdPercent: z.object({ standard: z.number(), elite: z.number(), boss: z.number() }),
+    thresholdCap: z.object({ standard: z.number(), elite: z.number(), boss: z.number() }),
+    shredPercentOfCurrent: z.object({ standard: z.number(), elite: z.number(), boss: z.number() }),
+    minShredPercentOfMax: z.number(),
+    freezeDuration: z.number(),
+  }),
   // Damage = your current Gold x goldPercent%, to the struck enemy.
   z.object({ ...payloadCommon, kind: z.literal('gold'), goldPercent: z.number(), sphereRadius: z.number() }),
 ]);
@@ -216,6 +226,13 @@ export const sharedAbilityUpgrades = parse(
 export const statusEffects = statusJson;
 export const aspectPayloads = parse(z.array(aspectPayloadSchema), aspectsJson.payloads, 'aspect payloads');
 export const payloadByAspect = new Map(aspectPayloads.map((p) => [p.aspect, p]));
+
+/** Enemies' typical base max Health by tier, from the game files (scripts/extract/enemy_health.py). */
+export const enemyHealth = parse(
+  z.object({ standard: z.number(), elite: z.number(), boss: z.number() }),
+  enemiesJson.typicalHealth,
+  'enemy health',
+);
 
 export const blessingsByAspect = new Map<string, Blessing[]>();
 for (const b of blessings) {

@@ -53,6 +53,7 @@ export const SCOPES = [
   'tentacle',
   'goldburst',
   'shadows',
+  'frost',
 ] as const;
 export type Scope = (typeof SCOPES)[number];
 
@@ -197,9 +198,19 @@ export const PAYLOAD_FIELDS = [
   'areaBurstDamage',
   /** Flat damage per second on every afflicted enemy. */
   'dotPerSecond',
+  /** Freeze: +x relative Frost buildup; +x damage taken by Frozen enemies (scaled by Frozen uptime). */
+  'buildup',
+  'damageTakenWhileActive',
+  /** Freeze: +x relative duration; +x points of current-Health shred on Freeze, per second
+   * while Frozen, and when the Freeze ends; x of the buildup kept after a Freeze. */
+  'duration',
+  'shredPercent',
+  'shredPerSecondWhileActive',
+  'shredOnEndPercent',
+  'buildupRetained',
 ] as const;
 export type PayloadField = (typeof PAYLOAD_FIELDS)[number];
-const PAYLOAD_IDS = ['hemorrhage', 'burn', 'chainLightning', 'windburst', 'tentacle', 'goldburst', 'shadows'] as const;
+const PAYLOAD_IDS = ['hemorrhage', 'burn', 'chainLightning', 'windburst', 'tentacle', 'goldburst', 'shadows', 'frost'] as const;
 
 /** Changes how an aspect payload behaves: `{op:'payload', payload:'windburst', field:'repeats', value:1}`. */
 const payloadSchema = z.object({

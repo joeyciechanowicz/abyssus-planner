@@ -1,0 +1,302 @@
+{
+  "source": "game files: DT_EnemyInfo + enemy Blueprint CDOs (scripts/extract/enemy_health.py)",
+  "levelHealthIncreasePercent": {
+    "standard": 20,
+    "boss": 0
+  },
+  "typicalHealth": {
+    "standard": 500.0,
+    "elite": 15000.0,
+    "boss": 25000.0
+  },
+  "enemies": [
+    {
+      "id": "Golemancer",
+      "name": "The Golemancer",
+      "tier": "boss",
+      "health": 25000.0
+    },
+    {
+      "id": "Golemancer_2",
+      "name": "Spiritbound Golemancer",
+      "tier": "boss",
+      "health": 25000.0
+    },
+    {
+      "id": "Golemancer_3",
+      "name": "Trueborn Golemancer",
+      "tier": "boss",
+      "health": 25000.0
+    },
+    {
+      "id": "GeneralKrisu",
+      "name": "General Kri'su",
+      "tier": "boss",
+      "health": 25000.0
+    },
+    {
+      "id": "GeneralKrisu_2",
+      "name": "Blood Lord Kri'su",
+      "tier": "boss",
+      "health": 25000.0
+    },
+    {
+      "id": "GeneralKrisu_3",
+      "name": "Flame Tyrant Kri'su",
+      "tier": "boss",
+      "health": 25000.0
+    },
+    {
+      "id": "TheCaptain",
+      "name": "Captain Gwaelod",
+      "tier": "boss",
+      "health": 25000.0
+    },
+    {
+      "id": "HighpriestUnglu",
+      "name": "Highpriest Un'glu",
+      "tier": "boss",
+      "health": 30000.0
+    },
+    {
+      "id": "HighpriestUnglu_2",
+      "name": "Dawn Saint Un'glu",
+      "tier": "boss",
+      "health": 30000.0
+    },
+    {
+      "id": "HighpriestUnglu_3",
+      "name": "Night Seer Un'glu",
+      "tier": "boss",
+      "health": 30000.0
+    },
+    {
+      "id": "TorakaKingoftheAbyss",
+      "name": "To'raka, King of the Abyss",
+      "tier": "boss",
+      "health": 30000.0
+    },
+    {
+      "id": "TorakaUnleashed",
+      "name": "To'raka Unleashed",
+      "tier": "boss",
+      "health": 55000.0
+    },
+    {
+      "id": "TruebornChampion",
+      "name": "Trueborn Champion",
+      "tier": "elite",
+      "health": 10000.0
+    },
+    {
+      "id": "EliteGolemSentry",
+      "name": "Elite Overseer",
+      "tier": "elite",
+      "health": 14000.0
+    },
+    {
+      "id": "EliteBerserker",
+      "name": "Elite Berserker",
+      "tier": "elite",
+      "health": 15000.0
+    },
+    {
+      "id": "EliteCatalyst",
+      "name": "Elite Catalyst",
+      "tier": "elite",
+      "health": 15000.0
+    },
+    {
+      "id": "SubmarineElite",
+      "name": "Elite Engine",
+      "tier": "elite",
+      "health": 15000.0
+    },
+    {
+      "id": "PrimalChieftain",
+      "name": "Primal Chieftain",
+      "tier": "elite",
+      "health": 20000.0
+    },
+    {
+      "id": "GolemPrototype",
+      "name": "Golem Prototype",
+      "tier": "elite",
+      "health": 20000.0
+    },
+    {
+      "id": "PrimalBomber",
+      "name": "Primal Bomber",
+      "tier": "standard",
+      "health": 60.0
+    },
+    {
+      "id": "TruebornWraith",
+      "name": "Trueborn Wraith",
+      "tier": "standard",
+      "health": 200.0
+    },
+    {
+      "id": "PrimalSlinger",
+      "name": "Primal Slinger",
+      "tier": "standard",
+      "health": 300.0
+    },
+    {
+      "id": "PrimalGrenadier",
+      "name": "Primal Grenadier",
+      "tier": "standard",
+      "health": 300.0
+    },
+    {
+      "id": "GolemSentry",
+      "name": "Golem Sentry",
+      "tier": "standard",
+      "health": 300.0
+    },
+    {
+      "id": "TruebornGhoul",
+      "name": "Trueborn Ghoul",
+      "tier": "standard",
+      "health": 300.0
+    },
+    {
+      "id": "SubmarineAssault",
+      "name": "Sunken Assault",
+      "tier": "standard",
+      "health": 300.0
+    },
+    {
+      "id": "SubmarineMortar",
+      "name": "Sunken Mortarman",
+      "tier": "standard",
+      "health": 300.0
+    },
+    {
+      "id": "GolemScrapper",
+      "name": "Golem Scrapper",
+      "tier": "standard",
+      "health": 400.0
+    },
+    {
+      "id": "TruebornHusk",
+      "name": "Trueborn Husk",
+      "tier": "standard",
+      "health": 400.0
+    },
+    {
+      "id": "SubmarineMelee",
+      "name": "Sunken Sledger",
+      "tier": "standard",
+      "health": 400.0
+    },
+    {
+      "id": "SubmarineSniper",
+      "name": "Sunken Sniper",
+      "tier": "standard",
+      "health": 400.0
+    },
+    {
+      "id": "GolemDragonfly",
+      "name": "Golem Dragonfly",
+      "tier": "standard",
+      "health": 500.0
+    },
+    {
+      "id": "PrimalShaman",
+      "name": "Primal Shaman",
+      "tier": "standard",
+      "health": 500.0
+    },
+    {
+      "id": "GolemDamselfly",
+      "name": "Golem Damselfly",
+      "tier": "standard",
+      "health": 500.0
+    },
+    {
+      "id": "PrimalBulwark",
+      "name": "Primal Bulwark",
+      "tier": "standard",
+      "health": 500.0
+    },
+    {
+      "id": "SubmarineFloater",
+      "name": "Sunken Ooze",
+      "tier": "standard",
+      "health": 500.0
+    },
+    {
+      "id": "TruebornVicar",
+      "name": "Trueborn Vicar",
+      "tier": "standard",
+      "health": 800.0
+    },
+    {
+      "id": "GolemSweeper",
+      "name": "Golem Sweeper",
+      "tier": "standard",
+      "health": 900.0
+    },
+    {
+      "id": "LootGolem",
+      "name": "Loot Golem",
+      "tier": "standard",
+      "health": 1000.0
+    },
+    {
+      "id": "GolemFabricator",
+      "name": "Golem Fabricator",
+      "tier": "standard",
+      "health": 1200.0
+    },
+    {
+      "id": "PrimalShamanOffensive",
+      "name": "Primal Shaman",
+      "tier": "standard",
+      "health": 1200.0
+    },
+    {
+      "id": "TruebornEmbalmer",
+      "name": "Trueborn Embalmer",
+      "tier": "standard",
+      "health": 1200.0
+    },
+    {
+      "id": "TruebornNecromancer",
+      "name": "Trueborn Necromancer",
+      "tier": "standard",
+      "health": 1200.0
+    },
+    {
+      "id": "SubmarineAbomination",
+      "name": "Sunken Abomination",
+      "tier": "standard",
+      "health": 1800.0
+    },
+    {
+      "id": "PrimalBruiser",
+      "name": "Primal Bruiser",
+      "tier": "standard",
+      "health": 2000.0
+    },
+    {
+      "id": "TruebornDreadknight",
+      "name": "Trueborn Dreadknight",
+      "tier": "standard",
+      "health": 2400.0
+    },
+    {
+      "id": "SubmarineHulk",
+      "name": "Sunken Strongman",
+      "tier": "standard",
+      "health": 2400.0
+    },
+    {
+      "id": "GolemTank",
+      "name": "Golem Tank",
+      "tier": "standard",
+      "health": 3500.0
+    }
+  ]
+}

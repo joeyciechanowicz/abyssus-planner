@@ -18,6 +18,8 @@ const ctx = (over: Partial<PayloadContext> = {}): PayloadContext => ({
   primaryModeDamage: 100,
   targetMissingHealth: 0,
   gold: 1000,
+  targetTier: 'boss',
+  targetMaxHealth: 25000,
   payloadBonus: 0,
   ...over,
 });
@@ -87,6 +89,16 @@ describe('payloadDamage', () => {
     expect(payloadDamage(p, 0.2, [stream()], ctx({ gold: 750, enemies: 5 })).dps).toBeCloseTo(750);
   });
 
+  it('Freeze: build to min(10% HP, cap), shred 3% of half Health, blocked 5s while Frozen', () => {
+    const p = payload('Frozen');
+    // 500 damage/s on a 25,000 HP boss: threshold 2,500 -> 5s to build + 5s Frozen = 10s cycle.
+    const r = payloadDamage(p, 1, [stream({ directHitsPerSecond: 5, directHit: 100 })], ctx());
+    expect(r.dps).toBeCloseTo((0.03 * 25000 * 0.5) / 10);
+    // Pack of 500 HP standard enemies: threshold 250 each, 100 dmg/s each -> 2.5s + 5s.
+    const pack = payloadDamage(p, 1, [stream()], ctx({ enemies: 5, targetTier: 'standard', targetMaxHealth: 500 }));
+    expect(pack.dps).toBeCloseTo((5 * Math.max(5, 0.1 * 500 * 0.5)) / 7.5);
+  });
+
   it('Shadows deals no damage itself but makes enemies take 25% more', () => {
     const r = payloadDamage(payload('Shadows'), 1, [stream()], ctx());
     expect(r.dps).toBe(0);
@@ -129,9 +141,9 @@ describe('aspect payloads in simulate()', () => {
   });
 
   it('flags aspects whose payload is not modelled yet', () => {
-    const r = simulate(card('Frozen', 'Frozen_Primary'));
+    const r = simulate(card('Spirit', 'Spirit_Primary'));
     expect(r.aspectDps).toBe(0);
-    expect(r.unmodeled.some((u) => u.name === 'Frozen aspect')).toBe(true);
+    expect(r.unmodeled.some((u) => u.name === 'Spirit aspect')).toBe(true);
   });
 
   it('only counts a card for hits from its own slot', () => {

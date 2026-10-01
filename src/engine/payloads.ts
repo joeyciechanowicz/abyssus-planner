@@ -33,6 +33,9 @@ export interface PayloadContext {
   primaryModeDamage: number;
   /** 0..1, how much Health the target is missing (Hemorrhage scales with it). */
   targetMissingHealth: number;
+  /** Which game table the targets use, and their max Health. */
+  targetTier: 'standard' | 'elite' | 'boss';
+  targetMaxHealth: number;
   /** Gold you're carrying (Goldburst hits for a share of it). */
   gold: number;
   /** Summed +% bonuses aimed at this payload alone (e.g. a "+20% Windburst damage" blessing). */
@@ -74,6 +77,8 @@ export function payloadDamage(
   let procsTotal = 0;
   let procsPerTarget = 0;
   let triggerWeighted = 0;
+  /** Damage per second landing on one enemy from these streams (Frost buildup). */
+  let damagePerTarget = 0;
   for (const s of streams) {
     const c = Math.min(1, chance * s.procMultiplier * (1 + m('chance')));
     const direct = c * s.directHitsPerSecond;
@@ -83,6 +88,7 @@ export function payloadDamage(
     // enemy afflicted); an area event procs on every enemy it hits.
     procsPerTarget += direct / n + area;
     triggerWeighted += direct * s.directHit + area * n * s.areaHit;
+    damagePerTarget += c * ((s.directHitsPerSecond * s.directHit) / n + s.areaEventsPerSecond * s.areaHit);
   }
   const trigger = procsTotal > 0 ? triggerWeighted / procsTotal : 0;
   const bonus = 1 + ctx.payloadBonus;
@@ -155,6 +161,34 @@ export function payloadDamage(
         dps: procsTotal * perProc * repeats * bonus,
         vulnerability: 1,
         procsPerSecond: procsTotal,
+        assumptions,
+      };
+    }
+    case 'freeze': {
+      const tier = ctx.targetTier;
+      const hp = ctx.targetMaxHealth;
+      const threshold =
+        Math.min((p.thresholdPercent[tier] / 100) * hp, p.thresholdCap[tier]) * (1 - m('buildupRetained'));
+      const buildRate = damagePerTarget * (1 + m('buildup'));
+      if (buildRate <= 0) return none;
+      const frozenFor = p.freezeDuration * (1 + m('duration'));
+      // Buildup is blocked while Frozen, so each cycle is build-up time + Freeze.
+      const cycle = threshold / buildRate + frozenFor;
+      // Shred scales with current Health; averaged over a fight that is half of max.
+      const current = hp * 0.5;
+      const shredPct = p.shredPercentOfCurrent[tier] + m('shredPercent');
+      const shred =
+        Math.max((p.minShredPercentOfMax / 100) * hp, (shredPct / 100) * current) +
+        ((m('shredPerSecondWhileActive') * frozenFor + m('shredOnEndPercent')) / 100) * current;
+      const frozenShare = frozenFor / cycle;
+      assumptions.push(
+        `${Math.round(hp).toLocaleString()} HP ${tier === 'boss' ? 'boss' : 'enemies'}: Frozen every ` +
+          `${cycle.toFixed(1)}s, shredded at half Health on average`,
+      );
+      return {
+        dps: (n * shred * bonus) / cycle,
+        vulnerability: 1 + m('damageTakenWhileActive') * frozenShare,
+        procsPerSecond: n / cycle,
         assumptions,
       };
     }

@@ -824,9 +824,9 @@
     "effects": []
   },
   "blessings/Frozen_Shards": {
-    "source": "Phase 0 miscoding fix: was % of hit damage",
-    "unmodeled": "deals a % of the enemy's current Health on kill -- awaits percent-health damage (dps-coverage.md, Phase 3)",
-    "effects": []
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [],
+    "unmodeled": "triggers on kills; kill rate is not modelled"
   },
   "blessings/Winds_Devastation": {
     "source": "Phase 2b: aspect payload model",
@@ -974,9 +974,9 @@
     ]
   },
   "blessings/Blightful_Freeze": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "source": "Phase 2c: Freeze payload model",
     "effects": [],
-    "unmodeled": "acts on the status-effect payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "unmodeled": "boosts other aspects' status damage on Frozen enemies; cross-aspect uptime is not modelled yet"
   },
   "blessings/Loaded_Bounce": {
     "source": "Phase 2b: aspect payload model",
@@ -1181,21 +1181,14 @@
     ]
   },
   "blessings/Brittle_Freeze": {
-    "source": "Phase 0 audit: now states the condition it assumes",
+    "source": "Phase 2c: Freeze payload model",
     "effects": [
       {
-        "op": "conditional",
-        "when": "targetHasStatus",
-        "then": [
-          {
-            "op": "mult",
-            "stat": "damage",
-            "scope": "all",
-            "value": 0.2,
-            "scalesWith": "{DamageIncrease}"
-          }
-        ],
-        "status": "Frozen"
+        "op": "payload",
+        "payload": "frost",
+        "field": "damageTakenWhileActive",
+        "value": 0.2,
+        "scalesWith": "{DamageIncrease}"
       }
     ]
   },
@@ -1746,5 +1739,144 @@
     "source": "Phase 2b: aspect payload model",
     "effects": [],
     "unmodeled": "instant kills on standard enemies; execute effects come in Phase 3"
+  },
+  "blessings/Heavy_Freeze": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "frost",
+        "field": "damageTakenWhileActive",
+        "value": 0.15,
+        "note": "15% Weakspot hits on Frozen enemies, assumed x2",
+        "scalesWith": "{ProcChace}"
+      }
+    ]
+  },
+  "blessings/Enduring_Freeze": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "frost",
+        "field": "duration",
+        "value": 0.3,
+        "scalesWith": "{DurationPercentage}"
+      }
+    ]
+  },
+  "blessings/Quick_Freeze": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "frost",
+        "field": "buildup",
+        "value": 0.8,
+        "scalesWith": "{BuildUpMultiplier}"
+      }
+    ]
+  },
+  "blessings/Frostbite": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "frost",
+        "field": "shredPercent",
+        "value": 3,
+        "scalesWith": "{DamageIncreasePercentagePoint}"
+      }
+    ]
+  },
+  "blessings/Hypothermia": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "frost",
+        "field": "shredPerSecondWhileActive",
+        "value": 1,
+        "scalesWith": "{TotalShredDamagePercentagePerSecond}"
+      }
+    ]
+  },
+  "blessings/Gliding_Glacier": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "each Frozen enemy slams into something once",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "frost",
+            "field": "shredPercent",
+            "value": 5,
+            "scalesWith": "{AoESlamShredPercentDamage}"
+          }
+        ]
+      }
+    ]
+  },
+  "blessings/Coldsnap": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "frost",
+        "field": "shredOnEndPercent",
+        "value": 6,
+        "scalesWith": "{damage}"
+      }
+    ]
+  },
+  "blessings/Packed_Snow": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [],
+    "unmodeled": "slows and weakens enemies; defensive only",
+    "utility": true
+  },
+  "blessings/Chronic_Cold": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "frost",
+        "field": "buildupRetained",
+        "value": 0.15,
+        "scalesWith": "{AmountRetained}"
+      }
+    ]
+  },
+  "blessings/Critical_Freeze": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "weakspot",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "payload",
+            "payload": "frost",
+            "field": "buildup",
+            "value": 1.0,
+            "scalesWith": "{FreezeIncrease}"
+          }
+        ]
+      }
+    ]
+  },
+  "blessings/Erupting_Freeze": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [],
+    "unmodeled": "triggers on kills; kill rate is not modelled"
+  },
+  "blessings/Everlasting_Winter": {
+    "source": "Phase 2c: Freeze payload model",
+    "effects": [],
+    "unmodeled": "pulse damage is native code and unknown"
   }
 }

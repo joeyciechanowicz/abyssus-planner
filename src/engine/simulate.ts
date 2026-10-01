@@ -3,6 +3,7 @@ import {
   blessingById,
   blessingRankValue,
   charmById,
+  enemyHealth,
   payloadByAspect,
   sharedAbilityUpgrades,
   soulSkillById,
@@ -10,7 +11,7 @@ import {
   type DamageComponent,
   type WeaponMode,
 } from '../model/data';
-import { defaultOptions, enemiesFor, type Build, type SimOptions } from '../model/build';
+import { defaultOptions, enemiesFor, tierFor, type Build, type SimOptions } from '../model/build';
 import { Modifiers, applyEffects } from './stacking';
 import { scaleBlessingEffects } from './blessingScaling';
 import { payloadDamage, type HitStream } from './payloads';
@@ -412,6 +413,8 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       primaryModeDamage,
       targetMissingHealth: 1 - opts.targetHealthFraction,
       gold: opts.gold,
+      targetTier: tierFor(opts.target),
+      targetMaxHealth: enemyHealth[tierFor(opts.target)],
       payloadBonus: mods.multForScopeOnly('damage', payload.id),
       mods: mods.payloadMods.get(payload.id),
     });

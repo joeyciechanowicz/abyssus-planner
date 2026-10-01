@@ -3702,8 +3702,16 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Frozen.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "frost",
+          "field": "damageTakenWhileActive",
+          "value": 0.15,
+          "note": "15% Weakspot hits on Frozen enemies, assumed x2",
+          "scalesWith": "{ProcChace}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{ProcChace}",
@@ -3739,9 +3747,9 @@
       "icon": "blessings/Frozen.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "statusDuration",
-          "scope": "all",
+          "op": "payload",
+          "payload": "frost",
+          "field": "duration",
           "value": 0.3,
           "scalesWith": "{DurationPercentage}"
         }
@@ -3781,11 +3789,10 @@
       "icon": "blessings/Frozen.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "statusEffectiveness",
-          "scope": "all",
+          "op": "payload",
+          "payload": "frost",
+          "field": "buildup",
           "value": 0.8,
-          "note": "Frost buildup",
           "scalesWith": "{BuildUpMultiplier}"
         }
       ],
@@ -3822,8 +3829,15 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Frozen.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "frost",
+          "field": "shredPercent",
+          "value": 3,
+          "scalesWith": "{DamageIncreasePercentagePoint}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncreasePercentagePoint}",
@@ -3859,18 +3873,11 @@
       "icon": "blessings/Frozen.webp",
       "effects": [
         {
-          "op": "conditional",
-          "when": "targetHasStatus",
-          "then": [
-            {
-              "op": "mult",
-              "stat": "damage",
-              "scope": "all",
-              "value": 0.2,
-              "scalesWith": "{DamageIncrease}"
-            }
-          ],
-          "status": "Frozen"
+          "op": "payload",
+          "payload": "frost",
+          "field": "damageTakenWhileActive",
+          "value": 0.2,
+          "scalesWith": "{DamageIncrease}"
         }
       ],
       "upgrades": [
@@ -3906,8 +3913,15 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Frozen.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "frost",
+          "field": "shredPerSecondWhileActive",
+          "value": 1,
+          "scalesWith": "{TotalShredDamagePercentagePerSecond}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{TotalShredDamagePercentagePerSecond}",
@@ -3985,7 +3999,7 @@
           ]
         }
       ],
-      "unmodeled": "deals a % of the enemy's current Health on kill -- awaits percent-health damage (dps-coverage.md, Phase 3)"
+      "unmodeled": "triggers on kills; kill rate is not modelled"
     },
     {
       "id": "Gliding_Glacier",
@@ -3995,8 +4009,22 @@
       "kind": "blessing",
       "logbookIndex": 10,
       "icon": "blessings/Frozen.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "each Frozen enemy slams into something once",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "frost",
+              "field": "shredPercent",
+              "value": 5,
+              "scalesWith": "{AoESlamShredPercentDamage}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{HitImpactForce}",
@@ -4049,8 +4077,15 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Frozen.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "frost",
+          "field": "shredOnEndPercent",
+          "value": 6,
+          "scalesWith": "{damage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{damage}",
@@ -4120,7 +4155,7 @@
       "logbookIndex": 13,
       "icon": "blessings/Frozen.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "slows and weakens enemies; defensive only",
       "upgrades": [
         {
           "variable": "{EffectAmount}",
@@ -4144,7 +4179,8 @@
             24
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Chronic_Cold",
@@ -4154,8 +4190,15 @@
       "kind": "blessing",
       "logbookIndex": 14,
       "icon": "blessings/Frozen.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "frost",
+          "field": "buildupRetained",
+          "value": 0.15,
+          "scalesWith": "{AmountRetained}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{AmountRetained}",
@@ -4191,11 +4234,18 @@
       "icon": "blessings/Frozen.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "statusEffectiveness",
-          "scope": "all",
-          "value": 1.0,
-          "note": "Freeze buildup",
+          "op": "trigger",
+          "on": "weakspot",
+          "chance": 1.0,
+          "then": [
+            {
+              "op": "payload",
+              "payload": "frost",
+              "field": "buildup",
+              "value": 1.0,
+              "scalesWith": "{FreezeIncrease}"
+            }
+          ],
           "scalesWith": "{FreezeIncrease}"
         }
       ],
@@ -4257,7 +4307,7 @@
           ]
         }
       ],
-      "unmodeled": "acts on the status-effect payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "boosts other aspects' status damage on Frozen enemies; cross-aspect uptime is not modelled yet"
     },
     {
       "id": "Frosts_Knowledge",
@@ -4306,7 +4356,7 @@
       "logbookIndex": 18,
       "icon": "blessings/Erupting_Freeze.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "triggers on kills; kill rate is not modelled"
     },
     {
       "id": "Everlasting_Winter",
@@ -4317,7 +4367,7 @@
       "logbookIndex": 19,
       "icon": "blessings/Everlasting_Winter.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "pulse damage is native code and unknown"
     },
     {
       "id": "Ability_Chain_Lightning",

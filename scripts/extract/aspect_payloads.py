@@ -87,6 +87,7 @@ def main():
     ocean = native['RBehaviorScriptOcean']
     abyss = pa_vars(dump, 'PA_Abyss_Behavior_Ability_Mutator')
     fortune_gp = pa_vars(dump, 'PA_Fortune_GodPassive_CharacterMutator')
+    frost_gp = pa_vars(dump, 'PA_FrostGodPassive_CharacterMutator')
     fortune = native['RBehaviorScriptFortune']
 
     payloads = [
@@ -156,6 +157,36 @@ def main():
             'maxActive': ocean['MaxTentacles'],
             'evidence': 'BP_Ocean_GodPassive_CharacterMutatorScript (Damage += TriggerDamage x {DamagePercentage}); '
                         'BP_OceanGod_Tentacle BaseAttackCooldown; ROceanGodTentacle/URBehaviorScriptOcean native defaults',
+        },
+        {
+            'id': 'frost',
+            'aspect': 'Frozen',
+            'kind': 'freeze',
+            'name': 'Freeze',
+            # Hits add Frost buildup (natively, from the hit's damage). At
+            # min(threshold% x max Health, cap) the enemy Freezes and takes
+            # max(minShred% x max Health, shred% x current Health); buildup is
+            # blocked while Frozen.
+            'thresholdPercent': {
+                'standard': frost_gp['{NormalEnemyFrostBuildupThreasholdPercentage}'],
+                'elite': frost_gp['{EliteEnemyFrostBuildupThreasholdPercentage}'],
+                'boss': frost_gp['{BossEnemyFrostBuildupThreasholdPercentage}'],
+            },
+            'thresholdCap': {
+                'standard': frost_gp['{NormalFrostBuildupHardcap}'],
+                'elite': frost_gp['{EliteFrostBuildupHardcap}'],
+                'boss': frost_gp['{BossFrostBuildupHardcap}'],
+            },
+            'shredPercentOfCurrent': {
+                'standard': frost_gp['{NormalEnemyHealthPercentageBurstDamage}'],
+                'elite': frost_gp['{EliteEnemyHealthPercentageBurstDamage}'],
+                'boss': frost_gp['{BossEnemyHealthPercentageBurstDamage}'],
+            },
+            'minShredPercentOfMax': frost_gp['{MinimumMaxHpShredPercent}'],
+            'freezeDuration': ailment['EffectDuration'],
+            'evidence': 'BP_Chill_StatusEffect_Rework (SetMaxStackCount from GetFrostbuildupPercentage/'
+                        'GetMaxFrostBuildup; shred = FMax(min% x MaxHealth, shred% x CurrentHealth)); '
+                        'PA_FrostGodPassive[2..11]; Frozen duration = native ailment default',
         },
         {
             'id': 'goldburst',

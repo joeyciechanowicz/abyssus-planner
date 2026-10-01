@@ -228,5 +228,14 @@ Findings per aspect: `docs/plans/kismet-spike-findings.md`.
 `native_defaults.json` is a committed snapshot, so step 3 runs without the game.
 The numbers land in `data/aspects.json`; the formulas that combine them are in
 `src/engine/payloads.ts`, each payload citing the Blueprint it was read from.
+Enemy Health (`data/enemies.json`, used for the target scenario's Health and
+anything that scales with it, like Freeze's thresholds) comes from the same dump:
+
+```
+dump_kismet ... dump "Content/Data/(DT_EnemyInfo|DifficultyScalingTables/)" <out>
+dump_kismet ... dump "Blueprints/AI/.*/BP_[^/]+\.uasset$" <out>
+python scripts/extract/enemy_health.py <out>
+```
+
 `weapon_mod_stats.py` also writes each fire mode's `procChance` (its multiplier
 on aspect proc chances) from the same ModStats assets.

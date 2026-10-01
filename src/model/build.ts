@@ -33,11 +33,13 @@ export type Build = z.infer<typeof buildSchema>;
 
 /** What you're shooting at. Decides Elite/Boss-only bonuses and how many enemies area damage hits. */
 export type Target = 'boss' | 'pack';
-export const TARGETS: { id: Target; label: string; enemies: number }[] = [
-  { id: 'boss', label: 'Boss', enemies: 1 },
-  { id: 'pack', label: 'Pack of 5', enemies: 5 },
+/** `tier` picks which game Health/threshold table applies (data/enemies.json, data/aspects.json). */
+export const TARGETS: { id: Target; label: string; enemies: number; tier: 'standard' | 'boss' }[] = [
+  { id: 'boss', label: 'Boss', enemies: 1, tier: 'boss' },
+  { id: 'pack', label: 'Pack of 5', enemies: 5, tier: 'standard' },
 ];
 export const enemiesFor = (t: Target) => TARGETS.find((x) => x.id === t)!.enemies;
+export const tierFor = (t: Target) => TARGETS.find((x) => x.id === t)!.tier;
 
 /**
  * Assumptions the player controls; none of these are knowable from the wiki.
