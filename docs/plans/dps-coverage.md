@@ -153,6 +153,12 @@ payload's base damage, tick rate, duration and scaling formula?
   with damage dealt (fill code is native; confirmed in-game). All 11 aspects
   now have a payload model. Flares and the Tentacle object pool are the remaining aspect gaps.
 
+- 2026-10-02: Flares and the Tentacle object pool modelled; status effectiveness and real
+  per-blessing stacks; utility marked across charms/soul skills/forge; Fan, Ms./Mr. Boom;
+  forge upgrades from their game assets (ramps, ammo refund, weakspot chance, extra charge
+  steps, area abilities, charm-rarity conditions). 83% of damage-relevant picks counted
+  (286 counted, 102 utility, 58 gaps).
+
 ## Later phases (unchanged from the earlier proposal)
 - Phase 1b: merge forge-upgrade `MutatorDescriptionVariables` (unstated magnitudes).
 - Phase 2: aspect payload engine + per-payload scopes, statusEffectiveness/duration, crit → weakspot.

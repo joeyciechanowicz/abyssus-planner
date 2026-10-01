@@ -51,8 +51,22 @@
           "name": "Explosive Culling",
           "description": "Your grenade deals bonus damage based on enemies' missing Health.",
           "icon": "forge/Explosive_Culling.webp",
-          "effects": [],
-          "unmodeled": "scales continuously with missing Health; magnitude unstated"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "abilityDamage",
+                  "scope": "ability",
+                  "value": 0.5,
+                  "note": "up to +100% at 0 Health"
+                }
+              ],
+              "note": "enemies are at half Health on average"
+            }
+          ]
         },
         {
           "id": "implosive_force",
@@ -60,15 +74,23 @@
           "description": "Grenade explosions pull enemies in and stun them for 1 sec.",
           "icon": "forge/Implosive_Force.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "pull and stun only",
+          "utility": true
         },
         {
           "id": "cluster_bomb",
           "name": "Cluster Bomb",
           "description": "Grenades split into explosive fragments on detonation.",
           "icon": "forge/Cluster_Bomb.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "abilityDamage",
+              "scope": "ability",
+              "value": 0.9,
+              "note": "6 fragments x 15% of ability damage"
+            }
+          ]
         },
         {
           "id": "compact_grenade",
@@ -97,24 +119,52 @@
           "name": "Shrapnel",
           "description": "Enemies hit by grenades take 25% grenade damage continuously for 3 sec.",
           "icon": "forge/Shrapnel.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "abilityDamage",
+              "scope": "ability",
+              "value": 0.75,
+              "note": "25% of grenade damage per second for 3s"
+            }
+          ]
         },
         {
           "id": "bouncy_bomb",
           "name": "Bouncy Bomb",
           "description": "Grenades explode each time they bounce and are no longer destroyed on impact with enemies. Bounce explosions have halved range and damage.",
           "icon": "forge/Shrapnel.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "abilityDamage",
+                  "scope": "ability",
+                  "value": 0.5,
+                  "note": "bounce explosions deal 50%"
+                }
+              ],
+              "note": "the grenade bounces once before exploding"
+            }
+          ]
         },
         {
           "id": "gas_grenade",
           "name": "Gas Grenade",
           "description": "Grenades leave behind a cloud of gas that deals 50% grenade damage continuously.",
           "icon": "forge/Shrapnel.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "abilityDamage",
+              "scope": "ability",
+              "value": 1.5,
+              "note": "50% of grenade damage per second for 3s"
+            }
+          ]
         },
         {
           "id": "gashing_shell",
@@ -197,15 +247,23 @@
           "description": "Increases movement speed by 10% for 5 sec. per enemy hit by the anchor.",
           "icon": "forge/The_Thrill.webp",
           "effects": [],
-          "unmodeled": "movementSpeed isn't consumed by the engine -- no DPS impact regardless of magnitude"
+          "unmodeled": "movement only",
+          "utility": true
         },
         {
           "id": "grenanchor",
           "name": "Grenanchor",
           "description": "The anchor is now thrown.",
           "icon": "forge/Grenanchor.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "abilityDamage",
+              "scope": "ability",
+              "value": -0.25,
+              "note": "the thrown anchor deals 25% less"
+            }
+          ]
         },
         {
           "id": "brine",
@@ -229,7 +287,8 @@
           "description": "Gain brief invulnerability while swinging the anchor.",
           "icon": "forge/Bulwark.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "defensive only",
+          "utility": true
         },
         {
           "id": "fearless",
@@ -280,8 +339,22 @@
           "name": "Mighty",
           "description": "Enemies hit by the anchor are knocked back.",
           "icon": "forge/Mighty.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "abilityDamage",
+                  "scope": "ability",
+                  "value": 0.417,
+                  "note": "+250 on a 600 hit"
+                }
+              ],
+              "note": "every enemy hit is knocked into a wall"
+            }
+          ]
         },
         {
           "id": "geyser",
@@ -378,23 +451,79 @@
           "description": "The pulse from one spear has a 60% chance to cause other spears to pulsate.",
           "icon": "forge/Shockwave.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "needs several spears out at once; spear count is not modelled"
         },
         {
           "id": "charmed_spear",
           "name": "Charmed Spear",
           "description": "Gain buffs based on your Charms.\n\nCommon: +20% pulse damage.\nRare: +50% duration.\nLegendary: +1 pulse.",
           "icon": "forge/Shockwave.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "charmRarity",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "abilityDamage",
+                  "scope": "ability",
+                  "value": 0.133,
+                  "note": "+20% pulse damage (pulses are 2/3 of the spear)"
+                }
+              ],
+              "status": "Common"
+            },
+            {
+              "op": "conditional",
+              "when": "charmRarity",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "abilityDamage",
+                  "scope": "ability",
+                  "value": 0.333,
+                  "note": "+50% duration = 50% more pulses"
+                }
+              ],
+              "status": "Rare"
+            },
+            {
+              "op": "conditional",
+              "when": "charmRarity",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "abilityDamage",
+                  "scope": "ability",
+                  "value": 0.083,
+                  "note": "+1 pulse of 50 on a 600 spear"
+                }
+              ],
+              "status": "Legendary"
+            }
+          ]
         },
         {
           "id": "sticking_spear",
           "name": "Sticking Spear",
           "description": "Spears that stick to enemies deal 20% increased pulse damage.",
           "icon": "forge/Shockwave.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "abilityDamage",
+                  "scope": "ability",
+                  "value": 0.133,
+                  "note": "+20% pulse damage"
+                }
+              ],
+              "note": "the spear sticks in an enemy"
+            }
+          ]
         },
         {
           "id": "weakspot_spear",
@@ -423,8 +552,15 @@
           "name": "Fragmenting Spear",
           "description": "Spears send a fragment toward a nearby enemy when sticking, dealing 40 damage. Sends additional fragments for every spear stuck in the enemy.",
           "icon": "forge/Shockwave.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "abilityDamage",
+              "scope": "ability",
+              "value": 0.067,
+              "note": "a 40-damage fragment on a 600 spear"
+            }
+          ]
         },
         {
           "id": "spear_grid",
@@ -432,15 +568,28 @@
           "description": "Spears that are stuck create a field between them that deals 30 damage to enemies that enter it.",
           "icon": "forge/Shockwave.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "needs several spears out at once; spear count is not modelled"
         },
         {
           "id": "split_spear",
           "name": "Split Spear",
           "description": "Throw additional spears diagonally left and right.",
           "icon": "forge/Shockwave.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "abilityDamage",
+                  "scope": "ability",
+                  "value": 2.0
+                }
+              ],
+              "note": "both extra spears hit"
+            }
+          ]
         },
         {
           "id": "enduring_spear",
@@ -448,15 +597,28 @@
           "description": "If an enemy dies from, or shortly after, being hit by a spear, the spear's duration resets.",
           "icon": "forge/Shockwave.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "triggers on kills; kill rate is not modelled"
         },
         {
           "id": "environmental_spear",
           "name": "Environmental Spear",
           "description": "Spears that stick to the environment Slow nearby enemies and increase their damage taken by 5%.",
           "icon": "forge/Shockwave.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "damage",
+                  "scope": "all",
+                  "value": 0.05
+                }
+              ],
+              "note": "enemies stay near a spear stuck in the ground"
+            }
+          ]
         },
         {
           "id": "charged_spear",
@@ -464,7 +626,7 @@
           "description": "Spears can be charged before being thrown, consuming stacks to increase damage and duration, while decreasing damage intervals, by 50% per stack.",
           "icon": "forge/Shockwave.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "charging consumes stacks; the stack economy is not modelled"
         }
       ]
     },
@@ -486,8 +648,14 @@
           "name": "Cone Blast",
           "description": "The blast from the Ancient Core targets all enemies in a cone instead of the first one.",
           "icon": "forge/Cone_Blast.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "abilityArea",
+              "scope": "all",
+              "value": 1
+            }
+          ]
         },
         {
           "id": "gold_blast",
@@ -495,7 +663,8 @@
           "description": "Enemies killed by the blast from the Ancient Core drop Gold.",
           "icon": "forge/Gold_Blast.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "economy only",
+          "utility": true
         },
         {
           "id": "stun_blast",
@@ -503,15 +672,29 @@
           "description": "The blast from the Ancient Core also stuns on hit.",
           "icon": "forge/Stun_Blast.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "crowd control only",
+          "utility": true
         },
         {
           "id": "bounce_blast",
           "name": "Bounce Blast",
           "description": "The blast from the Ancient Core also bounces to an additional nearby enemy.",
           "icon": "forge/Bounce_Blast.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "targetIsStandard",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "abilityDamage",
+                  "scope": "ability",
+                  "value": 1.0,
+                  "note": "bounces to a second enemy"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "active_reload",
@@ -519,7 +702,7 @@
           "description": "Getting a kill with the Ancient Core resets its cooldown.",
           "icon": "forge/Active_Reload.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "triggers on kills; kill rate is not modelled"
         },
         {
           "id": "target_lock",
@@ -640,8 +823,14 @@
           "name": "Quality Over Quantity",
           "description": "Buffs the current active Brine Field instead of placing a new one, increasing its benefits by 20% and its area by 20%.",
           "icon": "forge/Quality_Over_Quantity.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "abilityDamage",
+              "scope": "ability",
+              "value": 0.2
+            }
+          ]
         },
         {
           "id": "personal_space",
@@ -678,7 +867,8 @@
           "description": "The effects of the Brine Field linger for 5 sec. after the player or enemy leaves it.",
           "icon": "forge/Quality_Over_Quantity.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "lingering effects; the ideal fight stays inside the field",
+          "utility": true
         },
         {
           "id": "steady_field",
@@ -700,7 +890,8 @@
           "description": "Decreases the Brine Field's size by 20%, but its attached to you.",
           "icon": "forge/Quality_Over_Quantity.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "positioning only",
+          "utility": true
         },
         {
           "id": "end_with_a_bang",
@@ -724,15 +915,41 @@
           "description": "Brine Field Slows enemies 20% more and enemy projectiles within its area are Slowed by 70%.",
           "icon": "forge/Quality_Over_Quantity.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "slows only",
+          "utility": true
         },
         {
           "id": "noxious_bubble",
           "name": "Noxious Bubble",
           "description": "Status effect tick at a speed of 200% on enemies within the Brine Field.",
           "icon": "forge/Quality_Over_Quantity.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "damage",
+                  "scope": "hemorrhage",
+                  "value": 1.0
+                },
+                {
+                  "op": "mult",
+                  "stat": "damage",
+                  "scope": "burn",
+                  "value": 1.0
+                },
+                {
+                  "op": "mult",
+                  "stat": "dotDamage",
+                  "scope": "dot",
+                  "value": 1.0
+                }
+              ],
+              "note": "enemies stay inside the Brine Field"
+            }
+          ]
         },
         {
           "id": "expanding_territory",
@@ -740,7 +957,8 @@
           "description": "The Brine Field continuously increases in size when placed.",
           "icon": "forge/Quality_Over_Quantity.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "area size only",
+          "utility": true
         },
         {
           "id": "sanctum",
@@ -748,7 +966,7 @@
           "description": "Blessings on your Brine Field trigger 3% more frequently for every meter of the radius.",
           "icon": "forge/Quality_Over_Quantity.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "scales ability blessing procs with field radius; the radius is not modelled"
         }
       ]
     },
@@ -793,7 +1011,8 @@
           "description": "The Turret now flies, staying in close proximity while shooting nearby enemies.",
           "icon": "forge/Drones.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "positioning only",
+          "utility": true
         },
         {
           "id": "ammo_transfer",
@@ -801,7 +1020,7 @@
           "description": "60% chance when the Turret shoots an enemy to reload 1 ammo into your magazine.",
           "icon": "forge/Ammo_Transfer.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "refills your magazine per Turret shot; Turret fire rate is not modelled"
         },
         {
           "id": "buddy_system",
@@ -809,7 +1028,7 @@
           "description": "Lowers the cooldown by 10 sec. and reduces the damage dealt by your Turret. Turrets deal increased damage for each Turret within range",
           "icon": "forge/Buddy_System.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "its damage reduction is native code and unknown"
         },
         {
           "id": "unstable_cores",
@@ -817,7 +1036,7 @@
           "description": "Your Turret explodes and stuns enemies in a 10-meter radius when it spawns.",
           "icon": "forge/Unstable_Cores.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "spawn explosion damage is native code and unknown"
         },
         {
           "id": "sentinel",
@@ -866,8 +1085,29 @@
           "name": "Guiding Bullet",
           "description": "You deal 25% mode damage to your Turret's target.",
           "icon": "forge/Guiding_Bullet.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "damage",
+                  "scope": "primary",
+                  "value": 0.25,
+                  "note": "25% of your mode damage again on its target"
+                },
+                {
+                  "op": "mult",
+                  "stat": "damage",
+                  "scope": "secondary",
+                  "value": 0.25,
+                  "note": "25% of your mode damage again on its target"
+                }
+              ],
+              "note": "your Turret is out"
+            }
+          ]
         },
         {
           "id": "teamwork",

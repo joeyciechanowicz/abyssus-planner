@@ -101,6 +101,8 @@ export function applyEffects(
     hasAbility: boolean;
     /** Blessings of the source's own aspect in the build, for `per: 'blessing'` stacks. */
     sameAspectBlessings?: number;
+    /** Rarities of the equipped charms, for `charmRarity` conditions. */
+    charmRarities?: string[];
   } = { hasAbility: true },
 ): void {
   for (const e of effects) {
@@ -173,7 +175,11 @@ export function applyEffects(
       }
 
       case 'conditional':
-        if (conditionHolds(e.when, e.threshold, opts)) {
+        if (
+          e.when === 'charmRarity'
+            ? (ctx.charmRarities ?? []).includes(e.status ?? '')
+            : conditionHolds(e.when, e.threshold, opts)
+        ) {
           const why = e.when === 'assumed' ? (e.note ?? null) : assumedCondition(e.when, e.status);
           if (why) mods.assume(source, why);
           applyEffects(mods, e.then, `${source} (${e.when})`, opts, ctx);
@@ -196,7 +202,9 @@ export function applyEffects(
           mods.assume(source, `averaged over its ${Math.round(effectiveChance * 100)}% chance per ${e.on}`);
         }
         const scaled = e.then.map((inner) => {
-          if (inner.op === 'mult' || inner.op === 'payload') return { ...inner, value: inner.value * effectiveChance };
+          if (inner.op === 'mult' || inner.op === 'payload' || inner.op === 'flat') {
+            return { ...inner, value: inner.value * effectiveChance };
+          }
           // A nested `proc`'s own `chance` is independent of the trigger firing at
           // all -- compose them by multiplying, same expected-value math as `mult`.
           if (inner.op === 'proc') return { ...inner, chance: (inner.chance ?? 1) * effectiveChance };

@@ -223,14 +223,21 @@
           "description": "Shooting enemies reduces Heat.",
           "icon": "forge/Prolonged_Revving.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
         },
         {
           "name": "Greased Barrel",
           "description": "Increases damage the longer you fire without letting go of your Primary or Secondary.",
           "icon": "forge/Prolonged_Revving.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "damageRampPerSecond",
+              "scope": "all",
+              "value": 0.15,
+              "note": "+3% per 0.2s held, uncapped"
+            }
+          ]
         },
         {
           "name": "Insulated Barrel",
@@ -264,14 +271,14 @@
           "description": "Heat no longer decreases over time after Overheating, but is cleared after 5 sec.",
           "icon": "forge/Prolonged_Revving.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
         },
         {
           "name": "Burst Cooling",
           "description": "Stops Heat from increasing for 5 sec. after Overheated is cleared.",
           "icon": "forge/Heat_Converter.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
         },
         {
           "name": "Large Capacity",
@@ -567,7 +574,8 @@
           "description": "Secondary Fire applies Slow and Weak on enemies hit.",
           "icon": "forge/Heavy_Shell.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "applies Slow and Weak; defensive only",
+          "utility": true
         },
         {
           "name": "Compact Shell",
@@ -863,15 +871,29 @@
           "name": "Spark Gap",
           "description": "Increase fire rate the longer you fire without letting go of your Primary.",
           "icon": "forge/Spark_Gap.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "fireRateRampPerSecond",
+              "scope": "all",
+              "value": 0.02,
+              "note": "+1% per 0.5s held"
+            }
+          ]
         },
         {
           "name": "Streamlined Transistor",
           "description": "Increase damage the longer you fire without letting go of your Primary.",
           "icon": "forge/Spark_Gap.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "damageRampPerSecond",
+              "scope": "all",
+              "value": 0.1,
+              "note": "+5% per 0.5s held"
+            }
+          ]
         },
         {
           "name": "Compact Transformer",
@@ -890,15 +912,21 @@
           "name": "Larger Battery",
           "description": "Secondary can be charged an additional 2 steps, increasing its effect.",
           "icon": "forge/Spark_Gap.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "extraChargeSteps",
+              "scope": "all",
+              "value": 2
+            }
+          ]
         },
         {
           "name": "Wireless Transmitter",
           "description": "Your Secondary's duration is increased by 20% for each active Secondary effect.",
           "icon": "forge/Spark_Gap.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "scales Secondary effect durations by how many are active; overlap is not modelled"
         },
         {
           "name": "High Voltage",
@@ -918,7 +946,8 @@
           "description": "Increases range/radius of your Secondary by 50%",
           "icon": "forge/Spark_Gap.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "range/radius only; the ideal pack is already inside",
+          "utility": true
         },
         {
           "name": "Backup Battery",
@@ -1169,8 +1198,22 @@
           "name": "Critical Cylinder",
           "description": "Weakspot hits have a chance to recover 1 ammo.",
           "icon": "forge/Combustion_Muzzle.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "trigger",
+              "on": "weakspot",
+              "chance": 0.5,
+              "then": [
+                {
+                  "op": "flat",
+                  "stat": "ammoRefund",
+                  "scope": "all",
+                  "value": 1.0
+                }
+              ],
+              "note": "50% of Weakspot hits refund the bullet"
+            }
+          ]
         },
         {
           "name": "Fast Trigger",
@@ -1231,8 +1274,21 @@
           "name": "Boosted Cylinder",
           "description": "Hitting an enemy with your Secondary increases fire rate for 3 sec.",
           "icon": "forge/Combustion_Muzzle.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "fireRate",
+                  "scope": "primary",
+                  "value": 1.0
+                }
+              ],
+              "note": "you land a Secondary hit at least every 3s"
+            }
+          ]
         },
         {
           "name": "Exploitative Bullets",
@@ -1476,7 +1532,8 @@
           "description": "Increases disc speed by 100% and reduces spread and damage falloff.",
           "icon": "forge/Slim_Discs.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "projectile speed and falloff only",
+          "utility": true
         },
         {
           "name": "Twin Discs",
@@ -1521,15 +1578,24 @@
           "name": "Halting Discs",
           "description": "Discs spin in place for 2 sec. after hitting an enemy, then continue their arc. They deal continuous damage to nearby enemies while spinning.",
           "icon": "forge/Halting_Discs.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "proc",
+              "amount": 5.33,
+              "of": "weaponDamage",
+              "chance": 1.0,
+              "scope": "all",
+              "area": true,
+              "note": "80% of weapon damage every 0.3s for 2s around each disc"
+            }
+          ]
         },
         {
           "name": "Automatic Detonation",
           "description": "Weakspot hits with your Primary automatically trigger your Secondary.",
           "icon": "forge/Automatic_Detonation.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "fires the Secondary off Primary Weakspot hits; cross-mode triggering is not modelled"
         },
         {
           "name": "Priming Flight",
@@ -1822,8 +1888,21 @@
           "name": "True Form",
           "description": "Sweetspots always count as Weakspot hits.",
           "icon": "forge/True_Form.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "then": [
+                {
+                  "op": "flat",
+                  "stat": "weakspotChance",
+                  "scope": "all",
+                  "value": 1.0
+                }
+              ],
+              "note": "every charged shot lands in its Sweetspot"
+            }
+          ]
         },
         {
           "name": "Consistent Scope",
@@ -1870,7 +1949,7 @@
           "description": "Arrows are automatically shot once fully charged. Can be held to shoot continuously.",
           "icon": "forge/Shortbow.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "auto-releases at full charge; the charge timing is not modelled"
         }
       ]
     },
@@ -2124,7 +2203,8 @@
           "description": "Hitting 3 enemies increases the explosion radius for 5 sec.",
           "icon": "forge/Seismic_Fuel.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "explosion radius only; the ideal pack is already inside",
+          "utility": true
         },
         {
           "name": "Molotov Fuel",
@@ -2144,22 +2224,30 @@
           "name": "Revolving Valve",
           "description": "Lasting attacks have doubled duration, charged attacks have halved buildup.",
           "icon": "forge/Revolving_Valve.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "dotDamage",
+              "scope": "dot",
+              "value": 1.0,
+              "note": "lasting attacks last twice as long"
+            }
+          ]
         },
         {
           "name": "Explosive Valve",
           "description": "Damage now scales with the projectile's explosion radius.",
           "icon": "forge/Explosive_Valve.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "scales damage with explosion radius, which is not modelled"
         },
         {
           "name": "Accelerating Core",
           "description": "Explosions increase in size the further the projectile travels. Up to 100%.",
           "icon": "forge/Accelerating_Core.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "explosion size only; the ideal pack is already inside",
+          "utility": true
         },
         {
           "name": "Bouncy Core",
@@ -2180,15 +2268,56 @@
           "name": "Spreading Heat",
           "description": "Hitting an enemy suffering from status effects or that are Stunned, Slowed, Frozen or Rooted deals the same damage to a nearby enemy.",
           "icon": "forge/Spreading_Heat.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "targetIsStandard",
+              "then": [
+                {
+                  "op": "conditional",
+                  "when": "assumed",
+                  "then": [
+                    {
+                      "op": "mult",
+                      "stat": "damage",
+                      "scope": "primary",
+                      "value": 1.0,
+                      "note": "the same damage to a nearby enemy"
+                    },
+                    {
+                      "op": "mult",
+                      "stat": "damage",
+                      "scope": "secondary",
+                      "value": 1.0,
+                      "note": "the same damage to a nearby enemy"
+                    }
+                  ],
+                  "note": "the target has a status effect or is crowd-controlled"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "Repeating Blasts",
           "description": "Plasma Launcher explosions have a 60% chance of triggering again. Additional explosions can also trigger again, but have a 20% decreased chance per explosion.",
           "icon": "forge/Repeating_Blasts.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "primary",
+              "value": 0.888,
+              "note": "60% to repeat, each repeat 20% less likely: 0.6 + 0.24 + 0.048"
+            },
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "secondary",
+              "value": 0.888,
+              "note": "60% to repeat, each repeat 20% less likely: 0.6 + 0.24 + 0.048"
+            }
+          ]
         }
       ]
     },
@@ -2477,7 +2606,8 @@
           "description": "Enemies hit by your Secondary are Weakened and Slowed.",
           "icon": "forge/Weakening_Jabs.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "applies Weak and Slow; defensive only",
+          "utility": true
         },
         {
           "name": "Repeating Jabs",
@@ -2525,14 +2655,16 @@
           "description": "Secondary Range increases by 50%",
           "icon": "forge/Long_Horn.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "range only",
+          "utility": true
         },
         {
           "name": "Stunning Strike",
           "description": "Increase the Fish Deity's Stun duration by 300%.",
           "icon": "forge/Stunning_Strike.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "stun duration only",
+          "utility": true
         }
       ]
     },
@@ -2817,29 +2949,50 @@
           "name": "Increased Combo",
           "description": "Increases maximum Combo Points by 1.",
           "icon": "forge/Increased_Combo.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "secondary",
+              "value": 0.25,
+              "note": "5 Combo Points instead of 4, damage assumed linear"
+            }
+          ]
         },
         {
           "name": "Plentiful Combo",
           "description": "For each consumed Combo Point, refill 1 ammo.",
           "icon": "forge/Increased_Combo.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "ammo refills per Combo Point; the Combo Point economy is not modelled"
         },
         {
           "name": "Precise Combo",
           "description": "Marks a random Combo Point. Spending that amount of Combo Points increases the effect as if it consumed the maximum amount +1.",
           "icon": "forge/Increased_Combo.webp",
-          "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "damage",
+                  "scope": "secondary",
+                  "value": 0.25,
+                  "note": "acts as max + 1 Combo Points"
+                }
+              ],
+              "note": "you spend Combo Points on the marked amount"
+            }
+          ]
         },
         {
           "name": "Charged Harpoons",
           "description": "Primary and Secondary can be charged, causing up to 6 harpoons to be fired in quick succession.",
           "icon": "forge/Increased_Combo.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "charge-and-burst timing is not modelled"
         },
         {
           "name": "Rapid Harpoons",
@@ -2897,8 +3050,71 @@
           "name": "Charmed Harpoons",
           "description": "Gain buffs based on your Charms.\n\nCommon: +20% fire rate and +20% damage.\nRare: +30% reload speed and +20% Blessing trigger chance.\nLegendary: Shoot an extra harpoon.",
           "icon": "forge/Increased_Combo.webp",
-          "effects": [],
-          "unmodeled": "per-rarity-tier bonuses can't be keyed off owned charm rarity in the current conditions vocabulary; triggerChance also isn't consumed by the engine"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "charmRarity",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "fireRate",
+                  "scope": "primary",
+                  "value": 0.2
+                },
+                {
+                  "op": "mult",
+                  "stat": "fireRate",
+                  "scope": "secondary",
+                  "value": 0.2
+                },
+                {
+                  "op": "mult",
+                  "stat": "damage",
+                  "scope": "primary",
+                  "value": 0.2
+                },
+                {
+                  "op": "mult",
+                  "stat": "damage",
+                  "scope": "secondary",
+                  "value": 0.2
+                }
+              ],
+              "status": "Common"
+            },
+            {
+              "op": "conditional",
+              "when": "charmRarity",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "reloadSpeed",
+                  "scope": "primary",
+                  "value": 0.3
+                },
+                {
+                  "op": "mult",
+                  "stat": "reloadSpeed",
+                  "scope": "secondary",
+                  "value": 0.3
+                }
+              ],
+              "status": "Rare"
+            },
+            {
+              "op": "conditional",
+              "when": "charmRarity",
+              "then": [
+                {
+                  "op": "flat",
+                  "stat": "extraProjectiles",
+                  "scope": "all",
+                  "value": 1
+                }
+              ],
+              "status": "Legendary"
+            }
+          ]
         }
       ]
     }

@@ -649,14 +649,91 @@
     ]
   },
   "weapon forge/Harpoon_Gun/Charmed Harpoons": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "per-rarity-tier bonuses can't be keyed off owned charm rarity in the current conditions vocabulary; triggerChance also isn't consumed by the engine"
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "charmRarity",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "fireRate",
+            "scope": "primary",
+            "value": 0.2
+          },
+          {
+            "op": "mult",
+            "stat": "fireRate",
+            "scope": "secondary",
+            "value": 0.2
+          },
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "primary",
+            "value": 0.2
+          },
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "secondary",
+            "value": 0.2
+          }
+        ],
+        "status": "Common"
+      },
+      {
+        "op": "conditional",
+        "when": "charmRarity",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "reloadSpeed",
+            "scope": "primary",
+            "value": 0.3
+          },
+          {
+            "op": "mult",
+            "stat": "reloadSpeed",
+            "scope": "secondary",
+            "value": 0.3
+          }
+        ],
+        "status": "Rare"
+      },
+      {
+        "op": "conditional",
+        "when": "charmRarity",
+        "then": [
+          {
+            "op": "flat",
+            "stat": "extraProjectiles",
+            "scope": "all",
+            "value": 1
+          }
+        ],
+        "status": "Legendary"
+      }
+    ]
   },
   "ability forge/frag_grenade/Explosive Culling": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "scales continuously with missing Health; magnitude unstated"
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityDamage",
+            "scope": "ability",
+            "value": 0.5,
+            "note": "up to +100% at 0 Health"
+          }
+        ],
+        "note": "enemies are at half Health on average"
+      }
+    ]
   },
   "ability forge/frag_grenade/Compact Grenade": {
     "source": "hand-authored (audit c5d0d24)",
@@ -716,9 +793,10 @@
     ]
   },
   "ability forge/anchor/The Thrill": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
     "effects": [],
-    "unmodeled": "movementSpeed isn't consumed by the engine -- no DPS impact regardless of magnitude"
+    "unmodeled": "movement only",
+    "utility": true
   },
   "ability forge/anchor/Geyser": {
     "source": "hand-authored (audit c5d0d24)",
@@ -804,14 +882,27 @@
     ]
   },
   "shared ability forge/Increased Efficiency": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
     "effects": [],
-    "unmodeled": "structurally a trigger-on-kill cooldown reduction, but the wiki text gives no magnitude to model"
+    "unmodeled": "triggers on kills; kill rate is not modelled"
   },
   "shared ability forge/Rich Get Richer": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "scales with currently-held ability charges, a standing resource level the DSL's stacking op can't express (it only counts triggered events)"
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityCooldown",
+            "scope": "ability",
+            "value": -0.2
+          }
+        ],
+        "note": "you hold 2 Ability charges"
+      }
+    ]
   },
   "blessings/Empowering_Flames": {
     "source": "Phase 2b: aspect payload model",
@@ -2803,5 +2894,708 @@
     "source": "Phase 3: charms (BP_*_CharacterMutator / WeaponMutator)",
     "effects": [],
     "unmodeled": "depends on overkill damage per kill; kill rate is not modelled"
+  },
+  "weapon forge/Engine_Rifle/Prolonged Revving": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
+  },
+  "weapon forge/Engine_Rifle/Greased Barrel": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "damageRampPerSecond",
+        "scope": "all",
+        "value": 0.15,
+        "note": "+3% per 0.2s held, uncapped"
+      }
+    ]
+  },
+  "weapon forge/Engine_Rifle/Binary Cooling": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
+  },
+  "weapon forge/Engine_Rifle/Burst Cooling": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "changes the Engine Rifle heat system, which is not modelled (its overheat is treated as the reload)"
+  },
+  "weapon forge/Shotgun/Heavy Shell": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "applies Slow and Weak; defensive only",
+    "utility": true
+  },
+  "weapon forge/Tesla_Gun/Spark Gap": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "fireRateRampPerSecond",
+        "scope": "all",
+        "value": 0.02,
+        "note": "+1% per 0.5s held"
+      }
+    ]
+  },
+  "weapon forge/Tesla_Gun/Streamlined Transistor": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "damageRampPerSecond",
+        "scope": "all",
+        "value": 0.1,
+        "note": "+5% per 0.5s held"
+      }
+    ]
+  },
+  "weapon forge/Tesla_Gun/Larger Battery": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "extraChargeSteps",
+        "scope": "all",
+        "value": 2
+      }
+    ]
+  },
+  "weapon forge/Tesla_Gun/Wireless Transmitter": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "scales Secondary effect durations by how many are active; overlap is not modelled"
+  },
+  "weapon forge/Tesla_Gun/High-Frequency": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "range/radius only; the ideal pack is already inside",
+    "utility": true
+  },
+  "weapon forge/Brine_Revolver/Critical Cylinder": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "weakspot",
+        "chance": 0.5,
+        "then": [
+          {
+            "op": "flat",
+            "stat": "ammoRefund",
+            "scope": "all",
+            "value": 1.0
+          }
+        ],
+        "note": "50% of Weakspot hits refund the bullet"
+      }
+    ]
+  },
+  "weapon forge/Brine_Revolver/Boosted Cylinder": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "fireRate",
+            "scope": "primary",
+            "value": 1.0
+          }
+        ],
+        "note": "you land a Secondary hit at least every 3s"
+      }
+    ]
+  },
+  "weapon forge/Disc_Thrower/Slim Discs": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "projectile speed and falloff only",
+    "utility": true
+  },
+  "weapon forge/Disc_Thrower/Halting Discs": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "proc",
+        "amount": 5.33,
+        "of": "weaponDamage",
+        "chance": 1.0,
+        "scope": "all",
+        "area": true,
+        "note": "80% of weapon damage every 0.3s for 2s around each disc"
+      }
+    ]
+  },
+  "weapon forge/Disc_Thrower/Automatic Detonation": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "fires the Secondary off Primary Weakspot hits; cross-mode triggering is not modelled"
+  },
+  "weapon forge/Combat_Bow/True Form": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "flat",
+            "stat": "weakspotChance",
+            "scope": "all",
+            "value": 1.0
+          }
+        ],
+        "note": "every charged shot lands in its Sweetspot"
+      }
+    ]
+  },
+  "weapon forge/Combat_Bow/Shortbow": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "auto-releases at full charge; the charge timing is not modelled"
+  },
+  "weapon forge/Plasma_Launcher/Seismic Fuel": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "explosion radius only; the ideal pack is already inside",
+    "utility": true
+  },
+  "weapon forge/Plasma_Launcher/Revolving Valve": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "dotDamage",
+        "scope": "dot",
+        "value": 1.0,
+        "note": "lasting attacks last twice as long"
+      }
+    ]
+  },
+  "weapon forge/Plasma_Launcher/Explosive Valve": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "scales damage with explosion radius, which is not modelled"
+  },
+  "weapon forge/Plasma_Launcher/Accelerating Core": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "explosion size only; the ideal pack is already inside",
+    "utility": true
+  },
+  "weapon forge/Plasma_Launcher/Spreading Heat": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsStandard",
+        "then": [
+          {
+            "op": "conditional",
+            "when": "assumed",
+            "then": [
+              {
+                "op": "mult",
+                "stat": "damage",
+                "scope": "primary",
+                "value": 1.0,
+                "note": "the same damage to a nearby enemy"
+              },
+              {
+                "op": "mult",
+                "stat": "damage",
+                "scope": "secondary",
+                "value": 1.0,
+                "note": "the same damage to a nearby enemy"
+              }
+            ],
+            "note": "the target has a status effect or is crowd-controlled"
+          }
+        ]
+      }
+    ]
+  },
+  "weapon forge/Plasma_Launcher/Repeating Blasts": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "primary",
+        "value": 0.888,
+        "note": "60% to repeat, each repeat 20% less likely: 0.6 + 0.24 + 0.048"
+      },
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "secondary",
+        "value": 0.888,
+        "note": "60% to repeat, each repeat 20% less likely: 0.6 + 0.24 + 0.048"
+      }
+    ]
+  },
+  "weapon forge/Fish_Deity/Weakening Jabs": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "applies Weak and Slow; defensive only",
+    "utility": true
+  },
+  "weapon forge/Fish_Deity/Long Horn": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "range only",
+    "utility": true
+  },
+  "weapon forge/Fish_Deity/Stunning Strike": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "stun duration only",
+    "utility": true
+  },
+  "weapon forge/Harpoon_Gun/Increased Combo": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "secondary",
+        "value": 0.25,
+        "note": "5 Combo Points instead of 4, damage assumed linear"
+      }
+    ]
+  },
+  "weapon forge/Harpoon_Gun/Plentiful Combo": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "ammo refills per Combo Point; the Combo Point economy is not modelled"
+  },
+  "weapon forge/Harpoon_Gun/Precise Combo": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "secondary",
+            "value": 0.25,
+            "note": "acts as max + 1 Combo Points"
+          }
+        ],
+        "note": "you spend Combo Points on the marked amount"
+      }
+    ]
+  },
+  "weapon forge/Harpoon_Gun/Charged Harpoons": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "charge-and-burst timing is not modelled"
+  },
+  "ability forge/frag_grenade/Implosive Force": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "pull and stun only",
+    "utility": true
+  },
+  "ability forge/frag_grenade/Cluster Bomb": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "abilityDamage",
+        "scope": "ability",
+        "value": 0.9,
+        "note": "6 fragments x 15% of ability damage"
+      }
+    ]
+  },
+  "ability forge/frag_grenade/Shrapnel": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "abilityDamage",
+        "scope": "ability",
+        "value": 0.75,
+        "note": "25% of grenade damage per second for 3s"
+      }
+    ]
+  },
+  "ability forge/frag_grenade/Bouncy Bomb": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityDamage",
+            "scope": "ability",
+            "value": 0.5,
+            "note": "bounce explosions deal 50%"
+          }
+        ],
+        "note": "the grenade bounces once before exploding"
+      }
+    ]
+  },
+  "ability forge/frag_grenade/Gas Grenade": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "abilityDamage",
+        "scope": "ability",
+        "value": 1.5,
+        "note": "50% of grenade damage per second for 3s"
+      }
+    ]
+  },
+  "ability forge/anchor/Grenanchor": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "abilityDamage",
+        "scope": "ability",
+        "value": -0.25,
+        "note": "the thrown anchor deals 25% less"
+      }
+    ]
+  },
+  "ability forge/anchor/Bulwark": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "defensive only",
+    "utility": true
+  },
+  "ability forge/anchor/Mighty": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityDamage",
+            "scope": "ability",
+            "value": 0.417,
+            "note": "+250 on a 600 hit"
+          }
+        ],
+        "note": "every enemy hit is knocked into a wall"
+      }
+    ]
+  },
+  "ability forge/smiting_spear/Chain Pulse": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "needs several spears out at once; spear count is not modelled"
+  },
+  "ability forge/smiting_spear/Charmed Spear": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "charmRarity",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityDamage",
+            "scope": "ability",
+            "value": 0.133,
+            "note": "+20% pulse damage (pulses are 2/3 of the spear)"
+          }
+        ],
+        "status": "Common"
+      },
+      {
+        "op": "conditional",
+        "when": "charmRarity",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityDamage",
+            "scope": "ability",
+            "value": 0.333,
+            "note": "+50% duration = 50% more pulses"
+          }
+        ],
+        "status": "Rare"
+      },
+      {
+        "op": "conditional",
+        "when": "charmRarity",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityDamage",
+            "scope": "ability",
+            "value": 0.083,
+            "note": "+1 pulse of 50 on a 600 spear"
+          }
+        ],
+        "status": "Legendary"
+      }
+    ]
+  },
+  "ability forge/smiting_spear/Sticking Spear": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityDamage",
+            "scope": "ability",
+            "value": 0.133,
+            "note": "+20% pulse damage"
+          }
+        ],
+        "note": "the spear sticks in an enemy"
+      }
+    ]
+  },
+  "ability forge/smiting_spear/Fragmenting Spear": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "abilityDamage",
+        "scope": "ability",
+        "value": 0.067,
+        "note": "a 40-damage fragment on a 600 spear"
+      }
+    ]
+  },
+  "ability forge/smiting_spear/Spear Grid": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "needs several spears out at once; spear count is not modelled"
+  },
+  "ability forge/smiting_spear/Split Spear": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityDamage",
+            "scope": "ability",
+            "value": 2.0
+          }
+        ],
+        "note": "both extra spears hit"
+      }
+    ]
+  },
+  "ability forge/smiting_spear/Enduring Spear": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "triggers on kills; kill rate is not modelled"
+  },
+  "ability forge/smiting_spear/Environmental Spear": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "all",
+            "value": 0.05
+          }
+        ],
+        "note": "enemies stay near a spear stuck in the ground"
+      }
+    ]
+  },
+  "ability forge/smiting_spear/Charged Spear": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "charging consumes stacks; the stack economy is not modelled"
+  },
+  "ability forge/ancient_core/Cone Blast": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "abilityArea",
+        "scope": "all",
+        "value": 1
+      }
+    ]
+  },
+  "ability forge/ancient_core/Gold Blast": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "ability forge/ancient_core/Stun Blast": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "crowd control only",
+    "utility": true
+  },
+  "ability forge/ancient_core/Bounce Blast": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsStandard",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "abilityDamage",
+            "scope": "ability",
+            "value": 1.0,
+            "note": "bounces to a second enemy"
+          }
+        ]
+      }
+    ]
+  },
+  "ability forge/ancient_core/Active Reload": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "triggers on kills; kill rate is not modelled"
+  },
+  "ability forge/brine_field/Quality Over Quantity": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "abilityDamage",
+        "scope": "ability",
+        "value": 0.2
+      }
+    ]
+  },
+  "ability forge/brine_field/Lingering Field": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "lingering effects; the ideal fight stays inside the field",
+    "utility": true
+  },
+  "ability forge/brine_field/Mobility Field": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "positioning only",
+    "utility": true
+  },
+  "ability forge/brine_field/Time Warp": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "slows only",
+    "utility": true
+  },
+  "ability forge/brine_field/Noxious Bubble": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "hemorrhage",
+            "value": 1.0
+          },
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "burn",
+            "value": 1.0
+          },
+          {
+            "op": "mult",
+            "stat": "dotDamage",
+            "scope": "dot",
+            "value": 1.0
+          }
+        ],
+        "note": "enemies stay inside the Brine Field"
+      }
+    ]
+  },
+  "ability forge/brine_field/Expanding Territory": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "area size only",
+    "utility": true
+  },
+  "ability forge/brine_field/Sanctum": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "scales ability blessing procs with field radius; the radius is not modelled"
+  },
+  "ability forge/turret/Drones": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "positioning only",
+    "utility": true
+  },
+  "ability forge/turret/Ammo Transfer": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "refills your magazine per Turret shot; Turret fire rate is not modelled"
+  },
+  "ability forge/turret/Buddy System": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "its damage reduction is native code and unknown"
+  },
+  "ability forge/turret/Unstable Cores": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "spawn explosion damage is native code and unknown"
+  },
+  "ability forge/turret/Guiding Bullet": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "primary",
+            "value": 0.25,
+            "note": "25% of your mode damage again on its target"
+          },
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "secondary",
+            "value": 0.25,
+            "note": "25% of your mode damage again on its target"
+          }
+        ],
+        "note": "your Turret is out"
+      }
+    ]
+  },
+  "shared ability forge/Double Trouble": {
+    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "effects": [],
+    "unmodeled": "doubles ability-slot blessing procs; not wired into the payload model yet"
   }
 }

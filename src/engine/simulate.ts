@@ -115,17 +115,30 @@ interface ModeOutput {
  * re-collecting any picks' effects.
  */
 function computeModeOutput(
-  mode: WeaponMode,
+  modeIn: WeaponMode,
   mods: Modifiers,
   opts: SimOptions,
   abilityDamage: number,
 ): ModeOutput {
+  let mode = modeIn;
   const scope = mode.type.toLowerCase() as 'primary' | 'secondary';
 
   // Fan-style extra projectiles copy every direct hit; Mr. Boom-style extra
   // explosions repeat every explosion component.
   const projectiles = 1 + mods.flatFor('extraProjectiles');
   const explosions = 1 + mods.flatFor('extraExplosions');
+  // Larger Battery-style extra charge steps extend a charge range by whole steps.
+  const extraSteps = mods.flatFor('extraChargeSteps');
+  const components = (list: DamageComponent[] | null) =>
+    list && extraSteps > 0
+      ? list.map((c) =>
+          (c.chargeSteps ?? modeIn.chargeSteps ?? 0) > 1 && c.max > c.min
+            ? { ...c, max: c.max + ((c.max - c.min) / ((c.chargeSteps ?? modeIn.chargeSteps)! - 1)) * extraSteps }
+            : c,
+        )
+      : list;
+  mode = { ...mode, damageComponents: components(mode.damageComponents), weakspotComponents: components(mode.weakspotComponents) };
+  const weakspotRate = Math.min(1, opts.weakspotAccuracy + mods.flatFor('weakspotChance'));
   const baseImpact = componentTotal(mode.damageComponents, ['impact'], opts.chargeLevel) * projectiles;
   const baseWeakspot =
     (componentTotal(mode.weakspotComponents, ['impact'], opts.chargeLevel) || baseImpact / projectiles * 2) *
@@ -134,7 +147,11 @@ function computeModeOutput(
     componentTotal(mode.damageComponents, ['explosion'], opts.chargeLevel) * explosions +
     componentTotal(mode.damageComponents, ['pull', 'aoe'], opts.chargeLevel);
 
-  const damageMult = 1 + mods.multFor('damage', scope);
+  // Ramps while the trigger is held, reset on release: average over one burst of fire.
+  const burstSeconds = mode.clipSize ? mode.clipSize / mode.fireRate : 10;
+  const rampDamage = mods.flatFor('damageRampPerSecond') * (burstSeconds / 2);
+  const rampFireRate = mods.flatFor('fireRateRampPerSecond') * (burstSeconds / 2);
+  const damageMult = 1 + mods.multFor('damage', scope) + rampDamage;
   const weakspotMult = 1 + mods.multFor('weakspotDamage', scope);
   const aoeMult = 1 + mods.multFor('aoeDamage', scope);
 
@@ -142,8 +159,7 @@ function computeModeOutput(
   // weakspot bonus scales that rather than re-applying the x2.
   const normalHit = baseImpact * damageMult;
   const weakspotHit = baseWeakspot * damageMult * weakspotMult;
-  const blendedImpact =
-    normalHit * (1 - opts.weakspotAccuracy) + weakspotHit * opts.weakspotAccuracy;
+  const blendedImpact = normalHit * (1 - weakspotRate) + weakspotHit * weakspotRate;
 
   const procDamage = mods.procs.reduce((sum, p) => {
     const base =
@@ -164,7 +180,7 @@ function computeModeOutput(
   const areaDamage = baseExtra * aoeMult * enemiesFor(opts.target);
   const perShot = (blendedImpact + areaDamage + procDamage) * opts.accuracy;
 
-  const fireRate = mode.fireRate * (1 + mods.multFor('fireRate', scope));
+  const fireRate = mode.fireRate * (1 + mods.multFor('fireRate', scope) + rampFireRate);
   const reloadTime = mode.reloadTime / (1 + mods.multFor('reloadSpeed', scope));
   const clipSize =
     mode.clipSize === null
@@ -172,7 +188,9 @@ function computeModeOutput(
       : Math.max(1, Math.round(mode.clipSize * (1 + mods.multFor('clipSize', scope)) +
           mods.flatFor('clipSize')));
 
-  const shotsPerCycle = clipSize ?? fireRate; // no clip => one second of uninterrupted fire
+  // Ammo refunds (Critical Cylinder) stretch the clip: each shot costs (1 - refund).
+  const refund = Math.min(0.95, mods.flatFor('ammoRefund'));
+  const shotsPerCycle = clipSize === null ? fireRate : clipSize / (1 - refund); // no clip => one second of fire
   const cycleTime = shotsPerCycle / fireRate + (clipSize === null ? 0 : reloadTime);
   const perMagazine = perShot * shotsPerCycle;
   const weaponDps = cycleTime > 0 ? perMagazine / cycleTime : 0;
@@ -224,6 +242,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   if (!mode) throw new Error(`unknown mode: ${build.modeName} on ${build.weaponId}`);
   const ability = build.abilityId ? abilityById.get(build.abilityId) : undefined;
 
+  const charmRarities = build.charmIds.map((id) => charmById.get(id)?.rarity ?? '');
   const collect = (
     name: string,
     effects: Parameters<typeof applyEffects>[1],
@@ -232,7 +251,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     sameAspectBlessings?: number,
   ) => {
     if (effects.length === 0 && reason) unmodeled.push({ name, reason, utility });
-    applyEffects(mods, effects, name, opts, { hasAbility: !!ability, sameAspectBlessings });
+    applyEffects(mods, effects, name, opts, { hasAbility: !!ability, sameAspectBlessings, charmRarities });
   };
 
   // --- Blessings, restricted to aspects actually equipped -------------------
@@ -338,7 +357,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       ),
     );
     const pulses = ability.pulses ? ability.pulses.count * ability.pulses.damage : 0;
-    const isArea = ability.tags.includes('aoe');
+    const isArea = ability.tags.includes('aoe') || mods.flatFor('abilityArea') > 0;
     const targetsHit = isArea ? enemiesFor(opts.target) : 1;
     if (isArea && targetsHit > 1) {
       mods.assume(ability.name, `its area catches all ${targetsHit} enemies`);

@@ -37,6 +37,18 @@ export const STATS = [
   'extraProjectiles',
   /** Flat: extra times every explosion goes off (Mr. Boom: +1). */
   'extraExplosions',
+  /** Flat, per second of continuous fire (reset on release): +damage / +fire rate.
+   * Averaged over each magazine, or 10s of fire for modes with no clip. */
+  'damageRampPerSecond',
+  'fireRateRampPerSecond',
+  /** Flat: fraction of shots refunded as ammo (stretches the clip). */
+  'ammoRefund',
+  /** Flat: added to the share of hits that land on a weakspot (capped at 100%). */
+  'weakspotChance',
+  /** Flat: extra charge steps on charge-scaled damage components. */
+  'extraChargeSteps',
+  /** Flat: > 0 turns the ability into an area attack. */
+  'abilityArea',
 ] as const;
 export type Stat = (typeof STATS)[number];
 
@@ -93,6 +105,8 @@ export const CONDITIONS = [
   'targetIsEliteOrBoss',
   /** Holds only against the Pack target ("standard enemies" effects). */
   'targetIsStandard',
+  /** Holds when an equipped charm has the rarity named in `status` (Common/Rare/Legendary). */
+  'charmRarity',
   'always',
 ] as const;
 export type Condition = (typeof CONDITIONS)[number];

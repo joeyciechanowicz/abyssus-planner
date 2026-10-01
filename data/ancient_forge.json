@@ -28,14 +28,27 @@
         "description": "Kills Lower the cooldown of your Ability.",
         "icon": "forge/Ability_Shared.webp",
         "effects": [],
-        "unmodeled": "structurally a trigger-on-kill cooldown reduction, but the wiki text gives no magnitude to model"
+        "unmodeled": "triggers on kills; kill rate is not modelled"
       },
       {
         "name": "Rich Get Richer",
         "description": "Decreases cooldown by 10% for every Ability stack.",
         "icon": "forge/Ability_Shared.webp",
-        "effects": [],
-        "unmodeled": "scales with currently-held ability charges, a standing resource level the DSL's stacking op can't express (it only counts triggered events)"
+        "effects": [
+          {
+            "op": "conditional",
+            "when": "assumed",
+            "then": [
+              {
+                "op": "mult",
+                "stat": "abilityCooldown",
+                "scope": "ability",
+                "value": -0.2
+              }
+            ],
+            "note": "you hold 2 Ability charges"
+          }
+        ]
       },
       {
         "name": "Investment",
@@ -55,7 +68,7 @@
         "description": "Blessings on your Ability have 30% chance to trigger twice.",
         "icon": "forge/Ability_Shared.webp",
         "effects": [],
-        "unmodeled": "no numeric damage effect the DSL can express"
+        "unmodeled": "doubles ability-slot blessing procs; not wired into the payload model yet"
       }
     ]
   }

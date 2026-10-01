@@ -595,6 +595,43 @@ describe('charms', () => {
   });
 });
 
+describe('forge upgrades', () => {
+  const fx = (weaponId: string, modeName: string, weaponUpgrades: string[], extra: Partial<Build> = {}): Build => ({
+    ...emptyBuild, weaponId, modeName, weaponUpgrades, ...extra,
+  });
+
+  it('Greased Barrel averages +3% per 0.2s over each magazine', () => {
+    // Automatic Fire: 30 rounds at 8/s = 3.75s held; +15%/s averaged over it = +28.1%.
+    const r = simulate(fx('Engine_Rifle', 'Automatic Fire', ['Greased Barrel']), { weakspotAccuracy: 0 });
+    expect(r.stats.damageMultiplier).toBeCloseTo(1 + 0.15 * 3.75 / 2, 5);
+  });
+
+  it('Larger Battery extends Charge Orb by two charge steps', () => {
+    const plain = simulate(fx('Tesla_Gun', 'Charge Orb', []), { weakspotAccuracy: 0 });
+    const big = simulate(fx('Tesla_Gun', 'Charge Orb', ['Larger Battery']), { weakspotAccuracy: 0 });
+    // 97 > 120 > 142 > 165: +22.67 per step, two more steps.
+    expect(big.perShot - plain.perShot).toBeCloseTo(((165 - 97) / 3) * 2, 5);
+  });
+
+  it('Critical Cylinder stretches the clip by refunded Weakspot shots', () => {
+    const plain = simulate(fx('Brine_Revolver', 'Semi-automatic', []), { weakspotAccuracy: 1 });
+    const crit = simulate(fx('Brine_Revolver', 'Semi-automatic', ['Critical Cylinder']), { weakspotAccuracy: 1 });
+    expect(crit.perMagazine / plain.perMagazine).toBeCloseTo(2, 5); // half of all shots refunded
+  });
+
+  it('Charmed Harpoons follows the rarity of your charms', () => {
+    const none = simulate(fx('Harpoon_Gun', 'Piercing Harpoons', ['Charmed Harpoons']));
+    const common = simulate(fx('Harpoon_Gun', 'Piercing Harpoons', ['Charmed Harpoons'], { charmIds: ['hawkeye'] }));
+    expect(common.stats.fireRate / none.stats.fireRate).toBeCloseTo(1.2, 5);
+  });
+
+  it('Cone Blast turns the Ancient Core into an area attack', () => {
+    const core = { ...emptyBuild, abilityId: 'ancient_core' };
+    const cone = { ...core, abilityUpgrades: ['Cone Blast'] };
+    expect(simulate(cone, { target: 'pack' }).abilityDps).toBeCloseTo(simulate(core, { target: 'pack' }).abilityDps * 5, 5);
+  });
+});
+
 describe('aspect-payload blessings stay off weapon damage', () => {
   // These boost an aspect's own payload (Fire DoT, Spirits, Windburst, Brine Ball)
   // or a non-simulated source (melee); they once leaked into weapon damage/all.
