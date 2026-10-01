@@ -598,6 +598,21 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     };
   }
 
+  // Automatic Detonation: Primary weakspot hits fire the Secondary for free.
+  const autoSecondary = mods.flatFor('secondaryOnPrimaryWeakspot');
+  if (autoSecondary > 0) {
+    const [primaryOut, primaryShare] =
+      mode.type === 'Primary' ? [main, mainShare] : weaveMode?.type === 'Primary' ? [weaveOutput, weaveShare] : [undefined, 0];
+    const secondaryMode = mode.type === 'Secondary' ? mode : weaveMode?.type === 'Secondary' ? weaveMode : weapon.modes.find((m) => m.type === 'Secondary');
+    if (primaryOut && secondaryMode) {
+      const secondaryShot = computeModeOutput(secondaryMode, mods, opts, abilityDamage, heatSys).perShot;
+      const weakspotHits = primaryOut.stream.directHitsPerSecond * primaryShare * Math.min(1, opts.weakspotAccuracy);
+      const extra = weakspotHits * autoSecondary * secondaryShot;
+      weaponDps += extra;
+      mods.assume(secondaryMode.name, `fired for free on ${weakspotHits.toFixed(1)} Primary weakspot hits per second`);
+    }
+  }
+
   // Ammo Transfer: rounds handed back by the ability stretch the weapon's clip.
   if (abilityRoundsPerSecond > 0) {
     const stretch = (o: ModeOutput, share: number): ModeOutput => {

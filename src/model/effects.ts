@@ -84,6 +84,8 @@ export const STATS = [
   'ammoPerAbilityHit',
   /** Flat: damage scales with explosion size by this share of the aoeSize bonus (Explosive Valve: 1). */
   'damagePerAoeSize',
+  /** Flat: free Secondary shots per Primary weakspot hit (Automatic Detonation). */
+  'secondaryOnPrimaryWeakspot',
 ] as const;
 export type Stat = (typeof STATS)[number];
 

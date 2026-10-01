@@ -728,6 +728,17 @@ describe('Turret extras', () => {
   });
 });
 
+describe('Automatic Detonation', () => {
+  it('fires the Secondary on every Primary weakspot hit', () => {
+    const disc = (weaponUpgrades: string[]): Build => ({ ...emptyBuild, weaponId: 'Disc_Thrower', modeName: 'Automatic', weaponUpgrades });
+    const plain = simulate(disc([]), { weakspotAccuracy: 0.5 });
+    const auto = simulate(disc(['Automatic Detonation']), { weakspotAccuracy: 0.5 });
+    const secondary = simulate({ ...emptyBuild, weaponId: 'Disc_Thrower', modeName: 'Inferno Discs' }, { weakspotAccuracy: 0.5 }).perShot;
+    const hitsPerSecond = plain.weaponDps / plain.perShot; // one disc per shot
+    expect(auto.weaponDps - plain.weaponDps).toBeCloseTo(hitsPerSecond * 0.5 * secondary, 5);
+  });
+});
+
 describe('Smiting Spear concurrency', () => {
   const spear = (abilityUpgrades: string[] = []): Build => ({ ...emptyBuild, abilityId: 'smiting_spear', abilityUpgrades });
   const casts = 1 / 8 + 1 / 30; // one per 8s recharge + 1 charge per 30s encounter

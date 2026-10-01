@@ -3334,9 +3334,23 @@
     ]
   },
   "weapon forge/Tesla_Gun/Wireless Transmitter": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "scales Secondary effect durations by how many are active; overlap is not modelled"
+    "source": "Step 8: cross-mode weapon upgrades (formula native)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "one other Secondary effect is active at a time",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "dotDamage",
+            "scope": "dot",
+            "value": 0.2,
+            "note": "+20% duration on its lasting damage"
+          }
+        ]
+      }
+    ]
   },
   "weapon forge/Tesla_Gun/High-Frequency": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
@@ -3402,9 +3416,15 @@
     ]
   },
   "weapon forge/Disc_Thrower/Automatic Detonation": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "fires the Secondary off Primary Weakspot hits; cross-mode triggering is not modelled"
+    "source": "Step 8: cross-mode weapon upgrades (BP_DiscGun_AutomaticDetonation: SecondaryWeaponModScript->Fire())",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "secondaryOnPrimaryWeakspot",
+        "scope": "all",
+        "value": 1
+      }
+    ]
   },
   "weapon forge/Combat_Bow/True Form": {
     "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
@@ -3425,9 +3445,10 @@
     ]
   },
   "weapon forge/Combat_Bow/Shortbow": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
+    "source": "Step 8: cross-mode weapon upgrades",
     "effects": [],
-    "unmodeled": "auto-releases at full charge; the charge timing is not modelled"
+    "unmodeled": "the ideal already releases every shot at full charge",
+    "utility": true
   },
   "weapon forge/Plasma_Launcher/Seismic Fuel": {
     "source": "Step 3: area size (BP_WindPassive10 GetWindBlessingDamageMultiplier; AoERangeMultiplier sources)",

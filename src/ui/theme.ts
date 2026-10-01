@@ -92,6 +92,7 @@ const STAT_LABELS: Record<string, string> = {
   damagePerOtherActive: 'Damage per other copy out',
   ammoPerAbilityHit: 'Rounds returned per ability hit',
   damagePerAoeSize: 'Damage per area size',
+  secondaryOnPrimaryWeakspot: 'Free Secondary per Primary weakspot hit',
   radius: 'Radius',
   radiusDamageScaling: 'Damage per radius',
   statusDamageWhileActive: 'Status damage to Frozen enemies',

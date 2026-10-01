@@ -960,8 +960,22 @@
           "name": "Wireless Transmitter",
           "description": "Your Secondary's duration is increased by 20% for each active Secondary effect.",
           "icon": "forge/Spark_Gap.webp",
-          "effects": [],
-          "unmodeled": "scales Secondary effect durations by how many are active; overlap is not modelled"
+          "effects": [
+            {
+              "op": "conditional",
+              "when": "assumed",
+              "note": "one other Secondary effect is active at a time",
+              "then": [
+                {
+                  "op": "mult",
+                  "stat": "dotDamage",
+                  "scope": "dot",
+                  "value": 0.2,
+                  "note": "+20% duration on its lasting damage"
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "High Voltage",
@@ -1629,8 +1643,14 @@
           "name": "Automatic Detonation",
           "description": "Weakspot hits with your Primary automatically trigger your Secondary.",
           "icon": "forge/Automatic_Detonation.webp",
-          "effects": [],
-          "unmodeled": "fires the Secondary off Primary Weakspot hits; cross-mode triggering is not modelled"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "secondaryOnPrimaryWeakspot",
+              "scope": "all",
+              "value": 1
+            }
+          ]
         },
         {
           "name": "Priming Flight",
@@ -1984,7 +2004,8 @@
           "description": "Arrows are automatically shot once fully charged. Can be held to shoot continuously.",
           "icon": "forge/Shortbow.webp",
           "effects": [],
-          "unmodeled": "auto-releases at full charge; the charge timing is not modelled"
+          "unmodeled": "the ideal already releases every shot at full charge",
+          "utility": true
         }
       ]
     },
