@@ -269,6 +269,13 @@ export const PAYLOAD_FIELDS = [
   'killAreaDamage',
   'killProcs',
   'killGauge',
+  /** Chain Lightning crits: +chance (added to your Critical Chance), +crit damage multiplier,
+   * last bounce always crits, expected extra bounces per crit (re-hitting allowed), forks per crit. */
+  'critChance',
+  'critDamage',
+  'lastBounceCrit',
+  'critExtraBounces',
+  'critForks',
 ] as const;
 export type PayloadField = (typeof PAYLOAD_FIELDS)[number];
 const PAYLOAD_IDS = [

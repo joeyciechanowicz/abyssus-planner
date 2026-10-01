@@ -1257,9 +1257,17 @@
     ]
   },
   "blessings/Bashing_Lightning": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+    "source": "Chain Lightning crits: base Critical Chance 0 (BP_RPlayerPawn MutatorModifiers.CriticalChance, live CDO read)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "chainLightning",
+        "field": "critDamage",
+        "value": 0.09,
+        "note": "30% chance of +30% on crits",
+        "scalesWith": "{CritDamageIncrease}"
+      }
+    ]
   },
   "blessings/Distant_Storm": {
     "source": "Phase 2b: aspect payload model",
@@ -1442,9 +1450,18 @@
     "utility": true
   },
   "blessings/Lightnings_Fury": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+    "source": "Chain Lightning crits: base Critical Chance 0 (BP_RPlayerPawn MutatorModifiers.CriticalChance, live CDO read)",
+    "effects": [
+      {
+        "op": "stacking",
+        "stat": "critChance",
+        "scope": "all",
+        "valuePer": 0.03,
+        "per": "blessing",
+        "max": null,
+        "note": "per Lightning Blessing: Critical Chance (PA_LightningGodPassive {CritChangeIncrease})"
+      }
+    ]
   },
   "blessings/Oceans_Embrace": {
     "source": "Phase 0 audit: ally-count bonus was counted solo",
@@ -1761,29 +1778,75 @@
     "utility": true
   },
   "blessings/Charging_Bounce": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+    "source": "Chain Lightning crits: base Critical Chance 0 (BP_RPlayerPawn MutatorModifiers.CriticalChance, live CDO read)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "chainLightning",
+        "field": "lastBounceCrit",
+        "value": 1
+      }
+    ]
   },
   "blessings/Extended_Chain": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+    "source": "Chain Lightning crits: base Critical Chance 0 (BP_RPlayerPawn MutatorModifiers.CriticalChance, live CDO read)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsStandard",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "chainLightning",
+            "field": "critExtraBounces",
+            "value": 0.2,
+            "note": "20% chance after a crit last bounce; counted on every crit"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Lightning_Rod": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+    "source": "Chain Lightning crits: base Critical Chance 0 (BP_RPlayerPawn MutatorModifiers.CriticalChance, live CDO read)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "the target is Weakened, Stunned, Slowed or Frozen",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "chainLightning",
+            "field": "critChance",
+            "value": 0.2,
+            "scalesWith": "{CritChanceIncrease}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Slipping_Arcs": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+    "source": "Chain Lightning crits: base Critical Chance 0 (BP_RPlayerPawn MutatorModifiers.CriticalChance, live CDO read)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "chainLightning",
+        "field": "critForks",
+        "value": 1
+      }
+    ]
   },
   "blessings/Static_Repetition": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+    "source": "Chain Lightning crits: base Critical Chance 0 (BP_RPlayerPawn MutatorModifiers.CriticalChance, live CDO read)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "chainLightning",
+        "field": "critExtraBounces",
+        "value": 1,
+        "note": "can re-hit enemies, so it works on a lone Boss"
+      }
+    ]
   },
   "blessings/Charged_Bounty": {
     "source": "Phase 2b: aspect payload model",
@@ -2934,9 +2997,23 @@
     "utility": true
   },
   "blessings/Static_Zone": {
-    "source": "Phase 2b",
-    "effects": [],
-    "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+    "source": "Chain Lightning crits: base Critical Chance 0 (BP_RPlayerPawn MutatorModifiers.CriticalChance, live CDO read)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "you stand in a Static Zone",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "chainLightning",
+            "field": "critDamage",
+            "value": 0.25,
+            "scalesWith": "{CritDamageIncrease}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Miasmic_Flames": {
     "source": "Phase 5: status effectiveness",

@@ -40,6 +40,8 @@ export interface PayloadContext {
   gold: number;
   /** Summed +% bonuses aimed at this payload alone (e.g. a "+20% Windburst damage" blessing). */
   payloadBonus: number;
+  /** Your Critical Chance (0..1; base 0 -- only blessings add to it). */
+  critChance?: number;
   /** Status Effect effectiveness (1 = base): scales DoT/Flare damage, Shadows' bonus and
    * Frost buildup -- the game applies StatusEffectEffectiveness as a coefficient on them. */
   statusEffectiveness?: number;
@@ -177,11 +179,32 @@ export function payloadDamage(
       return { dps, vulnerability, procsPerSecond: procsTotal, assumptions };
     }
     case 'chain': {
-      const bounces = Math.min(p.chainCount, n - 1);
-      let reach = 0;
+      // Crits: your Critical Chance plus Lightning bonuses, at x2 (the native crit
+      // multiplier; Lightning's own isn't exposed) plus crit-damage bonuses.
+      const crit = Math.min(1, (ctx.critChance ?? 0) + m('critChance'));
+      const critMult = 2 + m('critDamage');
+      const hitMult = 1 + crit * (critMult - 1);
       const falloff = (p.falloffPercent + m('falloffPercent')) / 100;
-      for (let i = 0; i <= bounces; i++) reach += (1 - falloff) ** i;
-      if (bounces > 0) assumptions.push(`each ${p.name} bounces to ${bounces} more enemies`);
+      // Bounces: one per other enemy, up to ChainCount; Static Repetition-style extra
+      // bounces on crits can re-hit enemies (so a lone Boss can be hit again), up to BounceCap.
+      const baseBounces = Math.min(p.chainCount, n - 1);
+      const extraPerHit = crit * m('critExtraBounces');
+      const extra = extraPerHit > 0 ? Math.min(8 - baseBounces, (baseBounces + 1) * extraPerHit / (1 - Math.min(0.9, extraPerHit))) : 0;
+      const bounces = baseBounces + extra;
+      let reach = 0;
+      for (let i = 0; i <= Math.floor(bounces); i++) reach += (1 - falloff) ** i;
+      reach += (bounces - Math.floor(bounces)) * (1 - falloff) ** (Math.floor(bounces) + 1);
+      // Forks on crits: each crit spawns another (fallen-off) arc, in a pack.
+      reach *= 1 + (n > 1 ? crit * m('critForks') : 0);
+      let dmgMult = hitMult;
+      if (m('lastBounceCrit') > 0 && baseBounces === p.chainCount) {
+        // The last bounce is a guaranteed crit once the chain reaches its maximum.
+        const lastShare = (1 - falloff) ** baseBounces / reach;
+        dmgMult += lastShare * (critMult - hitMult);
+      }
+      if (bounces > 0) assumptions.push(`each ${p.name} bounces ${bounces.toFixed(1)} times`);
+      if (crit > 0) assumptions.push(`${Math.round(crit * 100)}% of Chain Lightning hits crit, at x${critMult.toFixed(2)}`);
+      reach *= dmgMult;
       return {
         dps: procsTotal * scaledHit(p.trigger, trigger) * reach * repeats * bonus,
         vulnerability: 1,

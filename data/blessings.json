@@ -4872,8 +4872,14 @@
       "kind": "blessing",
       "logbookIndex": 7,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
-      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "chainLightning",
+          "field": "lastBounceCrit",
+          "value": 1
+        }
+      ]
     },
     {
       "id": "Titan_Arc",
@@ -4996,7 +5002,22 @@
       "kind": "blessing",
       "logbookIndex": 10,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "you stand in a Static Zone",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "chainLightning",
+              "field": "critDamage",
+              "value": 0.25,
+              "scalesWith": "{CritDamageIncrease}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{chance}",
@@ -5042,8 +5063,7 @@
             108
           ]
         }
-      ],
-      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+      ]
     },
     {
       "id": "Charged_Bounty",
@@ -5089,7 +5109,16 @@
       "kind": "blessing",
       "logbookIndex": 12,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "chainLightning",
+          "field": "critDamage",
+          "value": 0.09,
+          "note": "30% chance of +30% on crits",
+          "scalesWith": "{CritDamageIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{CritDamageIncrease}",
@@ -5135,8 +5164,7 @@
             48
           ]
         }
-      ],
-      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+      ]
     },
     {
       "id": "Extended_Chain",
@@ -5146,8 +5174,21 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
-      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetIsStandard",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "chainLightning",
+              "field": "critExtraBounces",
+              "value": 0.2,
+              "note": "20% chance after a crit last bounce; counted on every crit"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -5288,8 +5329,22 @@
       "kind": "blessing",
       "logbookIndex": 16,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
-      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "the target is Weakened, Stunned, Slowed or Frozen",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "chainLightning",
+              "field": "critChance",
+              "value": 0.2,
+              "scalesWith": "{CritChanceIncrease}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{CritChanceIncrease}",
@@ -5323,7 +5378,17 @@
       "kind": "blessing",
       "logbookIndex": 17,
       "icon": "blessings/Chain_Lightning.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "stacking",
+          "stat": "critChance",
+          "scope": "all",
+          "valuePer": 0.03,
+          "per": "blessing",
+          "max": null,
+          "note": "per Lightning Blessing: Critical Chance (PA_LightningGodPassive {CritChangeIncrease})"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{ArtifactIncreasePercent}",
@@ -5345,8 +5410,7 @@
           ],
           "descriptionSpan": null
         }
-      ],
-      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+      ]
     },
     {
       "id": "Slipping_Arcs",
@@ -5356,8 +5420,14 @@
       "kind": "blessing",
       "logbookIndex": 18,
       "icon": "blessings/Slipping_Arcs.webp",
-      "effects": [],
-      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "chainLightning",
+          "field": "critForks",
+          "value": 1
+        }
+      ]
     },
     {
       "id": "Static_Repetition",
@@ -5367,8 +5437,15 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Static_Repetition.webp",
-      "effects": [],
-      "unmodeled": "depends on Chain Lightning critical hits, whose base chance is native code and unknown"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "chainLightning",
+          "field": "critExtraBounces",
+          "value": 1,
+          "note": "can re-hit enemies, so it works on a lone Boss"
+        }
+      ]
     },
     {
       "id": "Ability_Shadows",

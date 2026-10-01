@@ -117,6 +117,9 @@ const STAT_LABELS: Record<string, string> = {
   killAreaDamage: 'Area damage per kill',
   killProcs: 'Extra procs per kill',
   killGauge: 'Gauge per kill',
+  lastBounceCrit: 'Last bounce always crits',
+  critExtraBounces: 'Extra bounces per crit',
+  critForks: 'Forks per crit',
 };
 
 /** Payload fields counted in their own units rather than as a +% bonus. */
@@ -124,7 +127,8 @@ export const FLAT_FIELDS = new Set([
   'repeats', 'falloffPercent', 'maxActive', 'lifetime', 'goldPercent', 'triggerPercent',
   'burstDamage', 'areaBurstDamage', 'dotPerSecond', 'shredPercent', 'shredPerSecondWhileActive',
   'shredOnEndPercent', 'gaugePerOrb', 'flareBurstDamage', 'flareAreaDamage', 'linkedFlares', 'fireStacks',
-  'poolObjects', 'killBurstDamage', 'killAreaDamage', 'killProcs', 'killGauge',
+  'poolObjects', 'killBurstDamage', 'killAreaDamage', 'killProcs', 'killGauge', 'lastBounceCrit',
+  'critExtraBounces', 'critForks',
 ]);
 
 const SCOPE_LABELS: Record<string, string> = {

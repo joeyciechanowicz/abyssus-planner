@@ -657,7 +657,7 @@ describe('aspect-payload blessings stay off weapon damage', () => {
     'Empowering_Flames', 'Critical_Flares', 'Barraging_Spirits', 'Spiritual_Exchange',
     'Growing_Spirits', 'Eye_of_the_Storm', 'Storm_Belt', 'Magnetic_Brine', 'Thawing_Strike',
     'Winds_Devastation', 'Frozen_Shards', 'Rapid_Tentacles', 'Rupturing_Shadows', 'Shadow_Conversion',
-    'Explosive_Barrier', 'Exploding_Spirits', 'Lightnings_Fury', 'Fortunes_Riches',
+    'Explosive_Barrier', 'Exploding_Spirits', 'Fortunes_Riches',
   ];
   it.each(payloadOnly)('%s does not change weapon damage', (id) => {
     const aspect = blessings.find((b) => b.id === id)!.aspect;

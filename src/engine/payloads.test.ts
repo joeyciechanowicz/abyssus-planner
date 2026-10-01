@@ -252,6 +252,35 @@ describe('blessings that modify a payload', () => {
   });
 });
 
+describe('Chain Lightning crits', () => {
+  const p = payloadByAspect.get('Chain Lightning')!;
+  const base = { ...ctx() };
+
+  it('crit at x2 with your Critical Chance (base 0)', () => {
+    const plain = payloadDamage(p, 0.2, [stream()], base).dps;
+    expect(payloadDamage(p, 0.2, [stream()], { ...base, critChance: 0.3 }).dps).toBeCloseTo(plain * 1.3);
+  });
+
+  it('Static Repetition re-hits a lone Boss on crits', () => {
+    const plain = payloadDamage(p, 0.2, [stream()], { ...base, critChance: 0.5 }).dps;
+    const rep = payloadDamage(p, 0.2, [stream()], { ...base, critChance: 0.5, mods: { critExtraBounces: 1 } }).dps;
+    // 50% crits -> 1 extra hit expected (0.5 / (1 - 0.5)), at 80% falloff.
+    expect(rep / plain).toBeCloseTo(1 + 0.8);
+  });
+
+  it("Lightning's Fury adds 3% Critical Chance per Lightning blessing, to weapon hits too", () => {
+    const b = (extra: Record<string, number>): Build => ({
+      ...emptyBuild,
+      aspects: { primary: 'Chain Lightning', secondary: null, ability: null },
+      blessings: { Primary_Chain_Lightning: 1, ...extra },
+    });
+    const plain = simulate(b({}), { weakspotAccuracy: 0 });
+    const fury = simulate(b({ Lightnings_Fury: 1 }), { weakspotAccuracy: 0 });
+    // 2 Lightning blessings x 3% = 6% of hits become critical (x2).
+    expect(fury.perHit / plain.perHit).toBeCloseTo(1.06, 5);
+  });
+});
+
 describe('on-kill effects', () => {
   const shadows: Build = {
     ...emptyBuild,

@@ -138,7 +138,11 @@ function computeModeOutput(
         )
       : list;
   mode = { ...mode, damageComponents: components(mode.damageComponents), weakspotComponents: components(mode.weakspotComponents) };
-  const weakspotRate = Math.min(1, opts.weakspotAccuracy + mods.flatFor('weakspotChance'));
+  // Critical Chance (base 0; blessings add to it) turns a non-weakspot hit into a critical one,
+  // the same flag a weakspot hit sets.
+  const critChance = Math.min(1, mods.multFor('critChance', 'all'));
+  const weakspotBase = Math.min(1, opts.weakspotAccuracy + mods.flatFor('weakspotChance'));
+  const weakspotRate = weakspotBase + (1 - weakspotBase) * critChance;
   const baseImpact = componentTotal(mode.damageComponents, ['impact'], opts.chargeLevel) * projectiles;
   const baseWeakspot =
     (componentTotal(mode.weakspotComponents, ['impact'], opts.chargeLevel) || baseImpact / projectiles * 2) *
@@ -476,6 +480,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       mods: mods.payloadMods.get(payload.id),
       allStreams: streams,
       killsPerSecond,
+      critChance: Math.min(1, mods.multFor('critChance', 'all')),
     });
     for (const text of r.assumptions) mods.assume(payload.name, text);
     vulnerability *= r.vulnerability;
