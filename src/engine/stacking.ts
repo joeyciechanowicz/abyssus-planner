@@ -16,7 +16,15 @@ export class Modifiers {
   /** stat -> summed flat addition, in the stat's own units. */
   private flats = new Map<Stat, number>();
   /** One-off damage additions contributed by `proc` effects. */
-  readonly procs: { amount: number; of: string; chance: number; scope: Scope; note?: string }[] = [];
+  readonly procs: {
+    amount: number;
+    of: string;
+    chance: number;
+    scope: Scope;
+    note?: string;
+    area?: boolean;
+    explosion?: boolean;
+  }[] = [];
   /** status -> summed damage multiplier from `statusMod`. */
   readonly statusMods = new Map<string, number>();
   /** status -> best application chance seen. */
@@ -112,6 +120,8 @@ export function applyEffects(
           chance: e.chance ?? 1,
           scope: e.scope ?? 'all',
           note: e.note,
+          area: e.area,
+          explosion: e.explosion,
         });
         break;
 

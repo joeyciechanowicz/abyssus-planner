@@ -407,9 +407,19 @@
     "utility": true
   },
   "charms/ms_boom": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "explosion damage magnitude is not published anywhere"
+    "source": "Phase 3: charms (BP_*_CharacterMutator / WeaponMutator)",
+    "effects": [
+      {
+        "op": "proc",
+        "amount": 1.1,
+        "of": "weaponDamage",
+        "chance": 0.5,
+        "scope": "all",
+        "area": true,
+        "explosion": true,
+        "note": "BP_MsBoom: 110% of weapon damage, radius 400"
+      }
+    ]
   },
   "charms/freebie": {
     "source": "hand-authored (audit c5d0d24)",
@@ -2754,5 +2764,44 @@
         "scalesWith": "{EffectIncrease}"
       }
     ]
+  },
+  "charms/fan": {
+    "source": "Phase 3: charms (BP_*_CharacterMutator / WeaponMutator)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "both side projectiles hit",
+        "then": [
+          {
+            "op": "flat",
+            "stat": "extraProjectiles",
+            "scope": "all",
+            "value": 2
+          }
+        ]
+      }
+    ]
+  },
+  "charms/mr_boom": {
+    "source": "Phase 3: charms (BP_*_CharacterMutator / WeaponMutator)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "extraExplosions",
+        "scope": "all",
+        "value": 1
+      }
+    ]
+  },
+  "charms/power_from_pain": {
+    "source": "Phase 3: charms (BP_*_CharacterMutator / WeaponMutator)",
+    "effects": [],
+    "unmodeled": "scales with your missing Health; the ideal scenario keeps you at full Health"
+  },
+  "charms/overkill": {
+    "source": "Phase 3: charms (BP_*_CharacterMutator / WeaponMutator)",
+    "effects": [],
+    "unmodeled": "depends on overkill damage per kill; kill rate is not modelled"
   }
 }

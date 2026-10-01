@@ -569,6 +569,32 @@ describe('ideal defaults and target scenario', () => {
   });
 });
 
+describe('charms', () => {
+  const bow: Build = { ...emptyBuild, weaponId: 'Combat_Bow', modeName: 'Exploding Arrow' };
+
+  it('Fan triples every direct hit', () => {
+    const plain = simulate(emptyBuild, { weakspotAccuracy: 0 });
+    expect(simulate({ ...emptyBuild, charmIds: ['fan'] }, { weakspotAccuracy: 0 }).perHit).toBeCloseTo(plain.perHit * 3, 5);
+  });
+
+  it('Mr. Boom doubles explosion components but not direct hits', () => {
+    const plain = simulate(bow, { weakspotAccuracy: 0 });
+    const boom = simulate({ ...bow, charmIds: ['mr_boom'] }, { weakspotAccuracy: 0 });
+    expect(boom.perShot - plain.perShot).toBeCloseTo(306, 5); // one more 306 explosion
+  });
+
+  it('Ms. Boom adds a 50% chance of a 110% explosion that Mr. Boom repeats', () => {
+    const plain = simulate(emptyBuild, { weakspotAccuracy: 0 });
+    const ms = simulate({ ...emptyBuild, charmIds: ['ms_boom'] }, { weakspotAccuracy: 0 });
+    expect(ms.perShot).toBeCloseTo(plain.perShot * (1 + 0.5 * 1.1), 5);
+    const both = simulate(
+      { ...emptyBuild, charmIds: ['ms_boom', 'mr_boom'], soulSkillIds: ['charm_power'] },
+      { weakspotAccuracy: 0 },
+    );
+    expect(both.perShot).toBeCloseTo(plain.perShot * (1 + 0.5 * 1.1 * 2), 5);
+  });
+});
+
 describe('aspect-payload blessings stay off weapon damage', () => {
   // These boost an aspect's own payload (Fire DoT, Spirits, Windburst, Brine Ball)
   // or a non-simulated source (melee); they once leaked into weapon damage/all.

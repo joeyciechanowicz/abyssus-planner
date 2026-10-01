@@ -108,7 +108,7 @@
       "unlockCondition": "Challenge: Speedster",
       "icon": "charms/Rare.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "scales with your missing Health; the ideal scenario keeps you at full Health"
     },
     {
       "id": "golden_ticket",
@@ -130,8 +130,21 @@
       "unlockedByDefault": true,
       "unlockCondition": null,
       "icon": "charms/Legendary.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "both side projectiles hit",
+          "then": [
+            {
+              "op": "flat",
+              "stat": "extraProjectiles",
+              "scope": "all",
+              "value": 2
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "ms_boom",
@@ -141,8 +154,18 @@
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: Lightbringer",
       "icon": "charms/Rare.webp",
-      "effects": [],
-      "unmodeled": "explosion damage magnitude is not published anywhere"
+      "effects": [
+        {
+          "op": "proc",
+          "amount": 1.1,
+          "of": "weaponDamage",
+          "chance": 0.5,
+          "scope": "all",
+          "area": true,
+          "explosion": true,
+          "note": "BP_MsBoom: 110% of weapon damage, radius 400"
+        }
+      ]
     },
     {
       "id": "mr_boom",
@@ -152,8 +175,14 @@
       "unlockedByDefault": false,
       "unlockCondition": "Challenge: It's A Blast",
       "icon": "charms/Legendary.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "effects": [
+        {
+          "op": "flat",
+          "stat": "extraExplosions",
+          "scope": "all",
+          "value": 1
+        }
+      ]
     },
     {
       "id": "gold_lure",
@@ -412,7 +441,7 @@
       "unlockCondition": "Challenge: Exterminate",
       "icon": "charms/Legendary.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "depends on overkill damage per kill; kill rate is not modelled"
     },
     {
       "id": "giant_slayer",

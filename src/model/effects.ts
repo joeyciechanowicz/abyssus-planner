@@ -33,6 +33,10 @@ export const STATS = [
   'statusDuration',
   'triggerChance',
   'movementSpeed',
+  /** Flat: extra copies of every direct-hit projectile (Fan: +2, all assumed to land). */
+  'extraProjectiles',
+  /** Flat: extra times every explosion goes off (Mr. Boom: +1). */
+  'extraExplosions',
 ] as const;
 export type Stat = (typeof STATS)[number];
 
@@ -174,6 +178,10 @@ const procSchema = z.object({
   scalesWith,
   /** Like `scalesWith`, but for `chance` -- a proc can scale either independently. */
   chanceScalesWith: z.string().optional(),
+  /** Hits every enemy in the target scenario, not just the struck one. */
+  area: z.boolean().optional(),
+  /** Counts as an explosion (Mr. Boom repeats it; area-damage bonuses apply). */
+  explosion: z.boolean().optional(),
   note: z.string().optional(),
 });
 

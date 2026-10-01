@@ -63,6 +63,8 @@ const STAT_LABELS: Record<string, string> = {
   statusDuration: 'Status duration',
   triggerChance: 'Trigger chance',
   movementSpeed: 'Movement speed',
+  extraProjectiles: 'Extra projectiles',
+  extraExplosions: 'Extra explosions',
   // Aspect payload mechanics (`payload` effects).
   chance: 'Proc chance',
   repeats: 'Extra triggers',

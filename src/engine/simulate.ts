@@ -122,14 +122,17 @@ function computeModeOutput(
 ): ModeOutput {
   const scope = mode.type.toLowerCase() as 'primary' | 'secondary';
 
-  const baseImpact = componentTotal(mode.damageComponents, ['impact'], opts.chargeLevel);
+  // Fan-style extra projectiles copy every direct hit; Mr. Boom-style extra
+  // explosions repeat every explosion component.
+  const projectiles = 1 + mods.flatFor('extraProjectiles');
+  const explosions = 1 + mods.flatFor('extraExplosions');
+  const baseImpact = componentTotal(mode.damageComponents, ['impact'], opts.chargeLevel) * projectiles;
   const baseWeakspot =
-    componentTotal(mode.weakspotComponents, ['impact'], opts.chargeLevel) || baseImpact * 2;
-  const baseExtra = componentTotal(
-    mode.damageComponents,
-    ['explosion', 'pull', 'aoe'],
-    opts.chargeLevel,
-  );
+    (componentTotal(mode.weakspotComponents, ['impact'], opts.chargeLevel) || baseImpact / projectiles * 2) *
+    projectiles;
+  const baseExtra =
+    componentTotal(mode.damageComponents, ['explosion'], opts.chargeLevel) * explosions +
+    componentTotal(mode.damageComponents, ['pull', 'aoe'], opts.chargeLevel);
 
   const damageMult = 1 + mods.multFor('damage', scope);
   const weakspotMult = 1 + mods.multFor('weakspotDamage', scope);
@@ -151,7 +154,9 @@ function computeModeOutput(
           : p.of === 'abilityDamage'
             ? abilityDamage * p.amount
             : 0;
-    return sum + base * p.chance;
+    const targets = p.area ? enemiesFor(opts.target) : 1;
+    const boom = p.explosion ? explosions * aoeMult : 1;
+    return sum + base * p.chance * targets * boom;
   }, 0);
 
   // Area components (explosions, pulls) catch every enemy in the target scenario;
@@ -175,7 +180,7 @@ function computeModeOutput(
   const shotsPerSecond = cycleTime > 0 ? shotsPerCycle / cycleTime : 0;
   const count = (kinds: DamageComponent['kind'][]) =>
     (mode.damageComponents ?? []).filter((c) => kinds.includes(c.kind)).reduce((n, c) => n + c.count, 0);
-  const directPerShot = count(['impact']);
+  const directPerShot = count(['impact']) * projectiles;
   const areaPerShot = count(['explosion', 'pull', 'aoe']);
   const stream = {
     directHitsPerSecond: shotsPerSecond * directPerShot * opts.accuracy,
@@ -338,7 +343,10 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     if (isArea && targetsHit > 1) {
       mods.assume(ability.name, `its area catches all ${targetsHit} enemies`);
     }
-    const perCast = ((ability.damage ?? ability.weakspotDamage ?? 0) + pulses) * abilityMult * targetsHit;
+    const abilityExplosions = ability.tags.includes('explosion') ? 1 + mods.flatFor('extraExplosions') : 1;
+    if (abilityExplosions > 1) mods.assume(ability.name, `its explosions go off ${abilityExplosions} times`);
+    const perCast =
+      ((ability.damage ?? ability.weakspotDamage ?? 0) + pulses) * abilityMult * targetsHit * abilityExplosions;
     // Charges refill at the end of an encounter; amortise over a nominal 30s fight.
     // abilityCooldown mods shorten/lengthen the effective encounter window --
     // negative values fit more casts into the same 30s.
