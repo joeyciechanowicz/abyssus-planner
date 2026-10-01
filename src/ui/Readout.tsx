@@ -43,7 +43,7 @@ export function DpsSummary({ result }: { result: SimResult }) {
     ['Damage multiplier', `×${result.stats.damageMultiplier.toFixed(2)}`],
     ['Weakspot multiplier', `×${result.stats.weakspotMultiplier.toFixed(2)}`],
     ...(result.vulnerability !== 1
-      ? ([['Enemy damage taken', `×${result.vulnerability.toFixed(2)}`]] as [string, string][])
+      ? ([['Aspect damage multiplier', `×${result.vulnerability.toFixed(2)}`]] as [string, string][])
       : []),
   ];
 

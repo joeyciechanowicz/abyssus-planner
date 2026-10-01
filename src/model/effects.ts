@@ -54,6 +54,9 @@ export const SCOPES = [
   'goldburst',
   'shadows',
   'frost',
+  'spirit',
+  'brine',
+  'barrier',
 ] as const;
 export type Scope = (typeof SCOPES)[number];
 
@@ -208,9 +211,20 @@ export const PAYLOAD_FIELDS = [
   'shredPerSecondWhileActive',
   'shredOnEndPercent',
   'buildupRetained',
+  /** Gauges (Spirit, Brine, Barrier): +x relative gauge gain; Spirits: x relative orb cost change. */
+  'gaugeGain',
+  'orbCost',
+  /** Barrier: +x to all your damage while it's up (scaled by uptime); +x relative cooldown. */
+  'damageWhileActive',
+  'cooldown',
+  /** Gauges: flat gauge refunded per orb / Brine Ball; chance per hit to fill the gauge outright. */
+  'gaugePerOrb',
+  'fullGaugeChance',
 ] as const;
 export type PayloadField = (typeof PAYLOAD_FIELDS)[number];
-const PAYLOAD_IDS = ['hemorrhage', 'burn', 'chainLightning', 'windburst', 'tentacle', 'goldburst', 'shadows', 'frost'] as const;
+const PAYLOAD_IDS = [
+  'hemorrhage', 'burn', 'chainLightning', 'windburst', 'tentacle', 'goldburst', 'shadows', 'frost', 'spirit', 'brine', 'barrier',
+] as const;
 
 /** Changes how an aspect payload behaves: `{op:'payload', payload:'windburst', field:'repeats', value:1}`. */
 const payloadSchema = z.object({

@@ -187,6 +187,23 @@ export const aspectPayloadSchema = z.discriminatedUnion('kind', [
     minShredPercentOfMax: z.number(),
     freezeDuration: z.number(),
   }),
+  z.object({
+    ...payloadCommon,
+    kind: z.literal('spirit'),
+    maxGauge: z.number(),
+    orbCost: z.number(),
+    orbCostIncrementPercent: z.number(),
+    orbInterval: z.number(),
+    orb: scaledHitSchema,
+  }),
+  z.object({
+    ...payloadCommon,
+    kind: z.literal('brine'),
+    vialCapacity: z.number(),
+    explosionBase: z.number(),
+    explosionPercentOfTrigger: z.number(),
+  }),
+  z.object({ ...payloadCommon, kind: z.literal('barrier'), maxGauge: z.number(), duration: z.number(), cooldown: z.number() }),
   // Damage = your current Gold x goldPercent%, to the struck enemy.
   z.object({ ...payloadCommon, kind: z.literal('gold'), goldPercent: z.number(), sphereRadius: z.number() }),
 ]);

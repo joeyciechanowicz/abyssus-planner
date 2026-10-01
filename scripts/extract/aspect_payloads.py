@@ -88,6 +88,11 @@ def main():
     abyss = pa_vars(dump, 'PA_Abyss_Behavior_Ability_Mutator')
     fortune_gp = pa_vars(dump, 'PA_Fortune_GodPassive_CharacterMutator')
     frost_gp = pa_vars(dump, 'PA_FrostGodPassive_CharacterMutator')
+    spirit_gp = pa_vars(dump, 'PA_SpiritGodPassive_CharacterMutator')
+    spirit_bp = cdo(dump, 'BP_Spirit_Behavior_Mutator')
+    brine_bp = cdo(dump, 'BP_Brine_Behavior_Mutator')
+    brine = native['RBehaviorScriptBrine']
+    defender_gp = pa_vars(dump, 'PA_DefenderGodPassive_CharacterMutator')
     fortune = native['RBehaviorScriptFortune']
 
     payloads = [
@@ -187,6 +192,55 @@ def main():
             'evidence': 'BP_Chill_StatusEffect_Rework (SetMaxStackCount from GetFrostbuildupPercentage/'
                         'GetMaxFrostBuildup; shred = FMax(min% x MaxHealth, shred% x CurrentHealth)); '
                         'PA_FrostGodPassive[2..11]; Frozen duration = native ailment default',
+        },
+        # The three gauge aspects. Each hit fills the gauge natively from its
+        # damage (NativeRunBehavior / FillVials(HealthDamage)); the 1:1 rate is
+        # an assumption -- the code that applies it is compiled C++.
+        {
+            'id': 'spirit',
+            'aspect': 'Spirit',
+            'kind': 'spirit',
+            'name': 'Spirits',
+            # Full gauge -> drain it, one orb every OrbSpawnInterval, each costing
+            # BaseSpiritCost x (1 + SpiritCostIncrementPercentage% x orbs so far).
+            'maxGauge': spirit_gp['{MaxGauge}'],
+            'orbCost': spirit_gp['{BaseSpiritCost}'],
+            'orbCostIncrementPercent': spirit_gp['{SpiritCostIncrementPercentage}'],
+            'orbInterval': spirit_bp['OrbSpawnInterval'],
+            'orb': {
+                'base': spirit_gp['{SpiritOrbBaseDamage}'],
+                'percent': spirit_gp['{DamagePercentage}'],
+                'softCap': spirit_gp['{DamageSoftCap}'],
+                'percentAboveCap': spirit_gp['{DamagePercentagePostSoftCap}'],
+            },
+            'evidence': 'BP_Spirit_Behavior_Mutator (TrySpawnSpiritOrb loop, GetSpiritOrbDamage: '
+                        'PA_SpiritGodPassive[1..4,7,8]); gauge fill native',
+        },
+        {
+            'id': 'brine',
+            'aspect': 'Brine',
+            'kind': 'brine',
+            'name': 'Brine Ball',
+            # A full vial lets you throw a Brine Ball: an area explosion of
+            # BounceExplosionBaseDamage + ExplosionTriggerDamagePercent x the last hit.
+            'vialCapacity': brine_bp['VialCapacity'],
+            'explosionBase': mutable(brine_bp['BounceExplosionBaseDamage']),
+            'explosionPercentOfTrigger': brine['ExplosionTriggerDamagePercent'] * 100,
+            'evidence': 'BP_Brine_Behavior_Mutator::BPGetExplosionDamage, BPHandleAbilityUsed; '
+                        'URBehaviorScriptBrine native ExplosionTriggerDamagePercent; vial fill native',
+        },
+        {
+            'id': 'barrier',
+            'aspect': 'Barrier',
+            'kind': 'barrier',
+            'name': 'Barrier',
+            # Full gauge -> Barrier for BarrierDuration, then BarrierCooldownDuration
+            # before the gauge fills again. Deals no damage; its blessings scale with uptime.
+            'maxGauge': defender_gp['{MaxGauge}'],
+            'duration': defender_gp['{BarrierDuration}'],
+            'cooldown': defender_gp['{BarrierCooldownDuration}'],
+            'evidence': 'PA_DefenderGodPassive[1..4] (MaxGauge, BarrierToGain, BarrierDuration, '
+                        'BarrierCooldownDuration); gauge fill native',
         },
         {
             'id': 'goldburst',

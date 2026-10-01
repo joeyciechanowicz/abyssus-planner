@@ -1160,9 +1160,9 @@
       "icon": "blessings/Barrier.webp",
       "effects": [
         {
-          "op": "mult",
-          "stat": "statusDuration",
-          "scope": "all",
+          "op": "payload",
+          "payload": "barrier",
+          "field": "duration",
           "value": 0.5,
           "scalesWith": "{BarrierDurationIncreasePercentage}"
         }
@@ -1200,15 +1200,7 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Barrier.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "movementSpeed",
-          "scope": "all",
-          "value": 0.2,
-          "scalesWith": "{MovementSpeedIncreasePercentage}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{MovementSpeedIncreasePercentage}",
@@ -1232,7 +1224,9 @@
             38
           ]
         }
-      ]
+      ],
+      "utility": true,
+      "unmodeled": "movement only"
     },
     {
       "id": "Empowering_Barrier",
@@ -1244,18 +1238,11 @@
       "icon": "blessings/Barrier.webp",
       "effects": [
         {
-          "op": "conditional",
-          "when": "selfHasStatus",
-          "then": [
-            {
-              "op": "mult",
-              "stat": "damage",
-              "scope": "all",
-              "value": 0.35,
-              "scalesWith": "{DamageIncreasePercentage}"
-            }
-          ],
-          "status": "Barrier up"
+          "op": "payload",
+          "payload": "barrier",
+          "field": "damageWhileActive",
+          "value": 0.35,
+          "scalesWith": "{DamageIncreasePercentage}"
         }
       ],
       "upgrades": [
@@ -1291,8 +1278,15 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Barrier.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "barrier",
+          "field": "gaugeGain",
+          "value": 0.5,
+          "scalesWith": "{IncreasedGainPercentage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{IncreasedGainPercentage}",
@@ -1328,18 +1322,12 @@
       "icon": "blessings/Barrier.webp",
       "effects": [
         {
-          "op": "conditional",
-          "when": "selfHasStatus",
-          "then": [
-            {
-              "op": "mult",
-              "stat": "fireRate",
-              "scope": "all",
-              "value": 0.25,
-              "scalesWith": "{FireRateIncreasePercentage}"
-            }
-          ],
-          "status": "Barrier up"
+          "op": "payload",
+          "payload": "barrier",
+          "field": "damageWhileActive",
+          "value": 0.25,
+          "note": "+25% fire rate counted as +25% damage",
+          "scalesWith": "{FireRateIncreasePercentage}"
         }
       ],
       "upgrades": [
@@ -1376,7 +1364,7 @@
       "logbookIndex": 8,
       "icon": "blessings/Barrier.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "triggers on kills; kill rate is not modelled"
     },
     {
       "id": "Retaliating_Barrier",
@@ -1387,7 +1375,7 @@
       "logbookIndex": 9,
       "icon": "blessings/Barrier.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "reflects damage enemies deal to you; enemy attacks are not modelled",
       "upgrades": [
         {
           "variable": "{ReflectedDamageIncreasePercentage}",
@@ -1422,7 +1410,7 @@
       "logbookIndex": 10,
       "icon": "blessings/Barrier.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "defensive only",
       "upgrades": [
         {
           "variable": "",
@@ -1443,7 +1431,8 @@
           ],
           "descriptionSpan": null
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Rapid_Barrier",
@@ -1453,8 +1442,15 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Barrier.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "barrier",
+          "field": "cooldown",
+          "value": -0.25,
+          "scalesWith": "{CooldownReductionPercentage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{CooldownReductionPercentage}",
@@ -1489,7 +1485,7 @@
       "logbookIndex": 12,
       "icon": "blessings/Barrier.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "defensive only",
       "upgrades": [
         {
           "variable": "{BarrierGain}",
@@ -1513,7 +1509,8 @@
             35
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Suspended_Barrier",
@@ -1523,8 +1520,21 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Barrier.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "you take less than 15 damage while it is up, so it lasts ~10x longer",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "barrier",
+              "field": "duration",
+              "value": 9
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageTaken}",
@@ -1558,7 +1568,15 @@
       "kind": "blessing",
       "logbookIndex": 14,
       "icon": "blessings/Barrier.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "barrier",
+          "field": "areaBurstDamage",
+          "value": 500,
+          "scalesWith": "{Damage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Damage}",
@@ -1582,8 +1600,7 @@
             47
           ]
         }
-      ],
-      "unmodeled": "acts on the Barrier activation payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Dazing_Barrier",
@@ -1593,16 +1610,7 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Barrier.webp",
-      "effects": [
-        {
-          "op": "mult",
-          "stat": "damage",
-          "scope": "all",
-          "value": 0.15,
-          "note": "amplifier on affected enemies",
-          "scalesWith": "{DamageIncrease}"
-        }
-      ],
+      "effects": [],
       "upgrades": [
         {
           "variable": "{Duration}",
@@ -1648,7 +1656,8 @@
             37
           ]
         }
-      ]
+      ],
+      "unmodeled": "needs enemies to hit your Barrier; enemy attacks are not modelled"
     },
     {
       "id": "Vigorous_Defense",
@@ -1659,7 +1668,7 @@
       "logbookIndex": 16,
       "icon": "blessings/Barrier.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "defensive only",
       "upgrades": [
         {
           "variable": "{BarrierGain}",
@@ -1683,7 +1692,8 @@
             6
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Defenders_Touch",
@@ -1713,7 +1723,8 @@
       "logbookIndex": 18,
       "icon": "blessings/Enduring_Barrier.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "unmodeled": "defensive only",
+      "utility": true
     },
     {
       "id": "Radiating_Barrier",
@@ -1723,8 +1734,15 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Radiating_Barrier.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "barrier",
+          "field": "dotPerSecond",
+          "value": 1600,
+          "note": "800 damage every 0.5s (PA_DefenderMajorBlessing, area tick 0.5s)"
+        }
+      ]
     },
     {
       "id": "Ability_Flares",
@@ -7212,7 +7230,15 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "spirit",
+          "value": 0.045,
+          "note": "+1% per earlier orb in the burst: +4.5% averaged over 10 orbs"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -7258,8 +7284,7 @@
             77
           ]
         }
-      ],
-      "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Exploitative_Spirits",
@@ -7269,7 +7294,22 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "one other status effect is on the enemy",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "spirit",
+              "value": 0.2,
+              "scalesWith": "{DamageIncrease}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -7293,8 +7333,7 @@
             15
           ]
         }
-      ],
-      "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Exploding_Spirits",
@@ -7304,7 +7343,15 @@
       "kind": "blessing",
       "logbookIndex": 5,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "spirit",
+          "field": "areaBurstDamage",
+          "value": 80,
+          "scalesWith": "{ExplosionDamage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{ExplosionDamage}",
@@ -7328,8 +7375,7 @@
             37
           ]
         }
-      ],
-      "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Generative_Spirits",
@@ -7339,8 +7385,22 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "trigger",
+          "on": "weakspot",
+          "chance": 1.0,
+          "then": [
+            {
+              "op": "payload",
+              "payload": "spirit",
+              "field": "gaugePerOrb",
+              "value": 75,
+              "scalesWith": "{SpiritChargeGain}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{SpiritChargeGain}",
@@ -7374,8 +7434,15 @@
       "kind": "blessing",
       "logbookIndex": 7,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "spirit",
+          "field": "gaugeGain",
+          "value": 0.5,
+          "scalesWith": "{SpiritGaugePercentIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{SpiritGaugePercentIncrease}",
@@ -7410,7 +7477,7 @@
       "logbookIndex": 8,
       "icon": "blessings/Spirit.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "triggers on kills; kill rate is not modelled",
       "upgrades": [
         {
           "variable": "{SecondsToDie}",
@@ -7466,8 +7533,22 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
-      "unmodeled": "bounces to an additional target, but Spirit summons have no base damage magnitude tracked in the data",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "targetIsStandard",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "spirit",
+              "value": 0.25,
+              "note": "25% chance to hit a second enemy",
+              "scalesWith": "{Chance}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -7502,7 +7583,7 @@
       "logbookIndex": 10,
       "icon": "blessings/Spirit.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "stacking player damage buff whose cap and duration are native code",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -7602,7 +7683,7 @@
           ]
         }
       ],
-      "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      "unmodeled": "damage-over-time duration is native code and unknown"
     },
     {
       "id": "Spiritual_Exchange",
@@ -7612,7 +7693,22 @@
       "kind": "blessing",
       "logbookIndex": 12,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "spirit",
+          "field": "orbCost",
+          "value": -0.2,
+          "scalesWith": "{CostDecrease}"
+        },
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "spirit",
+          "value": -0.15,
+          "scalesWith": "{DamageDecrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{CostDecrease}",
@@ -7658,8 +7754,7 @@
             63
           ]
         }
-      ],
-      "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Growing_Spirits",
@@ -7669,7 +7764,15 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "spirit",
+          "value": 0.225,
+          "note": "+20% per second of drain, averaged over a 10-orb burst"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -7693,8 +7796,7 @@
             15
           ]
         }
-      ],
-      "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Heavy_Spirits",
@@ -7704,8 +7806,16 @@
       "kind": "blessing",
       "logbookIndex": 14,
       "icon": "blessings/Spirit.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "spirit",
+          "value": 0.2,
+          "note": "20% guaranteed Weakspot hits, assumed x2",
+          "scalesWith": "{Chance}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -7740,7 +7850,7 @@
       "logbookIndex": 15,
       "icon": "blessings/Spirit.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "scales with the target's missing Health (Phase 3 resource scaling)",
       "upgrades": [
         {
           "variable": "{ChargeIncrease}",
@@ -7879,8 +7989,14 @@
       "kind": "blessing",
       "logbookIndex": 18,
       "icon": "blessings/Plentiful_Spirits.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "spirit",
+          "field": "orbCost",
+          "value": -0.5
+        }
+      ]
     },
     {
       "id": "Overwhelming_Spirits",
@@ -7890,8 +8006,14 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Overwhelming_Spirits.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "spirit",
+          "field": "fullGaugeChance",
+          "value": 0.05
+        }
+      ]
     },
     {
       "id": "Windburst_Primary",
@@ -9005,7 +9127,16 @@
       "kind": "blessing",
       "logbookIndex": 3,
       "icon": "blessings/Brine.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "brine",
+          "value": 0.12,
+          "note": "30% chance x 2 smaller balls x 20%",
+          "scalesWith": "{DamagePercent}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -9051,8 +9182,7 @@
             85
           ]
         }
-      ],
-      "unmodeled": "acts on the Brine Ball payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Detonating_Brine",
@@ -9062,8 +9192,15 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Brine.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "brine",
+          "value": 0.125,
+          "note": "25% chance of a pool exploding for 50%"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -9097,8 +9234,22 @@
       "kind": "blessing",
       "logbookIndex": 5,
       "icon": "blessings/Brine.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "the ball travels far enough for the full bonus",
+          "then": [
+            {
+              "op": "mult",
+              "stat": "damage",
+              "scope": "brine",
+              "value": 0.25,
+              "scalesWith": "{DamageIncrease}"
+            }
+          ]
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -9152,7 +9303,7 @@
       "logbookIndex": 6,
       "icon": "blessings/Brine.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "projectile speed only",
       "upgrades": [
         {
           "variable": "{SpeedIncrease}",
@@ -9176,7 +9327,8 @@
             25
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Acidic_Brine",
@@ -9186,8 +9338,15 @@
       "kind": "blessing",
       "logbookIndex": 7,
       "icon": "blessings/Brine.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "brine",
+          "value": 0.15,
+          "scalesWith": "{DamagePercent}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamagePercent}",
@@ -9222,7 +9381,7 @@
       "logbookIndex": 8,
       "icon": "blessings/Brine.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "overcharging costs a full vial per +50%, so it never raises sustained damage",
       "upgrades": [
         {
           "variable": "{NumOvercharges}",
@@ -9268,7 +9427,8 @@
             121
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Mucous_Brine",
@@ -9279,7 +9439,7 @@
       "logbookIndex": 9,
       "icon": "blessings/Brine.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "damage-taken window length is native code and unknown",
       "upgrades": [
         {
           "variable": "{ExtraDamage}",
@@ -9313,8 +9473,15 @@
       "kind": "blessing",
       "logbookIndex": 10,
       "icon": "blessings/Brine.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "brine",
+          "field": "areaBurstDamage",
+          "value": 100,
+          "scalesWith": "{ExtraDamage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{ExtraDamage}",
@@ -9348,8 +9515,15 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Brine.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "brine",
+          "field": "gaugePerOrb",
+          "value": 30,
+          "note": "6% of a 500 vial per enemy hit"
+        }
+      ]
     },
     {
       "id": "Invigorating_Brine",
@@ -9360,7 +9534,7 @@
       "logbookIndex": 12,
       "icon": "blessings/Brine.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "buffs allies; solo has none",
       "upgrades": [
         {
           "variable": "{DamageBonus}",
@@ -9384,7 +9558,8 @@
             75
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Magnetic_Brine",
@@ -9394,7 +9569,16 @@
       "kind": "blessing",
       "logbookIndex": 13,
       "icon": "blessings/Brine.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "mult",
+          "stat": "damage",
+          "scope": "brine",
+          "value": 0.2,
+          "note": "+10%, +10% more after its one bounce",
+          "scalesWith": "{DamageIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -9418,8 +9602,7 @@
             24
           ]
         }
-      ],
-      "unmodeled": "modifies the Brine Ball payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+      ]
     },
     {
       "id": "Vial_Repeater",
@@ -9430,7 +9613,7 @@
       "logbookIndex": 14,
       "icon": "blessings/Brine.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "throws vials sooner, not more of them",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -9454,7 +9637,8 @@
             34
           ]
         }
-      ]
+      ],
+      "utility": true
     },
     {
       "id": "Vial_Pouch",
@@ -9464,8 +9648,15 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Brine.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "brine",
+          "field": "gaugeGain",
+          "value": 0.1,
+          "scalesWith": "{FillSpeedIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{NumBonusVials}",
@@ -9521,7 +9712,7 @@
       "logbookIndex": 16,
       "icon": "blessings/Brine.webp",
       "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "unmodeled": "executes; execute effects come in Phase 3",
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -9603,8 +9794,21 @@
       "kind": "blessing",
       "logbookIndex": 18,
       "icon": "blessings/Brine_Mitosis.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express"
+      "effects": [
+        {
+          "op": "conditional",
+          "when": "assumed",
+          "note": "both halves explode",
+          "then": [
+            {
+              "op": "payload",
+              "payload": "brine",
+              "field": "repeats",
+              "value": 1
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "Bouncing_Brine",
@@ -9614,8 +9818,15 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Bouncing_Brine.webp",
-      "effects": [],
-      "unmodeled": "no numeric damage effect the DSL can express",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "brine",
+          "field": "repeats",
+          "value": 1,
+          "note": "two bounces, each exploding, instead of one"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{StacksPerSecond}",

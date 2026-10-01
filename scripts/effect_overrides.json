@@ -248,14 +248,42 @@
     "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
   },
   "blessings/Exploitative_Spirits": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "one other status effect is on the enemy",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "spirit",
+            "value": 0.2,
+            "scalesWith": "{DamageIncrease}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Bouncing_Spirits": {
-    "source": "hand-authored (audit c5d0d24)",
-    "effects": [],
-    "unmodeled": "bounces to an additional target, but Spirit summons have no base damage magnitude tracked in the data"
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "targetIsStandard",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "spirit",
+            "value": 0.25,
+            "note": "25% chance to hit a second enemy",
+            "scalesWith": "{Chance}"
+          }
+        ]
+      }
+    ]
   },
   "blessings/Enveloping_Winds": {
     "source": "Phase 2b: aspect payload model",
@@ -766,19 +794,47 @@
     "unmodeled": "depends on Flares, which are not modelled yet"
   },
   "blessings/Barraging_Spirits": {
-    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
-    "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
-    "effects": []
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "spirit",
+        "value": 0.045,
+        "note": "+1% per earlier orb in the burst: +4.5% averaged over 10 orbs"
+      }
+    ]
   },
   "blessings/Spiritual_Exchange": {
-    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
-    "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
-    "effects": []
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "spirit",
+        "field": "orbCost",
+        "value": -0.2,
+        "scalesWith": "{CostDecrease}"
+      },
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "spirit",
+        "value": -0.15,
+        "scalesWith": "{DamageDecrease}"
+      }
+    ]
   },
   "blessings/Growing_Spirits": {
-    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
-    "unmodeled": "modifies the Spirit payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
-    "effects": []
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "spirit",
+        "value": 0.225,
+        "note": "+20% per second of drain, averaged over a 10-orb burst"
+      }
+    ]
   },
   "blessings/Eye_of_the_Storm": {
     "source": "Phase 2b: aspect payload model",
@@ -814,9 +870,17 @@
     ]
   },
   "blessings/Magnetic_Brine": {
-    "source": "Phase 0 miscoding fix: was scoped to all weapon damage",
-    "unmodeled": "modifies the Brine Ball payload's own damage, not weapon damage -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)",
-    "effects": []
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "brine",
+        "value": 0.2,
+        "note": "+10%, +10% more after its one bounce",
+        "scalesWith": "{DamageIncrease}"
+      }
+    ]
   },
   "blessings/Thawing_Strike": {
     "source": "Phase 0 miscoding fix: melee-only, was all damage",
@@ -1088,24 +1152,46 @@
     "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
   },
   "blessings/Exploding_Spirits": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "spirit",
+        "field": "areaBurstDamage",
+        "value": 80,
+        "scalesWith": "{ExplosionDamage}"
+      }
+    ]
   },
   "blessings/Aggression_Possession": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
     "effects": [],
-    "unmodeled": "acts on the Spirit payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "unmodeled": "damage-over-time duration is native code and unknown"
   },
   "blessings/Splattering_Brine": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Brine Ball payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "brine",
+        "value": 0.12,
+        "note": "30% chance x 2 smaller balls x 20%",
+        "scalesWith": "{DamagePercent}"
+      }
+    ]
   },
   "blessings/Explosive_Barrier": {
-    "source": "Phase 0 audit: was counted per weapon shot or on all weapon damage",
-    "effects": [],
-    "unmodeled": "acts on the Barrier activation payload, not on each weapon shot -- awaits the aspect payload model (docs/plans/dps-coverage.md, Phase 2)"
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "barrier",
+        "field": "areaBurstDamage",
+        "value": 500,
+        "scalesWith": "{Damage}"
+      }
+    ]
   },
   "blessings/Fortunes_Riches": {
     "source": "Phase 2b: aspect payload model",
@@ -1143,40 +1229,27 @@
     ]
   },
   "blessings/Empowering_Barrier": {
-    "source": "Phase 0 audit: now states the condition it assumes",
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
     "effects": [
       {
-        "op": "conditional",
-        "when": "selfHasStatus",
-        "then": [
-          {
-            "op": "mult",
-            "stat": "damage",
-            "scope": "all",
-            "value": 0.35,
-            "scalesWith": "{DamageIncreasePercentage}"
-          }
-        ],
-        "status": "Barrier up"
+        "op": "payload",
+        "payload": "barrier",
+        "field": "damageWhileActive",
+        "value": 0.35,
+        "scalesWith": "{DamageIncreasePercentage}"
       }
     ]
   },
   "blessings/Energizing_Barrier": {
-    "source": "Phase 0 audit: now states the condition it assumes",
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
     "effects": [
       {
-        "op": "conditional",
-        "when": "selfHasStatus",
-        "then": [
-          {
-            "op": "mult",
-            "stat": "fireRate",
-            "scope": "all",
-            "value": 0.25,
-            "scalesWith": "{FireRateIncreasePercentage}"
-          }
-        ],
-        "status": "Barrier up"
+        "op": "payload",
+        "payload": "barrier",
+        "field": "damageWhileActive",
+        "value": 0.25,
+        "note": "+25% fire rate counted as +25% damage",
+        "scalesWith": "{FireRateIncreasePercentage}"
       }
     ]
   },
@@ -1878,5 +1951,339 @@
     "source": "Phase 2c: Freeze payload model",
     "effects": [],
     "unmodeled": "pulse damage is native code and unknown"
+  },
+  "blessings/Stacking_Barrier": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "barrier",
+        "field": "duration",
+        "value": 0.5,
+        "scalesWith": "{BarrierDurationIncreasePercentage}"
+      }
+    ]
+  },
+  "blessings/Barrier_Burst": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "movement only",
+    "utility": true
+  },
+  "blessings/Panicked_Barrier": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "barrier",
+        "field": "gaugeGain",
+        "value": 0.5,
+        "scalesWith": "{IncreasedGainPercentage}"
+      }
+    ]
+  },
+  "blessings/Recharging_Barrier": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "triggers on kills; kill rate is not modelled"
+  },
+  "blessings/Retaliating_Barrier": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "reflects damage enemies deal to you; enemy attacks are not modelled"
+  },
+  "blessings/Lasting_Defense": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "defensive only",
+    "utility": true
+  },
+  "blessings/Shared_Defense": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "defensive only",
+    "utility": true
+  },
+  "blessings/Vigorous_Defense": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "defensive only",
+    "utility": true
+  },
+  "blessings/Enduring_Barrier": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "defensive only",
+    "utility": true
+  },
+  "blessings/Suspended_Barrier": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "you take less than 15 damage while it is up, so it lasts ~10x longer",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "barrier",
+            "field": "duration",
+            "value": 9
+          }
+        ]
+      }
+    ]
+  },
+  "blessings/Rapid_Barrier": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "barrier",
+        "field": "cooldown",
+        "value": -0.25,
+        "scalesWith": "{CooldownReductionPercentage}"
+      }
+    ]
+  },
+  "blessings/Dazing_Barrier": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "needs enemies to hit your Barrier; enemy attacks are not modelled"
+  },
+  "blessings/Radiating_Barrier": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "barrier",
+        "field": "dotPerSecond",
+        "value": 1600,
+        "note": "800 damage every 0.5s (PA_DefenderMajorBlessing, area tick 0.5s)"
+      }
+    ]
+  },
+  "blessings/Generative_Spirits": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "trigger",
+        "on": "weakspot",
+        "chance": 1.0,
+        "then": [
+          {
+            "op": "payload",
+            "payload": "spirit",
+            "field": "gaugePerOrb",
+            "value": 75,
+            "scalesWith": "{SpiritChargeGain}"
+          }
+        ]
+      }
+    ]
+  },
+  "blessings/Rapid_Spirits": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "spirit",
+        "field": "gaugeGain",
+        "value": 0.5,
+        "scalesWith": "{SpiritGaugePercentIncrease}"
+      }
+    ]
+  },
+  "blessings/Consuming_Spirits": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "triggers on kills; kill rate is not modelled"
+  },
+  "blessings/Friendly_Possession": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "stacking player damage buff whose cap and duration are native code"
+  },
+  "blessings/Heavy_Spirits": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "spirit",
+        "value": 0.2,
+        "note": "20% guaranteed Weakspot hits, assumed x2"
+      }
+    ]
+  },
+  "blessings/Suffering_Soul": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "scales with the target's missing Health (Phase 3 resource scaling)"
+  },
+  "blessings/Plentiful_Spirits": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "spirit",
+        "field": "orbCost",
+        "value": -0.5
+      }
+    ]
+  },
+  "blessings/Overwhelming_Spirits": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "spirit",
+        "field": "fullGaugeChance",
+        "value": 0.05
+      }
+    ]
+  },
+  "blessings/Detonating_Brine": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "brine",
+        "value": 0.125,
+        "note": "25% chance of a pool exploding for 50%"
+      }
+    ]
+  },
+  "blessings/Expanding_Brine": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "the ball travels far enough for the full bonus",
+        "then": [
+          {
+            "op": "mult",
+            "stat": "damage",
+            "scope": "brine",
+            "value": 0.25,
+            "scalesWith": "{DamageIncrease}"
+          }
+        ]
+      }
+    ]
+  },
+  "blessings/Accelerated_Brine": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "projectile speed only",
+    "utility": true
+  },
+  "blessings/Acidic_Brine": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "mult",
+        "stat": "damage",
+        "scope": "brine",
+        "value": 0.15,
+        "scalesWith": "{DamagePercent}"
+      }
+    ]
+  },
+  "blessings/Unstable_Vials": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "overcharging costs a full vial per +50%, so it never raises sustained damage",
+    "utility": true
+  },
+  "blessings/Mucous_Brine": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "damage-taken window length is native code and unknown"
+  },
+  "blessings/Solid_Brine": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "brine",
+        "field": "areaBurstDamage",
+        "value": 100,
+        "scalesWith": "{ExtraDamage}"
+      }
+    ]
+  },
+  "blessings/Absorbing_Vials": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "brine",
+        "field": "gaugePerOrb",
+        "value": 30,
+        "note": "6% of a 500 vial per enemy hit"
+      }
+    ]
+  },
+  "blessings/Invigorating_Brine": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "buffs allies; solo has none",
+    "utility": true
+  },
+  "blessings/Vial_Repeater": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "throws vials sooner, not more of them",
+    "utility": true
+  },
+  "blessings/Vial_Pouch": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "brine",
+        "field": "gaugeGain",
+        "value": 0.1,
+        "scalesWith": "{FillSpeedIncrease}"
+      }
+    ]
+  },
+  "blessings/Lethal_Brine": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [],
+    "unmodeled": "executes; execute effects come in Phase 3"
+  },
+  "blessings/Brine_Mitosis": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "conditional",
+        "when": "assumed",
+        "note": "both halves explode",
+        "then": [
+          {
+            "op": "payload",
+            "payload": "brine",
+            "field": "repeats",
+            "value": 1
+          }
+        ]
+      }
+    ]
+  },
+  "blessings/Bouncing_Brine": {
+    "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "brine",
+        "field": "repeats",
+        "value": 1,
+        "note": "two bounces, each exploding, instead of one"
+      }
+    ]
   }
 }

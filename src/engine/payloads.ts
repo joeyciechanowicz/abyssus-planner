@@ -79,6 +79,8 @@ export function payloadDamage(
   let triggerWeighted = 0;
   /** Damage per second landing on one enemy from these streams (Frost buildup). */
   let damagePerTarget = 0;
+  /** Hit events per second across all enemies (for per-hit gauge chances). */
+  let hitsTotal = 0;
   for (const s of streams) {
     const c = Math.min(1, chance * s.procMultiplier * (1 + m('chance')));
     const direct = c * s.directHitsPerSecond;
@@ -89,6 +91,7 @@ export function payloadDamage(
     procsPerTarget += direct / n + area;
     triggerWeighted += direct * s.directHit + area * n * s.areaHit;
     damagePerTarget += c * ((s.directHitsPerSecond * s.directHit) / n + s.areaEventsPerSecond * s.areaHit);
+    hitsTotal += c * (s.directHitsPerSecond + s.areaEventsPerSecond * n);
   }
   const trigger = procsTotal > 0 ? triggerWeighted / procsTotal : 0;
   const bonus = 1 + ctx.payloadBonus;
@@ -97,10 +100,18 @@ export function payloadDamage(
   if (procsTotal === 0) return none;
 
   const repeats = 1 + m('repeats');
-  // Extra flat damage some blessings hang off each proc (an explosion, a Thunderstrike).
-  const extras = procsTotal * (m('burstDamage') + m('areaBurstDamage') * n) * bonus;
-  const withExtras = (r: PayloadResult): PayloadResult => ({ ...r, dps: r.dps + extras });
-  return withExtras(core());
+  /** Seconds to fill a gauge of `size`, given refunds and a per-hit chance to fill it outright. */
+  const fillTime = (size: number, rate: number, refund: number) => {
+    const needed = Math.max(0, size - refund);
+    const byDamage = rate > 0 ? rate / Math.max(needed, 1e-9) : 0;
+    const byChance = m('fullGaugeChance') * hitsTotal;
+    return byDamage + byChance > 0 ? 1 / (byDamage + byChance) : Infinity;
+  };
+  // Extra flat damage some blessings hang off each proc (an explosion, a Thunderstrike);
+  // a gauge payload's "proc" is its activation.
+  const result = core();
+  const extras = result.procsPerSecond * (m('burstDamage') + m('areaBurstDamage') * n) * bonus;
+  return { ...result, dps: result.dps + extras };
 
   function core(): PayloadResult {
   switch (p.kind) {
@@ -151,6 +162,50 @@ export function payloadDamage(
         dps: (active * attack * speed * bonus) / p.attackInterval,
         vulnerability: 1,
         procsPerSecond: procsTotal,
+        assumptions,
+      };
+    }
+    case 'spirit': {
+      const gaugeRate = damagePerTarget * n * (1 + m('gaugeGain'));
+      if (gaugeRate <= 0) return none;
+      // Orbs one full gauge pays for, each costing more than the last. The game spawns
+      // while any gauge is left and subtracts afterwards, so the last orb may overdraw.
+      const cost = p.orbCost * (1 + m('orbCost'));
+      let orbs = 0;
+      for (let left = p.maxGauge; left > 0 && cost > 0; orbs++) {
+        left -= cost * (1 + (p.orbCostIncrementPercent / 100) * orbs);
+      }
+      const cycle = fillTime(p.maxGauge, gaugeRate, orbs * m('gaugePerOrb')) + orbs * p.orbInterval;
+      assumptions.push(`${orbs} Spirits per full gauge, every ${cycle.toFixed(1)}s (gauge fills 1:1 with damage dealt)`);
+      return {
+        dps: (orbs * scaledHit(p.orb, trigger) * bonus) / cycle,
+        vulnerability: 1,
+        procsPerSecond: orbs / cycle,
+        assumptions,
+      };
+    }
+    case 'brine': {
+      const fillRate = damagePerTarget * n * (1 + m('gaugeGain'));
+      if (fillRate <= 0) return none;
+      const balls = 1 / fillTime(p.vialCapacity, fillRate, m('gaugePerOrb') * n);
+      const explosion = p.explosionBase + (p.explosionPercentOfTrigger / 100) * trigger;
+      assumptions.push(
+        `a Brine Ball thrown every ${(1 / balls).toFixed(1)}s, as soon as a vial fills (1:1 with damage dealt)`,
+      );
+      if (n > 1) assumptions.push(`each Brine Ball catches all ${n} enemies`);
+      return { dps: balls * explosion * n * repeats * bonus, vulnerability: 1, procsPerSecond: balls, assumptions };
+    }
+    case 'barrier': {
+      const fillRate = damagePerTarget * n * (1 + m('gaugeGain'));
+      if (fillRate <= 0) return none;
+      const duration = p.duration * (1 + m('duration'));
+      const cycle = fillTime(p.maxGauge, fillRate, 0) + duration + p.cooldown * (1 + m('cooldown'));
+      const up = duration / cycle;
+      assumptions.push(`Barrier up ${Math.round(up * 100)}% of the time (gauge fills 1:1 with damage dealt)`);
+      return {
+        dps: m('dotPerSecond') * n * up * bonus,
+        vulnerability: 1 + m('damageWhileActive') * up,
+        procsPerSecond: 1 / cycle,
         assumptions,
       };
     }

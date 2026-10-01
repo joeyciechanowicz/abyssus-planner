@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { payloadDamage, scaledHit, type HitStream, type PayloadContext } from './payloads';
-import { payloadByAspect } from '../model/data';
+import { aspects, payloadByAspect } from '../model/data';
 import { simulate } from './simulate';
 import { emptyBuild, type Build } from '../model/build';
 
@@ -99,6 +99,28 @@ describe('payloadDamage', () => {
     expect(pack.dps).toBeCloseTo((5 * Math.max(5, 0.1 * 500 * 0.5)) / 7.5);
   });
 
+  it('Spirits: a full 1,000 gauge buys 10 orbs (cost 50, +25% each), 0.25s apart', () => {
+    const p = payload('Spirit');
+    // 500 damage/s fills 1,000 in 2s; 10 orbs drain in 2.5s -> 4.5s cycle.
+    const r = payloadDamage(p, 1, [stream()], ctx());
+    expect(r.dps).toBeCloseTo((10 * (50 + 0.2 * 100)) / 4.5);
+  });
+
+  it('Brine: a ball per 500 damage, an area explosion of 400 + 10% of the hit', () => {
+    const p = payload('Brine');
+    const r = payloadDamage(p, 1, [stream()], ctx());
+    expect(r.dps).toBeCloseTo((500 / 500) * (400 + 10));
+    expect(payloadDamage(p, 1, [stream()], ctx({ enemies: 5 })).dps).toBeCloseTo(r.dps * 5);
+  });
+
+  it('Barrier: no damage, but its "while active" bonuses scale with uptime', () => {
+    const p = payload('Barrier');
+    const r = payloadDamage(p, 1, [stream()], ctx({ mods: { damageWhileActive: 0.35 } }));
+    // 2,000 gauge at 500/s = 4s, then 10s up and 4s cooldown -> 18s cycle.
+    expect(r.dps).toBe(0);
+    expect(r.vulnerability).toBeCloseTo(1 + 0.35 * (10 / 18));
+  });
+
   it('Shadows deals no damage itself but makes enemies take 25% more', () => {
     const r = payloadDamage(payload('Shadows'), 1, [stream()], ctx());
     expect(r.dps).toBe(0);
@@ -140,10 +162,8 @@ describe('aspect payloads in simulate()', () => {
     expect(shadowed.weaponDps).toBeCloseTo(plain.weaponDps * 1.15 * 1.25, 5);
   });
 
-  it('flags aspects whose payload is not modelled yet', () => {
-    const r = simulate(card('Spirit', 'Spirit_Primary'));
-    expect(r.aspectDps).toBe(0);
-    expect(r.unmodeled.some((u) => u.name === 'Spirit aspect')).toBe(true);
+  it('has a payload model for every one of the 11 aspects', () => {
+    for (const aspect of aspects) expect(payloadByAspect.has(aspect), aspect).toBe(true);
   });
 
   it('only counts a card for hits from its own slot', () => {

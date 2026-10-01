@@ -99,6 +99,43 @@
       "evidence": "BP_Chill_StatusEffect_Rework (SetMaxStackCount from GetFrostbuildupPercentage/GetMaxFrostBuildup; shred = FMax(min% x MaxHealth, shred% x CurrentHealth)); PA_FrostGodPassive[2..11]; Frozen duration = native ailment default"
     },
     {
+      "id": "spirit",
+      "aspect": "Spirit",
+      "kind": "spirit",
+      "name": "Spirits",
+      "maxGauge": 1000,
+      "orbCost": 50,
+      "orbCostIncrementPercent": 25,
+      "orbInterval": 0.25,
+      "orb": {
+        "base": 50,
+        "percent": 20,
+        "softCap": 500,
+        "percentAboveCap": 5
+      },
+      "evidence": "BP_Spirit_Behavior_Mutator (TrySpawnSpiritOrb loop, GetSpiritOrbDamage: PA_SpiritGodPassive[1..4,7,8]); gauge fill native"
+    },
+    {
+      "id": "brine",
+      "aspect": "Brine",
+      "kind": "brine",
+      "name": "Brine Ball",
+      "vialCapacity": 500.0,
+      "explosionBase": 400.0,
+      "explosionPercentOfTrigger": 10.0,
+      "evidence": "BP_Brine_Behavior_Mutator::BPGetExplosionDamage, BPHandleAbilityUsed; URBehaviorScriptBrine native ExplosionTriggerDamagePercent; vial fill native"
+    },
+    {
+      "id": "barrier",
+      "aspect": "Barrier",
+      "kind": "barrier",
+      "name": "Barrier",
+      "maxGauge": 2000,
+      "duration": 10,
+      "cooldown": 4,
+      "evidence": "PA_DefenderGodPassive[1..4] (MaxGauge, BarrierToGain, BarrierDuration, BarrierCooldownDuration); gauge fill native"
+    },
+    {
       "id": "goldburst",
       "aspect": "Goldburst",
       "kind": "gold",
