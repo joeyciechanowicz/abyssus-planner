@@ -496,13 +496,15 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     o.heatDuty < 1 ? Math.min(share, o.heatDuty) / o.heatDuty : share;
   const mainShare = effShare(main, (1 - weaveRate) * weaponUptime);
   const weaveShare = weaveOutput ? effShare(weaveOutput, weaveRate * weaponUptime) : 0;
-  const weaveWeaponDps = (weaveOutput?.weaponDps ?? 0) * weaveShare;
+  let weaveWeaponDps = (weaveOutput?.weaponDps ?? 0) * weaveShare;
   const weaveDotDps = (weaveOutput?.dotDps ?? 0) * weaveShare;
-  const weaponDps = main.weaponDps * mainShare + weaveWeaponDps;
+  let weaponDps = main.weaponDps * mainShare + weaveWeaponDps;
   const dotDps = main.dotDps * mainShare + weaveDotDps;
 
   // --- Ability ------------------------------------------------------------
   let abilityDps = 0;
+  /** Rounds per second the ability puts back into your magazine (Turret Ammo Transfer). */
+  let abilityRoundsPerSecond = 0;
   let abilityStream: HitStream | null = null;
   if (ability) {
     const abilityMult =
@@ -533,7 +535,9 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     // per recharge; clearing an encounter refills every charge (assumed every 30s);
     // the input cooldown caps how fast you can recast.
     const ENCOUNTER_SECONDS = 30;
-    const cooldown = ability.rechargeCooldown * Math.max(0.1, 1 + mods.multFor('abilityCooldown', 'ability'));
+    const cooldown =
+      Math.max(1, ability.rechargeCooldown + mods.flatFor('abilityCooldownSeconds')) *
+      Math.max(0.1, 1 + mods.multFor('abilityCooldown', 'ability'));
     // Kills (from your weapon; Pack only) can speed recharge up or reset it outright.
     const weaponKills =
       opts.target === 'pack' ? (weaponDps + dotDps) / enemyHealth[tierFor(opts.target)] : 0;
@@ -551,6 +555,14 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
         `all ${charges} refilled each ${ENCOUNTER_SECONDS}s encounter)`,
     );
     abilityDps = perCast * castsPerSecond;
+
+    // Lasting abilities (Turret): copies alive at once, for Buddy System and Ammo Transfer.
+    if (sustain) {
+      const alive = castsPerSecond * sustain.duration;
+      abilityDps *= 1 + mods.flatFor('damagePerOtherActive') * Math.max(0, alive - 1);
+      if (alive > 1.05) mods.assume(ability.name, `${alive.toFixed(1)} out at once`);
+      abilityRoundsPerSecond = mods.flatFor('ammoPerAbilityHit') * sustain.hitsPerSecond * alive;
+    }
 
     // Smiting Spear: several spears can be out at once (each lives `lifetime`, up to
     // maxActive), which Chain Pulse and Spear Grid feed on.
@@ -581,6 +593,33 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       areaHit: perEvent,
       procMultiplier: 1,
     };
+  }
+
+  // Ammo Transfer: rounds handed back by the ability stretch the weapon's clip.
+  if (abilityRoundsPerSecond > 0) {
+    const stretch = (o: ModeOutput, share: number): ModeOutput => {
+      if (o.clipSize === null || share <= 0) return o;
+      const used = o.shotsPerSecond * share;
+      const r = Math.min(0.95, abilityRoundsPerSecond / used);
+      const before = o.clipSize / o.fireRate + o.reloadTime;
+      const after = o.clipSize / (1 - r) / o.fireRate + o.reloadTime;
+      const k = (o.clipSize / (1 - r) / after) / (o.clipSize / before);
+      return {
+        ...o,
+        weaponDps: o.weaponDps * k,
+        shotsPerSecond: o.shotsPerSecond * k,
+        stream: {
+          ...o.stream,
+          directHitsPerSecond: o.stream.directHitsPerSecond * k,
+          areaEventsPerSecond: o.stream.areaEventsPerSecond * k,
+        },
+      };
+    };
+    main = stretch(main, mainShare);
+    if (weaveOutput) weaveOutput = stretch(weaveOutput, weaveShare);
+    weaveWeaponDps = (weaveOutput?.weaponDps ?? 0) * weaveShare;
+    weaponDps = main.weaponDps * mainShare + weaveWeaponDps;
+    mods.assume('Ammo Transfer', `${abilityRoundsPerSecond.toFixed(1)} rounds per second back into your magazine`);
   }
 
   // --- Aspect payloads ------------------------------------------------------

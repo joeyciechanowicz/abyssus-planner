@@ -3842,14 +3842,43 @@
     "utility": true
   },
   "ability forge/turret/Ammo Transfer": {
-    "source": "Phase 4: forge upgrade (numbers from its PA_* / BP_* game assets)",
-    "effects": [],
-    "unmodeled": "refills your magazine per Turret shot; Turret fire rate is not modelled"
+    "source": "Turret extras (BP_BuddySystem / BP_AmmoTransferMod / PA values)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "ammoPerAbilityHit",
+        "scope": "all",
+        "value": 0.6,
+        "note": "60% per Turret shot",
+        "scalesWith": "{Chance}"
+      }
+    ]
   },
   "ability forge/turret/Buddy System": {
-    "source": "Native-gap pass: numbers from the PA / status-effect Blueprint defaults",
-    "effects": [],
-    "unmodeled": "-25% Turret damage, +25% per Turret in range; Turret overlap is not modelled"
+    "source": "Turret extras (BP_BuddySystem / BP_AmmoTransferMod / PA values)",
+    "effects": [
+      {
+        "op": "flat",
+        "stat": "abilityCooldownSeconds",
+        "scope": "all",
+        "value": -10,
+        "scalesWith": "{CooldownReduction}"
+      },
+      {
+        "op": "mult",
+        "stat": "abilityDamage",
+        "scope": "ability",
+        "value": -0.25,
+        "note": "InitialDamageReductionPercent 25"
+      },
+      {
+        "op": "flat",
+        "stat": "damagePerOtherActive",
+        "scope": "all",
+        "value": 0.25,
+        "note": "PerTurretDamageIncreasePercent 25"
+      }
+    ]
   },
   "ability forge/turret/Unstable Cores": {
     "source": "Native-gap pass: numbers from the PA / status-effect Blueprint defaults",

@@ -700,6 +700,28 @@ describe('Harpoon Combo Points', () => {
   });
 });
 
+describe('Turret extras', () => {
+  const turret = (abilityUpgrades: string[] = []): Build => ({ ...emptyBuild, abilityId: 'turret', abilityUpgrades });
+
+  it('Buddy System: 15s recharge, x0.75 damage, +25% per other Turret out', () => {
+    const casts = 1 / 15 + 1 / 30;
+    const alive = casts * 18.75;
+    const r = simulate(turret(['Buddy System']));
+    expect(r.abilityDps).toBeCloseTo(50 * 2 * 18.75 * 0.75 * casts * (1 + 0.25 * (alive - 1)), 5);
+  });
+
+  it('Ammo Transfer stretches your clip with rounds from Turret shots', () => {
+    const plain = simulate(turret(), { weakspotAccuracy: 0 });
+    const r = simulate(turret(['Ammo Transfer']), { weakspotAccuracy: 0 });
+    const rounds = 0.6 * 2 * (1 / 25 + 1 / 30) * 18.75;
+    // Automatic Fire: 30 rounds at 8/s + 1.6s reload.
+    const shots = 30 / (30 / 8 + 1.6);
+    const ref = Math.min(0.95, rounds / shots);
+    const k = (30 / (1 - ref) / (30 / (1 - ref) / 8 + 1.6)) / shots;
+    expect(r.weaponDps / plain.weaponDps).toBeCloseTo(k, 5);
+  });
+});
+
 describe('Smiting Spear concurrency', () => {
   const spear = (abilityUpgrades: string[] = []): Build => ({ ...emptyBuild, abilityId: 'smiting_spear', abilityUpgrades });
   const casts = 1 / 8 + 1 / 30; // one per 8s recharge + 1 charge per 30s encounter

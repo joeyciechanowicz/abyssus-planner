@@ -88,6 +88,9 @@ const STAT_LABELS: Record<string, string> = {
   chainPulse: 'Chain Pulse chance',
   spearGrid: 'Spear Grid damage per tick',
   enduringSpear: 'Kills keep spears alive',
+  abilityCooldownSeconds: 'Ability recharge (s)',
+  damagePerOtherActive: 'Damage per other copy out',
+  ammoPerAbilityHit: 'Rounds returned per ability hit',
   // Aspect payload mechanics (`payload` effects).
   chance: 'Proc chance',
   repeats: 'Extra triggers',

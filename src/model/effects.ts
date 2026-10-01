@@ -77,6 +77,11 @@ export const STATS = [
   'chainPulse',
   'spearGrid',
   'enduringSpear',
+  /** Abilities: flat seconds off the recharge; +damage per OTHER copy alive at once (Buddy System);
+   * rounds returned to your magazine per ability hit (Turret Ammo Transfer, expected). */
+  'abilityCooldownSeconds',
+  'damagePerOtherActive',
+  'ammoPerAbilityHit',
 ] as const;
 export type Stat = (typeof STATS)[number];
 

@@ -1072,16 +1072,45 @@
           "name": "Ammo Transfer",
           "description": "60% chance when the Turret shoots an enemy to reload 1 ammo into your magazine.",
           "icon": "forge/Ammo_Transfer.webp",
-          "effects": [],
-          "unmodeled": "refills your magazine per Turret shot; Turret fire rate is not modelled"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "ammoPerAbilityHit",
+              "scope": "all",
+              "value": 0.6,
+              "note": "60% per Turret shot",
+              "scalesWith": "{Chance}"
+            }
+          ]
         },
         {
           "id": "buddy_system",
           "name": "Buddy System",
           "description": "Lowers the cooldown by 10 sec. and reduces the damage dealt by your Turret. Turrets deal increased damage for each Turret within range",
           "icon": "forge/Buddy_System.webp",
-          "effects": [],
-          "unmodeled": "-25% Turret damage, +25% per Turret in range; Turret overlap is not modelled"
+          "effects": [
+            {
+              "op": "flat",
+              "stat": "abilityCooldownSeconds",
+              "scope": "all",
+              "value": -10,
+              "scalesWith": "{CooldownReduction}"
+            },
+            {
+              "op": "mult",
+              "stat": "abilityDamage",
+              "scope": "ability",
+              "value": -0.25,
+              "note": "InitialDamageReductionPercent 25"
+            },
+            {
+              "op": "flat",
+              "stat": "damagePerOtherActive",
+              "scope": "all",
+              "value": 0.25,
+              "note": "PerTurretDamageIncreasePercent 25"
+            }
+          ]
         },
         {
           "id": "unstable_cores",
