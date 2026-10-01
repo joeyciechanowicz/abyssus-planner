@@ -238,14 +238,34 @@
     ]
   },
   "blessings/Electrical_Orb": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+    "source": "Phase 2c: Tentacle throw pool",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "poolObjects",
+        "value": 1
+      },
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "poolBounce",
+        "value": 0.3,
+        "scalesWith": "{Chance}"
+      }
+    ]
   },
   "blessings/Hoarding_Tentacles": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+    "source": "Phase 2c: Tentacle throw pool",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "damagePerPoolObject",
+        "value": 0.05,
+        "scalesWith": "{DamageIncrease}"
+      }
+    ]
   },
   "blessings/Exploitative_Spirits": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -1172,19 +1192,51 @@
     ]
   },
   "blessings/Explosives": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+    "source": "Phase 2c: Tentacle throw pool",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "poolObjects",
+        "value": 1
+      },
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "poolAreaDamage",
+        "value": 0.5,
+        "scalesWith": "{AoEDamage}"
+      }
+    ]
   },
   "blessings/Crystals": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+    "source": "Phase 2c: Tentacle throw pool",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "poolObjects",
+        "value": 1
+      },
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "poolDamage",
+        "value": 1.5,
+        "scalesWith": "{HighImpactDamageMultiPercentage}"
+      }
+    ]
   },
   "blessings/Snails": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+    "source": "Phase 2c: Tentacle throw pool",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "poolObjects",
+        "value": 1
+      }
+    ]
   },
   "blessings/Exploding_Spirits": {
     "source": "Phase 2c: gauge payload model (Spirit, Brine, Barrier)",
@@ -1671,30 +1723,60 @@
     ]
   },
   "blessings/Acid": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+    "source": "Phase 2c: Tentacle throw pool",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "poolObjects",
+        "value": 1
+      },
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "poolDamage",
+        "value": 0.05,
+        "note": "5% of the Tentacle damage over time, counted once"
+      }
+    ]
   },
   "blessings/Vitamins": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+    "source": "Phase 2c: Tentacle throw pool",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "poolObjects",
+        "value": 1
+      }
+    ]
   },
   "blessings/Oceanic_Supplies": {
-    "source": "Phase 2b: aspect payload model",
+    "source": "Phase 2c: Tentacle throw pool",
     "effects": [],
-    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+    "unmodeled": "its chance to throw several objects is native code and unknown"
   },
   "blessings/Oceanic_Arsenal": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+    "source": "Phase 2c: Tentacle throw pool",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "throwAllChance",
+        "value": 0.03
+      }
+    ]
   },
   "blessings/Anchors": {
-    "source": "Phase 2b: aspect payload model",
-    "effects": [],
-    "unmodeled": "crowd control only",
-    "utility": true
+    "source": "Phase 2c: Tentacle throw pool",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "tentacle",
+        "field": "poolObjects",
+        "value": 1
+      }
+    ]
   },
   "blessings/Team_Tentacles": {
     "source": "Phase 2b: aspect payload model",

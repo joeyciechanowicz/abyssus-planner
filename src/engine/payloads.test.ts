@@ -136,6 +136,17 @@ describe('payloadDamage', () => {
     expect(linked.dps - burnPack).toBeCloseTo((pack.dps - burnPack) * 5);
   });
 
+  it('Tentacles: each object joins a random pool, diluting its bonus', () => {
+    const p = payload('Tentacles');
+    const plain = payloadDamage(p, 0.4, [stream()], ctx()).dps;
+    // Crystals: pool of 2, half the throws deal +150%.
+    const crystals = payloadDamage(p, 0.4, [stream()], ctx({ mods: { poolObjects: 1, poolDamage: 1.5 } })).dps;
+    expect(crystals / plain).toBeCloseTo(1 + 1.5 / 2);
+    // Adding a no-damage object (Anchors) dilutes it to a third.
+    const both = payloadDamage(p, 0.4, [stream()], ctx({ mods: { poolObjects: 2, poolDamage: 1.5 } })).dps;
+    expect(both / plain).toBeCloseTo(1 + 1.5 / 3);
+  });
+
   it('Shadows deals no damage itself but makes enemies take 25% more', () => {
     const r = payloadDamage(payload('Shadows'), 1, [stream()], ctx());
     expect(r.dps).toBe(0);

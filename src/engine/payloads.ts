@@ -181,7 +181,13 @@ export function payloadDamage(
     case 'summon': {
       const maxActive = p.maxActive + m('maxActive');
       const active = Math.min(maxActive, procsTotal * (p.lifetime + m('lifetime')));
-      const attack = p.attackBase + (p.attackPercentOfTrigger / 100) * trigger;
+      // The throw pool: the base projectile plus one per object blessing, chosen at random.
+      const pool = 1 + m('poolObjects');
+      const objectBonus = m('poolDamage') + m('poolAreaDamage') * n + m('poolBounce') * Math.min(1, n - 1);
+      const poolMult =
+        (1 + objectBonus / pool + m('throwAllChance') * objectBonus) * (1 + m('damagePerPoolObject') * pool);
+      if (pool > 1) assumptions.push(`${pool} objects in the Tentacles' throw pool, picked at random`);
+      const attack = (p.attackBase + (p.attackPercentOfTrigger / 100) * trigger) * poolMult;
       const speed = 1 + m('attackSpeed') + m('attackSpeedPerActive') * active;
       assumptions.push(`${active.toFixed(1)} of ${maxActive} ${p.name}s alive on average`);
       return {

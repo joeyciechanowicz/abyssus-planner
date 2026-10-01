@@ -6493,7 +6493,21 @@
       "kind": "blessing",
       "logbookIndex": 4,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "poolObjects",
+          "value": 1
+        },
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "poolAreaDamage",
+          "value": 0.5,
+          "scalesWith": "{AoEDamage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{AoERange}",
@@ -6536,8 +6550,7 @@
             50
           ]
         }
-      ],
-      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+      ]
     },
     {
       "id": "Acid",
@@ -6547,8 +6560,21 @@
       "kind": "blessing",
       "logbookIndex": 5,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
-      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "poolObjects",
+          "value": 1
+        },
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "poolDamage",
+          "value": 0.05,
+          "note": "5% of the Tentacle damage over time, counted once"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamagePerTick}",
@@ -6582,8 +6608,14 @@
       "kind": "blessing",
       "logbookIndex": 6,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
-      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "poolObjects",
+          "value": 1
+        }
+      ],
       "upgrades": [
         {
           "variable": "{FireRateIncreasePercentage}",
@@ -6681,8 +6713,14 @@
       "kind": "blessing",
       "logbookIndex": 8,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
-      "unmodeled": "crowd control only",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "poolObjects",
+          "value": 1
+        }
+      ],
       "upgrades": [
         {
           "variable": "{StunDuration}",
@@ -6706,8 +6744,7 @@
             61
           ]
         }
-      ],
-      "utility": true
+      ]
     },
     {
       "id": "Crystals",
@@ -6717,7 +6754,21 @@
       "kind": "blessing",
       "logbookIndex": 9,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "poolObjects",
+          "value": 1
+        },
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "poolDamage",
+          "value": 1.5,
+          "scalesWith": "{HighImpactDamageMultiPercentage}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{HighImpactDamageMultiPercentage}",
@@ -6741,8 +6792,7 @@
             52
           ]
         }
-      ],
-      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+      ]
     },
     {
       "id": "Team_Tentacles",
@@ -6821,7 +6871,14 @@
       "kind": "blessing",
       "logbookIndex": 11,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "poolObjects",
+          "value": 1
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageTakenIncreasePercentage}",
@@ -6867,8 +6924,7 @@
             62
           ]
         }
-      ],
-      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+      ]
     },
     {
       "id": "Regenerating_Tentacles",
@@ -6992,8 +7048,21 @@
       "kind": "blessing",
       "logbookIndex": 14,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
-      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "poolObjects",
+          "value": 1
+        },
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "poolBounce",
+          "value": 0.3,
+          "scalesWith": "{Chance}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{Chance}",
@@ -7027,8 +7096,15 @@
       "kind": "blessing",
       "logbookIndex": 15,
       "icon": "blessings/Tentacles.webp",
-      "effects": [],
-      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet",
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "damagePerPoolObject",
+          "value": 0.05,
+          "scalesWith": "{DamageIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -7164,7 +7240,7 @@
       "logbookIndex": 18,
       "icon": "blessings/Oceanic_Supplies.webp",
       "effects": [],
-      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+      "unmodeled": "its chance to throw several objects is native code and unknown"
     },
     {
       "id": "Oceanic_Arsenal",
@@ -7174,8 +7250,14 @@
       "kind": "blessing",
       "logbookIndex": 19,
       "icon": "blessings/Oceanic_Arsenal.webp",
-      "effects": [],
-      "unmodeled": "adds an object to the Tentacle's throw pool; the object pool is not modelled yet"
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "tentacle",
+          "field": "throwAllChance",
+          "value": 0.03
+        }
+      ]
     },
     {
       "id": "Spirit_Ability",

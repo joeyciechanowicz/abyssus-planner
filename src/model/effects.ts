@@ -228,6 +228,15 @@ export const PAYLOAD_FIELDS = [
   'flareAreaDamage',
   'linkedFlares',
   'fireStacks',
+  /** Tentacles' throw pool (base projectile + one per object blessing, picked at random):
+   * +1 object; its extra single-target damage, extra area damage, chance to bounce;
+   * +x damage per object in the pool; chance to throw every object at once. */
+  'poolObjects',
+  'poolDamage',
+  'poolAreaDamage',
+  'poolBounce',
+  'damagePerPoolObject',
+  'throwAllChance',
 ] as const;
 export type PayloadField = (typeof PAYLOAD_FIELDS)[number];
 const PAYLOAD_IDS = [
