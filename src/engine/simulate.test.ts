@@ -640,7 +640,6 @@ describe('Harpoon Combo Points', () => {
   const harpoon = (modeName: string, weave: string | null, weaponUpgrades: string[] = []): Build => ({
     ...emptyBuild, weaponId: 'Harpoon_Gun', modeName, weaveModeName: weave, weaponUpgrades,
   });
-  const at4 = (modeName: string) => simulate(harpoon(modeName, null), { weakspotAccuracy: 0 });
 
   it('spends no points without Primary hits: Barbed falls to its 0-point value', () => {
     const r = simulate(harpoon('Barbed Harpoons', null), { weakspotAccuracy: 0 });

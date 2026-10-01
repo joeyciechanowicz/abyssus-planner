@@ -176,7 +176,7 @@ payload's base damage, tick rate, duration and scaling formula?
 
 - 2026-10-02: Harpoon Combo Points: Primary hits bank points (max 4), Secondaries spend them and
   scale by their game curves; points per Secondary follow the Primary/Secondary mix. Increased,
-  Precise, Plentiful Combo and Charged Harpoons counted. 92% (317 counted, 103 utility, 26 gaps).
+  Precise, Plentiful Combo and Charged Harpoons counted. 92% (315 counted, 103 utility, 28 gaps).
 
 ## Later phases (unchanged from the earlier proposal)
 - Phase 1b: merge forge-upgrade `MutatorDescriptionVariables` (unstated magnitudes).
