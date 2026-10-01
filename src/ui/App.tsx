@@ -186,6 +186,7 @@ export function App() {
             setOpts((o) => ({ ...o, ...optsPatch }));
           }}
           playstyleHint={playstyleHint}
+          showGold={Object.values(build.aspects).includes('Goldburst')}
         />
         <Contributors result={result} />
         <Assumptions result={result} />

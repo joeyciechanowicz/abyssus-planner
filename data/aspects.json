@@ -75,6 +75,15 @@
       "evidence": "BP_Ocean_GodPassive_CharacterMutatorScript (Damage += TriggerDamage x {DamagePercentage}); BP_OceanGod_Tentacle BaseAttackCooldown; ROceanGodTentacle/URBehaviorScriptOcean native defaults"
     },
     {
+      "id": "goldburst",
+      "aspect": "Goldburst",
+      "kind": "gold",
+      "name": "Goldburst",
+      "goldPercent": 100,
+      "sphereRadius": 800.0,
+      "evidence": "PA_Fortune_GodPassive {GoldToDamageMultiplierPercentage}; URBehaviorScriptFortune (bNativeUsingSphereInsteadOfDirectHit false by default); formula confirmed in-game"
+    },
+    {
       "id": "shadows",
       "aspect": "Shadows",
       "kind": "vulnerability",

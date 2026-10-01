@@ -131,8 +131,9 @@ payload's base damage, tick rate, duration and scaling formula?
 - 2026-10-01: Phase 0 done (ideal defaults, Boss/Pack toggle, assumptions panel, ~40 leaking
   blessings fixed). Hand-authored effects moved to `scripts/effect_overrides.json`.
 - 2026-10-01: Phase 2a done: payloads for Hemorrhage, Fire burn, Chain Lightning, Windburst,
-  Tentacles, Shadows; per-mode `procChance`. Still to do: Goldburst (native formula, needs
-  an in-game check), Frozen (buildup), Spirit/Brine/Barrier (gauges), Flares, and
+  Tentacles, Shadows; per-mode `procChance`. Goldburst added (hits for current Gold,
+  confirmed in-game; new Gold setting). The per-mode proc multiplier was confirmed in-game too.
+  Still to do: Frozen (buildup), Spirit/Brine/Barrier (gauges), Flares, and
   re-modelling the payload-scoped blessings that Phase 0 marked unmodeled (Phase 2b).
 
 ## Later phases (unchanged from the earlier proposal)

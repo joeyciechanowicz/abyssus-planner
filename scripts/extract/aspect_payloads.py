@@ -86,6 +86,8 @@ def main():
     ocean_gp = pa_vars(dump, 'PA_Ocean_GodPassive_CharacterMutator')
     ocean = native['RBehaviorScriptOcean']
     abyss = pa_vars(dump, 'PA_Abyss_Behavior_Ability_Mutator')
+    fortune_gp = pa_vars(dump, 'PA_Fortune_GodPassive_CharacterMutator')
+    fortune = native['RBehaviorScriptFortune']
 
     payloads = [
         {
@@ -154,6 +156,19 @@ def main():
             'maxActive': ocean['MaxTentacles'],
             'evidence': 'BP_Ocean_GodPassive_CharacterMutatorScript (Damage += TriggerDamage x {DamagePercentage}); '
                         'BP_OceanGod_Tentacle BaseAttackCooldown; ROceanGodTentacle/URBehaviorScriptOcean native defaults',
+        },
+        {
+            'id': 'goldburst',
+            'aspect': 'Goldburst',
+            'kind': 'gold',
+            'name': 'Goldburst',
+            # Damage is computed natively; the formula (damage = current Gold x
+            # GoldToDamageMultiplierPercentage%) was confirmed in-game 2026-10-01.
+            # It hits the struck enemy only, unless a blessing switches it to a sphere.
+            'goldPercent': fortune_gp['{GoldToDamageMultiplierPercentage}'],
+            'sphereRadius': fortune['SphereRadius'],
+            'evidence': 'PA_Fortune_GodPassive {GoldToDamageMultiplierPercentage}; URBehaviorScriptFortune '
+                        '(bNativeUsingSphereInsteadOfDirectHit false by default); formula confirmed in-game',
         },
         {
             'id': 'shadows',

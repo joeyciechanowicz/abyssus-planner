@@ -32,6 +32,8 @@ export interface PayloadContext {
   primaryModeDamage: number;
   /** 0..1, how much Health the target is missing (Hemorrhage scales with it). */
   targetMissingHealth: number;
+  /** Gold you're carrying (Goldburst hits for a share of it). */
+  gold: number;
   /** Summed +% bonuses aimed at this payload alone (e.g. a "+20% Windburst damage" blessing). */
   payloadBonus: number;
 }
@@ -127,6 +129,15 @@ export function payloadDamage(
       assumptions.push(`${active.toFixed(1)} of ${p.maxActive} ${p.name}s alive on average`);
       return {
         dps: (active * attack * bonus) / p.attackInterval,
+        vulnerability: 1,
+        procsPerSecond: procsTotal,
+        assumptions,
+      };
+    }
+    case 'gold': {
+      assumptions.push(`you carry ${Math.round(ctx.gold)} Gold`);
+      return {
+        dps: procsTotal * ctx.gold * (p.goldPercent / 100) * bonus,
         vulnerability: 1,
         procsPerSecond: procsTotal,
         assumptions,

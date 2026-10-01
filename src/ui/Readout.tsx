@@ -92,11 +92,13 @@ interface PlayProps {
   playstyle: Playstyle | null;
   onPlaystyle: (p: Playstyle) => void;
   playstyleHint?: string;
+  /** Show the Gold field (only Goldburst reads it). */
+  showGold?: boolean;
 }
 
 type NumericOption = { [K in keyof SimOptions]: SimOptions[K] extends number ? K : never }[keyof SimOptions];
 
-export function HowYouPlay({ opts, setOpts, weaveLabel, hasAbility, playstyle, onPlaystyle, playstyleHint }: PlayProps) {
+export function HowYouPlay({ opts, setOpts, weaveLabel, hasAbility, playstyle, onPlaystyle, playstyleHint, showGold }: PlayProps) {
   const sliders: (readonly [NumericOption, string])[] = [...SLIDERS];
   if (weaveLabel) sliders.push(['weaveRate', `${weaveLabel} share`]);
   if (hasAbility) sliders.push(['weaponUptime', 'Time spent shooting']);
@@ -135,6 +137,19 @@ export function HowYouPlay({ opts, setOpts, weaveLabel, hasAbility, playstyle, o
         </label>
       )}
       {playstyleHint && <p className="sub small">{playstyleHint}</p>}
+      {showGold && (
+        <label className="field inline">
+          <span>Gold carried</span>
+          <input
+            type="number"
+            min={0}
+            step={50}
+            inputMode="numeric"
+            value={opts.gold}
+            onChange={(e) => setOpts({ ...opts, gold: Math.max(0, Number(e.target.value) || 0) })}
+          />
+        </label>
+      )}
       {sliders.map(([key, label]) => (
         <label key={key} className="slider">
           <span className="slider-head">

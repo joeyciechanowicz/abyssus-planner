@@ -174,6 +174,8 @@ export const aspectPayloadSchema = z.discriminatedUnion('kind', [
     maxActive: z.number(),
   }),
   z.object({ ...payloadCommon, kind: z.literal('vulnerability'), damageTakenPercent: z.number() }),
+  // Damage = your current Gold x goldPercent%, to the struck enemy.
+  z.object({ ...payloadCommon, kind: z.literal('gold'), goldPercent: z.number(), sphereRadius: z.number() }),
 ]);
 export type AspectPayload = z.infer<typeof aspectPayloadSchema>;
 

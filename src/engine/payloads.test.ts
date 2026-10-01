@@ -17,6 +17,7 @@ const ctx = (over: Partial<PayloadContext> = {}): PayloadContext => ({
   enemies: 1,
   primaryModeDamage: 100,
   targetMissingHealth: 0,
+  gold: 1000,
   payloadBonus: 0,
   ...over,
 });
@@ -77,6 +78,13 @@ describe('payloadDamage', () => {
     // A trickle of procs keeps fewer alive: 0.1 procs/s x 15s lifetime = 1.5 on average.
     const slow = payloadDamage(p, 0.02, [stream()], ctx());
     expect(slow.dps).toBeCloseTo((1.5 * 125) / 2);
+  });
+
+  it('Goldburst hits the struck enemy for your current Gold', () => {
+    const p = payload('Goldburst');
+    expect(payloadDamage(p, 0.2, [stream()], ctx({ gold: 750 })).dps).toBeCloseTo(1 * 750);
+    // Direct hit only: a pack doesn't multiply it.
+    expect(payloadDamage(p, 0.2, [stream()], ctx({ gold: 750, enemies: 5 })).dps).toBeCloseTo(750);
   });
 
   it('Shadows deals no damage itself but makes enemies take 25% more', () => {

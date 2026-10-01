@@ -405,6 +405,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       enemies: enemiesFor(opts.target),
       primaryModeDamage,
       targetMissingHealth: 1 - opts.targetHealthFraction,
+      gold: opts.gold,
       payloadBonus: mods.multForScopeOnly('damage', payload.id),
     });
     for (const text of r.assumptions) mods.assume(payload.name, text);

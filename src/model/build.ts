@@ -50,6 +50,8 @@ export const enemiesFor = (t: Target) => TARGETS.find((x) => x.id === t)!.enemie
 export interface SimOptions {
   /** Boss: one Elite/Boss target. Pack: 5 standard enemies, all caught by area damage. */
   target: Target;
+  /** Gold carried -- Goldburst hits for it. */
+  gold: number;
   /** Fraction of shots that land on a weakspot. */
   weakspotAccuracy: number;
   /** Fraction of shots that hit at all. */
@@ -74,6 +76,7 @@ export interface SimOptions {
 
 export const defaultOptions: SimOptions = {
   target: 'boss',
+  gold: 1000,
   weakspotAccuracy: 0.5,
   accuracy: 1.0,
   healthFraction: 1.0,
