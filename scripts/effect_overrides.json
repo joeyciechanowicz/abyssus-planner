@@ -401,9 +401,10 @@
     ]
   },
   "charms/supersonic": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 5: no damage effect",
     "effects": [],
-    "unmodeled": "movementSpeed isn't consumed by the engine, and there's no dashCooldown stat either -- no DPS impact regardless of magnitude"
+    "unmodeled": "movement and dash only",
+    "utility": true
   },
   "charms/ms_boom": {
     "source": "hand-authored (audit c5d0d24)",
@@ -423,9 +424,10 @@
     ]
   },
   "charms/lifeline": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 5: no damage effect",
     "effects": [],
-    "unmodeled": "damageTaken isn't consumed by the engine -- no DPS impact regardless of magnitude"
+    "unmodeled": "defensive only",
+    "utility": true
   },
   "charms/overdrive": {
     "source": "hand-authored (audit c5d0d24)",
@@ -451,9 +453,10 @@
     "unmodeled": "statusEffectiveness isn't consumed by the engine -- no DPS impact regardless of magnitude"
   },
   "soul wheel/padded_suit": {
-    "source": "hand-authored (audit c5d0d24)",
+    "source": "Phase 5: no damage effect",
     "effects": [],
-    "unmodeled": "damageTaken isn't consumed by the engine -- no DPS impact regardless of magnitude"
+    "unmodeled": "defensive only",
+    "utility": true
   },
   "weapon forge/Tesla_Gun/Compact Transformer": {
     "source": "hand-authored (audit c5d0d24)",
@@ -2451,5 +2454,238 @@
         "note": "two bounces, each exploding, instead of one"
       }
     ]
+  },
+  "charms/golden_ticket": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "charms/gold_lure": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "charms/bandage": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "defensive only",
+    "utility": true
+  },
+  "charms/phoenix_feather": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "defensive only",
+    "utility": true
+  },
+  "charms/healthy_commitment": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "max Health only",
+    "utility": true
+  },
+  "charms/upgrade_kit": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "upgrades a blessing; set the rank instead",
+    "utility": true
+  },
+  "charms/gold_converter": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "charms/skeleton_key": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "charms/lucky_charm": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "charms/thief_s_eye": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "charms/spiritual": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "meta progression only",
+    "utility": true
+  },
+  "soul wheel/bountiful_bottles": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "healing only",
+    "utility": true
+  },
+  "soul wheel/bountiful_bottles_ii": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "healing only",
+    "utility": true
+  },
+  "soul wheel/ancient_forge": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "map content only",
+    "utility": true
+  },
+  "soul wheel/picky_worship": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "reroll only",
+    "utility": true
+  },
+  "soul wheel/picky_worship_ii": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "reroll only",
+    "utility": true
+  },
+  "soul wheel/bartering": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "soul wheel/hastened_dash": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "dash only",
+    "utility": true
+  },
+  "soul wheel/first_rest": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "healing only",
+    "utility": true
+  },
+  "soul wheel/garden_s_rest": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "healing only",
+    "utility": true
+  },
+  "soul wheel/sanctuary_s_rest": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "healing only",
+    "utility": true
+  },
+  "soul wheel/rare_supplies": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "loot only",
+    "utility": true
+  },
+  "soul wheel/starting_funds": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "soul wheel/favorite_customer": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "soul wheel/ascended_blessings": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "map content only",
+    "utility": true
+  },
+  "soul wheel/gambler": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "map content only",
+    "utility": true
+  },
+  "soul wheel/growing_chain": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "soul wheel/abundance": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "economy only",
+    "utility": true
+  },
+  "soul wheel/reserve_stock": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "loot only",
+    "utility": true
+  },
+  "soul wheel/second_wind": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "defensive only",
+    "utility": true
+  },
+  "soul wheel/devout": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "choice only",
+    "utility": true
+  },
+  "soul wheel/treasure_map": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "loot only",
+    "utility": true
+  },
+  "soul wheel/beginner_s_charm": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "loot only",
+    "utility": true
+  },
+  "soul wheel/timely_reward": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "loot only",
+    "utility": true
+  },
+  "soul wheel/misty_dash": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "defensive only",
+    "utility": true
+  },
+  "soul wheel/finer_charms": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "loot only",
+    "utility": true
+  },
+  "soul wheel/charm_power": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "unlocks a second charm slot; pick the charm itself",
+    "utility": true
+  },
+  "soul wheel/artificer": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "unlocks forge choices; pick the upgrades themselves",
+    "utility": true
+  },
+  "soul wheel/execution": {
+    "source": "Phase 5: no damage effect",
+    "effects": [],
+    "unmodeled": "melee executes; melee damage is not part of the simulated DPS"
   }
 }

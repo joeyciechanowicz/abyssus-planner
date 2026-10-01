@@ -40,7 +40,8 @@
           "description": "Increases the number of Syringe charges by 1.",
           "icon": "soulwheel/Bountiful_Bottles.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "healing only",
+          "utility": true
         },
         {
           "id": "ancient_forge",
@@ -48,7 +49,8 @@
           "description": "A forge that upgrades your weapon or ability can now be found during an expedition.",
           "icon": "soulwheel/Ancient_Forge.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "map content only",
+          "utility": true
         },
         {
           "id": "controlled_chaos",
@@ -70,7 +72,8 @@
           "description": "Allows you to reroll the available categories at Blessing Altars. [Rerolls available: 3]",
           "icon": "soulwheel/Picky_Worship.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "reroll only",
+          "utility": true
         },
         {
           "id": "bartering",
@@ -78,7 +81,8 @@
           "description": "Allows you to reroll your options at the merchant for Gold.",
           "icon": "soulwheel/Bartering.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "economy only",
+          "utility": true
         }
       ]
     },
@@ -120,7 +124,8 @@
           "description": "Reduces dash cooldown by 20%.",
           "icon": "soulwheel/Hastened_Dash.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "dash only",
+          "utility": true
         },
         {
           "id": "first_rest",
@@ -128,7 +133,8 @@
           "description": "A healing shrine can now be found in the Abandoned Temple and Submarine.",
           "icon": "soulwheel/Temples_Rest.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "healing only",
+          "utility": true
         },
         {
           "id": "upgraded_inventions",
@@ -150,7 +156,8 @@
           "description": "Regular chests have an increased chance to provide higher rarity rewards.",
           "icon": "soulwheel/Rare_Supplies.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "loot only",
+          "utility": true
         },
         {
           "id": "starting_funds",
@@ -158,7 +165,8 @@
           "description": "Start the run with 2 keys and 100 Gold.",
           "icon": "soulwheel/Starting_Funds.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "economy only",
+          "utility": true
         }
       ]
     },
@@ -214,7 +222,8 @@
           "description": "A healing shrine can now be found in the Gardens.",
           "icon": "soulwheel/Gardens_Rest.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "healing only",
+          "utility": true
         },
         {
           "id": "favorite_customer",
@@ -222,7 +231,8 @@
           "description": "Decrease the cost of Wishing Wells and Merchants by 15%.",
           "icon": "soulwheel/Favorite_Customer.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "economy only",
+          "utility": true
         },
         {
           "id": "ascended_blessings",
@@ -230,7 +240,8 @@
           "description": "Upgrade altars can now be found during an expedition.",
           "icon": "soulwheel/Ascended_Blessings.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "map content only",
+          "utility": true
         },
         {
           "id": "gambler",
@@ -238,7 +249,8 @@
           "description": "Wishing Wells and Sacrifice Altars can now be found during an expedition.",
           "icon": "soulwheel/Gambler.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "map content only",
+          "utility": true
         }
       ]
     },
@@ -280,7 +292,8 @@
           "description": "Increases the number of Syringe charges by 1.",
           "icon": "soulwheel/Bountiful_Bottles_II.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "healing only",
+          "utility": true
         },
         {
           "id": "combat_medic",
@@ -302,7 +315,8 @@
           "description": "Discounted Merchant items can now appear during expeditions.",
           "icon": "soulwheel/Growing_Chain.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "economy only",
+          "utility": true
         },
         {
           "id": "abundance",
@@ -310,7 +324,8 @@
           "description": "Additional options are available at the merchant.",
           "icon": "soulwheel/Abundance.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "economy only",
+          "utility": true
         },
         {
           "id": "reserve_stock",
@@ -318,7 +333,8 @@
           "description": "Provides a locked chest by Merchants.",
           "icon": "soulwheel/Reserve_Stock.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "loot only",
+          "utility": true
         }
       ]
     },
@@ -346,7 +362,8 @@
           "description": "Once per expedition, revive with 100% Health when you would have died.",
           "icon": "soulwheel/Second_Wind.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "defensive only",
+          "utility": true
         },
         {
           "id": "devout",
@@ -354,7 +371,8 @@
           "description": "See a third option when choosing Blessings or Ancient Forge mods.",
           "icon": "soulwheel/Devout.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "choice only",
+          "utility": true
         },
         {
           "id": "sanctuary_s_rest",
@@ -362,7 +380,8 @@
           "description": "A healing shrine can now be found in the Sanctuary.",
           "icon": "soulwheel/Sanctuarys_Rest.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "healing only",
+          "utility": true
         },
         {
           "id": "treasure_map",
@@ -370,7 +389,8 @@
           "description": "3 chests can now appear in encounters.",
           "icon": "soulwheel/Timely_Reward.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "loot only",
+          "utility": true
         },
         {
           "id": "beginner_s_charm",
@@ -378,7 +398,8 @@
           "description": "The first starting room of an expedition provides a random Charm.",
           "icon": "soulwheel/Beginners_Charm.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "loot only",
+          "utility": true
         },
         {
           "id": "timely_reward",
@@ -386,7 +407,8 @@
           "description": "Completing areas quickly grants extra loot.",
           "icon": "soulwheel/Timely_Reward.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "loot only",
+          "utility": true
         }
       ]
     },
@@ -400,7 +422,7 @@
           "description": "Melee hits can execute enemies below 20% Health.",
           "icon": "soulwheel/Execution.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "melee executes; melee damage is not part of the simulated DPS"
         },
         {
           "id": "misty_dash",
@@ -408,7 +430,8 @@
           "description": "Brief invulnerability while dashing.",
           "icon": "soulwheel/Misty_Dash.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "defensive only",
+          "utility": true
         },
         {
           "id": "finer_charms",
@@ -416,7 +439,8 @@
           "description": "Increases chance to gain higher rarity Charms.",
           "icon": "soulwheel/Finer_Charms.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "loot only",
+          "utility": true
         },
         {
           "id": "padded_suit",
@@ -424,7 +448,8 @@
           "description": "Reduces damage taken by 25%.",
           "icon": "soulwheel/Padded_Suit.webp",
           "effects": [],
-          "unmodeled": "damageTaken isn't consumed by the engine -- no DPS impact regardless of magnitude"
+          "unmodeled": "defensive only",
+          "utility": true
         },
         {
           "id": "picky_worship_ii",
@@ -432,7 +457,8 @@
           "description": "Allows spending Soul Fragments in order to reroll categories.",
           "icon": "soulwheel/Picky_Worship_II.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "reroll only",
+          "utility": true
         }
       ]
     },
@@ -446,7 +472,8 @@
           "description": "Allows equipping a second Charm.",
           "icon": "soulwheel/Charm_Power.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "unlocks a second charm slot; pick the charm itself",
+          "utility": true
         },
         {
           "id": "even_spread",
@@ -468,7 +495,8 @@
           "description": "You can choose mods for both your weapon and ability at the Ancient Forge.",
           "icon": "soulwheel/Artificer.webp",
           "effects": [],
-          "unmodeled": "no numeric damage effect the DSL can express"
+          "unmodeled": "unlocks forge choices; pick the upgrades themselves",
+          "utility": true
         }
       ]
     }
