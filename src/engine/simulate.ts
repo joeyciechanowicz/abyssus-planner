@@ -672,7 +672,10 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   let aspectDps = 0;
   let vulnerability = 1;
   const aspects: { name: string; dps: number }[] = [];
-  for (const [aspect, cards] of cardsByAspect) {
+  // Blightful Freeze: status damage to Frozen enemies goes up, so Freeze is worked out first.
+  let statusDamageMult = 1;
+  const ordered = [...cardsByAspect].sort(([a], [b]) => Number(b === 'Frozen') - Number(a === 'Frozen'));
+  for (const [aspect, cards] of ordered) {
     const payload = payloadByAspect.get(aspect);
     if (!payload) {
       unmodeled.push({
@@ -703,6 +706,11 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     });
     for (const text of r.assumptions) mods.assume(payload.name, text);
     vulnerability *= r.vulnerability;
+    if (r.frozenShare !== undefined) {
+      statusDamageMult = 1 + (mods.payloadMods.get('frost')?.statusDamageWhileActive ?? 0) * r.frozenShare;
+    } else if (payload.kind === 'dot') {
+      r.dps *= statusDamageMult;
+    }
     if (r.dps > 0) {
       aspectDps += r.dps;
       aspects.push({ name: payload.name, dps: r.dps });
@@ -715,6 +723,8 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     aspects.push({ name: 'Overkill', dps: overkill });
     mods.assume('Overkill', 'each kill overshoots by half a hit on average');
   }
+  // Weapon DoTs are status damage as well.
+  const statusDotDps = dotDps * (statusDamageMult - 1);
   if (vulnerability !== 1) {
     aspectDps *= vulnerability;
     for (const a of aspects) a.dps *= vulnerability;
@@ -741,12 +751,12 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
     perShot: main.perShot,
     perMagazine: main.perMagazine,
     weaponDps: weaponDps * vulnerability,
-    dotDps: dotDps * vulnerability,
+    dotDps: (dotDps + statusDotDps) * vulnerability,
     abilityDps: abilityDps * vulnerability,
     aspectDps,
     aspects,
     vulnerability,
-    totalDps: (weaponDps + dotDps + abilityDps) * vulnerability + aspectDps,
+    totalDps: (weaponDps + dotDps + statusDotDps + abilityDps) * vulnerability + aspectDps,
     mode: { name: mode.name, type: mode.type },
     weave: weaveOutput
       ? {

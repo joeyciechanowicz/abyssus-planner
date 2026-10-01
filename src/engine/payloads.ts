@@ -63,6 +63,8 @@ export interface PayloadResult {
   vulnerability: number;
   /** Procs per second across all enemies. */
   procsPerSecond: number;
+  /** Freeze: share of the time enemies are Frozen. */
+  frozenShare?: number;
   assumptions: string[];
 }
 
@@ -339,6 +341,7 @@ export function payloadDamage(
         dps: (n * shred * bonus) / cycle,
         vulnerability: 1 + m('damageTakenWhileActive') * frozenShare,
         procsPerSecond: n / cycle,
+        frozenShare,
         assumptions,
       };
     }

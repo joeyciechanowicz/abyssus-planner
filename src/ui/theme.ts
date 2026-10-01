@@ -94,6 +94,7 @@ const STAT_LABELS: Record<string, string> = {
   damagePerAoeSize: 'Damage per area size',
   radius: 'Radius',
   radiusDamageScaling: 'Damage per radius',
+  statusDamageWhileActive: 'Status damage to Frozen enemies',
   // Aspect payload mechanics (`payload` effects).
   chance: 'Proc chance',
   repeats: 'Extra triggers',

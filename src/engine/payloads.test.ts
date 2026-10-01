@@ -307,6 +307,22 @@ describe('area size', () => {
   });
 });
 
+describe('Blightful Freeze', () => {
+  it("raises other aspects' status damage by 15% of the Frozen uptime", () => {
+    const b = (extra: Record<string, number>): Build => ({
+      ...emptyBuild,
+      abilityId: 'frag_grenade',
+      aspects: { primary: 'Frozen', secondary: null, ability: 'Blood' },
+      blessings: { Frozen_Primary: 1, Blood_Ability: 1, ...extra },
+    });
+    const plain = simulate(b({}));
+    const blight = simulate(b({ Blightful_Freeze: 1 }));
+    const cycle = Number(/Frozen every ([\d.]+)s/.exec(plain.assumptions.find((a) => a.source === 'Freeze')!.text)![1]);
+    const hem = (r: typeof plain) => r.aspects.find((a) => a.name === 'Hemorrhage')!.dps;
+    expect(hem(blight) / hem(plain)).toBeCloseTo(1 + 0.15 * (5 / cycle), 2);
+  });
+});
+
 describe('on-kill effects', () => {
   const shadows: Build = {
     ...emptyBuild,

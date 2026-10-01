@@ -4393,7 +4393,15 @@
       "kind": "blessing",
       "logbookIndex": 16,
       "icon": "blessings/Frozen.webp",
-      "effects": [],
+      "effects": [
+        {
+          "op": "payload",
+          "payload": "frost",
+          "field": "statusDamageWhileActive",
+          "value": 0.15,
+          "scalesWith": "{DamageIncrease}"
+        }
+      ],
       "upgrades": [
         {
           "variable": "{DamageIncrease}",
@@ -4417,8 +4425,7 @@
             22
           ]
         }
-      ],
-      "unmodeled": "boosts other aspects' status damage on Frozen enemies; cross-aspect uptime is not modelled yet"
+      ]
     },
     {
       "id": "Frosts_Knowledge",

@@ -268,6 +268,8 @@ export const PAYLOAD_FIELDS = [
   'shredPerSecondWhileActive',
   'shredOnEndPercent',
   'buildupRetained',
+  /** Freeze: +x damage from status effects (other aspects' DoTs) to Frozen enemies. */
+  'statusDamageWhileActive',
   /** Gauges (Spirit, Brine, Barrier): +x relative gauge gain; Spirits: x relative orb cost change. */
   'gaugeGain',
   'orbCost',

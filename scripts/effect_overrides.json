@@ -1262,9 +1262,16 @@
     ]
   },
   "blessings/Blightful_Freeze": {
-    "source": "Phase 2c: Freeze payload model",
-    "effects": [],
-    "unmodeled": "boosts other aspects' status damage on Frozen enemies; cross-aspect uptime is not modelled yet"
+    "source": "Step 4: cross-aspect Freeze",
+    "effects": [
+      {
+        "op": "payload",
+        "payload": "frost",
+        "field": "statusDamageWhileActive",
+        "value": 0.15,
+        "scalesWith": "{DamageIncrease}"
+      }
+    ]
   },
   "blessings/Loaded_Bounce": {
     "source": "Phase 2b: aspect payload model",
