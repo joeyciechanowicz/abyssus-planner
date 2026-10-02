@@ -14,6 +14,7 @@ import {
 import { defaultOptions, enemiesFor, tierFor, type Build, type SimOptions } from '../model/build';
 import { Modifiers, applyEffects } from './stacking';
 import { scaleBlessingEffects } from './blessingScaling';
+import { countedForAspect, heldBlessings } from '../model/blessings';
 import { payloadDamage, type HitStream } from './payloads';
 
 export interface SimResult {
@@ -355,18 +356,18 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   const equippedAspects = new Set(
     ASPECT_SLOTS.map((s) => build.aspects[s]).filter((a): a is string => a !== null),
   );
-  for (const [id, rank] of Object.entries(build.blessings)) {
+  for (const id of Object.keys(build.blessings)) {
     const b = blessingById.get(id);
-    if (!b) {
-      warnings.push(`unknown blessing: ${id}`);
-      continue;
+    if (!b) warnings.push(`unknown blessing: ${id}`);
+    else if (!equippedAspects.has(b.aspect)) warnings.push(`${b.name} ignored: its aspect (${b.aspect}) is not equipped`);
+  }
+  // Each aspect's passive, Minor and Major join by the rules, not by hand (model/blessings.ts).
+  for (const aspect of equippedAspects) {
+    const held = heldBlessings(build, aspect);
+    const sameAspect = countedForAspect(held);
+    for (const { blessing: b, rank } of held) {
+      collect(b.name, scaleBlessingEffects(b, rank), b.unmodeled, b.utility, sameAspect, b.outOfScope);
     }
-    if (!equippedAspects.has(b.aspect)) {
-      warnings.push(`${b.name} ignored: its aspect (${b.aspect}) is not equipped`);
-      continue;
-    }
-    const sameAspect = Object.keys(build.blessings).filter((x) => blessingById.get(x)?.aspect === b.aspect).length;
-    collect(b.name, scaleBlessingEffects(b, rank), b.unmodeled, b.utility, sameAspect, b.outOfScope);
   }
 
   for (const id of build.charmIds) {

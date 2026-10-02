@@ -217,6 +217,13 @@ and per-affected-enemy stacks count all five). Whatever a pick needed assuming i
 recorded via `Modifiers.assume()` and shown in the UI's "Assumed" panel, so the
 best-case number always says what it took for granted.
 
+**Each aspect's passive, Minor and Major join by the rules.** The passive is on
+whenever the aspect is equipped; the Minor is always the 2nd blessing taken from it
+and the Major the 5th (the aspect card doesn't count), so they join at 2 and 4
+hand-picked blessings. `heldBlessings()` in `src/model/blessings.ts` decides this
+for both the engine and the board; "every X Blessing" stacks count the picks plus
+the Minor and Major. They can't be picked by hand; their rank can still be set.
+
 **Aspect payloads are their own damage source.** An aspect card's proc (Hemorrhage,
 Chain Lightning, Windburst, Tentacles, Fire, Shadows) is modelled in
 `src/engine/payloads.ts` from `data/aspects.json`: proc chance x the fire mode's

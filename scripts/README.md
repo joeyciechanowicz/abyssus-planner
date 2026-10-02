@@ -252,5 +252,11 @@ Engine Rifle heat (`heat` on the weapon, `heatPerShot` on its Secondaries, from
 `python scripts/extract/engine_rifle_heat.py <out>` after dumping
 `Blueprints/Weapons/EngineRifle/`.
 
+Each aspect's three fixed blessings (`role`: `passive`, `minor`, `major` in
+`data/blessings.json`, from the `PA_<Aspect>GodPassive/MinorBlessing/MajorBlessing`
+assets): `python scripts/extract/blessing_roles.py <out>` after dumping
+`PrimaryAssets/CharacterMutators`. It matches by display name and fails unless every
+aspect gets exactly one of each.
+
 `weapon_mod_stats.py` also writes each fire mode's `procChance` (its multiplier
 on aspect proc chances) from the same ModStats assets.

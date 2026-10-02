@@ -8,6 +8,7 @@ import {
   type Blessing,
 } from '../model/data';
 import { isFullyRankLinked } from '../engine/blessingScaling';
+import { heldBlessings, isPickable } from '../model/blessings';
 import type { Build } from '../model/build';
 import { Icon, type PickerItem } from './Picker';
 import { Tooltip } from './Tooltip';
@@ -110,7 +111,7 @@ export function BlessingBoard({ build, onChange, openPicker, only }: Props) {
             id: a,
             name: a,
             icon: asset(card?.icon),
-            tag: `${(blessingsByAspect.get(a) ?? []).filter((b) => b.kind === 'blessing').length} blessings`,
+            tag: `${(blessingsByAspect.get(a) ?? []).filter(isPickable).length} blessings`,
             describe: () => <p>{card ? renderBlessingDescription(card, 1) : ''}</p>,
           };
         }),
@@ -122,7 +123,8 @@ export function BlessingBoard({ build, onChange, openPicker, only }: Props) {
   }
 
   function pickBlessing(aspect: string, existing?: Blessing) {
-    const pool = (blessingsByAspect.get(aspect) ?? []).filter((b) => b.kind === 'blessing');
+    // The passive, Minor and Major join by themselves; only their rank can be set.
+    const pool = (blessingsByAspect.get(aspect) ?? []).filter(isPickable);
     const items = existing
       ? [existing]
       : pool.filter((b) => build.blessings[b.id] === undefined);
@@ -136,7 +138,7 @@ export function BlessingBoard({ build, onChange, openPicker, only }: Props) {
       emptyText: `Every ${aspect} blessing is already in your build.`,
       confirmLabel: (_, rank) => (existing ? `Set rank +${rank}` : `Add at rank +${rank}`),
       onConfirm: (id, rank) => setRank(id, rank),
-      extraAction: existing && existing.kind === 'blessing' ? { label: 'Remove', onClick: () => remove(existing.id) } : undefined,
+      extraAction: existing && isPickable(existing) ? { label: 'Remove', onClick: () => remove(existing.id) } : undefined,
     });
   }
 
@@ -152,8 +154,10 @@ export function BlessingBoard({ build, onChange, openPicker, only }: Props) {
           const color = aspectColor(aspect);
           const pool = aspect ? (blessingsByAspect.get(aspect) ?? []) : [];
           const card = aspect ? aspectCardFor(aspect, slot) : undefined;
-          const equipped = pool.filter((b) => b.kind === 'blessing' && build.blessings[b.id] !== undefined);
-          const left = pool.filter((b) => b.kind === 'blessing').length - equipped.length;
+          // Picks in order, with the passive first and the Minor/Major in their turn.
+          const held = aspect ? heldBlessings(build, aspect).filter((h) => h.blessing.kind === 'blessing') : [];
+          const pickable = pool.filter(isPickable);
+          const left = pickable.filter((b) => build.blessings[b.id] === undefined).length;
 
           return (
             <div key={slot} className={`panel column${aspect ? '' : ' empty'}`} style={{ '--aspect': color } as CSSProperties}>
@@ -176,14 +180,14 @@ export function BlessingBoard({ build, onChange, openPicker, only }: Props) {
 
               {aspect && (
                 <ul className="tiles">
-                  {[card, ...equipped].filter((b): b is Blessing => !!b).map((b) => (
+                  {card && (
+                    <li>
+                      <BlessingTile blessing={card} rank={build.blessings[card.id] ?? 1} pinned onClick={() => pickBlessing(aspect, card)} />
+                    </li>
+                  )}
+                  {held.map(({ blessing: b, rank, auto }) => (
                     <li key={b.id}>
-                      <BlessingTile
-                        blessing={b}
-                        rank={build.blessings[b.id] ?? 1}
-                        pinned={b.kind === 'aspect'}
-                        onClick={() => pickBlessing(aspect, b)}
-                      />
+                      <BlessingTile blessing={b} rank={rank} pinned={false} auto={auto} onClick={() => pickBlessing(aspect, b)} />
                     </li>
                   ))}
                   <li>
@@ -201,21 +205,45 @@ export function BlessingBoard({ build, onChange, openPicker, only }: Props) {
   );
 }
 
-function BlessingTile({ blessing, rank, pinned, onClick }: { blessing: Blessing; rank: number; pinned: boolean; onClick: () => void }) {
+/** Why a fixed blessing is on the board. */
+const AUTO_LABELS: Record<NonNullable<Blessing['role']>, string> = {
+  passive: 'Always on',
+  minor: 'Always your 2nd',
+  major: 'Always your 5th',
+};
+
+function BlessingTile({
+  blessing,
+  rank,
+  pinned,
+  auto = false,
+  onClick,
+}: {
+  blessing: Blessing;
+  rank: number;
+  pinned: boolean;
+  /** Added by the rules (passive, Minor, Major), not picked. */
+  auto?: boolean;
+  onClick: () => void;
+}) {
   const max = maxBlessingRank(blessing);
+  const autoLabel = auto && blessing.role ? AUTO_LABELS[blessing.role] : undefined;
   const counted = blessing.effects.length > 0;
   const text = renderBlessingDescription(blessing, rank);
   return (
     <Tooltip content={text}>
       <button
         type="button"
-        className={`tile cham${pinned ? ' pinned' : ''}${counted ? '' : ' uncounted'}`}
+        className={`tile cham${pinned ? ' pinned' : ''}${autoLabel ? ' auto' : ''}${counted ? '' : ' uncounted'}`}
         onClick={onClick}
-        aria-label={`${blessing.name}, rank ${rank} of ${max}${counted ? '' : ', not counted in DPS'}. Edit`}
+        aria-label={`${blessing.name}${autoLabel ? ` (${autoLabel.toLowerCase()})` : ''}, rank ${rank} of ${max}${counted ? '' : ', not counted in DPS'}. Edit`}
       >
         <Icon src={asset(blessing.icon)} size={40} dim={!counted} />
         <span className="slot-text">
-          <span className="name">{blessing.name}</span>
+          <span className="name">
+            {blessing.name}
+            {autoLabel && <span className="auto-tag">{autoLabel}</span>}
+          </span>
           <span className="sub clamp">{counted ? text : 'Not counted in DPS'}</span>
         </span>
         <span className={`rank cham num${max > 1 ? '' : ' fixed'}`}>+{rank}</span>

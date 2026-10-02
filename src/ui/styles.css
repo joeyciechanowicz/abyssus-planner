@@ -265,6 +265,13 @@ input[type='range'] { accent-color: var(--brass); width: 100%; margin: 0; }
 .tile:hover { border-color: color-mix(in srgb, var(--aspect) 70%, var(--line)); }
 .tile .slot-text { flex: 1; }
 .tile.uncounted .name { color: #b9b4a8; }
+/* The aspect's passive, Minor and Major: joined by the rules, not picked. */
+.tile.auto { border-style: dashed; border-color: color-mix(in srgb, var(--aspect) 45%, var(--line)); }
+.tile .name { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.auto-tag {
+  font: 500 11px/1 var(--cond); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--aspect);
+}
 .clamp { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; font-size: 13px; }
 .rank {
   flex: none; min-width: 36px; padding: 2px 6px; text-align: center;

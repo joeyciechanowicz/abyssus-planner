@@ -48,6 +48,10 @@ export const blessingSchema = z.object({
   // Only the 33 aspect cards carry a slot; plain blessings omit the key entirely.
   slot: z.enum(['primary', 'secondary', 'ability']).nullable().default(null),
   logbookIndex: z.number(),
+  /** The aspect's three fixed blessings (scripts/extract/blessing_roles.py): the passive is
+   * on whenever the aspect is equipped, the Minor is always the 2nd blessing taken from it
+   * and the Major the 5th. None of them can be picked by hand; see model/blessings.ts. */
+  role: z.enum(['passive', 'minor', 'major']).optional(),
   // Absent for capstone-style blessings that have no per-rank scaling variables.
   upgrades: z.array(blessingUpgradeVariableSchema).optional(),
   ...codified,

@@ -1405,7 +1405,7 @@
     ]
   },
   "blessings/Nights_Major_Blessing": {
-    "source": "Phase 2b: aspect payload model",
+    "source": "Fixed blessings: the Major always comes with the Minor",
     "effects": [
       {
         "op": "conditional",
@@ -1415,8 +1415,8 @@
             "op": "mult",
             "stat": "damage",
             "scope": "all",
-            "value": 6.0,
-            "note": "150% of each hit to the 4 other afflicted enemies"
+            "value": 4.8,
+            "note": "150% of each hit to the 4 other afflicted enemies, replacing the Minor's 30%"
           }
         ]
       }
@@ -1770,7 +1770,7 @@
       {
         "op": "conditional",
         "when": "assumed",
-        "note": "you have Blood Sphere, and the orb explodes over every enemy (radius 1000)",
+        "note": "the orb explodes over every enemy (radius 1000)",
         "then": [
           {
             "op": "payload",
@@ -2053,13 +2053,14 @@
     ]
   },
   "blessings/Raging_Winds": {
-    "source": "Phase 2b: aspect payload model",
+    "source": "Fixed blessings: the Major always comes with the Minor",
     "effects": [
       {
         "op": "payload",
         "payload": "windburst",
         "field": "repeats",
-        "value": 2
+        "value": 1,
+        "note": "a third Windburst, on top of Roaring Winds' second"
       }
     ]
   },
@@ -2879,7 +2880,7 @@
       {
         "op": "conditional",
         "when": "assumed",
-        "note": "both halves explode",
+        "note": "each bounce of Bouncing Brine splits the ball, and both halves explode",
         "then": [
           {
             "op": "payload",

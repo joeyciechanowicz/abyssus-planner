@@ -219,10 +219,14 @@ describe('blessings that modify a payload', () => {
   });
   const aspect = (b: Build, opts = {}) => simulate(b, opts).aspectDps;
 
-  it('Roaring Winds fires each Windburst twice; Raging Winds three times', () => {
-    const base = aspect(build('Windburst', 'Windburst_Primary', {}));
-    expect(aspect(build('Windburst', 'Windburst_Primary', { Roaring_Winds: 1 }))).toBeCloseTo(base * 2, 5);
-    expect(aspect(build('Windburst', 'Windburst_Primary', { Raging_Winds: 1 }))).toBeCloseTo(base * 3, 5);
+  it('Roaring Winds (joins at the 2nd pick) fires each Windburst twice; Raging Winds three times', () => {
+    // Whirling Winds and Headwind do no damage, so only the Minor joining changes anything.
+    const base = aspect(build('Windburst', 'Windburst_Primary', { Whirling_Winds: 1 }));
+    expect(aspect(build('Windburst', 'Windburst_Primary', { Whirling_Winds: 1, Headwind: 1 }))).toBeCloseTo(base * 2, 5);
+    // The Major always comes with the Minor: their repeats add up to 3 bursts.
+    const p = payload('Windburst');
+    const one = payloadDamage(p, 0.2, [stream()], ctx()).dps;
+    expect(payloadDamage(p, 0.2, [stream()], ctx({ mods: { repeats: 2 } })).dps).toBeCloseTo(one * 3, 5);
   });
 
   it('Storm Belt adds +10% Windburst damage per stack, up to 5', () => {
@@ -236,7 +240,8 @@ describe('blessings that modify a payload', () => {
   });
 
   it('Loaded Bounce turns -20% per bounce into +5% in a pack', () => {
-    const plain = aspect(build('Chain Lightning', 'Primary_Chain_Lightning', {}), { target: 'pack' });
+    // Same number of Lightning blessings either way (Lightning's Fury counts them).
+    const plain = aspect(build('Chain Lightning', 'Primary_Chain_Lightning', { Malignant_Arc: 1 }), { target: 'pack' });
     const loaded = aspect(build('Chain Lightning', 'Primary_Chain_Lightning', { Loaded_Bounce: 1 }), { target: 'pack' });
     const reach = (f: number) => [0, 1, 2, 3, 4].reduce((s, i) => s + (1 - f) ** i, 0);
     expect(loaded / plain).toBeCloseTo(reach(-0.05) / reach(0.2), 5);
@@ -282,10 +287,13 @@ describe('Chain Lightning crits', () => {
       aspects: { primary: 'Chain Lightning', secondary: null, ability: null },
       blessings: { Primary_Chain_Lightning: 1, ...extra },
     });
+    // The passive is always on; it counts picks plus the Minor/Major, not the card.
     const plain = simulate(b({}), { weakspotAccuracy: 0 });
-    const fury = simulate(b({ Lightnings_Fury: 1 }), { weakspotAccuracy: 0 });
-    // 2 Lightning blessings x 3% = 6% of hits become critical (x2).
-    expect(fury.perHit / plain.perHit).toBeCloseTo(1.06, 5);
+    const one = simulate(b({ Malignant_Arc: 1 }), { weakspotAccuracy: 0 });
+    expect(one.perHit / plain.perHit).toBeCloseTo(1.03, 5);
+    // A 2nd pick brings Slipping Arcs with it: 3 Lightning blessings.
+    const two = simulate(b({ Malignant_Arc: 1, Static_Concussion: 1 }), { weakspotAccuracy: 0 });
+    expect(two.perHit / plain.perHit).toBeCloseTo(1.09, 5);
   });
 });
 
@@ -298,14 +306,16 @@ describe('area size', () => {
   const burst = (b: Build) => simulate(b).aspects.find((a) => a.name === 'Windburst')!.dps;
 
   it("Raging Storm scales Windburst with Wind's Devastation's +5% size per Wind blessing", () => {
-    const base = burst(wind({ Winds_Devastation: 1 }));
-    // Card + Devastation + Raging Storm = 3 Wind blessings = +15% size.
-    expect(burst(wind({ Winds_Devastation: 1, Raging_Storm: 1 })) / base).toBeCloseTo(1.15, 5);
+    const base = burst(wind({}));
+    // Raging Storm is the one Wind blessing (the card doesn't count) = +5% size.
+    expect(burst(wind({ Raging_Storm: 1 })) / base).toBeCloseTo(1.05, 5);
   });
 
   it("counts Roaring Winds' larger second burst", () => {
-    const base = burst(wind({ Roaring_Winds: 1 }));
-    expect(burst(wind({ Roaring_Winds: 1, Raging_Storm: 1 })) / base).toBeCloseTo(1 + 0.4 / 2, 5);
+    // Two picks either way, so Roaring Winds is in both: 3 Wind blessings = +15% size,
+    // and the second burst is 40% larger.
+    const base = burst(wind({ Whirling_Winds: 1, Headwind: 1 }));
+    expect(burst(wind({ Whirling_Winds: 1, Raging_Storm: 1 })) / base).toBeCloseTo(1 + 0.15 + 0.4 / 2, 5);
   });
 
   it('Explosive Valve scales Plasma damage with explosion size', () => {
@@ -337,16 +347,21 @@ describe('Blood Orbs', () => {
     blessings: { Blood_Primary: 1, ...extra },
   });
   it('Blood Sphere doubles weapon damage while an orb is up; Bloodsplosions spreads it over the pack', () => {
-    const plain = simulate(b({}), { weakspotAccuracy: 0 });
-    const sphere = simulate(b({ Blood_Sphere: 1 }), { weakspotAccuracy: 0 });
+    // Red-blooded and Giant's Blood do no damage; the 2nd pick brings Blood Sphere.
+    const plain = simulate(b({ 'Red-blooded': 1 }), { weakspotAccuracy: 0 });
+    const sphere = simulate(b({ 'Red-blooded': 1, Giants_Blood: 1 }), { weakspotAccuracy: 0 });
     // 20% Hemorrhage procs x 25% orb chance at 5.6 hits/s, 6s orbs.
     const procs = (30 / 5.35) * 0.2;
     const orbUp = 1 - Math.exp(-procs * 0.25 * 6);
     expect(sphere.weaponDps / plain.weaponDps).toBeCloseTo(1 + orbUp, 3);
-    const pack = simulate(b({ Blood_Sphere: 1, Bloodsplosions: 1 }), { weakspotAccuracy: 0, target: 'pack' });
-    const packPlain = simulate(b({}), { weakspotAccuracy: 0, target: 'pack' });
-    const packUp = 1 - Math.exp(-(procs / 5) * 0.25 * 6);
-    expect(pack.weaponDps / packPlain.weaponDps).toBeCloseTo(1 + (2 * 5 - 1) * packUp, 3);
+    // Bloodsplosions (the 5th) explodes the orb over the pack.
+    const orb = { orbChance: 0.25, orbDuration: 6, orbDamage: 2 };
+    const hem = payload('Blood');
+    const pack = (mods: Record<string, number>) =>
+      payloadDamage(hem, 0.2, [stream()], ctx({ enemies: 5, mods })).weaponMult!;
+    const packUp = 1 - Math.exp(-((5 * 0.2) / 5) * 0.25 * 6);
+    expect(pack({ ...orb, orbArea: 1 })).toBeCloseTo(1 + (2 * 5 - 1) * packUp, 3);
+    expect(pack(orb)).toBeCloseTo(1 + packUp, 3);
   });
 });
 
@@ -358,7 +373,8 @@ describe('Blightful Freeze', () => {
       aspects: { primary: 'Frozen', secondary: null, ability: 'Blood' },
       blessings: { Frozen_Primary: 1, Blood_Ability: 1, ...extra },
     });
-    const plain = simulate(b({}));
+    // Packed Snow does no damage; it keeps the Frost blessing count (Frost's Knowledge) equal.
+    const plain = simulate(b({ Packed_Snow: 1 }));
     const blight = simulate(b({ Blightful_Freeze: 1 }));
     const cycle = Number(/Frozen every ([\d.]+)s/.exec(plain.assumptions.find((a) => a.source === 'Freeze')!.text)![1]);
     const hem = (r: typeof plain) => r.aspects.find((a) => a.name === 'Hemorrhage')!.dps;
@@ -411,10 +427,9 @@ describe('status effectiveness and per-blessing stacks', () => {
   });
 
   it("Fire's Wrath counts the Fire blessings you actually hold", () => {
+    // Always on with Flares equipped; the card doesn't count, so it starts at 0.
     const base = simulate(fire({})).aspectDps;
-    // Card + Fire's Wrath = 2 Fire blessings x 10% effectiveness.
-    expect(simulate(fire({ Fires_Wrath: 1 })).aspectDps).toBeCloseTo(base * 1.2, 5);
-    // Adding a third Fire blessing that does nothing else raises it to 30%.
-    expect(simulate(fire({ Fires_Wrath: 1, Stunning_Flares: 1 })).aspectDps).toBeCloseTo(base * 1.3, 5);
+    // One Fire blessing that does nothing else: +10% effectiveness.
+    expect(simulate(fire({ Stunning_Flares: 1 })).aspectDps).toBeCloseTo(base * 1.1, 5);
   });
 });

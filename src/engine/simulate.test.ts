@@ -834,7 +834,9 @@ describe('aspect-payload blessings stay off weapon damage', () => {
     const aspect = blessings.find((b) => b.id === id)!.aspect;
     const b: Build = { ...emptyBuild, aspects: { primary: aspect, secondary: null, ability: null }, blessings: { [id]: 1 } };
     const bare: Build = { ...b, blessings: {} };
-    expect(simulate(b).stats.damageMultiplier).toBeCloseTo(simulate(bare).stats.damageMultiplier, 5);
-    expect(simulate(b).weaponDps).toBeCloseTo(simulate(bare).weaponDps, 5);
+    // In a pack, so Frost's Knowledge (Elite/Boss damage per Frost blessing) stays out of it.
+    const pack = { target: 'pack' } as const;
+    expect(simulate(b, pack).stats.damageMultiplier).toBeCloseTo(simulate(bare, pack).stats.damageMultiplier, 5);
+    expect(simulate(b, pack).weaponDps).toBeCloseTo(simulate(bare, pack).weaponDps, 5);
   });
 });
