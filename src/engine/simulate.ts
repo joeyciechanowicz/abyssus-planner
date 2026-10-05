@@ -329,6 +329,7 @@ function computeModeOutput(
 
 export function simulate(build: Build, options: Partial<SimOptions> = {}): SimResult {
   const opts: SimOptions = { ...defaultOptions, ...options };
+  const targetMaxHealth = enemyHealth[tierFor(opts.target)] * opts.enemyHealthMultiplier;
   const warnings: string[] = [];
   const unmodeled: SimResult['unmodeled'] = [];
   const mods = new Modifiers();
@@ -550,10 +551,10 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       Math.max(0.1, 1 + mods.multFor('abilityCooldown', 'ability'));
     // Kills (from your weapon; Pack only) can speed recharge up or reset it outright.
     const weaponKills =
-      opts.target === 'pack' ? (weaponDps + dotDps) / enemyHealth[tierFor(opts.target)] : 0;
+      opts.target === 'pack' ? (weaponDps + dotDps) / targetMaxHealth : 0;
     const rechargeSpeed = 1 + mods.flatFor('abilityCooldownPerKill') * weaponKills;
     let castsPerSecond = rechargeSpeed / cooldown + charges / ENCOUNTER_SECONDS;
-    const castKills = opts.target === 'pack' && perCast / targetsHit >= enemyHealth[tierFor(opts.target)];
+    const castKills = opts.target === 'pack' && perCast / targetsHit >= targetMaxHealth;
     if (mods.flatFor('abilityResetOnKill') > 0 && castKills) {
       castsPerSecond = Infinity;
       mods.assume(ability.name, 'every cast kills, so its cooldown resets each time');
@@ -688,7 +689,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
   // are replaced as they fall, so kills/s = damage per second / one enemy's Health.
   const killsPerSecond =
     opts.target === 'pack'
-      ? (weaponDps + dotDps + abilityDps) / enemyHealth[tierFor(opts.target)]
+      ? (weaponDps + dotDps + abilityDps) / targetMaxHealth
       : 0;
 
   let aspectDps = 0;
@@ -718,7 +719,7 @@ export function simulate(build: Build, options: Partial<SimOptions> = {}): SimRe
       targetMissingHealth: 1 - opts.targetHealthFraction,
       gold: opts.gold,
       targetTier: tierFor(opts.target),
-      targetMaxHealth: enemyHealth[tierFor(opts.target)],
+      targetMaxHealth,
       payloadBonus: mods.multForScopeOnly('damage', payload.id),
       statusEffectiveness: 1 + mods.multFor('statusEffectiveness', 'all'),
       mods: mods.payloadMods.get(payload.id),

@@ -404,6 +404,11 @@ describe('on-kill effects', () => {
     const kills = plain.totalDps / plain.vulnerability / 500; // weapon damage before Shadows' bonus
     expect(pack.aspectDps).toBeCloseTo(kills * 400 * 5 * pack.vulnerability, 3);
   });
+
+  it('slow down as the Enemy HP multiplier raises enemy Health', () => {
+    const normal = simulate(shadows, { target: 'pack' }).aspectDps;
+    expect(simulate(shadows, { target: 'pack', enemyHealthMultiplier: 10 }).aspectDps).toBeCloseTo(normal / 10, 5);
+  });
 });
 
 describe('Shadow Conversion', () => {

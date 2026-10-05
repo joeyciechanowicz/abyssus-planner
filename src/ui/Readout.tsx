@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { SimResult } from '../engine/simulate';
-import { TARGETS, type SimOptions } from '../model/build';
-import { soulSkills } from '../model/data';
+import { TARGETS, tierFor, type SimOptions } from '../model/build';
+import { enemyHealth, soulSkills } from '../model/data';
 import { PLAYSTYLES, type Playstyle } from './playstyle';
 import { FLAT_FIELDS, fmt, statLabel } from './theme';
 
@@ -137,6 +137,7 @@ export function HowYouPlay({ opts, setOpts, weaveLabel, hasAbility, playstyle, o
         </label>
       )}
       {playstyleHint && <p className="sub small">{playstyleHint}</p>}
+      <EnemyHealthField opts={opts} setOpts={setOpts} />
       {showGold && (
         <label className="field inline">
           <span>Gold carried</span>
@@ -167,6 +168,40 @@ export function HowYouPlay({ opts, setOpts, weaveLabel, hasAbility, playstyle, o
         </label>
       ))}
     </section>
+  );
+}
+
+/** Enemy HP multiplier. Keeps its own text so the box can be cleared while typing. */
+function EnemyHealthField({ opts, setOpts }: { opts: SimOptions; setOpts: (o: SimOptions) => void }) {
+  const [text, setText] = useState(String(opts.enemyHealthMultiplier));
+  useEffect(() => {
+    if (Number(text) !== opts.enemyHealthMultiplier) setText(String(opts.enemyHealthMultiplier));
+    // Resync only when the option changes from outside (reset, playstyle).
+  }, [opts.enemyHealthMultiplier]);
+  const hp = enemyHealth[tierFor(opts.target)] * opts.enemyHealthMultiplier;
+
+  return (
+    <>
+      <label className="field inline">
+        <span>Enemy HP ×</span>
+        <input
+          type="number"
+          min={1}
+          step={1}
+          inputMode="decimal"
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value);
+            const v = Number(e.target.value);
+            if (e.target.value !== '' && v > 0) setOpts({ ...opts, enemyHealthMultiplier: v });
+          }}
+          onBlur={() => setText(String(opts.enemyHealthMultiplier))}
+        />
+      </label>
+      <p className="sub small">
+        {fmt(hp)} HP {opts.target === 'boss' ? 'boss' : 'per enemy'}
+      </p>
+    </>
   );
 }
 

@@ -62,6 +62,8 @@ export interface SimOptions {
   healthFraction: number;
   /** Target health fraction, for "enemies at full Health" style conditionals. */
   targetHealthFraction: number;
+  /** Scales every enemy's base max Health (500 standard, 25,000 boss); deeper runs hit harder targets. */
+  enemyHealthMultiplier: number;
   /** How many stacks of a stacking effect to assume are up (0..1 of its cap). */
   stackFullness: number;
   /** Charge-based modes: 0 = tap, 1 = fully charged. */
@@ -83,6 +85,7 @@ export const defaultOptions: SimOptions = {
   accuracy: 1.0,
   healthFraction: 1.0,
   targetHealthFraction: 1.0,
+  enemyHealthMultiplier: 1,
   stackFullness: 1.0,
   chargeLevel: 1.0,
   weaveRate: 0.2,
