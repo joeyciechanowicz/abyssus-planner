@@ -278,7 +278,6 @@ input[type='range'] { accent-color: var(--brass); width: 100%; margin: 0; }
   border: 1px solid var(--aspect); color: var(--aspect);
   font-size: 16px;
 }
-.rank.fixed { border-color: var(--line-2); color: var(--silt); }
 
 /* --- Soul Wheel -------------------------------------------------------- */
 

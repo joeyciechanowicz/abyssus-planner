@@ -77,6 +77,10 @@ export function Picker({
   const picked = items.find((i) => i.id === pickedId);
   const maxRank = picked?.maxRank ?? 1;
   const clampedRank = Math.min(rank, maxRank);
+  // Every blessing starts at rank 1 and can be upgraded up to maxRank - 1 times;
+  // the track shows upgrades, so rank r reads as +(r - 1).
+  const upgrades = clampedRank - 1;
+  const maxUpgrades = maxRank - 1;
 
   const pick = (item: PickerItem) => {
     if (item.id !== pickedId) setRank(item.id === selectedId ? (selectedRank ?? 1) : 1);
@@ -157,23 +161,25 @@ export function Picker({
               {maxRank > 1 && (
                 <div className="rank-track">
                   <div className="rank-head">
-                    <span className="sub">Rank</span>
+                    <span className="sub">Upgrades</span>
                     <span className="num rank-now">
-                      +{clampedRank} <span className="of">of {maxRank}</span>
+                      +{upgrades} <span className="of">of {maxUpgrades}</span>
                     </span>
                   </div>
-                  <div className="rank-steps" style={{ gridTemplateColumns: `repeat(${maxRank}, minmax(0, 1fr))` }}>
-                    {Array.from({ length: maxRank }, (_, i) => i + 1).map((r) => (
+                  <div className="rank-steps" style={{ gridTemplateColumns: `repeat(${maxUpgrades}, minmax(0, 1fr))` }}>
+                    {Array.from({ length: maxUpgrades }, (_, i) => i + 1).map((u) => (
                       <button
-                        key={r}
+                        key={u}
                         type="button"
-                        aria-label={`Rank ${r}`}
-                        aria-pressed={r === clampedRank}
-                        className={r <= clampedRank ? 'on' : ''}
-                        onClick={() => setRank(r)}
+                        aria-label={`Upgrade ${u}`}
+                        aria-pressed={u === upgrades}
+                        className={u <= upgrades ? 'on' : ''}
+                        // Clicking the current top step steps back down, so +1 can go back to none.
+                        onClick={() => setRank(u === upgrades ? u : u + 1)}
                       />
                     ))}
                   </div>
+                  <span className="sub small">Click the last lit step to take it back off.</span>
                   {picked.rankValues && (
                     <dl className="rank-values">
                       {picked.rankValues(clampedRank).map((v) => (

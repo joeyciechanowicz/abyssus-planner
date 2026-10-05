@@ -8,7 +8,7 @@ import {
   type Blessing,
 } from '../model/data';
 import { isFullyRankLinked } from '../engine/blessingScaling';
-import { heldBlessings, isPickable } from '../model/blessings';
+import { MAX_BLESSINGS_PER_ASPECT, countedForAspect, heldBlessings, isPickable, picksLeft } from '../model/blessings';
 import type { Build } from '../model/build';
 import { Icon, type PickerItem } from './Picker';
 import { Tooltip } from './Tooltip';
@@ -48,7 +48,7 @@ function rankValues(b: Blessing) {
 
 function simNote(b: Blessing): string | undefined {
   return maxBlessingRank(b) > 1 && b.effects.length > 0 && !isFullyRankLinked(b)
-    ? 'Ranks above +1 are shown for reference; the simulator uses the base value.'
+    ? 'Upgrades are shown for reference; the simulator uses the base value.'
     : undefined;
 }
 
@@ -136,7 +136,7 @@ export function BlessingBoard({ build, onChange, openPicker, only }: Props) {
       selectedId: existing?.id,
       selectedRank: existing ? build.blessings[existing.id] : 1,
       emptyText: `Every ${aspect} blessing is already in your build.`,
-      confirmLabel: (_, rank) => (existing ? `Set rank +${rank}` : `Add at rank +${rank}`),
+      confirmLabel: (_, rank) => (existing ? `Set to +${rank - 1}` : rank > 1 ? `Add at +${rank - 1}` : 'Add'),
       onConfirm: (id, rank) => setRank(id, rank),
       extraAction: existing && isPickable(existing) ? { label: 'Remove', onClick: () => remove(existing.id) } : undefined,
     });
@@ -156,8 +156,9 @@ export function BlessingBoard({ build, onChange, openPicker, only }: Props) {
           const card = aspect ? aspectCardFor(aspect, slot) : undefined;
           // Picks in order, with the passive first and the Minor/Major in their turn.
           const held = aspect ? heldBlessings(build, aspect).filter((h) => h.blessing.kind === 'blessing') : [];
-          const pickable = pool.filter(isPickable);
-          const left = pickable.filter((b) => build.blessings[b.id] === undefined).length;
+          const left = aspect ? picksLeft(build, aspect) : 0;
+          const counted = aspect ? countedForAspect(heldBlessings(build, aspect)) : 0;
+          const allTaken = pool.filter(isPickable).every((b) => build.blessings[b.id] !== undefined);
 
           return (
             <div key={slot} className={`panel column${aspect ? '' : ' empty'}`} style={{ '--aspect': color } as CSSProperties}>
@@ -192,7 +193,11 @@ export function BlessingBoard({ build, onChange, openPicker, only }: Props) {
                   ))}
                   <li>
                     <button type="button" className="add-slot cham" disabled={left === 0} onClick={() => pickBlessing(aspect)}>
-                      {left === 0 ? `All ${aspect} blessings taken` : `Add ${aspect} blessing`}
+                      {left > 0
+                        ? `Add ${aspect} blessing (${counted}/${MAX_BLESSINGS_PER_ASPECT})`
+                        : allTaken
+                          ? `All ${aspect} blessings taken`
+                          : `${MAX_BLESSINGS_PER_ASPECT} of ${MAX_BLESSINGS_PER_ASPECT} ${aspect} blessings`}
                     </button>
                   </li>
                 </ul>
@@ -236,7 +241,7 @@ function BlessingTile({
         type="button"
         className={`tile cham${pinned ? ' pinned' : ''}${autoLabel ? ' auto' : ''}${counted ? '' : ' uncounted'}`}
         onClick={onClick}
-        aria-label={`${blessing.name}${autoLabel ? ` (${autoLabel.toLowerCase()})` : ''}, rank ${rank} of ${max}${counted ? '' : ', not counted in DPS'}. Edit`}
+        aria-label={`${blessing.name}${autoLabel ? ` (${autoLabel.toLowerCase()})` : ''}${max > 1 ? `, upgraded ${rank - 1} of ${max - 1} times` : ''}${counted ? '' : ', not counted in DPS'}. Edit`}
       >
         <Icon src={asset(blessing.icon)} size={40} dim={!counted} />
         <span className="slot-text">
@@ -246,7 +251,8 @@ function BlessingTile({
           </span>
           <span className="sub clamp">{counted ? text : 'Not counted in DPS'}</span>
         </span>
-        <span className={`rank cham num${max > 1 ? '' : ' fixed'}`}>+{rank}</span>
+        {/* Rank 1 is the blessing as taken; the badge counts upgrades on top of it. */}
+        {max > 1 && <span className="rank cham num">+{rank - 1}</span>}
       </button>
     </Tooltip>
   );
