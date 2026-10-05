@@ -50,3 +50,18 @@ export function heldBlessings(build: Build, aspect: string): HeldBlessing[] {
 /** "Every Fortune Blessing ...": the blessings that count, i.e. picks plus the Minor and Major. */
 export const countedForAspect = (held: HeldBlessing[]) =>
   held.filter((h) => h.blessing.kind === 'blessing' && h.blessing.role !== 'passive').length;
+
+/** The most blessings one aspect can hold at once, counted as countedForAspect() does. */
+export const MAX_BLESSINGS_PER_ASPECT = 11;
+
+/** How many more blessings can be hand-picked from `aspect`; the Minor and Major take room as they join. */
+export function picksLeft(build: Build, aspect: string): number {
+  const pool = blessingsByAspect.get(aspect) ?? [];
+  const picks = Object.keys(build.blessings).filter((id) => {
+    const b = blessingById.get(id);
+    return !!b && b.aspect === aspect && isPickable(b);
+  }).length;
+  const fixed = pool.filter((b) => b.role === 'minor' || b.role === 'major').length;
+  const unpicked = pool.filter((b) => isPickable(b) && build.blessings[b.id] === undefined).length;
+  return Math.max(0, Math.min(unpicked, MAX_BLESSINGS_PER_ASPECT - fixed - picks));
+}

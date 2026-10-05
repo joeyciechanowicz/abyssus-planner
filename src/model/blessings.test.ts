@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { countedForAspect, heldBlessings, isPickable } from './blessings';
+import { MAX_BLESSINGS_PER_ASPECT, countedForAspect, heldBlessings, isPickable, picksLeft } from './blessings';
 import { aspects, blessings } from './data';
 import { emptyBuild, type Build } from './build';
 import { simulate } from '../engine/simulate';
@@ -37,6 +37,14 @@ describe('fixed blessings', () => {
   it('counts picks plus the Minor and Major for "every X blessing"', () => {
     expect(countedForAspect(heldBlessings(blood([]), 'Blood'))).toBe(0);
     expect(countedForAspect(heldBlessings(blood(['Red-blooded', 'Giants_Blood']), 'Blood'))).toBe(3);
+  });
+
+  it('caps an aspect at 11 blessings, the Minor and Major included', () => {
+    expect(picksLeft(blood([]), 'Blood')).toBe(9);
+    const nine = blessings.filter((b) => b.aspect === 'Blood' && isPickable(b)).slice(0, 9).map((b) => b.id);
+    const full = blood(nine);
+    expect(picksLeft(full, 'Blood')).toBe(0);
+    expect(countedForAspect(heldBlessings(full, 'Blood'))).toBe(MAX_BLESSINGS_PER_ASPECT);
   });
 
   it('keeps a rank set on a fixed blessing, and ignores it while the blessing is not due', () => {
