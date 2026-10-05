@@ -26,6 +26,7 @@ function scaleTree(effects: Effect[], variablesByName: Map<string, Variable>, ra
       case 'mult':
       case 'flat':
       case 'statusMod':
+      case 'payload':
         if (node.scalesWith) node.value = rescale(node.value, variablesByName.get(node.scalesWith), rank);
         break;
       case 'applyStatus':

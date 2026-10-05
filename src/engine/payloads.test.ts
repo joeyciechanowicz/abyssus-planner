@@ -247,6 +247,14 @@ describe('blessings that modify a payload', () => {
     expect(loaded / plain).toBeCloseTo(reach(-0.05) / reach(0.2), 5);
   });
 
+  it('Loaded Bounce rank sets the per-bounce bonus in a pack', () => {
+    const plain = aspect(build('Chain Lightning', 'Primary_Chain_Lightning', { Malignant_Arc: 1 }), { target: 'pack' });
+    const top = aspect(build('Chain Lightning', 'Primary_Chain_Lightning', { Loaded_Bounce: 11 }), { target: 'pack' });
+    const reach = (f: number) => [0, 1, 2, 3, 4].reduce((s, i) => s + (1 - f) ** i, 0);
+    // Rank 11 = +40% per bounce.
+    expect(top / plain).toBeCloseTo(reach(-0.4) / reach(0.2), 5);
+  });
+
   it('Exponential Gold adds 20% of your Gold to each Goldburst', () => {
     const base = aspect(build('Goldburst', 'Primary_Goldburst', {}));
     expect(aspect(build('Goldburst', 'Primary_Goldburst', { Exponential_Gold: 1 }))).toBeCloseTo(base * 1.2, 5);

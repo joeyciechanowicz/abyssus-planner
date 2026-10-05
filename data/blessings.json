@@ -5076,8 +5076,16 @@
           "op": "payload",
           "payload": "chainLightning",
           "field": "falloffPercent",
-          "value": -25,
-          "note": "+5% per bounce instead of -20%"
+          "value": -20,
+          "note": "cancels the -20% per bounce"
+        },
+        {
+          "op": "payload",
+          "payload": "chainLightning",
+          "field": "falloffPercent",
+          "value": -5,
+          "scalesWith": "{DamageIncreasePercent}",
+          "note": "+5% more damage per bounce"
         }
       ],
       "upgrades": [

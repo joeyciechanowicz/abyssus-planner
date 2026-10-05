@@ -29,6 +29,14 @@ describe('scaleBlessingEffects', () => {
     expect(mult(top).value).toBeCloseTo(-ranks[top - 1] / 100, 5); // stays negative, follows the rank table
   });
 
+  it('scales a linked aspect-payload leaf', () => {
+    // Exponential Gold: +20% of your Gold per Goldburst, scaling with {GoldPercentage}.
+    const b = blessingById.get('Exponential_Gold')!;
+    const ranks = b.upgrades!.find((u) => u.variable === '{GoldPercentage}')!.ranks;
+    const payload = scaleBlessingEffects(b, ranks.length).find((e) => e.op === 'payload') as { value: number };
+    expect(payload.value).toBeCloseTo(ranks[ranks.length - 1], 5);
+  });
+
   it('clamps a rank above the blessing max to its highest rank', () => {
     const b = blessingById.get('Blood_Primary')!;
     expect(scaleBlessingEffects(b, 999)).toEqual(scaleBlessingEffects(b, 11));

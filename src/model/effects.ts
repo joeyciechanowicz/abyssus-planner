@@ -242,7 +242,7 @@ export const PAYLOAD_FIELDS = [
   'chance',
   /** Extra times each proc fires (Roaring Winds: +1). Fractional = a chance to. */
   'repeats',
-  /** +x to the chain falloff percentage (Loaded Bounce: -25 turns -20%/bounce into +5%). */
+  /** +x to the chain falloff percentage (Loaded Bounce: -20 cancels the -20%/bounce, then -rank makes it +rank%). */
   'falloffPercent',
   /** Summons: +n alive at once, +s lifetime, +x attack speed, +x attack speed per summon alive. */
   'maxActive',
